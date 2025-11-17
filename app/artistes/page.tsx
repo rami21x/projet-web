@@ -1,105 +1,233 @@
 "use client";
 
-import { ExternalLink, User } from "lucide-react";
-import { artists } from "@/data/content";
+import { useState } from "react";
+import { Trophy, Award, Star, CheckCircle, Calendar, Users, Upload, Download, Sparkles } from "lucide-react";
+import { contestContent } from "@/data/content";
 import FadeIn from "@/components/FadeIn";
+import { motion } from "framer-motion";
 
-export default function ArtistesPage() {
+const iconMap = {
+  Trophy: Trophy,
+  Award: Award,
+  Star: Star,
+};
+
+export default function ConcoursPage() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setSelectedFile(null);
+      setEmail("");
+      setName("");
+    }, 5000);
+  };
+
   return (
     <div>
       {/* Hero Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-dark to-dark/95 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-black via-dark to-primary/30 dark:from-black dark:via-light/10 dark:to-primary/20 text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(139,0,0,0.4),transparent_50%)]" />
+        </div>
+
+        <motion.div
+          animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 6, repeat: Infinity }}
+          className="absolute top-20 left-10 w-32 h-32 border-4 border-primary/30 rounded-full"
+        />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Trophy className="w-20 h-20 md:w-28 md:h-28 mx-auto text-primary mb-6" />
+          </motion.div>
+
           <FadeIn>
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8">
-              Artistes
+            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6">
+              {contestContent.hero.title}
             </h1>
-            <p className="font-body text-lg md:text-xl text-light/90 leading-relaxed max-w-3xl mx-auto">
-              Arteral collabore avec des artistes conceptuels qui partagent
-              notre vision : transformer la philosophie en art incarné. Découvrez
-              les créateurs derrière la collection Amour ↔ Ennuie.
+            <p className="font-display text-3xl sm:text-4xl md:text-5xl italic mb-4 text-accent">
+              {contestContent.hero.subtitle}
+            </p>
+            <p className="font-body text-xl sm:text-2xl md:text-3xl mb-8 text-light/90">
+              {contestContent.hero.description}
+            </p>
+
+            <div className="bg-primary/20 backdrop-blur-sm border-2 border-primary px-8 py-4 rounded-lg inline-block mb-8">
+              <Calendar className="w-6 h-6 inline mr-2" />
+              <span className="font-body font-bold text-lg">
+                Deadline: {contestContent.hero.deadline}
+              </span>
+            </div>
+
+            <br />
+
+            <a
+              href="#submit"
+              className="inline-block font-body font-semibold text-lg px-12 py-6 bg-primary hover:bg-primary/90 text-white rounded-sm transition-all hover:scale-105 shadow-2xl"
+            >
+              Participer Maintenant →
+            </a>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Prix */}
+      <section className="py-24 bg-light dark:bg-light">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <h2 className="font-display text-6xl font-bold text-center text-dark dark:text-dark mb-4">
+              Prix: <span className="text-primary">6500€</span>
+            </h2>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+            {contestContent.prizes.map((prize, idx) => {
+              const Icon = iconMap[prize.icon as keyof typeof iconMap];
+              return (
+                <FadeIn key={prize.position} delay={idx * 0.2}>
+                  <motion.div whileHover={{ y: -10 }} className="bg-white dark:bg-white border-2 border-primary/40 p-8 rounded-lg">
+                    {idx === 0 && (
+                      <div className="absolute -top-4 -right-4 bg-primary text-white px-4 py-2 rounded-full font-bold text-sm">
+                        GAGNANT!
+                      </div>
+                    )}
+                    <Icon className="w-16 h-16 mb-4 mx-auto text-primary" />
+                    <h3 className="font-display text-3xl font-bold text-dark mb-2 text-center">
+                      {prize.position}
+                    </h3>
+                    <p className="font-display text-5xl font-bold text-primary mb-6 text-center">
+                      {prize.amount}
+                    </p>
+                    <ul className="space-y-3">
+                      {prize.rewards.map((reward, i) => (
+                        <li key={i} className="flex items-start gap-2 font-body text-sm text-dark/80">
+                          <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                          {reward}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </FadeIn>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Thème */}
+      <section className="py-24 bg-gradient-to-br from-dark to-primary/20 text-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <h2 className="font-display text-6xl font-bold mb-8 text-center">
+              {contestContent.theme.title}
+            </h2>
+            <p className="font-body text-xl leading-relaxed mb-8 whitespace-pre-line">
+              {contestContent.theme.description}
             </p>
           </FadeIn>
         </div>
       </section>
 
-      {/* Artists Gallery */}
-      <section className="py-16 md:py-24 bg-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {artists.map((artist, index) => (
-              <FadeIn key={artist.name} delay={index * 0.2}>
-                <div className="bg-white rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
-                  {/* Artist Image Placeholder */}
-                  <div className="aspect-square bg-gradient-to-br from-dark/10 to-primary/10 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <User className="w-24 h-24 md:w-32 md:h-32 text-dark/30 relative z-10" />
-                  </div>
-
-                  {/* Artist Info */}
-                  <div className="p-6 md:p-8">
-                    <h3 className="font-display text-2xl md:text-3xl font-bold text-dark mb-2">
-                      {artist.name}
-                    </h3>
-                    <p className="font-body text-sm md:text-base font-semibold text-accent mb-4">
-                      {artist.discipline}
-                    </p>
-                    <p className="font-body text-sm md:text-base text-dark/70 leading-relaxed mb-6">
-                      {artist.bio}
-                    </p>
-
-                    {/* Contribution */}
-                    <div className="bg-light p-4 rounded-lg mb-6">
-                      <p className="font-body text-xs font-semibold text-dark/60 uppercase tracking-wider mb-2">
-                        Contribution à Amour ↔ Ennuie
-                      </p>
-                      <p className="font-body text-sm md:text-base text-dark/80 leading-relaxed">
-                        {artist.contribution}
-                      </p>
-                    </div>
-
-                    {/* Portfolio Link */}
-                    <a
-                      href={artist.portfolio}
-                      className="inline-flex items-center gap-2 font-body text-sm md:text-base font-semibold text-primary hover:text-primary/80 transition-colors group/link"
-                    >
-                      <span>Voir le portfolio</span>
-                      <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                    </a>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Collaboration CTA */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Soumission */}
+      <section id="submit" className="py-24 bg-light dark:bg-light">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-6 md:mb-8">
-              Collaborez avec nous
+            <Sparkles className="w-16 h-16 mx-auto mb-4 text-primary" />
+            <h2 className="font-display text-5xl font-bold text-dark dark:text-dark mb-12 text-center">
+              Soumettre votre Artwork
             </h2>
-            <p className="font-body text-base md:text-lg text-dark/70 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
-              Vous êtes artiste et vous explorez des thèmes philosophiques,
-              émotionnels ou conceptuels? Nous recherchons constamment de
-              nouvelles collaborations pour nos futures collections.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
-                className="inline-block font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 bg-primary hover:bg-primary/90 text-white rounded-sm transition-all hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Nous contacter
-              </a>
-              <a
-                href="/processus"
-                className="inline-block font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 border-2 border-dark hover:bg-dark hover:text-white text-dark rounded-sm transition-all hover:scale-105"
-              >
-                Voir notre processus
-              </a>
-            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            {submitted ? (
+              <div className="bg-white p-12 rounded-lg text-center border-2 border-primary">
+                <CheckCircle className="w-20 h-20 mx-auto mb-6 text-primary" />
+                <h3 className="font-display text-3xl font-bold text-dark mb-4">
+                  Soumission Reçue!
+                </h3>
+              </div>
+            ) : (
+              <div className="bg-white dark:bg-white p-12 rounded-lg shadow-2xl">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label className="block font-body text-sm font-semibold text-dark mb-2">
+                      Nom Complet *
+                    </label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className="w-full px-4 py-4 border-2 border-dark/20 rounded-lg focus:border-primary"
+                      placeholder="Votre nom"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-body text-sm font-semibold text-dark mb-2">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full px-4 py-4 border-2 border-dark/20 rounded-lg focus:border-primary"
+                      placeholder="votre@email.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-body text-sm font-semibold text-dark mb-2">
+                      Artwork *
+                    </label>
+                    <div className="border-2 border-dashed border-dark/30 rounded-lg p-8 text-center hover:border-primary cursor-pointer">
+                      <input
+                        type="file"
+                        onChange={handleFileChange}
+                        accept=".png,.jpg,.jpeg,.psd,.ai"
+                        required
+                        className="hidden"
+                        id="artwork-upload"
+                      />
+                      <label htmlFor="artwork-upload" className="cursor-pointer">
+                        <Upload className="w-12 h-12 mx-auto mb-4 text-dark/40" />
+                        {selectedFile ? (
+                          <p className="font-body text-primary font-semibold">{selectedFile.name}</p>
+                        ) : (
+                          <p className="font-body text-dark/60">Cliquez pour uploader</p>
+                        )}
+                      </label>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full flex items-center justify-center gap-3 font-body font-semibold text-lg px-8 py-5 bg-primary hover:bg-primary/90 text-white rounded-lg"
+                  >
+                    Soumettre
+                    <Sparkles className="w-5 h-5" />
+                  </button>
+                </form>
+              </div>
+            )}
           </FadeIn>
         </div>
       </section>

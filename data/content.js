@@ -275,11 +275,121 @@ export const contactContent = {
   ],
 };
 
+// Concours Créatif Content
+export const contestContent = {
+  hero: {
+    title: "CONCOURS ARTERAL",
+    subtitle: "Incarnez le Paradoxe",
+    description: "Créez l'artwork de notre prochaine collection et remportez 5000€",
+    deadline: "15 Janvier 2026",
+  },
+  prizes: [
+    {
+      position: "1er Prix",
+      amount: "5000€",
+      rewards: [
+        "5000€ en cash",
+        "Votre artwork produit sur collection limitée",
+        "Collaboration officielle Arteral",
+        "Feature sur tous nos canaux (10k+ followers)",
+        "Pièce unique signée offerte",
+      ],
+      icon: "Trophy",
+      color: "primary",
+    },
+    {
+      position: "2ème Prix",
+      amount: "1000€",
+      rewards: [
+        "1000€ en cash",
+        "Pièce collection Amour ↔ Ennuie offerte",
+        "Feature Instagram + portfolio",
+      ],
+      icon: "Award",
+      color: "accent",
+    },
+    {
+      position: "3ème Prix",
+      amount: "500€",
+      rewards: [
+        "500€ en cash",
+        "T-shirt collection limitée",
+        "Mention sur réseaux sociaux",
+      ],
+      icon: "Star",
+      color: "dark",
+    },
+  ],
+  theme: {
+    title: "Thème : CHAOS ↔ ORDRE",
+    description: `Explorez le paradoxe entre chaos créateur et ordre structurant. Comment ces forces opposées coexistent-elles ? Comment l'une nourrit-elle l'autre ?
+
+Inspirations philosophiques : Nietzsche (chaos créateur), Taoïsme (équilibre), Kandinsky (abstraction vs structure).`,
+    keywords: ["Chaos", "Ordre", "Équilibre", "Transformation", "Dualité", "Harmonie"],
+  },
+  rules: [
+    {
+      title: "Format",
+      description: "Artwork digital haute résolution (min 3000x3000px, 300 DPI). Formats acceptés: PNG, JPG, PSD, AI",
+    },
+    {
+      title: "Style",
+      description: "Surréalisme minimaliste. Palette: max 4 couleurs dominantes. Doit pouvoir être brodé/imprimé sur textile.",
+    },
+    {
+      title: "Originalité",
+      description: "100% création originale. Aucun plagiat, aucun AI-généré pur (AI assisté autorisé si retravaill é significativement).",
+    },
+    {
+      title: "Droits",
+      description: "Le gagnant cède les droits commerciaux à Arteral pour production. Vous conservez les droits d'exposition portfolio.",
+    },
+    {
+      title: "Participation",
+      description: "Gratuit et ouvert à tous, artistes pro ou amateurs. 1 soumission par personne.",
+    },
+  ],
+  criteria: [
+    { label: "Cohérence philosophique", weight: "30%" },
+    { label: "Impact visuel", weight: "30%" },
+    { label: "Faisabilité textile", weight: "20%" },
+    { label: "Originalité", weight: "20%" },
+  ],
+  timeline: [
+    { date: "1 Déc 2025", event: "Ouverture concours" },
+    { date: "15 Jan 2026", event: "Clôture soumissions (23h59 CET)" },
+    { date: "31 Jan 2026", event: "Délibération jury" },
+    { date: "10 Fév 2026", event: "Annonce gagnants" },
+    { date: "Mars 2026", event: "Production collection gagnante" },
+  ],
+  jury: [
+    {
+      name: "Sophie Moreau",
+      role: "Artiste Surréaliste",
+      bio: "Créatrice artwork Amour ↔ Ennuie",
+    },
+    {
+      name: "Marc Dubois",
+      role: "Designer Textile",
+      bio: "20 ans mode conceptuelle",
+    },
+    {
+      name: "Léa Chen",
+      role: "Philosophe & Curator",
+      bio: "Spécialiste art contemporain",
+    },
+  ],
+  cta: {
+    primary: "Soumettre mon artwork",
+    secondary: "Télécharger le brief complet (PDF)",
+  },
+};
+
 export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },
   { name: "Collection", href: "/collection" },
-  { name: "Artistes", href: "/artistes" },
+  { name: "Concours 5K€", href: "/artistes" },
   { name: "Processus", href: "/processus" },
   { name: "Contact", href: "/contact" },
 ];

@@ -34,6 +34,8 @@ export const metadata: Metadata = {
 
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { ThemeProviders } from "@/components/ThemeProvider";
+import CustomCursor from "@/components/CustomCursor";
 
 export default function RootLayout({
   children,
@@ -41,13 +43,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="scroll-smooth">
+    <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={`${playfairDisplay.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <Navigation />
-        <main className="min-h-screen pt-16 md:pt-20">{children}</main>
-        <Footer />
+        <ThemeProviders>
+          <CustomCursor />
+          <Navigation />
+          <main className="min-h-screen pt-16 md:pt-20">{children}</main>
+          <Footer />
+        </ThemeProviders>
       </body>
     </html>
   );

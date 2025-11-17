@@ -3,23 +3,25 @@
 import { motion } from "framer-motion";
 import { collectionContent } from "@/data/content";
 import FadeIn from "@/components/FadeIn";
+import NotifyMeButton from "@/components/NotifyMeButton";
 
 export default function CollectionPage() {
   return (
     <div>
       {/* Header Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-primary/10 via-light to-accent/10">
+      <section className="py-20 md:py-32 bg-gradient-to-br from-primary/10 via-light to-accent/10 dark:from-primary/20 dark:via-light dark:to-accent/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-dark mb-4 md:mb-6">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-dark dark:text-dark mb-4 md:mb-6">
               {collectionContent.title}
             </h1>
-            <p className="font-body text-lg md:text-xl text-dark/80 mb-8 md:mb-12">
+            <p className="font-body text-lg md:text-xl text-dark/80 dark:text-dark/80 mb-8 md:mb-12">
               {collectionContent.subtitle}
             </p>
-            <p className="font-body text-base md:text-lg text-dark/70 leading-relaxed whitespace-pre-line max-w-3xl mx-auto">
+            <p className="font-body text-base md:text-lg text-dark/70 dark:text-dark/70 leading-relaxed whitespace-pre-line max-w-3xl mx-auto mb-8">
               {collectionContent.description}
             </p>
+            <NotifyMeButton />
           </FadeIn>
         </div>
       </section>
