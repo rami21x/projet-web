@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/* Arteral Brand Colors */
+:root {
+  --primary: #8B0000;     /* Rouge profond - passion, feu */
+  --dark: #2B2B2B;        /* Noir charbon - ombre, profondeur */
+  --light: #E8E8E8;       /* Blanc/beige - clarté, conscience */
+  --accent: #A0522D;      /* Brun/or - transformation */
+  --white: #ffffff;
+  --black: #000000;
+}
+
+@theme inline {
+  /* Arteral Color Palette */
+  --color-primary: var(--primary);
+  --color-dark: var(--dark);
+  --color-light: var(--light);
+  --color-accent: var(--accent);
+  --color-white: var(--white);
+  --color-black: var(--black);
+
+  /* Font Families */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Default fonts */
+  --font-sans: 'Inter', sans-serif;
+}
+
+body {
+  background: var(--light);
+  color: var(--dark);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}

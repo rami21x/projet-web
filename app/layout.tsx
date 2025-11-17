@@ -1,0 +1,54 @@
+import type { Metadata } from "next";
+import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-display",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-body",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "ARTERAL - Mode Philosophique",
+  description: "Chaque pièce raconte un paradoxe. Art incarné, mode consciente. Collection Amour ↔ Ennuie.",
+  keywords: ["mode", "art", "philosophie", "Arteral", "fashion", "conceptuel"],
+  authors: [{ name: "Arteral" }],
+  openGraph: {
+    title: "ARTERAL - Mode Philosophique",
+    description: "Chaque pièce raconte un paradoxe. Art incarné, mode consciente.",
+    type: "website",
+  },
+};
+
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="fr" className="scroll-smooth">
+      <body
+        className={`${playfairDisplay.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+      >
+        <Navigation />
+        <main className="min-h-screen pt-16 md:pt-20">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  );
+}
