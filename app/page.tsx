@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { Palette, Brain, Sparkles } from "lucide-react";
 import { heroContent, homeFeatures } from "@/data/content";
 import FadeIn from "@/components/FadeIn";
+import PhilosophicalQuote from "@/components/PhilosophicalQuote";
+import DualitySlider from "@/components/DualitySlider";
 
 const iconMap = {
   Palette: Palette,
@@ -129,6 +131,12 @@ export default function Home() {
           </FadeIn>
         </div>
       </section>
+
+      {/* Philosophical Quote Section */}
+      <PhilosophicalQuote />
+
+      {/* Duality Slider Section */}
+      <DualitySlider />
 
       {/* Collection Teaser */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-accent/5">

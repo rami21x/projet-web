@@ -389,7 +389,9 @@ export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },
   { name: "Collection", href: "/collection" },
+  { name: "Manifeste", href: "/manifeste" },
   { name: "Concours 5K€", href: "/artistes" },
+  { name: "Livre d'Or", href: "/livre-or" },
   { name: "Processus", href: "/processus" },
   { name: "Contact", href: "/contact" },
 ];

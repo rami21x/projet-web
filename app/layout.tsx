@@ -36,6 +36,9 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ThemeProviders } from "@/components/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
+import AmbientMusic from "@/components/AmbientMusic";
+import MuseumSpotlight from "@/components/MuseumSpotlight";
+import PhilosophicalEasterEggs from "@/components/PhilosophicalEasterEggs";
 
 export default function RootLayout({
   children,
@@ -49,6 +52,9 @@ export default function RootLayout({
       >
         <ThemeProviders>
           <CustomCursor />
+          <MuseumSpotlight />
+          <PhilosophicalEasterEggs />
+          <AmbientMusic />
           <Navigation />
           <main className="min-h-screen pt-16 md:pt-20">{children}</main>
           <Footer />
