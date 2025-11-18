@@ -18,19 +18,14 @@ export default function Navigation() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Left navigation items
+  // Left navigation items - Only Home and Gallery
   const leftNav = navigation.filter((item) =>
     ["Home", "Accueil", "Gallery", "Galerie"].includes(item.name)
   );
 
-  // Right navigation - visible items
-  const rightNavVisible = navigation.filter((item) =>
-    ["Collection", "Studio", "Brand", "La Marque"].includes(item.name)
-  );
-
-  // Dropdown items (rest of navigation)
+  // Dropdown items - Everything except Home and Gallery
   const dropdownItems = navigation.filter((item) =>
-    !leftNav.includes(item) && !rightNavVisible.includes(item)
+    !leftNav.includes(item)
   );
 
   // Close dropdown when clicking outside
@@ -80,34 +75,14 @@ export default function Navigation() {
           </Link>
 
           {/* Right Navigation - Desktop */}
-          <div className="hidden lg:flex items-center space-x-6">
-            {rightNavVisible.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`font-body text-sm font-medium transition-colors relative group ${
-                  pathname === item.href
-                    ? "text-primary dark:text-primary"
-                    : "text-dark dark:text-dark hover:text-primary dark:hover:text-primary"
-                }`}
-              >
-                {item.name}
-                <span
-                  className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-primary dark:bg-primary transition-all group-hover:w-full ${
-                    pathname === item.href ? "w-full" : ""
-                  }`}
-                />
-              </Link>
-            ))}
-
-            {/* More Dropdown */}
+          <div className="hidden lg:flex items-center space-x-4">
+            {/* More Dropdown with all pages except Home and Gallery */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="font-body text-sm font-medium text-dark dark:text-dark hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-1"
+                className="font-body text-sm font-medium text-dark dark:text-dark hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-primary/5"
               >
-                More
-                <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <Menu className="w-4 h-4" />
               </button>
 
               <AnimatePresence>
@@ -117,7 +92,7 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-white shadow-xl rounded-lg border border-dark/10 dark:border-dark/10 py-2 overflow-hidden"
+                    className="absolute right-0 mt-2 w-56 bg-white dark:bg-white shadow-xl rounded-lg border border-dark/10 dark:border-dark/10 py-2 overflow-hidden"
                   >
                     {dropdownItems.map((item) => (
                       <Link

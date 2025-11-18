@@ -757,7 +757,7 @@ export default function StudioPage() {
                           Télécharger le Design
                         </button>
                       )}
-                    </div>
+                    </motion.div>
                   </FadeIn>
                 </div>
 
