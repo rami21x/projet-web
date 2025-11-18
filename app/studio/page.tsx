@@ -18,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import { useContent } from "@/hooks/useContent";
 
 // Types de vêtements
 type GarmentType = "tshirt" | "pull";
@@ -59,6 +60,8 @@ interface Design {
 }
 
 export default function StudioPage() {
+  const { studioContent } = useContent();
+
   // Configuration étape
   const [step, setStep] = useState<"config" | "design">("config");
 
@@ -216,7 +219,7 @@ export default function StudioPage() {
       // Add watermark
       ctx.fillStyle = isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)";
       ctx.font = "12px monospace";
-      ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
+      ctx.fillText(studioContent.canvas.watermark, 10, canvas.height - 10);
     };
 
     garmentImg.onerror = () => {
@@ -227,10 +230,10 @@ export default function StudioPage() {
       ctx.fillStyle = "#999";
       ctx.font = "20px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("Photo manquante", canvas.width / 2, canvas.height / 2 - 40);
+      ctx.fillText(studioContent.canvas.missingPhoto, canvas.width / 2, canvas.height / 2 - 40);
       ctx.font = "14px sans-serif";
       ctx.fillText(garmentPhotoPath, canvas.width / 2, canvas.height / 2);
-      ctx.fillText("Ajoutez cette photo pour voir le rendu", canvas.width / 2, canvas.height / 2 + 30);
+      ctx.fillText(studioContent.canvas.addPhotoHint, canvas.width / 2, canvas.height / 2 + 30);
 
       // Still draw the uploaded design if present
       if (uploadedImage) {
@@ -353,12 +356,12 @@ export default function StudioPage() {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      alert("Veuillez uploader une image (PNG, JPG, etc.)");
+      alert(studioContent.design.upload.errors.notImage);
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      alert("L'image est trop grande. Maximum 5 MB.");
+      alert(studioContent.design.upload.errors.tooLarge);
       return;
     }
 
@@ -471,7 +474,7 @@ export default function StudioPage() {
               // Add watermark
               ctx.fillStyle = isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)";
               ctx.font = "12px monospace";
-              ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
+              ctx.fillText(studioContent.canvas.watermark, 10, canvas.height - 10);
 
               // Return the data URL
               resolve(canvas.toDataURL("image/png"));
@@ -481,7 +484,7 @@ export default function StudioPage() {
             // No design on this side, just return garment
             ctx.fillStyle = isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)";
             ctx.font = "12px monospace";
-            ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
+            ctx.fillText(studioContent.canvas.watermark, 10, canvas.height - 10);
             resolve(canvas.toDataURL("image/png"));
           }
         };
@@ -521,7 +524,7 @@ export default function StudioPage() {
       }, 100);
     } catch (error) {
       console.error("Error downloading both sides:", error);
-      alert("Une erreur s'est produite lors du téléchargement");
+      alert(studioContent.design.download.error);
     }
   };
 
@@ -529,7 +532,7 @@ export default function StudioPage() {
     e.preventDefault();
 
     if (!uploadedImage || !canvasRef.current) {
-      alert("Veuillez uploader et créer un design d'abord");
+      alert(studioContent.design.submit.error);
       return;
     }
 
@@ -611,10 +614,10 @@ export default function StudioPage() {
             </motion.div>
 
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8">
-              Studio Arteral
+              {studioContent.hero.title}
             </h1>
             <p className="font-body text-lg md:text-xl text-light/90 leading-relaxed max-w-3xl mx-auto">
-              Configurez votre vêtement. Visualisez votre œuvre. Créez l'art porté.
+              {studioContent.hero.subtitle}
             </p>
           </FadeIn>
         </div>
@@ -634,13 +637,13 @@ export default function StudioPage() {
               <FadeIn>
                 <div className="bg-white dark:bg-dark/80 p-8 md:p-12 rounded-lg shadow-2xl border-2 border-primary/20">
                   <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-8 text-center">
-                    Configurez votre vêtement
+                    {studioContent.config.title}
                   </h2>
 
                   {/* Type de vêtement */}
                   <div className="mb-10">
                     <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
-                      1. Type de vêtement
+                      {studioContent.config.garmentType.label}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <button
@@ -665,10 +668,10 @@ export default function StudioPage() {
                               : "text-dark dark:text-white"
                           }`}
                         >
-                          T-Shirt
+                          {studioContent.config.garmentType.tshirt.title}
                         </p>
                         <p className="font-body text-sm text-dark/60 dark:text-white/60 mt-1">
-                          Manches courtes, léger
+                          {studioContent.config.garmentType.tshirt.description}
                         </p>
                       </button>
 
@@ -694,10 +697,10 @@ export default function StudioPage() {
                               : "text-dark dark:text-white"
                           }`}
                         >
-                          Pull
+                          {studioContent.config.garmentType.pull.title}
                         </p>
                         <p className="font-body text-sm text-dark/60 dark:text-white/60 mt-1">
-                          Manches longues, confort
+                          {studioContent.config.garmentType.pull.description}
                         </p>
                       </button>
                     </div>
@@ -706,7 +709,7 @@ export default function StudioPage() {
                   {/* Coupe */}
                   <div className="mb-10">
                     <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
-                      2. Coupe
+                      {studioContent.config.fit.label}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       {["oversize", "regular", "slim"].map((fit) => (
@@ -733,14 +736,14 @@ export default function StudioPage() {
                                 : "text-dark dark:text-white"
                             }`}
                           >
-                            {fit === "oversize" && "Oversize"}
-                            {fit === "regular" && "Regular"}
-                            {fit === "slim" && "Slim Fit"}
+                            {fit === "oversize" && studioContent.config.fit.oversize.title}
+                            {fit === "regular" && studioContent.config.fit.regular.title}
+                            {fit === "slim" && studioContent.config.fit.slim.title}
                           </p>
                           <p className="font-body text-xs text-dark/60 dark:text-white/60 mt-1">
-                            {fit === "oversize" && "Ample, décontracté"}
-                            {fit === "regular" && "Coupe classique"}
-                            {fit === "slim" && "Ajusté, moderne"}
+                            {fit === "oversize" && studioContent.config.fit.oversize.description}
+                            {fit === "regular" && studioContent.config.fit.regular.description}
+                            {fit === "slim" && studioContent.config.fit.slim.description}
                           </p>
                         </button>
                       ))}
@@ -750,7 +753,7 @@ export default function StudioPage() {
                   {/* Couleur */}
                   <div className="mb-10">
                     <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
-                      3. Couleur
+                      {studioContent.config.color.label}
                     </label>
                     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                       {ARTERAL_COLORS.map((color) => (
@@ -785,16 +788,16 @@ export default function StudioPage() {
                   {/* Aperçu de la configuration */}
                   <div className="bg-light dark:bg-dark/50 p-6 rounded-lg mb-8">
                     <p className="font-body text-sm font-semibold text-dark dark:text-white mb-3">
-                      Votre configuration :
+                      {studioContent.config.summary}
                     </p>
                     <div className="flex flex-wrap gap-3">
                       <span className="px-3 py-1 bg-primary/10 text-primary rounded-full font-body text-sm font-semibold">
-                        {garmentType === "tshirt" ? "T-Shirt" : "Pull"}
+                        {garmentType === "tshirt" ? studioContent.config.garmentType.tshirt.title : studioContent.config.garmentType.pull.title}
                       </span>
                       <span className="px-3 py-1 bg-accent/10 text-accent rounded-full font-body text-sm font-semibold capitalize">
-                        {garmentFit === "oversize" && "Oversize"}
-                        {garmentFit === "regular" && "Regular"}
-                        {garmentFit === "slim" && "Slim Fit"}
+                        {garmentFit === "oversize" && studioContent.config.fit.oversize.title}
+                        {garmentFit === "regular" && studioContent.config.fit.regular.title}
+                        {garmentFit === "slim" && studioContent.config.fit.slim.title}
                       </span>
                       <span
                         className="px-3 py-1 rounded-full font-body text-sm font-semibold flex items-center gap-2"
@@ -821,7 +824,7 @@ export default function StudioPage() {
                     className="w-full flex items-center justify-center gap-3 font-body font-semibold text-lg px-8 py-5 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white rounded-lg transition-all hover:scale-105 shadow-lg"
                   >
                     <Palette className="w-6 h-6" />
-                    Commencer le design
+                    {studioContent.config.startButton}
                   </button>
                 </div>
               </FadeIn>
@@ -842,7 +845,7 @@ export default function StudioPage() {
                 onClick={() => setStep("config")}
                 className="mb-8 flex items-center gap-2 font-body text-primary hover:text-accent transition-colors"
               >
-                ← Modifier la configuration
+                {studioContent.design.backButton}
               </button>
 
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
@@ -865,7 +868,7 @@ export default function StudioPage() {
                         >
                           <Move className="w-8 h-8 text-primary" />
                         </motion.div>
-                        Live Preview
+                        {studioContent.design.preview.title}
                       </h2>
 
                       {/* Canvas - Larger and more prominent */}
@@ -908,10 +911,10 @@ export default function StudioPage() {
                                 <Upload className="w-20 h-20 text-primary/30 dark:text-primary/40 mx-auto mb-4" />
                               </motion.div>
                               <p className="font-body text-lg text-dark/50 dark:text-white/50 font-semibold">
-                                Upload your artwork to begin
+                                {studioContent.design.preview.uploadPrompt}
                               </p>
                               <p className="font-body text-sm text-dark/30 dark:text-white/30 mt-2">
-                                PNG, JPG - Max 5 MB
+                                {studioContent.design.preview.uploadHint}
                               </p>
                             </div>
                           </motion.div>
@@ -927,7 +930,7 @@ export default function StudioPage() {
                             <Wind className="w-5 h-5 text-primary" />
                           )}
                           <span className="font-body text-sm font-semibold text-dark dark:text-white capitalize">
-                            {garmentType === "tshirt" ? "T-Shirt" : "Pull"} {garmentFit}
+                            {garmentType === "tshirt" ? studioContent.config.garmentType.tshirt.title : studioContent.config.garmentType.pull.title} {garmentFit}
                           </span>
                         </div>
                         <div
@@ -939,7 +942,7 @@ export default function StudioPage() {
                       {/* Front/Back Toggle */}
                       <div className="mb-6 p-4 bg-light dark:bg-dark/50 rounded-lg">
                         <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-3">
-                          Côté du vêtement
+                          {studioContent.design.sides.label}
                         </label>
                         <div className="grid grid-cols-2 gap-3">
                           <button
@@ -964,7 +967,7 @@ export default function StudioPage() {
                                   : "text-dark dark:text-white"
                               }`}
                             >
-                              Face avant
+                              {studioContent.design.sides.front}
                             </p>
                           </button>
 
@@ -990,7 +993,7 @@ export default function StudioPage() {
                                   : "text-dark dark:text-white"
                               }`}
                             >
-                              Face arrière
+                              {studioContent.design.sides.back}
                             </p>
                           </button>
                         </div>
@@ -1004,7 +1007,7 @@ export default function StudioPage() {
                             className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-3 bg-accent hover:bg-accent/90 text-white rounded-lg transition-all hover:scale-105"
                           >
                             <Download className="w-5 h-5" />
-                            Télécharger {garmentSide === "front" ? "Face avant" : "Face arrière"}
+                            {studioContent.design.download.single} {garmentSide === "front" ? studioContent.design.sides.front : studioContent.design.sides.back}
                           </button>
                           <button
                             onClick={downloadBothSides}
@@ -1012,7 +1015,7 @@ export default function StudioPage() {
                           >
                             <Download className="w-5 h-5" />
                             <Layers className="w-5 h-5" />
-                            Télécharger Face avant + Face arrière
+                            {studioContent.design.download.both}
                           </button>
                         </div>
                       )}
@@ -1026,7 +1029,7 @@ export default function StudioPage() {
                   <FadeIn delay={0.1}>
                     <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
                       <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-4">
-                        1. Uploadez votre œuvre
+                        {studioContent.design.upload.title}
                       </h3>
 
                       <input
@@ -1042,11 +1045,11 @@ export default function StudioPage() {
                         className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all hover:scale-105"
                       >
                         <Upload className="w-5 h-5" />
-                        {getActiveLayers().length > 0 ? "Ajouter une autre image" : "Choisir une image"}
+                        {getActiveLayers().length > 0 ? studioContent.design.upload.buttonMultiple : studioContent.design.upload.button}
                       </button>
 
                       <p className="font-body text-xs text-dark/60 dark:text-white/60 mt-3 text-center">
-                        PNG, JPG - Max 5 MB · Vous pouvez ajouter plusieurs images
+                        {studioContent.design.upload.hint}
                       </p>
 
                       {/* Layers List */}
@@ -1055,10 +1058,10 @@ export default function StudioPage() {
                           <div className="flex items-center justify-between mb-3">
                             <h4 className="font-body text-sm font-semibold text-dark dark:text-white flex items-center gap-2">
                               <Layers className="w-4 h-4" />
-                              Images sur {garmentSide === "front" ? "face avant" : "face arrière"}
+                              {studioContent.design.layers.title} {garmentSide === "front" ? studioContent.design.layers.frontSide : studioContent.design.layers.backSide}
                             </h4>
                             <span className="font-mono text-xs text-primary">
-                              {getActiveLayers().length} {getActiveLayers().length === 1 ? "image" : "images"}
+                              {getActiveLayers().length} {getActiveLayers().length === 1 ? studioContent.design.layers.count : studioContent.design.layers.countPlural}
                             </span>
                           </div>
 
@@ -1124,7 +1127,7 @@ export default function StudioPage() {
                                     }
                                   }}
                                   className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-red-500/10 rounded"
-                                  title="Supprimer"
+                                  title={studioContent.design.layers.deleteTitle}
                                 >
                                   <X className="w-4 h-4 text-red-500" />
                                 </button>
@@ -1133,7 +1136,7 @@ export default function StudioPage() {
                           </div>
 
                           <p className="font-body text-xs text-dark/50 dark:text-white/50 mt-3 text-center italic">
-                            💡 Cliquez sur une image pour la modifier. Les images sur face avant et arrière sont indépendantes.
+                            {studioContent.design.layers.helpText}
                           </p>
                         </div>
                       )}
@@ -1145,7 +1148,7 @@ export default function StudioPage() {
                     <FadeIn delay={0.2}>
                       <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
                         <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
-                          2. Ajustez le design
+                          {studioContent.design.controls.title}
                         </h3>
 
                         <div className="space-y-6">
@@ -1154,7 +1157,7 @@ export default function StudioPage() {
                             <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
                               <span className="flex items-center gap-2">
                                 <ZoomIn className="w-4 h-4" />
-                                Taille
+                                {studioContent.design.controls.scale}
                               </span>
                               <span className="font-mono text-primary">
                                 {Math.round(designScale * 100)}%
@@ -1178,7 +1181,7 @@ export default function StudioPage() {
                           {/* Position X */}
                           <div>
                             <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                              <span>Position Horizontale</span>
+                              <span>{studioContent.design.controls.positionX}</span>
                               <span className="font-mono text-primary">{designX}%</span>
                             </label>
                             <input
@@ -1198,7 +1201,7 @@ export default function StudioPage() {
                           {/* Position Y */}
                           <div>
                             <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                              <span>Position Verticale</span>
+                              <span>{studioContent.design.controls.positionY}</span>
                               <span className="font-mono text-primary">{designY}%</span>
                             </label>
                             <input
@@ -1220,7 +1223,7 @@ export default function StudioPage() {
                             <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
                               <span className="flex items-center gap-2">
                                 <RotateCw className="w-4 h-4" />
-                                Rotation
+                                {studioContent.design.controls.rotation}
                               </span>
                               <span className="font-mono text-primary">{rotation}°</span>
                             </label>
@@ -1247,7 +1250,7 @@ export default function StudioPage() {
                     <FadeIn delay={0.3}>
                       <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
                         <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
-                          3. Soumettez à la galerie
+                          {studioContent.design.submit.title}
                         </h3>
 
                         {submitted ? (
@@ -1258,23 +1261,23 @@ export default function StudioPage() {
                           >
                             <Check className="w-16 h-16 text-primary mx-auto mb-4" />
                             <p className="font-display text-2xl font-bold text-primary mb-2">
-                              Design soumis avec succès !
+                              {studioContent.design.submit.success.title}
                             </p>
                             <p className="font-body text-dark/70 dark:text-white/70">
-                              Découvrez-le dans la galerie
+                              {studioContent.design.submit.success.message}
                             </p>
                             <a
                               href="/galerie"
                               className="inline-block mt-6 font-body font-semibold px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all"
                             >
-                              Voir la galerie
+                              {studioContent.design.submit.success.viewGallery}
                             </a>
                           </motion.div>
                         ) : (
                           <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                               <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                                Nom de l'artiste *
+                                {studioContent.design.submit.fields.artistName.label}
                               </label>
                               <input
                                 type="text"
@@ -1282,13 +1285,13 @@ export default function StudioPage() {
                                 onChange={(e) => setArtistName(e.target.value)}
                                 required
                                 className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
-                                placeholder="Votre nom"
+                                placeholder={studioContent.design.submit.fields.artistName.placeholder}
                               />
                             </div>
 
                             <div>
                               <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                                Email *
+                                {studioContent.design.submit.fields.email.label}
                               </label>
                               <input
                                 type="email"
@@ -1296,13 +1299,13 @@ export default function StudioPage() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                                 className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
-                                placeholder="artiste@example.com"
+                                placeholder={studioContent.design.submit.fields.email.placeholder}
                               />
                             </div>
 
                             <div>
                               <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                                Titre de l'œuvre *
+                                {studioContent.design.submit.fields.title.label}
                               </label>
                               <input
                                 type="text"
@@ -1310,13 +1313,13 @@ export default function StudioPage() {
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
                                 className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
-                                placeholder="Ex: Chaos Intérieur"
+                                placeholder={studioContent.design.submit.fields.title.placeholder}
                               />
                             </div>
 
                             <div>
                               <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                                Philosophie / Inspiration *
+                                {studioContent.design.submit.fields.philosophy.label}
                               </label>
                               <textarea
                                 value={philosophy}
@@ -1324,20 +1327,20 @@ export default function StudioPage() {
                                 required
                                 rows={4}
                                 className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary resize-none"
-                                placeholder="Quelle est la philosophie derrière votre création ?"
+                                placeholder={studioContent.design.submit.fields.philosophy.placeholder}
                               />
                             </div>
 
                             <div>
                               <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                                Instagram (optionnel)
+                                {studioContent.design.submit.fields.instagram.label}
                               </label>
                               <input
                                 type="text"
                                 value={social}
                                 onChange={(e) => setSocial(e.target.value)}
                                 className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
-                                placeholder="@votre_instagram"
+                                placeholder={studioContent.design.submit.fields.instagram.placeholder}
                               />
                             </div>
 
@@ -1346,7 +1349,7 @@ export default function StudioPage() {
                               className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white rounded-lg transition-all hover:scale-105 shadow-lg"
                             >
                               <Send className="w-5 h-5" />
-                              Soumettre à la galerie
+                              {studioContent.design.submit.button}
                             </button>
                           </form>
                         )}
@@ -1365,16 +1368,16 @@ export default function StudioPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
-              Rejoignez la communauté Arteral
+              {studioContent.cta.title}
             </h2>
             <p className="font-body text-lg text-light/80 mb-8">
-              Découvrez les créations des autres artistes dans la galerie
+              {studioContent.cta.subtitle}
             </p>
             <a
               href="/galerie"
               className="inline-block font-body font-semibold px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all hover:scale-105"
             >
-              Voir la galerie
+              {studioContent.cta.button}
             </a>
           </FadeIn>
         </div>

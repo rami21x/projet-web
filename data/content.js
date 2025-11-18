@@ -385,6 +385,133 @@ Philosophical inspirations: Nietzsche (creative chaos), Taoism (balance), Kandin
   },
 };
 
+export const studioContent = {
+  hero: {
+    title: "Arteral Studio",
+    subtitle: "Configure your garment. Visualize your work. Create wearable art.",
+  },
+  config: {
+    title: "Configure your garment",
+    garmentType: {
+      label: "1. Garment Type",
+      tshirt: {
+        title: "T-Shirt",
+        description: "Short sleeves, lightweight",
+      },
+      pull: {
+        title: "Sweater",
+        description: "Long sleeves, comfort",
+      },
+    },
+    fit: {
+      label: "2. Fit",
+      oversize: {
+        title: "Oversize",
+        description: "Loose, relaxed",
+      },
+      regular: {
+        title: "Regular",
+        description: "Classic fit",
+      },
+      slim: {
+        title: "Slim Fit",
+        description: "Fitted, modern",
+      },
+    },
+    color: {
+      label: "3. Color",
+    },
+    summary: "Your configuration:",
+    startButton: "Start designing",
+  },
+  design: {
+    backButton: "← Modify configuration",
+    preview: {
+      title: "Live Preview",
+      uploadPrompt: "Upload your artwork to begin",
+      uploadHint: "PNG, JPG - Max 5 MB",
+    },
+    sides: {
+      label: "Garment side",
+      front: "Front side",
+      back: "Back side",
+    },
+    upload: {
+      title: "1. Upload your artwork",
+      button: "Choose an image",
+      buttonMultiple: "Add another image",
+      hint: "PNG, JPG - Max 5 MB · You can add multiple images",
+      errors: {
+        notImage: "Please upload an image (PNG, JPG, etc.)",
+        tooLarge: "Image is too large. Maximum 5 MB.",
+      },
+    },
+    layers: {
+      title: "Images on",
+      frontSide: "front side",
+      backSide: "back side",
+      count: "image",
+      countPlural: "images",
+      deleteTitle: "Delete",
+      helpText: "💡 Click on an image to edit it. Front and back images are independent.",
+    },
+    controls: {
+      title: "2. Adjust the design",
+      scale: "Size",
+      positionX: "Horizontal Position",
+      positionY: "Vertical Position",
+      rotation: "Rotation",
+    },
+    download: {
+      single: "Download",
+      both: "Download Front + Back",
+      error: "An error occurred during download",
+    },
+    submit: {
+      title: "3. Submit to gallery",
+      fields: {
+        artistName: {
+          label: "Artist name *",
+          placeholder: "Your name",
+        },
+        email: {
+          label: "Email *",
+          placeholder: "artist@example.com",
+        },
+        title: {
+          label: "Artwork title *",
+          placeholder: "Ex: Inner Chaos",
+        },
+        philosophy: {
+          label: "Philosophy / Inspiration *",
+          placeholder: "What is the philosophy behind your creation?",
+        },
+        instagram: {
+          label: "Instagram (optional)",
+          placeholder: "@your_instagram",
+        },
+      },
+      button: "Submit to gallery",
+      success: {
+        title: "Design successfully submitted!",
+        message: "Discover it in the gallery",
+        viewGallery: "View gallery",
+      },
+      error: "Please upload and create a design first",
+    },
+  },
+  cta: {
+    title: "Join the Arteral community",
+    subtitle: "Discover other artists' creations in the gallery",
+    button: "View gallery",
+  },
+  canvas: {
+    watermark: "ARTERAL STUDIO",
+    missingPhoto: "Missing photo",
+    addPhotoHint: "Add this photo to see the result",
+  },
+};
+
 export const navigation = [
   { name: "Home", href: "/" },
   { name: "Brand", href: "/marque" },

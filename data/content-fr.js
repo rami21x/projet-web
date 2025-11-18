@@ -385,6 +385,133 @@ Inspirations philosophiques : Nietzsche (chaos créateur), Taoïsme (équilibre)
   },
 };
 
+export const studioContent = {
+  hero: {
+    title: "Studio Arteral",
+    subtitle: "Configurez votre vêtement. Visualisez votre œuvre. Créez l'art porté.",
+  },
+  config: {
+    title: "Configurez votre vêtement",
+    garmentType: {
+      label: "1. Type de vêtement",
+      tshirt: {
+        title: "T-Shirt",
+        description: "Manches courtes, léger",
+      },
+      pull: {
+        title: "Pull",
+        description: "Manches longues, confort",
+      },
+    },
+    fit: {
+      label: "2. Coupe",
+      oversize: {
+        title: "Oversize",
+        description: "Ample, décontracté",
+      },
+      regular: {
+        title: "Regular",
+        description: "Coupe classique",
+      },
+      slim: {
+        title: "Slim Fit",
+        description: "Ajusté, moderne",
+      },
+    },
+    color: {
+      label: "3. Couleur",
+    },
+    summary: "Votre configuration :",
+    startButton: "Commencer le design",
+  },
+  design: {
+    backButton: "← Modifier la configuration",
+    preview: {
+      title: "Live Preview",
+      uploadPrompt: "Uploadez votre œuvre pour commencer",
+      uploadHint: "PNG, JPG - Max 5 MB",
+    },
+    sides: {
+      label: "Côté du vêtement",
+      front: "Face avant",
+      back: "Face arrière",
+    },
+    upload: {
+      title: "1. Uploadez votre œuvre",
+      button: "Choisir une image",
+      buttonMultiple: "Ajouter une autre image",
+      hint: "PNG, JPG - Max 5 MB · Vous pouvez ajouter plusieurs images",
+      errors: {
+        notImage: "Veuillez uploader une image (PNG, JPG, etc.)",
+        tooLarge: "L'image est trop grande. Maximum 5 MB.",
+      },
+    },
+    layers: {
+      title: "Images sur",
+      frontSide: "face avant",
+      backSide: "face arrière",
+      count: "image",
+      countPlural: "images",
+      deleteTitle: "Supprimer",
+      helpText: "💡 Cliquez sur une image pour la modifier. Les images sur face avant et arrière sont indépendantes.",
+    },
+    controls: {
+      title: "2. Ajustez le design",
+      scale: "Taille",
+      positionX: "Position Horizontale",
+      positionY: "Position Verticale",
+      rotation: "Rotation",
+    },
+    download: {
+      single: "Télécharger",
+      both: "Télécharger Face avant + Face arrière",
+      error: "Une erreur s'est produite lors du téléchargement",
+    },
+    submit: {
+      title: "3. Soumettez à la galerie",
+      fields: {
+        artistName: {
+          label: "Nom de l'artiste *",
+          placeholder: "Votre nom",
+        },
+        email: {
+          label: "Email *",
+          placeholder: "artiste@example.com",
+        },
+        title: {
+          label: "Titre de l'œuvre *",
+          placeholder: "Ex: Chaos Intérieur",
+        },
+        philosophy: {
+          label: "Philosophie / Inspiration *",
+          placeholder: "Quelle est la philosophie derrière votre création ?",
+        },
+        instagram: {
+          label: "Instagram (optionnel)",
+          placeholder: "@votre_instagram",
+        },
+      },
+      button: "Soumettre à la galerie",
+      success: {
+        title: "Design soumis avec succès !",
+        message: "Découvrez-le dans la galerie",
+        viewGallery: "Voir la galerie",
+      },
+      error: "Veuillez uploader et créer un design d'abord",
+    },
+  },
+  cta: {
+    title: "Rejoignez la communauté Arteral",
+    subtitle: "Découvrez les créations des autres artistes dans la galerie",
+    button: "Voir la galerie",
+  },
+  canvas: {
+    watermark: "ARTERAL STUDIO",
+    missingPhoto: "Photo manquante",
+    addPhotoHint: "Ajoutez cette photo pour voir le rendu",
+  },
+};
+
 export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },
