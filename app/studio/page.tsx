@@ -136,8 +136,8 @@ export default function StudioPage() {
     const colorFileName = selectedColor?.fileName || "white";
     const isDark = selectedColor?.dark || false;
 
-    // Build the garment photo path
-    const garmentPhotoPath = `/images/garments/${garmentType}/${garmentFit}/${garmentSide}/${colorFileName}.png`;
+    // Build the garment photo path using flat naming convention
+    const garmentPhotoPath = `/images/garments/public-images-garments-${garmentType}-${garmentFit}-${garmentSide}-${colorFileName}.png`;
 
     // Load the garment photo
     const garmentImg = new Image();
