@@ -15,6 +15,7 @@ import {
   Shirt,
   Wind,
   Layers,
+  X,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 
@@ -67,12 +68,30 @@ export default function StudioPage() {
   const [garmentColor, setGarmentColor] = useState("#FFFFFF");
   const [garmentSide, setGarmentSide] = useState<GarmentSide>("front");
 
-  // Design
+  // Design layers - separate for front and back
+  interface ImageLayer {
+    id: string;
+    imageData: string;
+    scale: number;
+    x: number;
+    y: number;
+    rotation: number;
+  }
+
+  const [frontLayers, setFrontLayers] = useState<ImageLayer[]>([]);
+  const [backLayers, setBackLayers] = useState<ImageLayer[]>([]);
+  const [selectedLayerId, setSelectedLayerId] = useState<string | null>(null);
+
+  // Legacy single image support (for backward compatibility with sliders)
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [designScale, setDesignScale] = useState(1);
   const [designX, setDesignX] = useState(50);
   const [designY, setDesignY] = useState(45);
   const [rotation, setRotation] = useState(0);
+
+  // Drag & drop states
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragLayerId, setDragLayerId] = useState<string | null>(null);
 
   // Form states
   const [artistName, setArtistName] = useState("");
@@ -253,6 +272,82 @@ export default function StudioPage() {
     garmentImg.src = garmentPhotoPath;
   }, [uploadedImage, garmentType, garmentFit, garmentColor, garmentSide, designScale, designX, designY, rotation, step]);
 
+  // Get current active layers based on garment side
+  const getActiveLayers = () => {
+    return garmentSide === "front" ? frontLayers : backLayers;
+  };
+
+  const setActiveLayers = (layers: ImageLayer[]) => {
+    if (garmentSide === "front") {
+      setFrontLayers(layers);
+    } else {
+      setBackLayers(layers);
+    }
+  };
+
+  // Handle canvas mouse events for drag & drop
+  const handleCanvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!canvasRef.current || !uploadedImage) return;
+
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    // Start dragging
+    setIsDragging(true);
+  };
+
+  const handleCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDragging || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    // Update design position based on mouse
+    const newX = (mouseX / canvas.width) * 100;
+    const newY = (mouseY / canvas.height) * 100;
+
+    // Clamp values to reasonable bounds
+    setDesignX(Math.max(25, Math.min(75, newX)));
+    setDesignY(Math.max(20, Math.min(70, newY)));
+  };
+
+  const handleCanvasMouseUp = () => {
+    setIsDragging(false);
+    // Sync current values back to the selected layer
+    syncToLayer();
+  };
+
+  // Sync current control values to the selected layer
+  const syncToLayer = () => {
+    if (!selectedLayerId) return;
+
+    const layers = getActiveLayers();
+    const updatedLayers = layers.map(layer => {
+      if (layer.id === selectedLayerId) {
+        return {
+          ...layer,
+          scale: designScale,
+          x: designX,
+          y: designY,
+          rotation: rotation,
+        };
+      }
+      return layer;
+    });
+
+    setActiveLayers(updatedLayers);
+  };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -269,7 +364,22 @@ export default function StudioPage() {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      setUploadedImage(event.target?.result as string);
+      const imageData = event.target?.result as string;
+      setUploadedImage(imageData);
+
+      // Also add to layers system
+      const newLayer: ImageLayer = {
+        id: `layer-${Date.now()}`,
+        imageData,
+        scale: 1,
+        x: 50,
+        y: 45,
+        rotation: 0,
+      };
+
+      const currentLayers = getActiveLayers();
+      setActiveLayers([...currentLayers, newLayer]);
+      setSelectedLayerId(newLayer.id);
     };
     reader.readAsDataURL(file);
   };
@@ -278,9 +388,141 @@ export default function StudioPage() {
     if (!canvasRef.current) return;
 
     const link = document.createElement("a");
-    link.download = `arteral-${garmentType}-${Date.now()}.png`;
+    link.download = `arteral-${garmentType}-${garmentSide}-${Date.now()}.png`;
     link.href = canvasRef.current.toDataURL("image/png");
     link.click();
+  };
+
+  const downloadBothSides = async () => {
+    if (!canvasRef.current) return;
+
+    // Helper function to render a specific side
+    const renderSide = (side: GarmentSide): Promise<string> => {
+      return new Promise((resolve) => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Get the color file name
+        const selectedColor = ARTERAL_COLORS.find((c) => c.hex === garmentColor);
+        const colorFileName = selectedColor?.fileName || "white";
+        const isDark = selectedColor?.dark || false;
+
+        // Build the garment photo path
+        const garmentPhotoPath = `/images/garments/public-images-garments-${garmentType}-${garmentFit}-${side}-${colorFileName}.png`;
+
+        // Load the garment photo
+        const garmentImg = new Image();
+
+        garmentImg.onload = () => {
+          // Draw the garment photo
+          const aspectRatio = garmentImg.width / garmentImg.height;
+          let drawWidth = canvas.width * 0.8;
+          let drawHeight = drawWidth / aspectRatio;
+
+          if (drawHeight > canvas.height * 0.9) {
+            drawHeight = canvas.height * 0.9;
+            drawWidth = drawHeight * aspectRatio;
+          }
+
+          const x = (canvas.width - drawWidth) / 2;
+          const y = (canvas.height - drawHeight) / 2;
+
+          ctx.drawImage(garmentImg, x, y, drawWidth, drawHeight);
+
+          // Draw uploaded design on top (for backward compatibility)
+          if (uploadedImage && side === garmentSide) {
+            const designImg = new Image();
+            designImg.onload = () => {
+              ctx.save();
+
+              const designCenterX = canvas.width * (designX / 100);
+              const designCenterY = canvas.height * (designY / 100);
+
+              ctx.translate(designCenterX, designCenterY);
+              ctx.rotate((rotation * Math.PI) / 180);
+
+              const maxWidth = 250 * designScale;
+              const maxHeight = 250 * designScale;
+
+              let designDrawWidth = maxWidth;
+              let designDrawHeight = (designImg.height / designImg.width) * maxWidth;
+
+              if (designDrawHeight > maxHeight) {
+                designDrawHeight = maxHeight;
+                designDrawWidth = (designImg.width / designImg.height) * maxHeight;
+              }
+
+              ctx.drawImage(
+                designImg,
+                -designDrawWidth / 2,
+                -designDrawHeight / 2,
+                designDrawWidth,
+                designDrawHeight
+              );
+
+              ctx.restore();
+
+              // Add watermark
+              ctx.fillStyle = isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)";
+              ctx.font = "12px monospace";
+              ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
+
+              // Return the data URL
+              resolve(canvas.toDataURL("image/png"));
+            };
+            designImg.src = uploadedImage;
+          } else {
+            // No design on this side, just return garment
+            ctx.fillStyle = isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)";
+            ctx.font = "12px monospace";
+            ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
+            resolve(canvas.toDataURL("image/png"));
+          }
+        };
+
+        garmentImg.onerror = () => {
+          // Fallback for missing photo
+          ctx.fillStyle = "#f0f0f0";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL("image/png"));
+        };
+
+        garmentImg.src = garmentPhotoPath;
+      });
+    };
+
+    try {
+      // Render front side
+      const frontDataUrl = await renderSide("front");
+      const frontLink = document.createElement("a");
+      frontLink.download = `arteral-${garmentType}-front-${Date.now()}.png`;
+      frontLink.href = frontDataUrl;
+      frontLink.click();
+
+      // Wait a bit before second download
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      // Render back side
+      const backDataUrl = await renderSide("back");
+      const backLink = document.createElement("a");
+      backLink.download = `arteral-${garmentType}-back-${Date.now()}.png`;
+      backLink.href = backDataUrl;
+      backLink.click();
+
+      // Restore current view
+      setTimeout(() => {
+        // The useEffect will automatically re-render the current side
+      }, 100);
+    } catch (error) {
+      console.error("Error downloading both sides:", error);
+      alert("Une erreur s'est produite lors du téléchargement");
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -642,7 +884,14 @@ export default function StudioPage() {
                         <canvas
                           ref={canvasRef}
                           className="w-full h-auto rounded-lg relative z-10 shadow-lg"
-                          style={{ maxHeight: "900px" }}
+                          style={{
+                            maxHeight: "900px",
+                            cursor: isDragging ? 'grabbing' : (uploadedImage ? 'grab' : 'default')
+                          }}
+                          onMouseDown={handleCanvasMouseDown}
+                          onMouseMove={handleCanvasMouseMove}
+                          onMouseUp={handleCanvasMouseUp}
+                          onMouseLeave={handleCanvasMouseUp}
                         />
 
                         {!uploadedImage && (
@@ -747,15 +996,25 @@ export default function StudioPage() {
                         </div>
                       </div>
 
-                      {/* Download Button */}
+                      {/* Download Buttons */}
                       {uploadedImage && (
-                        <button
-                          onClick={downloadDesign}
-                          className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-3 bg-accent hover:bg-accent/90 text-white rounded-lg transition-all hover:scale-105"
-                        >
-                          <Download className="w-5 h-5" />
-                          Télécharger le Design
-                        </button>
+                        <div className="space-y-3">
+                          <button
+                            onClick={downloadDesign}
+                            className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-3 bg-accent hover:bg-accent/90 text-white rounded-lg transition-all hover:scale-105"
+                          >
+                            <Download className="w-5 h-5" />
+                            Télécharger {garmentSide === "front" ? "Face avant" : "Face arrière"}
+                          </button>
+                          <button
+                            onClick={downloadBothSides}
+                            className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white rounded-lg transition-all hover:scale-105 shadow-lg"
+                          >
+                            <Download className="w-5 h-5" />
+                            <Layers className="w-5 h-5" />
+                            Télécharger Face avant + Face arrière
+                          </button>
+                        </div>
                       )}
                     </motion.div>
                   </FadeIn>
@@ -783,12 +1042,101 @@ export default function StudioPage() {
                         className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all hover:scale-105"
                       >
                         <Upload className="w-5 h-5" />
-                        Choisir une image
+                        {getActiveLayers().length > 0 ? "Ajouter une autre image" : "Choisir une image"}
                       </button>
 
                       <p className="font-body text-xs text-dark/60 dark:text-white/60 mt-3 text-center">
-                        PNG, JPG - Max 5 MB
+                        PNG, JPG - Max 5 MB · Vous pouvez ajouter plusieurs images
                       </p>
+
+                      {/* Layers List */}
+                      {getActiveLayers().length > 0 && (
+                        <div className="mt-6 pt-6 border-t-2 border-dark/10 dark:border-white/10">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-body text-sm font-semibold text-dark dark:text-white flex items-center gap-2">
+                              <Layers className="w-4 h-4" />
+                              Images sur {garmentSide === "front" ? "face avant" : "face arrière"}
+                            </h4>
+                            <span className="font-mono text-xs text-primary">
+                              {getActiveLayers().length} {getActiveLayers().length === 1 ? "image" : "images"}
+                            </span>
+                          </div>
+
+                          <div className="space-y-2 max-h-60 overflow-y-auto">
+                            {getActiveLayers().map((layer, index) => (
+                              <motion.div
+                                key={layer.id}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className={`group relative flex items-center gap-3 p-3 rounded-lg border-2 transition-all cursor-pointer ${
+                                  selectedLayerId === layer.id
+                                    ? "border-primary bg-primary/10 shadow-lg"
+                                    : "border-dark/20 dark:border-white/20 hover:border-primary/50"
+                                }`}
+                                onClick={() => {
+                                  setSelectedLayerId(layer.id);
+                                  setDesignScale(layer.scale);
+                                  setDesignX(layer.x);
+                                  setDesignY(layer.y);
+                                  setRotation(layer.rotation);
+                                  setUploadedImage(layer.imageData);
+                                }}
+                              >
+                                {/* Thumbnail */}
+                                <div className="w-12 h-12 rounded overflow-hidden bg-dark/5 dark:bg-white/5 flex-shrink-0">
+                                  <img
+                                    src={layer.imageData}
+                                    alt={`Layer ${index + 1}`}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+
+                                {/* Layer info */}
+                                <div className="flex-1 min-w-0">
+                                  <p className="font-body text-sm font-semibold text-dark dark:text-white truncate">
+                                    Image {index + 1}
+                                  </p>
+                                  <p className="font-mono text-xs text-dark/60 dark:text-white/60">
+                                    {Math.round(layer.scale * 100)}% · {layer.rotation}°
+                                  </p>
+                                </div>
+
+                                {/* Delete button */}
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    const newLayers = getActiveLayers().filter(l => l.id !== layer.id);
+                                    setActiveLayers(newLayers);
+
+                                    if (selectedLayerId === layer.id) {
+                                      if (newLayers.length > 0) {
+                                        const nextLayer = newLayers[0];
+                                        setSelectedLayerId(nextLayer.id);
+                                        setDesignScale(nextLayer.scale);
+                                        setDesignX(nextLayer.x);
+                                        setDesignY(nextLayer.y);
+                                        setRotation(nextLayer.rotation);
+                                        setUploadedImage(nextLayer.imageData);
+                                      } else {
+                                        setSelectedLayerId(null);
+                                        setUploadedImage(null);
+                                      }
+                                    }
+                                  }}
+                                  className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-red-500/10 rounded"
+                                  title="Supprimer"
+                                >
+                                  <X className="w-4 h-4 text-red-500" />
+                                </button>
+                              </motion.div>
+                            ))}
+                          </div>
+
+                          <p className="font-body text-xs text-dark/50 dark:text-white/50 mt-3 text-center italic">
+                            💡 Cliquez sur une image pour la modifier. Les images sur face avant et arrière sont indépendantes.
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </FadeIn>
 
@@ -818,7 +1166,11 @@ export default function StudioPage() {
                               max="2.5"
                               step="0.1"
                               value={designScale}
-                              onChange={(e) => setDesignScale(parseFloat(e.target.value))}
+                              onChange={(e) => {
+                                setDesignScale(parseFloat(e.target.value));
+                              }}
+                              onMouseUp={syncToLayer}
+                              onTouchEnd={syncToLayer}
                               className="w-full"
                             />
                           </div>
@@ -834,7 +1186,11 @@ export default function StudioPage() {
                               min="25"
                               max="75"
                               value={designX}
-                              onChange={(e) => setDesignX(parseInt(e.target.value))}
+                              onChange={(e) => {
+                                setDesignX(parseInt(e.target.value));
+                              }}
+                              onMouseUp={syncToLayer}
+                              onTouchEnd={syncToLayer}
                               className="w-full"
                             />
                           </div>
@@ -850,7 +1206,11 @@ export default function StudioPage() {
                               min="20"
                               max="70"
                               value={designY}
-                              onChange={(e) => setDesignY(parseInt(e.target.value))}
+                              onChange={(e) => {
+                                setDesignY(parseInt(e.target.value));
+                              }}
+                              onMouseUp={syncToLayer}
+                              onTouchEnd={syncToLayer}
                               className="w-full"
                             />
                           </div>
@@ -869,7 +1229,11 @@ export default function StudioPage() {
                               min="-45"
                               max="45"
                               value={rotation}
-                              onChange={(e) => setRotation(parseInt(e.target.value))}
+                              onChange={(e) => {
+                                setRotation(parseInt(e.target.value));
+                              }}
+                              onMouseUp={syncToLayer}
+                              onTouchEnd={syncToLayer}
                               className="w-full"
                             />
                           </div>
