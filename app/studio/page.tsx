@@ -21,21 +21,22 @@ import FadeIn from "@/components/FadeIn";
 // Types de vêtements
 type GarmentType = "tshirt" | "pull";
 type GarmentFit = "oversize" | "regular" | "slim";
+type GarmentSide = "front" | "back";
 
 // Palette de couleurs Arteral étendue
 const ARTERAL_COLORS = [
-  { name: "Blanc Pur", hex: "#FFFFFF", dark: false },
-  { name: "Blanc Cassé", hex: "#E8E8E8", dark: false },
-  { name: "Beige Sable", hex: "#D4C5B9", dark: false },
-  { name: "Gris Clair", hex: "#B8B8B8", dark: false },
-  { name: "Gris Anthracite", hex: "#3E4149", dark: true },
-  { name: "Noir Profond", hex: "#1A1A1A", dark: true },
-  { name: "Navy", hex: "#1B2845", dark: true },
-  { name: "Kaki", hex: "#8B8D7A", dark: true },
-  { name: "Rouge Arteral", hex: "#8B0000", dark: true },
-  { name: "Bordeaux", hex: "#7D0633", dark: true },
-  { name: "Camel", hex: "#A0522D", dark: true },
-  { name: "Olive", hex: "#6B7353", dark: true },
+  { name: "Blanc Pur", hex: "#FFFFFF", dark: false, fileName: "white" },
+  { name: "Blanc Cassé", hex: "#E8E8E8", dark: false, fileName: "offwhite" },
+  { name: "Beige Sable", hex: "#D4C5B9", dark: false, fileName: "beige" },
+  { name: "Gris Clair", hex: "#B8B8B8", dark: false, fileName: "lightgray" },
+  { name: "Gris Anthracite", hex: "#3E4149", dark: true, fileName: "anthracite" },
+  { name: "Noir Profond", hex: "#1A1A1A", dark: true, fileName: "black" },
+  { name: "Navy", hex: "#1B2845", dark: true, fileName: "navy" },
+  { name: "Kaki", hex: "#8B8D7A", dark: true, fileName: "khaki" },
+  { name: "Rouge Arteral", hex: "#8B0000", dark: true, fileName: "red" },
+  { name: "Bordeaux", hex: "#7D0633", dark: true, fileName: "bordeaux" },
+  { name: "Camel", hex: "#A0522D", dark: true, fileName: "camel" },
+  { name: "Olive", hex: "#6B7353", dark: true, fileName: "olive" },
 ];
 
 interface Design {
@@ -53,6 +54,7 @@ interface Design {
   garmentType: GarmentType;
   garmentFit: GarmentFit;
   garmentColor: string;
+  garmentSide: GarmentSide;
 }
 
 export default function StudioPage() {
@@ -63,6 +65,7 @@ export default function StudioPage() {
   const [garmentType, setGarmentType] = useState<GarmentType>("tshirt");
   const [garmentFit, setGarmentFit] = useState<GarmentFit>("regular");
   const [garmentColor, setGarmentColor] = useState("#FFFFFF");
+  const [garmentSide, setGarmentSide] = useState<GarmentSide>("front");
 
   // Design
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -113,7 +116,7 @@ export default function StudioPage() {
     };
   };
 
-  // Render garment with design
+  // Render garment photo with design overlay
   useEffect(() => {
     if (!canvasRef.current || step === "config") return;
 
@@ -128,133 +131,127 @@ export default function StudioPage() {
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const dims = getGarmentDimensions();
-    const centerX = canvas.width / 2;
-    const startY = 100;
-
-    // Déterminer si c'est une couleur sombre
+    // Get the color file name
     const selectedColor = ARTERAL_COLORS.find((c) => c.hex === garmentColor);
+    const colorFileName = selectedColor?.fileName || "white";
     const isDark = selectedColor?.dark || false;
 
-    // Dessiner le vêtement
-    ctx.fillStyle = garmentColor;
-    ctx.strokeStyle = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
-    ctx.lineWidth = 2;
+    // Build the garment photo path
+    const garmentPhotoPath = `/images/garments/${garmentType}/${garmentFit}/${garmentSide}/${colorFileName}.png`;
 
-    // Corps du vêtement
-    ctx.beginPath();
+    // Load the garment photo
+    const garmentImg = new Image();
 
-    if (garmentType === "tshirt") {
-      // T-SHIRT avec manches courtes
-      // Épaule gauche
-      ctx.moveTo(centerX - dims.shoulderWidth / 2, startY);
-      // Manche gauche
-      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 60, startY + 20);
-      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 70, startY + dims.sleeveLength);
-      ctx.lineTo(centerX - dims.bodyWidth / 2, startY + dims.sleeveLength + 20);
-      // Côté gauche
-      ctx.lineTo(centerX - dims.bodyWidth / 2, startY + dims.bodyHeight);
-      // Bas
-      ctx.lineTo(centerX + dims.bodyWidth / 2, startY + dims.bodyHeight);
-      // Côté droit
-      ctx.lineTo(centerX + dims.bodyWidth / 2, startY + dims.sleeveLength + 20);
-      // Manche droite
-      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 70, startY + dims.sleeveLength);
-      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 60, startY + 20);
-      // Épaule droite
-      ctx.lineTo(centerX + dims.shoulderWidth / 2, startY);
-      // Col (simple)
-      ctx.lineTo(centerX + 40, startY);
-      ctx.quadraticCurveTo(centerX + 30, startY - 20, centerX, startY - 25);
-      ctx.quadraticCurveTo(centerX - 30, startY - 20, centerX - 40, startY);
-      ctx.closePath();
-    } else {
-      // PULL avec manches longues
-      // Épaule gauche
-      ctx.moveTo(centerX - dims.shoulderWidth / 2, startY + 20);
-      // Manche gauche longue
-      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 40, startY + 40);
-      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 50, startY + dims.sleeveLength);
-      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 40, startY + dims.sleeveLength + 10);
-      ctx.lineTo(centerX - dims.bodyWidth / 2, startY + dims.sleeveLength + 40);
-      // Côté gauche
-      ctx.lineTo(centerX - dims.bodyWidth / 2, startY + dims.bodyHeight);
-      // Bas avec bord côtelé
-      ctx.lineTo(centerX - dims.bodyWidth / 2 + 20, startY + dims.bodyHeight + 10);
-      ctx.lineTo(centerX + dims.bodyWidth / 2 - 20, startY + dims.bodyHeight + 10);
-      ctx.lineTo(centerX + dims.bodyWidth / 2, startY + dims.bodyHeight);
-      // Côté droit
-      ctx.lineTo(centerX + dims.bodyWidth / 2, startY + dims.sleeveLength + 40);
-      // Manche droite longue
-      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 40, startY + dims.sleeveLength + 10);
-      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 50, startY + dims.sleeveLength);
-      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 40, startY + 40);
-      // Épaule droite
-      ctx.lineTo(centerX + dims.shoulderWidth / 2, startY + 20);
-      // Col pull (plus haut)
-      ctx.lineTo(centerX + 50, startY + 20);
-      ctx.lineTo(centerX + 45, startY - 10);
-      ctx.lineTo(centerX + 35, startY - 15);
-      ctx.lineTo(centerX - 35, startY - 15);
-      ctx.lineTo(centerX - 45, startY - 10);
-      ctx.lineTo(centerX - 50, startY + 20);
-      ctx.closePath();
-    }
+    garmentImg.onload = () => {
+      // Draw the garment photo centered on canvas
+      const aspectRatio = garmentImg.width / garmentImg.height;
+      let drawWidth = canvas.width * 0.8;
+      let drawHeight = drawWidth / aspectRatio;
 
-    ctx.fill();
-    ctx.stroke();
+      if (drawHeight > canvas.height * 0.9) {
+        drawHeight = canvas.height * 0.9;
+        drawWidth = drawHeight * aspectRatio;
+      }
 
-    // Ajouter des détails (coutures)
-    ctx.strokeStyle = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)";
-    ctx.lineWidth = 1;
+      const x = (canvas.width - drawWidth) / 2;
+      const y = (canvas.height - drawHeight) / 2;
 
-    // Couture centrale
-    ctx.beginPath();
-    ctx.moveTo(centerX, startY + 50);
-    ctx.lineTo(centerX, startY + dims.bodyHeight);
-    ctx.stroke();
+      ctx.drawImage(garmentImg, x, y, drawWidth, drawHeight);
 
-    // Draw uploaded image on garment
-    if (uploadedImage) {
-      const img = new Image();
-      img.onload = () => {
-        ctx.save();
+      // Draw uploaded design on top of garment
+      if (uploadedImage) {
+        const designImg = new Image();
+        designImg.onload = () => {
+          ctx.save();
 
-        const designCenterX = canvas.width * (designX / 100);
-        const designCenterY = (startY + dims.bodyHeight) * (designY / 100);
+          const designCenterX = canvas.width * (designX / 100);
+          const designCenterY = canvas.height * (designY / 100);
 
-        ctx.translate(designCenterX, designCenterY);
-        ctx.rotate((rotation * Math.PI) / 180);
+          ctx.translate(designCenterX, designCenterY);
+          ctx.rotate((rotation * Math.PI) / 180);
 
-        const maxWidth = 250 * designScale;
-        const maxHeight = 250 * designScale;
+          const maxWidth = 250 * designScale;
+          const maxHeight = 250 * designScale;
 
-        let drawWidth = maxWidth;
-        let drawHeight = (img.height / img.width) * maxWidth;
+          let designDrawWidth = maxWidth;
+          let designDrawHeight = (designImg.height / designImg.width) * maxWidth;
 
-        if (drawHeight > maxHeight) {
-          drawHeight = maxHeight;
-          drawWidth = (img.width / img.height) * maxHeight;
-        }
+          if (designDrawHeight > maxHeight) {
+            designDrawHeight = maxHeight;
+            designDrawWidth = (designImg.width / designImg.height) * maxHeight;
+          }
 
-        ctx.drawImage(
-          img,
-          -drawWidth / 2,
-          -drawHeight / 2,
-          drawWidth,
-          drawHeight
-        );
+          ctx.drawImage(
+            designImg,
+            -designDrawWidth / 2,
+            -designDrawHeight / 2,
+            designDrawWidth,
+            designDrawHeight
+          );
 
-        ctx.restore();
+          ctx.restore();
+        };
+        designImg.src = uploadedImage;
+      }
 
-        // Add watermark
-        ctx.fillStyle = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
-        ctx.font = "12px monospace";
-        ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
-      };
-      img.src = uploadedImage;
-    }
-  }, [uploadedImage, garmentType, garmentFit, garmentColor, designScale, designX, designY, rotation, step]);
+      // Add watermark
+      ctx.fillStyle = isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)";
+      ctx.font = "12px monospace";
+      ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
+    };
+
+    garmentImg.onerror = () => {
+      // Fallback: show placeholder if photo doesn't exist
+      ctx.fillStyle = "#f0f0f0";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#999";
+      ctx.font = "20px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Photo manquante", canvas.width / 2, canvas.height / 2 - 40);
+      ctx.font = "14px sans-serif";
+      ctx.fillText(garmentPhotoPath, canvas.width / 2, canvas.height / 2);
+      ctx.fillText("Ajoutez cette photo pour voir le rendu", canvas.width / 2, canvas.height / 2 + 30);
+
+      // Still draw the uploaded design if present
+      if (uploadedImage) {
+        const designImg = new Image();
+        designImg.onload = () => {
+          ctx.save();
+
+          const designCenterX = canvas.width * (designX / 100);
+          const designCenterY = canvas.height * (designY / 100);
+
+          ctx.translate(designCenterX, designCenterY);
+          ctx.rotate((rotation * Math.PI) / 180);
+
+          const maxWidth = 250 * designScale;
+          const maxHeight = 250 * designScale;
+
+          let designDrawWidth = maxWidth;
+          let designDrawHeight = (designImg.height / designImg.width) * maxWidth;
+
+          if (designDrawHeight > maxHeight) {
+            designDrawHeight = maxHeight;
+            designDrawWidth = (designImg.width / designImg.height) * maxHeight;
+          }
+
+          ctx.drawImage(
+            designImg,
+            -designDrawWidth / 2,
+            -designDrawHeight / 2,
+            designDrawWidth,
+            designDrawHeight
+          );
+
+          ctx.restore();
+        };
+        designImg.src = uploadedImage;
+      }
+    };
+
+    garmentImg.src = garmentPhotoPath;
+  }, [uploadedImage, garmentType, garmentFit, garmentColor, garmentSide, designScale, designX, designY, rotation, step]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -309,6 +306,7 @@ export default function StudioPage() {
       garmentType,
       garmentFit,
       garmentColor,
+      garmentSide,
     };
 
     const existingDesigns = JSON.parse(
@@ -336,6 +334,7 @@ export default function StudioPage() {
       setGarmentType("tshirt");
       setGarmentFit("regular");
       setGarmentColor("#FFFFFF");
+      setGarmentSide("front");
     }, 3000);
   };
 
@@ -650,6 +649,66 @@ export default function StudioPage() {
                           className="w-8 h-8 rounded-full border-2 border-white shadow-lg"
                           style={{ backgroundColor: garmentColor }}
                         />
+                      </div>
+
+                      {/* Front/Back Toggle */}
+                      <div className="mb-6 p-4 bg-light dark:bg-dark/50 rounded-lg">
+                        <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-3">
+                          Côté du vêtement
+                        </label>
+                        <div className="grid grid-cols-2 gap-3">
+                          <button
+                            onClick={() => setGarmentSide("front")}
+                            className={`p-3 rounded-lg border-2 transition-all hover:scale-105 ${
+                              garmentSide === "front"
+                                ? "border-primary bg-primary/10 shadow-lg"
+                                : "border-dark/20 dark:border-white/20 hover:border-primary/50"
+                            }`}
+                          >
+                            <Layers
+                              className={`w-6 h-6 mx-auto mb-1 ${
+                                garmentSide === "front"
+                                  ? "text-primary"
+                                  : "text-dark/40 dark:text-white/40"
+                              }`}
+                            />
+                            <p
+                              className={`font-body text-sm font-semibold ${
+                                garmentSide === "front"
+                                  ? "text-primary"
+                                  : "text-dark dark:text-white"
+                              }`}
+                            >
+                              Face avant
+                            </p>
+                          </button>
+
+                          <button
+                            onClick={() => setGarmentSide("back")}
+                            className={`p-3 rounded-lg border-2 transition-all hover:scale-105 ${
+                              garmentSide === "back"
+                                ? "border-primary bg-primary/10 shadow-lg"
+                                : "border-dark/20 dark:border-white/20 hover:border-primary/50"
+                            }`}
+                          >
+                            <Layers
+                              className={`w-6 h-6 mx-auto mb-1 ${
+                                garmentSide === "back"
+                                  ? "text-primary"
+                                  : "text-dark/40 dark:text-white/40"
+                              }`}
+                            />
+                            <p
+                              className={`font-body text-sm font-semibold ${
+                                garmentSide === "back"
+                                  ? "text-primary"
+                                  : "text-dark dark:text-white"
+                              }`}
+                            >
+                              Face arrière
+                            </p>
+                          </button>
+                        </div>
                       </div>
 
                       {/* Download Button */}

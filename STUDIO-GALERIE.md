@@ -74,14 +74,23 @@ Galerie communautaire avec :
 3. **Position Verticale** : 20% à 60%
 4. **Rotation** : -45° à +45°
 
-#### Couleurs de T-shirt
-- ⚪ Blanc (par défaut)
-- ⚫ Noir
+#### Couleurs Disponibles
+12 couleurs de la palette Arteral :
+- ⚪ Blanc Pur, Blanc Cassé, Beige Sable, Gris Clair
+- ⚫ Gris Anthracite, Noir Profond, Navy, Kaki
+- 🔴 Rouge Arteral, Bordeaux, Camel, Olive
 
-#### Rendu Canvas
-- **Résolution** : 600x700px
+#### Côté du Vêtement
+- **Face avant** : Design visible de face
+- **Face arrière** : Design visible au dos
+- Toggle simple pour basculer entre les deux
+
+#### Rendu avec Photos Réelles
+- **Résolution canvas** : 800x900px
+- **Photos réelles** : Chargées depuis `/public/images/garments/`
 - **Watermark** : "ARTERAL STUDIO" (discret)
-- **Export** : PNG haute qualité
+- **Export** : PNG haute qualité avec photo réelle + design overlay
+- **Fallback** : Message si photo manquante
 
 #### Formulaire de Soumission
 Champs requis :
@@ -198,14 +207,18 @@ Champs requis :
 **Créer un design :**
 ```
 1. Allez sur /studio
-2. Cliquez "Choisir une image"
-3. Uploadez votre œuvre (PNG/JPG)
-4. Ajustez avec les sliders
-5. Changez la couleur du t-shirt si besoin
-6. Téléchargez le rendu (optionnel)
-7. Remplissez le formulaire
-8. Cliquez "Soumettre à la galerie"
-9. Votre design apparaît dans /galerie !
+2. Configurez votre vêtement :
+   - Type : T-Shirt ou Pull
+   - Coupe : Oversize, Regular, ou Slim Fit
+   - Couleur : Choisissez parmi 12 couleurs
+3. Cliquez "Commencer le design"
+4. Choisissez le côté : Face avant ou Face arrière
+5. Uploadez votre œuvre (PNG/JPG)
+6. Ajustez avec les sliders (taille, position, rotation)
+7. Téléchargez le rendu (optionnel)
+8. Remplissez le formulaire
+9. Cliquez "Soumettre à la galerie"
+10. Votre design apparaît dans /galerie !
 ```
 
 **Interagir avec la communauté :**
@@ -235,6 +248,72 @@ Champs requis :
 - Grid galerie : 3 colonnes
 - Studio : Layout 2 colonnes spacieux
 - Modal : 2 colonnes (image + détails)
+
+---
+
+## 📸 AJOUT DES PHOTOS DE VÊTEMENTS
+
+### Où placer les photos ?
+
+Les photos doivent être placées dans cette structure **EXACTE** :
+
+```
+public/images/garments/
+├── tshirt/
+│   ├── oversize/
+│   │   ├── front/
+│   │   │   ├── white.png
+│   │   │   ├── black.png
+│   │   │   ├── red.png
+│   │   │   └── ... (12 couleurs)
+│   │   └── back/
+│   │       └── ... (mêmes couleurs)
+│   ├── regular/
+│   │   ├── front/ & back/
+│   └── slim/
+│       ├── front/ & back/
+└── pull/
+    ├── oversize/
+    │   ├── front/ & back/
+    ├── regular/
+    │   ├── front/ & back/
+    └── slim/
+        ├── front/ & back/
+```
+
+### Noms des fichiers
+
+Les noms doivent correspondre **EXACTEMENT** aux noms ci-dessous :
+
+- `white.png` - Blanc Pur
+- `offwhite.png` - Blanc Cassé
+- `beige.png` - Beige Sable
+- `lightgray.png` - Gris Clair
+- `anthracite.png` - Gris Anthracite
+- `black.png` - Noir Profond
+- `navy.png` - Navy
+- `khaki.png` - Kaki
+- `red.png` - Rouge Arteral
+- `bordeaux.png` - Bordeaux
+- `camel.png` - Camel
+- `olive.png` - Olive
+
+### Spécifications des photos
+
+- **Format** : PNG (transparent) ou JPG
+- **Dimensions** : 1200x1400px recommandé
+- **Poids** : < 500 KB par photo
+- **Cadrage** : Identique pour toutes les photos
+- **Total** : 144 photos (ou minimum 8 pour tester)
+
+### Guide complet
+
+Consultez le fichier `public/images/garments/README.md` pour :
+- Instructions détaillées
+- Exemples de chemins
+- Checklist complète
+- Outils de compression
+- Troubleshooting
 
 ---
 
