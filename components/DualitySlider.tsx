@@ -40,7 +40,7 @@ export default function DualitySlider() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="font-body text-base md:text-lg text-white/80"
+            className="font-body text-base md:text-lg text-white/95"
           >
             Déplacez le curseur pour naviguer entre chaos et ordre
           </motion.p>
@@ -52,7 +52,7 @@ export default function DualitySlider() {
           <div className="flex justify-between items-center mb-8">
             <div className="text-center flex-1">
               <Zap className={`w-8 h-8 mx-auto mb-2 transition-all duration-300 ${chaosPercentage > 50 ? 'text-primary scale-125' : 'text-white/40'}`} />
-              <p className={`font-display text-xl md:text-2xl font-bold transition-all duration-300 ${chaosPercentage > 50 ? 'text-primary scale-110' : 'text-white/60'}`}>
+              <p className={`font-display text-xl md:text-2xl font-bold transition-all duration-300 ${chaosPercentage > 50 ? 'text-primary scale-110' : 'text-white/90'}`}>
                 CHAOS
               </p>
               <p className="font-mono text-3xl md:text-4xl font-bold text-white mt-2">
@@ -66,7 +66,7 @@ export default function DualitySlider() {
 
             <div className="text-center flex-1">
               <Minimize2 className={`w-8 h-8 mx-auto mb-2 transition-all duration-300 ${orderPercentage > 50 ? 'text-accent scale-125' : 'text-white/40'}`} />
-              <p className={`font-display text-xl md:text-2xl font-bold transition-all duration-300 ${orderPercentage > 50 ? 'text-accent scale-110' : 'text-white/60'}`}>
+              <p className={`font-display text-xl md:text-2xl font-bold transition-all duration-300 ${orderPercentage > 50 ? 'text-accent scale-110' : 'text-white/90'}`}>
                 ORDRE
               </p>
               <p className="font-mono text-3xl md:text-4xl font-bold text-white mt-2">
@@ -138,7 +138,7 @@ export default function DualitySlider() {
           transition={{ delay: 0.5 }}
           className="mt-12 text-center"
         >
-          <p className="font-body text-sm md:text-base text-white/70 max-w-2xl mx-auto">
+          <p className="font-body text-sm md:text-base text-white/90 max-w-2xl mx-auto">
             Arteral incarne cette dualité dans chaque création. Le chaos de l'inspiration
             créative rencontre la précision de l'artisanat. Le résultat : des pièces uniques
             qui portent en elles cette tension créative.

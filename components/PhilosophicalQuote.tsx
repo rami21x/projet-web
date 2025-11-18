@@ -147,7 +147,7 @@ export default function PhilosophicalQuote() {
               — {quote.author}
             </p>
             <span className="hidden sm:block w-px h-6 bg-white/20" />
-            <p className="font-mono text-sm md:text-base text-white/60 uppercase tracking-wider">
+            <p className="font-mono text-sm md:text-base text-white/90 uppercase tracking-wider">
               {quote.theme}
             </p>
           </div>

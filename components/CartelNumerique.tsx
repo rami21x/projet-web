@@ -56,7 +56,7 @@ export default function CartelNumerique({
                 <h3 className="font-display text-2xl font-bold text-dark dark:text-white mb-1">
                   {title}
                 </h3>
-                <p className="font-mono text-sm text-dark/60 dark:text-white/60">
+                <p className="font-mono text-sm text-dark/60 dark:text-white/90">
                   {artisan}, {year}
                 </p>
               </div>
@@ -66,7 +66,7 @@ export default function CartelNumerique({
                 <p className="font-body text-xs font-semibold text-primary uppercase tracking-wider mb-1">
                   Matériaux
                 </p>
-                <p className="font-body text-sm text-dark/80 dark:text-white/80 italic">
+                <p className="font-body text-sm text-dark/80 dark:text-white/95 italic">
                   {materials}
                 </p>
               </div>
@@ -76,7 +76,7 @@ export default function CartelNumerique({
                 <p className="font-body text-xs font-semibold text-accent uppercase tracking-wider mb-1">
                   Inspiration Philosophique
                 </p>
-                <p className="font-body text-sm text-dark/70 dark:text-white/70 leading-relaxed">
+                <p className="font-body text-sm text-dark/70 dark:text-white/90 leading-relaxed">
                   {philosophy}
                 </p>
               </div>

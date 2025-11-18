@@ -156,7 +156,7 @@ export default function PhilosophicalEasterEggs() {
                 <blockquote className="font-body text-lg md:text-xl text-white/95 leading-relaxed italic mb-8">
                   {revealedMessage}
                 </blockquote>
-                <p className="font-mono text-sm text-white/70">
+                <p className="font-mono text-sm text-white/90">
                   Cliquez n'importe où pour continuer votre visite
                 </p>
               </div>

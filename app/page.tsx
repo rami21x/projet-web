@@ -118,7 +118,7 @@ export default function Home() {
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8">
               Mode qui transforme
             </h2>
-            <p className="font-body text-base sm:text-lg md:text-xl text-light/80 leading-relaxed mb-8 md:mb-12">
+            <p className="font-body text-base sm:text-lg md:text-xl text-light/95 leading-relaxed mb-8 md:mb-12">
               Nous croyons que ce qu'on porte affecte la conscience. Chaque
               pièce Arteral est une exploration philosophique incarnée,
               une collaboration artistique, une série limitée qui invite

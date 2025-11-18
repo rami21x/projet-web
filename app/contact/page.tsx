@@ -52,7 +52,7 @@ export default function ContactPage() {
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-4 md:mb-6 text-center">
                 {contactContent.newsletter.headline}
               </h2>
-              <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/80 mb-8 md:mb-10 text-center">
+              <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/95 mb-8 md:mb-10 text-center">
                 {contactContent.newsletter.subtitle}
               </p>
 
@@ -107,7 +107,7 @@ export default function ContactPage() {
                     <Send className="w-5 h-5" />
                   </button>
 
-                  <p className="font-body text-xs md:text-sm text-dark/60 dark:text-white/60 text-center mt-4">
+                  <p className="font-body text-xs md:text-sm text-dark/60 dark:text-white/90 text-center mt-4">
                     {contactContent.newsletter.privacy}
                   </p>
                 </form>
@@ -136,7 +136,7 @@ export default function ContactPage() {
                   <Mail className="w-6 h-6 md:w-8 md:h-8 text-primary" />
                 </div>
                 <div>
-                  <p className="font-body text-sm font-semibold text-dark/60 dark:text-white/60 uppercase tracking-wider mb-1">
+                  <p className="font-body text-sm font-semibold text-dark/60 dark:text-white/90 uppercase tracking-wider mb-1">
                     Email
                   </p>
                   <p className="font-body text-base md:text-lg text-dark dark:text-white font-semibold">
@@ -157,7 +157,7 @@ export default function ContactPage() {
                   <Instagram className="w-6 h-6 md:w-8 md:h-8 text-accent" />
                 </div>
                 <div>
-                  <p className="font-body text-sm font-semibold text-dark/60 dark:text-white/60 uppercase tracking-wider mb-1">
+                  <p className="font-body text-sm font-semibold text-dark/60 dark:text-white/90 uppercase tracking-wider mb-1">
                     Instagram
                   </p>
                   <p className="font-body text-base md:text-lg text-dark dark:text-white font-semibold">
@@ -205,7 +205,7 @@ export default function ContactPage() {
                     }`}
                   >
                     <div className="px-6 md:px-8 pb-6 md:pb-8">
-                      <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/80 leading-relaxed">
+                      <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/95 leading-relaxed">
                         {item.answer}
                       </p>
                     </div>
@@ -224,7 +224,7 @@ export default function ContactPage() {
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8">
               Explorez l'univers Arteral
             </h2>
-            <p className="font-body text-base md:text-lg text-light/80 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
+            <p className="font-body text-base md:text-lg text-light/95 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
               Découvrez notre philosophie, notre processus créatif et la
               collection Amour ↔ Ennuie.
             </p>

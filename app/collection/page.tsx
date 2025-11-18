@@ -20,7 +20,7 @@ export default function CollectionPage() {
             <p className="font-body text-lg md:text-xl text-dark/80 dark:text-dark/80 mb-8 md:mb-12">
               {collectionContent.subtitle}
             </p>
-            <p className="font-body text-base md:text-lg text-dark/70 dark:text-dark/70 leading-relaxed whitespace-pre-line max-w-3xl mx-auto mb-8">
+            <p className="font-body text-base md:text-lg text-dark/70 dark:text-dark/70 dark:text-white/90 leading-relaxed whitespace-pre-line max-w-3xl mx-auto mb-8">
               {collectionContent.description}
             </p>
             <NotifyMeButton />
@@ -38,14 +38,14 @@ export default function CollectionPage() {
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-3">
                   {collectionContent.moodboard.amour.title}
                 </h2>
-                <p className="font-body text-lg md:text-xl text-dark/70 mb-6">
+                <p className="font-body text-lg md:text-xl text-dark/70 dark:text-white/90 mb-6">
                   {collectionContent.moodboard.amour.subtitle}
                 </p>
                 <ul className="space-y-3">
                   {collectionContent.moodboard.amour.points.map((point) => (
                     <li
                       key={point}
-                      className="flex items-center gap-3 font-body text-sm md:text-base text-dark/80"
+                      className="flex items-center gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/95"
                     >
                       <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
                       {point}
@@ -79,14 +79,14 @@ export default function CollectionPage() {
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-dark mb-3">
                   {collectionContent.moodboard.ennuie.title}
                 </h2>
-                <p className="font-body text-lg md:text-xl text-dark/70 mb-6">
+                <p className="font-body text-lg md:text-xl text-dark/70 dark:text-white/90 mb-6">
                   {collectionContent.moodboard.ennuie.subtitle}
                 </p>
                 <ul className="space-y-3">
                   {collectionContent.moodboard.ennuie.points.map((point) => (
                     <li
                       key={point}
-                      className="flex items-center gap-3 font-body text-sm md:text-base text-dark/80"
+                      className="flex items-center gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/95"
                     >
                       <div className="w-2 h-2 bg-dark rounded-full flex-shrink-0" />
                       {point}
@@ -126,7 +126,7 @@ export default function CollectionPage() {
                     <h3 className="font-display text-xl md:text-2xl font-bold text-dark mb-3">
                       {element.title}
                     </h3>
-                    <p className="font-body text-sm md:text-base text-dark/70 leading-relaxed">
+                    <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/90 leading-relaxed">
                       {element.content}
                     </p>
                   </div>
@@ -157,7 +157,7 @@ export default function CollectionPage() {
                     <h3 className="font-display text-xl md:text-2xl font-bold text-dark mb-2">
                       {item.title}
                     </h3>
-                    <p className="font-body text-sm md:text-base text-dark/70">
+                    <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/90">
                       {item.description}
                     </p>
                   </div>
@@ -191,7 +191,7 @@ export default function CollectionPage() {
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-6 md:mb-8">
               Découvrez plus
             </h2>
-            <p className="font-body text-base md:text-lg text-dark/70 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
+            <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/90 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
               Explorez les artistes derrière Amour ↔ Ennuie et découvrez
               le processus complet de création.
             </p>

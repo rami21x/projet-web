@@ -69,7 +69,7 @@ export default function ProcessusPage() {
                       <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4 md:mb-6">
                         {section.title}
                       </h2>
-                      <p className="font-body text-base md:text-lg text-dark/70 leading-relaxed mb-6 md:mb-8">
+                      <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/90 leading-relaxed mb-6 md:mb-8">
                         {section.description}
                       </p>
 
@@ -79,7 +79,7 @@ export default function ProcessusPage() {
                           {section.subsections.map((subsection) => (
                             <li
                               key={subsection}
-                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80"
+                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/95"
                             >
                               <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-2" />
                               {subsection}
@@ -99,7 +99,7 @@ export default function ProcessusPage() {
                               <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white text-sm font-bold">
                                 {stepIndex + 1}
                               </div>
-                              <p className="font-body text-sm md:text-base text-dark/80">
+                              <p className="font-body text-sm md:text-base text-dark/80 dark:text-white/95">
                                 {step}
                               </p>
                             </div>
@@ -113,7 +113,7 @@ export default function ProcessusPage() {
                           {section.details.map((detail) => (
                             <li
                               key={detail}
-                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80"
+                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/95"
                             >
                               <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0 mt-2" />
                               {detail}
@@ -156,7 +156,7 @@ export default function ProcessusPage() {
                     <h3 className="font-display text-lg md:text-xl font-bold text-dark mb-2">
                       {section.title}
                     </h3>
-                    <p className="font-body text-xs md:text-sm text-dark/60 line-clamp-3">
+                    <p className="font-body text-xs md:text-sm text-dark/60 dark:text-white/90 line-clamp-3">
                       {section.description}
                     </p>
                   </div>
@@ -174,7 +174,7 @@ export default function ProcessusPage() {
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8">
               Découvrez le résultat
             </h2>
-            <p className="font-body text-base md:text-lg text-light/80 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
+            <p className="font-body text-base md:text-lg text-light/95 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
               Tout ce processus aboutit à la collection Amour ↔ Ennuie.
               Explorez les pièces finales et découvrez les artistes qui
               les ont créées.

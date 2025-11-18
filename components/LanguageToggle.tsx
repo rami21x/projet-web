@@ -13,7 +13,7 @@ export default function LanguageToggle() {
         className={`px-3 py-1 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
           language === "fr"
             ? "bg-primary text-white"
-            : "text-dark/60 dark:text-white/60 hover:text-dark dark:hover:text-white"
+            : "text-dark/60 dark:text-white/90 hover:text-dark dark:hover:text-white"
         }`}
       >
         <Globe className="w-3 h-3" />
@@ -24,7 +24,7 @@ export default function LanguageToggle() {
         className={`px-3 py-1 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
           language === "en"
             ? "bg-primary text-white"
-            : "text-dark/60 dark:text-white/60 hover:text-dark dark:hover:text-white"
+            : "text-dark/60 dark:text-white/90 hover:text-dark dark:hover:text-white"
         }`}
       >
         <Globe className="w-3 h-3" />

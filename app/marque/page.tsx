@@ -27,7 +27,7 @@ export default function MarquePage() {
             <p className="font-body text-xl md:text-2xl text-light/90 mb-8 md:mb-12">
               {aboutContent.vision.subtitle}
             </p>
-            <p className="font-body text-base md:text-lg text-light/80 leading-relaxed whitespace-pre-line max-w-2xl mx-auto">
+            <p className="font-body text-base md:text-lg text-light/95 leading-relaxed whitespace-pre-line max-w-2xl mx-auto">
               {aboutContent.vision.description}
             </p>
           </FadeIn>
@@ -58,7 +58,7 @@ export default function MarquePage() {
                     <p className="font-body text-sm md:text-base font-semibold text-accent mb-3">
                       {item.subtitle}
                     </p>
-                    <p className="font-body text-sm md:text-base text-dark/70 leading-relaxed">
+                    <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/90 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -93,7 +93,7 @@ export default function MarquePage() {
                   <h4 className="font-body font-semibold text-sm md:text-base text-dark mb-1">
                     {step.title}
                   </h4>
-                  <p className="font-body text-xs md:text-sm text-dark/60">
+                  <p className="font-body text-xs md:text-sm text-dark/60 dark:text-white/90">
                     {step.description}
                   </p>
                 </div>
@@ -124,7 +124,7 @@ export default function MarquePage() {
                       <h3 className="font-display text-xl md:text-2xl font-bold text-dark mb-2">
                         {value.title}
                       </h3>
-                      <p className="font-body text-sm md:text-base text-dark/70 leading-relaxed">
+                      <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/90 leading-relaxed">
                         {value.description}
                       </p>
                     </div>
@@ -143,7 +143,7 @@ export default function MarquePage() {
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8">
               Prêt à explorer?
             </h2>
-            <p className="font-body text-base md:text-lg text-light/80 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
+            <p className="font-body text-base md:text-lg text-light/95 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
               Découvrez notre première collection Amour ↔ Ennuie et plongez
               dans l'univers philosophique d'Arteral.
             </p>

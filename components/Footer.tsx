@@ -17,7 +17,7 @@ export default function Footer() {
             <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-4">
               ARTERAL
             </h3>
-            <p className="font-body text-sm text-light/80 leading-relaxed whitespace-pre-line">
+            <p className="font-body text-sm text-light/95 leading-relaxed whitespace-pre-line">
               {footerContent.brand.tagline}
             </p>
           </div>
@@ -49,7 +49,7 @@ export default function Footer() {
             <div className="space-y-3">
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="flex items-center gap-2 font-body text-sm text-light/80 hover:text-white transition-colors group"
+                className="flex items-center gap-2 font-body text-sm text-light/95 hover:text-white transition-colors group"
               >
                 <Mail size={16} className="group-hover:text-primary" />
                 {siteConfig.email}
@@ -58,7 +58,7 @@ export default function Footer() {
                 href={`https://instagram.com/${siteConfig.instagram.replace("@", "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 font-body text-sm text-light/80 hover:text-white transition-colors group"
+                className="flex items-center gap-2 font-body text-sm text-light/95 hover:text-white transition-colors group"
               >
                 <Instagram size={16} className="group-hover:text-primary" />
                 {siteConfig.instagram}
@@ -70,10 +70,10 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-light/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="font-body text-xs text-light/60">
+            <p className="font-body text-xs text-light/90">
               © {currentYear} Arteral. {footerContent.copyright}
             </p>
-            <p className="font-body text-xs text-light/60">
+            <p className="font-body text-xs text-light/90">
               {footerContent.taglineShort}
             </p>
           </div>
