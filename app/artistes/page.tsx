@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Trophy, Award, Star, CheckCircle, Calendar, Users, Upload, Download, Sparkles } from "lucide-react";
-import { contestContent } from "@/data/content";
+import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 import { motion } from "framer-motion";
 
@@ -13,6 +13,7 @@ const iconMap = {
 };
 
 export default function ConcoursPage() {
+  const { contestContent } = useContent();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");

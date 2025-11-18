@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Palette, Brain, Sparkles } from "lucide-react";
-import { heroContent, homeFeatures } from "@/data/content";
+import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 import PhilosophicalQuote from "@/components/PhilosophicalQuote";
 import DualitySlider from "@/components/DualitySlider";
@@ -15,6 +15,8 @@ const iconMap = {
 };
 
 export default function Home() {
+  const { heroContent, homeFeatures } = useContent();
+
   return (
     <div>
       {/* Hero Section */}

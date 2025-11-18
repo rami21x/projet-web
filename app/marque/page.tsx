@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CircleDot, Moon, Flame, Check } from "lucide-react";
-import { aboutContent } from "@/data/content";
+import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 import type { Metadata } from "next";
 
@@ -13,6 +13,8 @@ const iconMap = {
 };
 
 export default function MarquePage() {
+  const { aboutContent } = useContent();
+
   return (
     <div>
       {/* Hero Section */}

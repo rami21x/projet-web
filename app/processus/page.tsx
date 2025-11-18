@@ -1,7 +1,7 @@
 "use client";
 
 import { BookOpen, Users, Shirt, Film } from "lucide-react";
-import { processContent } from "@/data/content";
+import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 
 const iconMap = {
@@ -12,6 +12,8 @@ const iconMap = {
 };
 
 export default function ProcessusPage() {
+  const { processContent } = useContent();
+
   return (
     <div>
       {/* Hero Section */}

@@ -1,11 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { collectionContent } from "@/data/content";
+import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 import NotifyMeButton from "@/components/NotifyMeButton";
 
 export default function CollectionPage() {
+  const { collectionContent } = useContent();
+
   return (
     <div>
       {/* Header Section */}

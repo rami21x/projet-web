@@ -512,6 +512,18 @@ export const studioContent = {
   },
 };
 
+export const footerContent = {
+  brand: {
+    tagline: "Philosophical fashion.\nEmbodied art.\nEvery piece tells a paradox.",
+  },
+  sections: {
+    navigation: "Navigation",
+    contact: "Contact",
+  },
+  copyright: "All rights reserved.",
+  taglineShort: "Philosophical fashion · Limited series · Embodied art",
+};
+
 export const navigation = [
   { name: "Home", href: "/" },
   { name: "Brand", href: "/marque" },

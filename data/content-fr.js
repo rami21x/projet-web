@@ -512,6 +512,18 @@ export const studioContent = {
   },
 };
 
+export const footerContent = {
+  brand: {
+    tagline: "Mode philosophique.\nArt incarné.\nChaque pièce raconte un paradoxe.",
+  },
+  sections: {
+    navigation: "Navigation",
+    contact: "Contact",
+  },
+  copyright: "Tous droits réservés.",
+  taglineShort: "Mode philosophique · Séries limitées · Art incarné",
+};
+
 export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },

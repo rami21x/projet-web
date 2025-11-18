@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { Mail, Instagram, ChevronDown, Send } from "lucide-react";
-import { contactContent, siteConfig } from "@/data/content";
+import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 
 export default function ContactPage() {
+  const { contactContent, siteConfig } = useContent();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [submitted, setSubmitted] = useState(false);
