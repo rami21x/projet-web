@@ -104,12 +104,12 @@ export default function AmbientMusic() {
                 </div>
 
                 <h3 className="font-display text-2xl md:text-3xl font-bold text-dark dark:text-white mb-4">
-                  Expérience Immersive
+                  Immersive Experience
                 </h3>
 
                 <p className="font-body text-base text-dark/70 dark:text-white/80 mb-8 leading-relaxed">
-                  Activez la musique d'ambiance pour une visite muséale complète et
-                  enrichir votre expérience artistique.
+                  Enable ambient music for a complete museum visit and enrich your
+                  artistic experience.
                 </p>
 
                 <div className="flex gap-4 w-full">
@@ -117,13 +117,13 @@ export default function AmbientMusic() {
                     onClick={dismissNotification}
                     className="flex-1 font-body font-semibold px-6 py-3 bg-dark/10 dark:bg-white/10 text-dark dark:text-white rounded-lg hover:bg-dark/20 dark:hover:bg-white/20 transition-all"
                   >
-                    Plus tard
+                    Later
                   </button>
                   <button
                     onClick={enableMusic}
                     className="flex-1 font-body font-semibold px-6 py-3 bg-gradient-to-r from-primary to-accent text-white rounded-lg hover:shadow-lg transition-all hover:scale-105"
                   >
-                    Activer le son
+                    Enable sound
                   </button>
                 </div>
               </div>
@@ -132,33 +132,27 @@ export default function AmbientMusic() {
         )}
       </AnimatePresence>
 
-      {/* Music Toggle Button - Fixed Position */}
+      {/* Music Toggle Button - Minimal Design */}
       <motion.button
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.5 }}
         onClick={toggleMusic}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-primary via-primary to-accent hover:from-accent hover:via-primary hover:to-primary rounded-full shadow-2xl flex items-center justify-center group transition-all duration-300 hover:scale-110 border-2 border-white/20"
-        aria-label={isPlaying ? "Désactiver la musique" : "Activer la musique"}
-        title={isPlaying ? "Désactiver la musique" : "Activer la musique"}
+        className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-white dark:bg-dark/90 backdrop-blur-md rounded-full shadow-lg flex items-center justify-center group transition-all duration-300 hover:scale-105 border border-dark/10 dark:border-white/20"
+        aria-label={isPlaying ? "Mute" : "Unmute"}
+        title={isPlaying ? "Mute" : "Unmute"}
       >
         <div className="relative">
           {isPlaying ? (
-            <Volume2 className="w-6 h-6 text-white animate-pulse" />
+            <Volume2 className="w-5 h-5 text-primary dark:text-primary transition-colors" />
           ) : (
-            <VolumeX className="w-6 h-6 text-white" />
+            <VolumeX className="w-5 h-5 text-dark/40 dark:text-white/40 transition-colors" />
           )}
         </div>
 
-        {/* Animated rings when playing */}
+        {/* Subtle glow when playing */}
         {isPlaying && (
-          <>
-            <span className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
-            <span
-              className="absolute inset-0 rounded-full bg-primary/20 animate-ping"
-              style={{ animationDelay: "0.5s" }}
-            />
-          </>
+          <span className="absolute inset-0 rounded-full bg-primary/10 animate-pulse" />
         )}
       </motion.button>
 
@@ -173,7 +167,7 @@ export default function AmbientMusic() {
               transition={{ delay: 3 }}
               className="bg-dark dark:bg-white text-white dark:text-dark px-4 py-2 rounded-lg shadow-lg font-body text-sm whitespace-nowrap"
             >
-              Musique d'ambiance
+              Ambient music
               <div className="absolute -bottom-1 right-8 w-2 h-2 bg-dark dark:bg-white transform rotate-45" />
             </motion.div>
           )}

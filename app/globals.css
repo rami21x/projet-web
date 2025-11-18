@@ -69,30 +69,36 @@ html {
 
 .custom-cursor {
   position: fixed;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--primary);
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--primary);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-  mix-blend-mode: difference;
+  transition: transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 0 15px rgba(139, 0, 0, 0.4),
+              0 0 30px rgba(139, 0, 0, 0.2);
 }
 
 .custom-cursor-dot {
   position: fixed;
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   background: var(--primary);
   border-radius: 50%;
   pointer-events: none;
   z-index: 10000;
   transition: transform 0.1s ease;
+  box-shadow: 0 0 8px rgba(139, 0, 0, 0.6);
 }
 
 .custom-cursor.hover {
-  transform: scale(1.5);
-  opacity: 0.6;
+  transform: scale(1.8);
+  opacity: 0.8;
+  border-color: var(--accent);
+  background: rgba(139, 0, 0, 0.1);
 }
 
 /* Mobile: désactiver curseur custom */

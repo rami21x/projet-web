@@ -2,17 +2,17 @@
 
 export const siteConfig = {
   name: "ARTERAL",
-  tagline: "Mode Philosophique",
+  tagline: "Philosophical Fashion",
   email: "contact@arteral.com",
   instagram: "@arteral",
 };
 
 export const heroContent = {
   title: "ARTERAL",
-  subtitle: "Chaque pièce raconte un paradoxe.\nChaque paradoxe change celui qui la porte.",
-  description: "Mode philosophique. Art incarné.",
+  subtitle: "Every piece tells a paradox.\nEvery paradox transforms the wearer.",
+  description: "Philosophical fashion. Embodied art.",
   cta: {
-    text: "Découvrez Amour ↔ Ennuie",
+    text: "Discover Love ↔ Boredom",
     link: "/collection",
   },
 };
@@ -20,151 +20,151 @@ export const heroContent = {
 export const homeFeatures = [
   {
     icon: "Palette",
-    title: "Art Conceptuel",
-    description: "Chaque pièce est une collaboration avec un artiste, une exploration visuelle unique",
+    title: "Conceptual Art",
+    description: "Every piece is a collaboration with an artist, a unique visual exploration",
   },
   {
     icon: "Brain",
-    title: "Philosophie Incarnée",
-    description: "Explorations de paradoxes philosophiques portés sur textile premium",
+    title: "Embodied Philosophy",
+    description: "Philosophical paradoxes explored through premium textiles",
   },
   {
     icon: "Sparkles",
-    title: "Séries Limitées",
-    description: "Productions exclusives, jamais de fast-fashion, juste art et qualité",
+    title: "Limited Series",
+    description: "Exclusive productions, never fast-fashion, only art and quality",
   },
 ];
 
 export const aboutContent = {
   vision: {
     title: "ARTERAL",
-    subtitle: "Mode philosophique",
-    description: `Nous croyons que ce qu'on porte affecte la conscience.
+    subtitle: "Philosophical fashion",
+    description: `We believe that what we wear affects consciousness.
 
-Arteral fusionne art conceptuel et textile pour créer des vêtements qui transforment. Chaque pièce est une collaboration avec un artiste, une exploration philosophique, une série limitée.
+Arteral merges conceptual art and textiles to create transformative garments. Every piece is a collaboration with an artist, a philosophical exploration, a limited series.
 
-Pas de fast-fashion. Juste art, sens, et qualité.`,
+No fast-fashion. Just art, meaning, and quality.`,
   },
   philosophy: [
     {
       icon: "Yin Yang",
       title: "YIN/YANG",
-      subtitle: "Équilibre des contraires",
-      description: "La dualité comme source d'harmonie. Accepter les opposés en soi.",
+      subtitle: "Balance of opposites",
+      description: "Duality as a source of harmony. Accepting opposites within ourselves.",
     },
     {
       icon: "Moon",
       title: "JUNG",
-      subtitle: "Ombre & Lumière",
-      description: "Intégration de la totalité. Reconnaître et embrasser toutes nos facettes.",
+      subtitle: "Shadow & Light",
+      description: "Integration of wholeness. Recognizing and embracing all our facets.",
     },
     {
       icon: "Flame",
       title: "NIETZSCHE",
-      subtitle: "Chaos → Création",
-      description: "Transformation du chaos en œuvre. La création véritable naît du désordre.",
+      subtitle: "Chaos → Creation",
+      description: "Transforming chaos into work. True creation emerges from disorder.",
     },
   ],
   processSteps: [
-    { title: "Émotion", description: "Point de départ philosophique" },
-    { title: "Style", description: "Direction artistique" },
-    { title: "Symboles", description: "Langage visuel" },
-    { title: "Couleurs", description: "Palette émotionnelle" },
-    { title: "Textures", description: "Matérialité tactile" },
-    { title: "Atmosphère", description: "Expérience finale" },
+    { title: "Emotion", description: "Philosophical starting point" },
+    { title: "Style", description: "Artistic direction" },
+    { title: "Symbols", description: "Visual language" },
+    { title: "Colors", description: "Emotional palette" },
+    { title: "Textures", description: "Tactile materiality" },
+    { title: "Atmosphere", description: "Final experience" },
   ],
   values: [
     {
-      title: "Authenticité artistique",
-      description: "Collaboration véritable avec des artistes conceptuels",
+      title: "Artistic authenticity",
+      description: "True collaboration with conceptual artists",
     },
     {
-      title: "Transparence",
-      description: "Processus créatif ouvert et documenté",
+      title: "Transparency",
+      description: "Open and documented creative process",
     },
     {
-      title: "Exclusivité",
-      description: "Séries limitées, jamais de surproduction",
+      title: "Exclusivity",
+      description: "Limited series, never overproduction",
     },
     {
-      title: "Conscience",
-      description: "Mode qui invite à la réflexion philosophique",
+      title: "Consciousness",
+      description: "Fashion that invites philosophical reflection",
     },
   ],
 };
 
 export const collectionContent = {
-  title: "AMOUR ↔ ENNUIE",
-  subtitle: "Une exploration du paradoxe passion/vide",
-  description: `La série Amour ↔ Ennuie explore comment l'amour (expansion du cœur, passion) et l'ennuie (repli introspectif, vide) sont deux réactions face à l'intensité de vivre. Ces deux états ne sont pas opposés mais complémentaires - les deux pulsations d'un même cœur.
+  title: "LOVE ↔ BOREDOM",
+  subtitle: "An exploration of the passion/void paradox",
+  description: `The Love ↔ Boredom series explores how love (heart expansion, passion) and boredom (introspective withdrawal, void) are two reactions to the intensity of living. These two states are not opposed but complementary - two pulses of the same heart.
 
-Porter cette pièce signifie accepter cette oscillation. C'est reconnaître que la totalité de soi inclut passion ET détachement, présence ET absence.
+Wearing this piece means accepting this oscillation. It's acknowledging that the totality of self includes passion AND detachment, presence AND absence.
 
-Philosophie: Yin/Yang (équilibre) + Jung (ombre et lumière) + Nietzsche (création à partir du chaos)`,
+Philosophy: Yin/Yang (balance) + Jung (shadow and light) + Nietzsche (creation from chaos)`,
   moodboard: {
     amour: {
-      title: "AMOUR",
+      title: "LOVE",
       subtitle: "Expansion",
       points: [
-        "Passion ardente",
-        "Feu intérieur",
-        "Présence totale",
-        "Énergie débordante",
+        "Burning passion",
+        "Inner fire",
+        "Total presence",
+        "Overflowing energy",
       ],
     },
     ennuie: {
-      title: "ENNUIE",
-      subtitle: "Repli",
+      title: "BOREDOM",
+      subtitle: "Withdrawal",
       points: [
-        "Introspection profonde",
-        "Silence contemplatif",
-        "Vide créateur",
-        "Détachement serein",
+        "Deep introspection",
+        "Contemplative silence",
+        "Creative void",
+        "Serene detachment",
       ],
     },
   },
   elements: [
     {
-      title: "ÉMOTION",
-      content: "Oscillation entre passion explosive et calme méditatif",
+      title: "EMOTION",
+      content: "Oscillation between explosive passion and meditative calm",
       color: "primary",
     },
     {
-      title: "STYLE ARTISTIQUE",
-      content: "Surréalisme minimaliste - contraste fort, espace contemplatif",
+      title: "ARTISTIC STYLE",
+      content: "Minimalist surrealism - strong contrast, contemplative space",
       color: "dark",
     },
     {
-      title: "SYMBOLES VISUELS",
-      content: "Feu/Eau, Présence/Absence, Plein/Vide, Éclipse",
+      title: "VISUAL SYMBOLS",
+      content: "Fire/Water, Presence/Absence, Full/Empty, Eclipse",
       color: "accent",
     },
     {
-      title: "PALETTE COULEURS",
-      content: "Rouge profond (#8B0000), Noir charbon (#2B2B2B), Beige clair (#E8E8E8)",
+      title: "COLOR PALETTE",
+      content: "Deep red (#8B0000), Charcoal black (#2B2B2B), Light beige (#E8E8E8)",
       color: "primary",
     },
     {
-      title: "TEXTURES & MATIÈRES",
-      content: "Coton premium, broderie artisanale, finitions soignées",
+      title: "TEXTURES & MATERIALS",
+      content: "Premium cotton, artisanal embroidery, refined finishes",
       color: "dark",
     },
     {
-      title: "ATMOSPHÈRE",
-      content: "Dramatique mais contemplatif, poétique sans artifice",
+      title: "ATMOSPHERE",
+      content: "Dramatic yet contemplative, poetic without artifice",
       color: "accent",
     },
   ],
   timeline: [
-    { step: 1, title: "Concept philosophique", description: "Exploration du paradoxe" },
-    { step: 2, title: "Recherche artistique", description: "Références visuelles" },
-    { step: 3, title: "Collaboration artiste", description: "Briefing créatif" },
-    { step: 4, title: "Création artwork", description: "Œuvre surréaliste" },
-    { step: 5, title: "Adaptation textile", description: "Broderie & matières" },
-    { step: 6, title: "Pièce finale", description: "Production limitée" },
+    { step: 1, title: "Philosophical concept", description: "Paradox exploration" },
+    { step: 2, title: "Artistic research", description: "Visual references" },
+    { step: 3, title: "Artist collaboration", description: "Creative briefing" },
+    { step: 4, title: "Artwork creation", description: "Surrealist work" },
+    { step: 5, title: "Textile adaptation", description: "Embroidery & materials" },
+    { step: 6, title: "Final piece", description: "Limited production" },
   ],
   quote: {
-    text: "Le créateur véritable ne cherche pas à éliminer le chaos, mais à le transformer en œuvre, en vie.",
+    text: "The true creator does not seek to eliminate chaos, but to transform it into work, into life.",
     author: "Nietzsche",
   },
 };
@@ -172,25 +172,25 @@ Philosophie: Yin/Yang (équilibre) + Jung (ombre et lumière) + Nietzsche (créa
 export const artists = [
   {
     name: "Sophie Moreau",
-    discipline: "Artiste Surréaliste",
-    bio: "Spécialisée dans l'exploration des paradoxes émotionnels à travers l'art digital et traditionnel.",
-    contribution: "Création de l'artwork principal 'Amour ↔ Ennuie' - fusion de symboles opposés",
+    discipline: "Surrealist Artist",
+    bio: "Specialized in exploring emotional paradoxes through digital and traditional art.",
+    contribution: "Creation of the main 'Love ↔ Boredom' artwork - fusion of opposite symbols",
     portfolio: "#",
     image: "/images/artists/artist-1.jpg",
   },
   {
     name: "Lucas Chen",
-    discipline: "Illustrateur Conceptuel",
-    bio: "Travaille à l'intersection de la philosophie orientale et du design contemporain minimaliste.",
-    contribution: "Développement des symboles Yin/Yang adaptés à la collection",
+    discipline: "Conceptual Illustrator",
+    bio: "Works at the intersection of Eastern philosophy and minimalist contemporary design.",
+    contribution: "Development of Yin/Yang symbols adapted to the collection",
     portfolio: "#",
     image: "/images/artists/artist-2.jpg",
   },
   {
     name: "Amara Diallo",
-    discipline: "Brodeuse d'Art",
-    bio: "Maîtrise ancestrale de la broderie africaine appliquée aux concepts contemporains.",
-    contribution: "Réalisation technique de la broderie sur textile premium",
+    discipline: "Art Embroiderer",
+    bio: "Ancestral mastery of African embroidery applied to contemporary concepts.",
+    contribution: "Technical realization of embroidery on premium textiles",
     portfolio: "#",
     image: "/images/artists/artist-3.jpg",
   },
@@ -199,45 +199,45 @@ export const artists = [
 export const processContent = {
   sections: [
     {
-      title: "Recherche Philosophique",
-      description: "Chaque collection débute par une exploration philosophique profonde. Pour Amour ↔ Ennuie, nous avons étudié les travaux de Jung sur l'intégration des opposés, le concept de Yin/Yang, et la vision nietzschéenne du chaos créateur.",
+      title: "Philosophical Research",
+      description: "Each collection begins with deep philosophical exploration. For Love ↔ Boredom, we studied Jung's work on integration of opposites, the Yin/Yang concept, and Nietzsche's vision of creative chaos.",
       subsections: [
-        "Histoire du concept Amour/Ennuie",
-        "Références artistiques (surréalisme, minimalisme)",
-        "Philosophies orientales et occidentales",
+        "History of Love/Boredom concept",
+        "Artistic references (surrealism, minimalism)",
+        "Eastern and Western philosophies",
       ],
     },
     {
-      title: "Collaboration Artistique",
-      description: "Nous travaillons en étroite collaboration avec des artistes pour traduire les concepts philosophiques en langage visuel puissant.",
+      title: "Artistic Collaboration",
+      description: "We work in close collaboration with artists to translate philosophical concepts into powerful visual language.",
       steps: [
-        "Briefing créatif partagé",
-        "Itérations et explorations",
-        "Sélection de l'artwork final",
+        "Shared creative briefing",
+        "Iterations and explorations",
+        "Final artwork selection",
       ],
     },
     {
-      title: "Adaptation Textile",
-      description: "La transformation d'une œuvre 2D en vêtement 3D est un art en soi, nécessitant expertise technique et sensibilité artistique.",
+      title: "Textile Adaptation",
+      description: "Transforming a 2D artwork into a 3D garment is an art in itself, requiring technical expertise and artistic sensitivity.",
       details: [
-        "Choix des matières premium (coton, lin)",
-        "Technique de broderie artisanale",
-        "Prototypage et ajustements",
+        "Premium materials selection (cotton, linen)",
+        "Artisanal embroidery technique",
+        "Prototyping and adjustments",
       ],
     },
     {
       title: "Storytelling",
-      description: "Chaque pièce Arteral vient avec son histoire, accessible via notre documentation visuelle et textuelle.",
+      description: "Every Arteral piece comes with its story, accessible through our visual and textual documentation.",
     },
   ],
 };
 
 export const contactContent = {
   newsletter: {
-    headline: "Restez connecté à la conscience",
-    subtitle: "Recevez les updates Amour ↔ Ennuie et accès anticipé",
-    privacy: "Nous respectons votre vie privée",
-    successMessage: "Merci! Vérifiez votre email.",
+    headline: "Stay connected to consciousness",
+    subtitle: "Receive Love ↔ Boredom updates and early access",
+    privacy: "We respect your privacy",
+    successMessage: "Thank you! Check your email.",
   },
   info: {
     email: "contact@arteral.com",
@@ -245,155 +245,155 @@ export const contactContent = {
   },
   faq: [
     {
-      question: "Pourquoi ces prix?",
-      answer: "Nos prix reflètent la qualité des matières premium, la collaboration artistique rémunérée équitablement, et la production en série limitée. Nous ne faisons pas de fast-fashion, mais de l'art portable.",
+      question: "Why these prices?",
+      answer: "Our prices reflect premium materials quality, fairly compensated artistic collaboration, and limited series production. We don't do fast-fashion, we create wearable art.",
     },
     {
-      question: "Comment sont brodées les pièces?",
-      answer: "Chaque broderie est réalisée artisanalement par des maîtres brodeurs, suivant l'artwork original. Le processus peut prendre plusieurs jours par pièce.",
+      question: "How are pieces embroidered?",
+      answer: "Each embroidery is handcrafted by master embroiderers, following the original artwork. The process can take several days per piece.",
     },
     {
-      question: "Quand sort la collection Amour ↔ Ennuie?",
-      answer: "La collection est en phase de finalisation. Inscrivez-vous à la newsletter pour être informé du lancement en avant-première.",
+      question: "When will the Love ↔ Boredom collection launch?",
+      answer: "The collection is in its final phase. Sign up for the newsletter to be informed of the pre-launch.",
     },
     {
-      question: "Puis-je contribuer en tant qu'artiste?",
-      answer: "Absolument! Nous cherchons toujours des collaborations avec des artistes qui explorent des thèmes philosophiques. Contactez-nous à contact@arteral.com avec votre portfolio.",
+      question: "Can I contribute as an artist?",
+      answer: "Absolutely! We're always seeking collaborations with artists exploring philosophical themes. Contact us at contact@arteral.com with your portfolio.",
     },
     {
-      question: "Vous livrez où?",
-      answer: "Nous livrons actuellement en France métropolitaine. L'international sera disponible prochainement.",
+      question: "Where do you ship?",
+      answer: "We currently ship to metropolitan France. International shipping will be available soon.",
     },
     {
-      question: "Quelle est votre politique de retour?",
-      answer: "Nous acceptons les retours dans les 14 jours suivant la réception, à condition que la pièce soit non portée et avec les étiquettes d'origine.",
+      question: "What is your return policy?",
+      answer: "We accept returns within 14 days of receipt, provided the piece is unworn with original tags.",
     },
     {
-      question: "Les pièces sont-elles unisexes?",
-      answer: "Oui, notre approche philosophique transcende les genres. Les coupes sont pensées pour être portées par tous.",
+      question: "Are pieces unisex?",
+      answer: "Yes, our philosophical approach transcends genders. Cuts are designed to be worn by everyone.",
     },
   ],
 };
 
-// Concours Créatif Content
+// Creative Contest Content
 export const contestContent = {
   hero: {
-    title: "CONCOURS ARTERAL",
-    subtitle: "Incarnez le Paradoxe",
-    description: "Créez l'artwork de notre prochaine collection et remportez 5000€",
-    deadline: "15 Janvier 2026",
+    title: "ARTERAL CONTEST",
+    subtitle: "Embody the Paradox",
+    description: "Create the artwork for our next collection and win €5,000",
+    deadline: "January 15, 2026",
   },
   prizes: [
     {
-      position: "1er Prix",
-      amount: "5000€",
+      position: "1st Prize",
+      amount: "€5,000",
       rewards: [
-        "5000€ en cash",
-        "Votre artwork produit sur collection limitée",
-        "Collaboration officielle Arteral",
-        "Feature sur tous nos canaux (10k+ followers)",
-        "Pièce unique signée offerte",
+        "€5,000 cash",
+        "Your artwork produced on limited collection",
+        "Official Arteral collaboration",
+        "Feature on all our channels (10k+ followers)",
+        "Unique signed piece offered",
       ],
       icon: "Trophy",
       color: "primary",
     },
     {
-      position: "2ème Prix",
-      amount: "1000€",
+      position: "2nd Prize",
+      amount: "€1,000",
       rewards: [
-        "1000€ en cash",
-        "Pièce collection Amour ↔ Ennuie offerte",
-        "Feature Instagram + portfolio",
+        "€1,000 cash",
+        "Love ↔ Boredom collection piece offered",
+        "Instagram feature + portfolio",
       ],
       icon: "Award",
       color: "accent",
     },
     {
-      position: "3ème Prix",
-      amount: "500€",
+      position: "3rd Prize",
+      amount: "€500",
       rewards: [
-        "500€ en cash",
-        "T-shirt collection limitée",
-        "Mention sur réseaux sociaux",
+        "€500 cash",
+        "Limited collection t-shirt",
+        "Social media mention",
       ],
       icon: "Star",
       color: "dark",
     },
   ],
   theme: {
-    title: "Thème : CHAOS ↔ ORDRE",
-    description: `Explorez le paradoxe entre chaos créateur et ordre structurant. Comment ces forces opposées coexistent-elles ? Comment l'une nourrit-elle l'autre ?
+    title: "Theme: CHAOS ↔ ORDER",
+    description: `Explore the paradox between creative chaos and structuring order. How do these opposing forces coexist? How does one nourish the other?
 
-Inspirations philosophiques : Nietzsche (chaos créateur), Taoïsme (équilibre), Kandinsky (abstraction vs structure).`,
-    keywords: ["Chaos", "Ordre", "Équilibre", "Transformation", "Dualité", "Harmonie"],
+Philosophical inspirations: Nietzsche (creative chaos), Taoism (balance), Kandinsky (abstraction vs structure).`,
+    keywords: ["Chaos", "Order", "Balance", "Transformation", "Duality", "Harmony"],
   },
   rules: [
     {
       title: "Format",
-      description: "Artwork digital haute résolution (min 3000x3000px, 300 DPI). Formats acceptés: PNG, JPG, PSD, AI",
+      description: "High-resolution digital artwork (min 3000x3000px, 300 DPI). Accepted formats: PNG, JPG, PSD, AI",
     },
     {
       title: "Style",
-      description: "Surréalisme minimaliste. Palette: max 4 couleurs dominantes. Doit pouvoir être brodé/imprimé sur textile.",
+      description: "Minimalist surrealism. Palette: max 4 dominant colors. Must be embroiderable/printable on textile.",
     },
     {
-      title: "Originalité",
-      description: "100% création originale. Aucun plagiat, aucun AI-généré pur (AI assisté autorisé si retravaill é significativement).",
+      title: "Originality",
+      description: "100% original creation. No plagiarism, no pure AI-generated (AI-assisted allowed if significantly reworked).",
     },
     {
-      title: "Droits",
-      description: "Le gagnant cède les droits commerciaux à Arteral pour production. Vous conservez les droits d'exposition portfolio.",
+      title: "Rights",
+      description: "Winner transfers commercial rights to Arteral for production. You retain portfolio exhibition rights.",
     },
     {
       title: "Participation",
-      description: "Gratuit et ouvert à tous, artistes pro ou amateurs. 1 soumission par personne.",
+      description: "Free and open to all, professional or amateur artists. 1 submission per person.",
     },
   ],
   criteria: [
-    { label: "Cohérence philosophique", weight: "30%" },
-    { label: "Impact visuel", weight: "30%" },
-    { label: "Faisabilité textile", weight: "20%" },
-    { label: "Originalité", weight: "20%" },
+    { label: "Philosophical coherence", weight: "30%" },
+    { label: "Visual impact", weight: "30%" },
+    { label: "Textile feasibility", weight: "20%" },
+    { label: "Originality", weight: "20%" },
   ],
   timeline: [
-    { date: "1 Déc 2025", event: "Ouverture concours" },
-    { date: "15 Jan 2026", event: "Clôture soumissions (23h59 CET)" },
-    { date: "31 Jan 2026", event: "Délibération jury" },
-    { date: "10 Fév 2026", event: "Annonce gagnants" },
-    { date: "Mars 2026", event: "Production collection gagnante" },
+    { date: "Dec 1, 2025", event: "Contest opening" },
+    { date: "Jan 15, 2026", event: "Submissions close (11:59 PM CET)" },
+    { date: "Jan 31, 2026", event: "Jury deliberation" },
+    { date: "Feb 10, 2026", event: "Winners announcement" },
+    { date: "March 2026", event: "Winning collection production" },
   ],
   jury: [
     {
       name: "Sophie Moreau",
-      role: "Artiste Surréaliste",
-      bio: "Créatrice artwork Amour ↔ Ennuie",
+      role: "Surrealist Artist",
+      bio: "Creator of Love ↔ Boredom artwork",
     },
     {
       name: "Marc Dubois",
-      role: "Designer Textile",
-      bio: "20 ans mode conceptuelle",
+      role: "Textile Designer",
+      bio: "20 years in conceptual fashion",
     },
     {
       name: "Léa Chen",
-      role: "Philosophe & Curator",
-      bio: "Spécialiste art contemporain",
+      role: "Philosopher & Curator",
+      bio: "Contemporary art specialist",
     },
   ],
   cta: {
-    primary: "Soumettre mon artwork",
-    secondary: "Télécharger le brief complet (PDF)",
+    primary: "Submit my artwork",
+    secondary: "Download full brief (PDF)",
   },
 };
 
 export const navigation = [
-  { name: "Accueil", href: "/" },
-  { name: "La Marque", href: "/marque" },
+  { name: "Home", href: "/" },
+  { name: "Brand", href: "/marque" },
   { name: "Collection", href: "/collection" },
   { name: "Studio", href: "/studio" },
-  { name: "Galerie", href: "/galerie" },
-  { name: "Manifeste", href: "/manifeste" },
-  { name: "Concours 5K€", href: "/artistes" },
-  { name: "Livre d'Or", href: "/livre-or" },
-  { name: "Processus", href: "/processus" },
+  { name: "Gallery", href: "/galerie" },
+  { name: "Manifesto", href: "/manifeste" },
+  { name: "€5K Contest", href: "/artistes" },
+  { name: "Guestbook", href: "/livre-or" },
+  { name: "Process", href: "/processus" },
   { name: "Contact", href: "/contact" },
 ];
