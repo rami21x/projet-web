@@ -5,25 +5,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { navigation } from "@/data/content";
 import DarkModeToggle from "./DarkModeToggle";
+import LanguageToggle from "./LanguageToggle";
+import { useContent } from "@/hooks/useContent";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { navigation } = useContent();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   // Left navigation items
   const leftNav = navigation.filter((item) =>
-    item.name === "Home" || item.name === "Gallery"
+    ["Home", "Accueil", "Gallery", "Galerie"].includes(item.name)
   );
 
   // Right navigation - visible items
   const rightNavVisible = navigation.filter((item) =>
-    item.name === "Collection" || item.name === "Studio" || item.name === "Brand"
+    ["Collection", "Studio", "Brand", "La Marque"].includes(item.name)
   );
 
   // Dropdown items (rest of navigation)
@@ -136,11 +138,13 @@ export default function Navigation() {
               </AnimatePresence>
             </div>
 
+            <LanguageToggle />
             <DarkModeToggle />
           </div>
 
-          {/* Mobile Menu Button + Dark Mode */}
-          <div className="lg:hidden flex items-center gap-3 ml-auto">
+          {/* Mobile Menu Button + Language + Dark Mode */}
+          <div className="lg:hidden flex items-center gap-2 ml-auto">
+            <LanguageToggle />
             <DarkModeToggle />
             <button
               onClick={toggleMenu}

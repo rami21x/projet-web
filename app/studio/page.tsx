@@ -603,35 +603,71 @@ export default function StudioPage() {
                 ← Modifier la configuration
               </button>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-                {/* Left: Preview */}
-                <div>
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+                {/* Left: Preview - Takes 3 columns for larger display */}
+                <div className="lg:col-span-3">
                   <FadeIn>
-                    <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20 sticky top-8">
-                      <h2 className="font-display text-2xl md:text-3xl font-bold text-dark dark:text-white mb-6 flex items-center gap-3">
-                        <Move className="w-6 h-6 text-primary" />
-                        Prévisualisation
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-gradient-to-br from-white via-light/50 to-white dark:from-dark/90 dark:via-dark/70 dark:to-dark/90 p-8 rounded-2xl shadow-2xl border-2 border-primary/30 dark:border-primary/20 sticky top-8 overflow-hidden relative"
+                    >
+                      {/* Decorative corner accents */}
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full" />
+                      <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-accent/10 to-transparent rounded-tr-full" />
+
+                      <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-8 flex items-center gap-3 relative z-10">
+                        <motion.div
+                          animate={{ rotate: uploadedImage ? 360 : 0 }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          <Move className="w-8 h-8 text-primary" />
+                        </motion.div>
+                        Live Preview
                       </h2>
 
-                      {/* Canvas */}
-                      <div className="relative bg-gradient-to-br from-light to-white dark:from-dark/50 dark:to-dark/30 rounded-lg p-4 mb-6">
+                      {/* Canvas - Larger and more prominent */}
+                      <motion.div
+                        className="relative bg-gradient-to-br from-dark/5 via-white to-dark/5 dark:from-white/5 dark:via-dark/50 dark:to-white/5 rounded-xl p-6 mb-6 shadow-inner"
+                        whileHover={{ scale: 1.01 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {/* Grid pattern overlay */}
+                        <div className="absolute inset-0 opacity-5 dark:opacity-10"
+                          style={{
+                            backgroundImage: 'repeating-linear-gradient(0deg, #8B0000 0px, #8B0000 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #8B0000 0px, #8B0000 1px, transparent 1px, transparent 40px)',
+                          }}
+                        />
+
                         <canvas
                           ref={canvasRef}
-                          className="w-full h-auto rounded-lg"
-                          style={{ maxHeight: "700px" }}
+                          className="w-full h-auto rounded-lg relative z-10 shadow-lg"
+                          style={{ maxHeight: "900px" }}
                         />
 
                         {!uploadedImage && (
-                          <div className="absolute inset-0 flex items-center justify-center">
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="absolute inset-0 flex items-center justify-center z-20"
+                          >
                             <div className="text-center">
-                              <Upload className="w-16 h-16 text-dark/20 dark:text-white/20 mx-auto mb-4" />
-                              <p className="font-body text-dark/40 dark:text-white/40">
-                                Uploadez une image pour commencer
+                              <motion.div
+                                animate={{ y: [0, -10, 0] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                              >
+                                <Upload className="w-20 h-20 text-primary/30 dark:text-primary/40 mx-auto mb-4" />
+                              </motion.div>
+                              <p className="font-body text-lg text-dark/50 dark:text-white/50 font-semibold">
+                                Upload your artwork to begin
+                              </p>
+                              <p className="font-body text-sm text-dark/30 dark:text-white/30 mt-2">
+                                PNG, JPG - Max 5 MB
                               </p>
                             </div>
-                          </div>
+                          </motion.div>
                         )}
-                      </div>
+                      </motion.div>
 
                       {/* Configuration display */}
                       <div className="flex items-center justify-between mb-6 p-4 bg-light dark:bg-dark/50 rounded-lg">
@@ -725,8 +761,8 @@ export default function StudioPage() {
                   </FadeIn>
                 </div>
 
-                {/* Right: Controls & Form */}
-                <div className="space-y-8">
+                {/* Right: Controls & Form - Takes 2 columns */}
+                <div className="lg:col-span-2 space-y-8">
                   {/* Upload */}
                   <FadeIn delay={0.1}>
                     <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">

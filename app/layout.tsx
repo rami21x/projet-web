@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ThemeProviders } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import CustomCursor from "@/components/CustomCursor";
 import AmbientMusic from "@/components/AmbientMusic";
 import MuseumSpotlight from "@/components/MuseumSpotlight";
@@ -51,13 +52,15 @@ export default function RootLayout({
         className={`${playfairDisplay.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
         <ThemeProviders>
-          <CustomCursor />
-          <MuseumSpotlight />
-          <PhilosophicalEasterEggs />
-          <AmbientMusic />
-          <Navigation />
-          <main className="min-h-screen pt-16 md:pt-20">{children}</main>
-          <Footer />
+          <LanguageProvider>
+            <CustomCursor />
+            <MuseumSpotlight />
+            <PhilosophicalEasterEggs />
+            <AmbientMusic />
+            <Navigation />
+            <main className="min-h-screen pt-16 md:pt-20">{children}</main>
+            <Footer />
+          </LanguageProvider>
         </ThemeProviders>
       </body>
     </html>
