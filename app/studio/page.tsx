@@ -12,8 +12,31 @@ import {
   Send,
   Palette,
   Check,
+  Shirt,
+  Wind,
+  Layers,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+
+// Types de vêtements
+type GarmentType = "tshirt" | "pull";
+type GarmentFit = "oversize" | "regular" | "slim";
+
+// Palette de couleurs Arteral étendue
+const ARTERAL_COLORS = [
+  { name: "Blanc Pur", hex: "#FFFFFF", dark: false },
+  { name: "Blanc Cassé", hex: "#E8E8E8", dark: false },
+  { name: "Beige Sable", hex: "#D4C5B9", dark: false },
+  { name: "Gris Clair", hex: "#B8B8B8", dark: false },
+  { name: "Gris Anthracite", hex: "#3E4149", dark: true },
+  { name: "Noir Profond", hex: "#1A1A1A", dark: true },
+  { name: "Navy", hex: "#1B2845", dark: true },
+  { name: "Kaki", hex: "#8B8D7A", dark: true },
+  { name: "Rouge Arteral", hex: "#8B0000", dark: true },
+  { name: "Bordeaux", hex: "#7D0633", dark: true },
+  { name: "Camel", hex: "#A0522D", dark: true },
+  { name: "Olive", hex: "#6B7353", dark: true },
+];
 
 interface Design {
   id: string;
@@ -22,19 +45,30 @@ interface Design {
   title: string;
   philosophy: string;
   imageData: string;
-  designData: string; // Canvas rendering
+  designData: string;
   timestamp: number;
   likes: number;
   comments: number;
   social?: string;
+  garmentType: GarmentType;
+  garmentFit: GarmentFit;
+  garmentColor: string;
 }
 
 export default function StudioPage() {
+  // Configuration étape
+  const [step, setStep] = useState<"config" | "design">("config");
+
+  // Configuration du vêtement
+  const [garmentType, setGarmentType] = useState<GarmentType>("tshirt");
+  const [garmentFit, setGarmentFit] = useState<GarmentFit>("regular");
+  const [garmentColor, setGarmentColor] = useState("#FFFFFF");
+
+  // Design
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-  const [tshirtColor, setTshirtColor] = useState<"white" | "black">("white");
   const [designScale, setDesignScale] = useState(1);
   const [designX, setDesignX] = useState(50);
-  const [designY, setDesignY] = useState(40);
+  const [designY, setDesignY] = useState(45);
   const [rotation, setRotation] = useState(0);
 
   // Form states
@@ -48,95 +82,189 @@ export default function StudioPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Render t-shirt with design
+  // Obtenir les dimensions selon le type et la coupe
+  const getGarmentDimensions = () => {
+    const baseWidth = 400;
+    const baseHeight = 500;
+
+    let widthMultiplier = 1;
+    let shoulderWidth = 1;
+
+    switch (garmentFit) {
+      case "oversize":
+        widthMultiplier = 1.3;
+        shoulderWidth = 1.4;
+        break;
+      case "regular":
+        widthMultiplier = 1;
+        shoulderWidth = 1.1;
+        break;
+      case "slim":
+        widthMultiplier = 0.85;
+        shoulderWidth = 0.95;
+        break;
+    }
+
+    return {
+      bodyWidth: baseWidth * widthMultiplier,
+      bodyHeight: baseHeight,
+      shoulderWidth: baseWidth * shoulderWidth,
+      sleeveLength: garmentType === "tshirt" ? 80 : 200,
+    };
+  };
+
+  // Render garment with design
   useEffect(() => {
-    if (!canvasRef.current || !uploadedImage) return;
+    if (!canvasRef.current || step === "config") return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Set canvas size
-    canvas.width = 600;
-    canvas.height = 700;
+    canvas.width = 800;
+    canvas.height = 900;
 
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw t-shirt background
-    ctx.fillStyle = tshirtColor === "white" ? "#FFFFFF" : "#1A1A1A";
+    const dims = getGarmentDimensions();
+    const centerX = canvas.width / 2;
+    const startY = 100;
 
-    // T-shirt shape (simplified)
-    ctx.beginPath();
-    // Body
-    ctx.moveTo(150, 150);
-    ctx.lineTo(150, 650);
-    ctx.lineTo(450, 650);
-    ctx.lineTo(450, 150);
-    // Neck
-    ctx.lineTo(400, 150);
-    ctx.lineTo(380, 100);
-    ctx.lineTo(220, 100);
-    ctx.lineTo(200, 150);
-    ctx.closePath();
-    ctx.fill();
+    // Déterminer si c'est une couleur sombre
+    const selectedColor = ARTERAL_COLORS.find((c) => c.hex === garmentColor);
+    const isDark = selectedColor?.dark || false;
 
-    // Outline
-    ctx.strokeStyle = tshirtColor === "white" ? "#E0E0E0" : "#404040";
+    // Dessiner le vêtement
+    ctx.fillStyle = garmentColor;
+    ctx.strokeStyle = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
     ctx.lineWidth = 2;
+
+    // Corps du vêtement
+    ctx.beginPath();
+
+    if (garmentType === "tshirt") {
+      // T-SHIRT avec manches courtes
+      // Épaule gauche
+      ctx.moveTo(centerX - dims.shoulderWidth / 2, startY);
+      // Manche gauche
+      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 60, startY + 20);
+      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 70, startY + dims.sleeveLength);
+      ctx.lineTo(centerX - dims.bodyWidth / 2, startY + dims.sleeveLength + 20);
+      // Côté gauche
+      ctx.lineTo(centerX - dims.bodyWidth / 2, startY + dims.bodyHeight);
+      // Bas
+      ctx.lineTo(centerX + dims.bodyWidth / 2, startY + dims.bodyHeight);
+      // Côté droit
+      ctx.lineTo(centerX + dims.bodyWidth / 2, startY + dims.sleeveLength + 20);
+      // Manche droite
+      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 70, startY + dims.sleeveLength);
+      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 60, startY + 20);
+      // Épaule droite
+      ctx.lineTo(centerX + dims.shoulderWidth / 2, startY);
+      // Col (simple)
+      ctx.lineTo(centerX + 40, startY);
+      ctx.quadraticCurveTo(centerX + 30, startY - 20, centerX, startY - 25);
+      ctx.quadraticCurveTo(centerX - 30, startY - 20, centerX - 40, startY);
+      ctx.closePath();
+    } else {
+      // PULL avec manches longues
+      // Épaule gauche
+      ctx.moveTo(centerX - dims.shoulderWidth / 2, startY + 20);
+      // Manche gauche longue
+      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 40, startY + 40);
+      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 50, startY + dims.sleeveLength);
+      ctx.lineTo(centerX - dims.shoulderWidth / 2 - 40, startY + dims.sleeveLength + 10);
+      ctx.lineTo(centerX - dims.bodyWidth / 2, startY + dims.sleeveLength + 40);
+      // Côté gauche
+      ctx.lineTo(centerX - dims.bodyWidth / 2, startY + dims.bodyHeight);
+      // Bas avec bord côtelé
+      ctx.lineTo(centerX - dims.bodyWidth / 2 + 20, startY + dims.bodyHeight + 10);
+      ctx.lineTo(centerX + dims.bodyWidth / 2 - 20, startY + dims.bodyHeight + 10);
+      ctx.lineTo(centerX + dims.bodyWidth / 2, startY + dims.bodyHeight);
+      // Côté droit
+      ctx.lineTo(centerX + dims.bodyWidth / 2, startY + dims.sleeveLength + 40);
+      // Manche droite longue
+      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 40, startY + dims.sleeveLength + 10);
+      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 50, startY + dims.sleeveLength);
+      ctx.lineTo(centerX + dims.shoulderWidth / 2 + 40, startY + 40);
+      // Épaule droite
+      ctx.lineTo(centerX + dims.shoulderWidth / 2, startY + 20);
+      // Col pull (plus haut)
+      ctx.lineTo(centerX + 50, startY + 20);
+      ctx.lineTo(centerX + 45, startY - 10);
+      ctx.lineTo(centerX + 35, startY - 15);
+      ctx.lineTo(centerX - 35, startY - 15);
+      ctx.lineTo(centerX - 45, startY - 10);
+      ctx.lineTo(centerX - 50, startY + 20);
+      ctx.closePath();
+    }
+
+    ctx.fill();
     ctx.stroke();
 
-    // Draw uploaded image on t-shirt
-    const img = new Image();
-    img.onload = () => {
-      ctx.save();
+    // Ajouter des détails (coutures)
+    ctx.strokeStyle = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)";
+    ctx.lineWidth = 1;
 
-      const centerX = canvas.width * (designX / 100);
-      const centerY = canvas.height * (designY / 100);
+    // Couture centrale
+    ctx.beginPath();
+    ctx.moveTo(centerX, startY + 50);
+    ctx.lineTo(centerX, startY + dims.bodyHeight);
+    ctx.stroke();
 
-      ctx.translate(centerX, centerY);
-      ctx.rotate((rotation * Math.PI) / 180);
+    // Draw uploaded image on garment
+    if (uploadedImage) {
+      const img = new Image();
+      img.onload = () => {
+        ctx.save();
 
-      const maxWidth = 200 * designScale;
-      const maxHeight = 200 * designScale;
+        const designCenterX = canvas.width * (designX / 100);
+        const designCenterY = (startY + dims.bodyHeight) * (designY / 100);
 
-      let drawWidth = maxWidth;
-      let drawHeight = (img.height / img.width) * maxWidth;
+        ctx.translate(designCenterX, designCenterY);
+        ctx.rotate((rotation * Math.PI) / 180);
 
-      if (drawHeight > maxHeight) {
-        drawHeight = maxHeight;
-        drawWidth = (img.width / img.height) * maxHeight;
-      }
+        const maxWidth = 250 * designScale;
+        const maxHeight = 250 * designScale;
 
-      ctx.drawImage(
-        img,
-        -drawWidth / 2,
-        -drawHeight / 2,
-        drawWidth,
-        drawHeight
-      );
+        let drawWidth = maxWidth;
+        let drawHeight = (img.height / img.width) * maxWidth;
 
-      ctx.restore();
+        if (drawHeight > maxHeight) {
+          drawHeight = maxHeight;
+          drawWidth = (img.width / img.height) * maxHeight;
+        }
 
-      // Add watermark
-      ctx.fillStyle = tshirtColor === "white" ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.1)";
-      ctx.font = "12px monospace";
-      ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
-    };
-    img.src = uploadedImage;
-  }, [uploadedImage, tshirtColor, designScale, designX, designY, rotation]);
+        ctx.drawImage(
+          img,
+          -drawWidth / 2,
+          -drawHeight / 2,
+          drawWidth,
+          drawHeight
+        );
+
+        ctx.restore();
+
+        // Add watermark
+        ctx.fillStyle = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
+        ctx.font = "12px monospace";
+        ctx.fillText("ARTERAL STUDIO", 10, canvas.height - 10);
+      };
+      img.src = uploadedImage;
+    }
+  }, [uploadedImage, garmentType, garmentFit, garmentColor, designScale, designX, designY, rotation, step]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
     if (!file.type.startsWith("image/")) {
       alert("Veuillez uploader une image (PNG, JPG, etc.)");
       return;
     }
 
-    // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       alert("L'image est trop grande. Maximum 5 MB.");
       return;
@@ -153,7 +281,7 @@ export default function StudioPage() {
     if (!canvasRef.current) return;
 
     const link = document.createElement("a");
-    link.download = `arteral-design-${Date.now()}.png`;
+    link.download = `arteral-${garmentType}-${Date.now()}.png`;
     link.href = canvasRef.current.toDataURL("image/png");
     link.click();
   };
@@ -166,7 +294,6 @@ export default function StudioPage() {
       return;
     }
 
-    // Create design object
     const design: Design = {
       id: `design-${Date.now()}`,
       artistName,
@@ -179,25 +306,23 @@ export default function StudioPage() {
       timestamp: Date.now(),
       likes: 0,
       comments: 0,
+      garmentType,
+      garmentFit,
+      garmentColor,
     };
 
-    // Get existing designs from localStorage
     const existingDesigns = JSON.parse(
       localStorage.getItem("arteral-designs") || "[]"
     );
 
-    // Add new design
     existingDesigns.push(design);
-
-    // Save to localStorage
     localStorage.setItem("arteral-designs", JSON.stringify(existingDesigns));
 
-    // Show success
     setSubmitted(true);
 
-    // Reset form after 3 seconds
     setTimeout(() => {
       setSubmitted(false);
+      setStep("config");
       setUploadedImage(null);
       setArtistName("");
       setEmail("");
@@ -206,9 +331,16 @@ export default function StudioPage() {
       setSocial("");
       setDesignScale(1);
       setDesignX(50);
-      setDesignY(40);
+      setDesignY(45);
       setRotation(0);
+      setGarmentType("tshirt");
+      setGarmentFit("regular");
+      setGarmentColor("#FFFFFF");
     }, 3000);
+  };
+
+  const startDesigning = () => {
+    setStep("design");
   };
 
   return (
@@ -241,317 +373,533 @@ export default function StudioPage() {
               Studio Arteral
             </h1>
             <p className="font-body text-lg md:text-xl text-light/90 leading-relaxed max-w-3xl mx-auto">
-              Créez votre design philosophique. Visualisez votre œuvre sur un
-              t-shirt. Partagez avec la communauté.
+              Configurez votre vêtement. Visualisez votre œuvre. Créez l'art porté.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      {/* Studio Section */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Left: Preview */}
-            <div>
+      {/* Configuration or Design */}
+      <AnimatePresence mode="wait">
+        {step === "config" ? (
+          <motion.section
+            key="config"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 50 }}
+            className="py-16 md:py-24 bg-light dark:bg-dark/50"
+          >
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <FadeIn>
-                <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
-                  <h2 className="font-display text-2xl md:text-3xl font-bold text-dark dark:text-white mb-6 flex items-center gap-3">
-                    <Move className="w-6 h-6 text-primary" />
-                    Prévisualisation
+                <div className="bg-white dark:bg-dark/80 p-8 md:p-12 rounded-lg shadow-2xl border-2 border-primary/20">
+                  <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-8 text-center">
+                    Configurez votre vêtement
                   </h2>
 
-                  {/* Canvas */}
-                  <div className="relative bg-light dark:bg-dark/50 rounded-lg p-4 mb-6">
-                    <canvas
-                      ref={canvasRef}
-                      className="w-full h-auto rounded-lg"
-                      style={{ maxHeight: "600px" }}
-                    />
-
-                    {!uploadedImage && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center">
-                          <Upload className="w-16 h-16 text-dark/20 dark:text-white/20 mx-auto mb-4" />
-                          <p className="font-body text-dark/40 dark:text-white/40">
-                            Uploadez une image pour commencer
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* T-shirt Color Toggle */}
-                  <div className="flex items-center justify-center gap-4 mb-6">
-                    <button
-                      onClick={() => setTshirtColor("white")}
-                      className={`w-12 h-12 rounded-full border-4 transition-all ${
-                        tshirtColor === "white"
-                          ? "border-primary bg-white"
-                          : "border-dark/20 bg-white"
-                      }`}
-                      aria-label="T-shirt blanc"
-                    />
-                    <span className="font-body text-sm text-dark dark:text-white">
-                      Couleur du T-shirt
-                    </span>
-                    <button
-                      onClick={() => setTshirtColor("black")}
-                      className={`w-12 h-12 rounded-full border-4 transition-all ${
-                        tshirtColor === "black"
-                          ? "border-primary bg-dark"
-                          : "border-dark/20 bg-dark"
-                      }`}
-                      aria-label="T-shirt noir"
-                    />
-                  </div>
-
-                  {/* Download Button */}
-                  {uploadedImage && (
-                    <button
-                      onClick={downloadDesign}
-                      className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-3 bg-accent hover:bg-accent/90 text-white rounded-lg transition-all hover:scale-105"
-                    >
-                      <Download className="w-5 h-5" />
-                      Télécharger le Design
-                    </button>
-                  )}
-                </div>
-              </FadeIn>
-            </div>
-
-            {/* Right: Controls & Form */}
-            <div className="space-y-8">
-              {/* Upload */}
-              <FadeIn delay={0.1}>
-                <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
-                  <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-4">
-                    1. Uploadez votre œuvre
-                  </h3>
-
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all hover:scale-105"
-                  >
-                    <Upload className="w-5 h-5" />
-                    Choisir une image
-                  </button>
-
-                  <p className="font-body text-xs text-dark/60 dark:text-white/60 mt-3 text-center">
-                    PNG, JPG - Max 5 MB
-                  </p>
-                </div>
-              </FadeIn>
-
-              {/* Controls */}
-              {uploadedImage && (
-                <FadeIn delay={0.2}>
-                  <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
-                    <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
-                      2. Ajustez le design
-                    </h3>
-
-                    <div className="space-y-6">
-                      {/* Scale */}
-                      <div>
-                        <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                          <span className="flex items-center gap-2">
-                            <ZoomIn className="w-4 h-4" />
-                            Taille
-                          </span>
-                          <span className="font-mono text-primary">
-                            {Math.round(designScale * 100)}%
-                          </span>
-                        </label>
-                        <input
-                          type="range"
-                          min="0.3"
-                          max="2"
-                          step="0.1"
-                          value={designScale}
-                          onChange={(e) => setDesignScale(parseFloat(e.target.value))}
-                          className="w-full"
+                  {/* Type de vêtement */}
+                  <div className="mb-10">
+                    <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
+                      1. Type de vêtement
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <button
+                        onClick={() => setGarmentType("tshirt")}
+                        className={`p-6 rounded-lg border-2 transition-all hover:scale-105 ${
+                          garmentType === "tshirt"
+                            ? "border-primary bg-primary/10 shadow-lg"
+                            : "border-dark/20 dark:border-white/20 hover:border-primary/50"
+                        }`}
+                      >
+                        <Shirt
+                          className={`w-12 h-12 mx-auto mb-3 ${
+                            garmentType === "tshirt"
+                              ? "text-primary"
+                              : "text-dark/40 dark:text-white/40"
+                          }`}
                         />
-                      </div>
+                        <p
+                          className={`font-body text-lg font-semibold ${
+                            garmentType === "tshirt"
+                              ? "text-primary"
+                              : "text-dark dark:text-white"
+                          }`}
+                        >
+                          T-Shirt
+                        </p>
+                        <p className="font-body text-sm text-dark/60 dark:text-white/60 mt-1">
+                          Manches courtes, léger
+                        </p>
+                      </button>
 
-                      {/* Position X */}
-                      <div>
-                        <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                          <span>Position Horizontale</span>
-                          <span className="font-mono text-primary">{designX}%</span>
-                        </label>
-                        <input
-                          type="range"
-                          min="25"
-                          max="75"
-                          value={designX}
-                          onChange={(e) => setDesignX(parseInt(e.target.value))}
-                          className="w-full"
+                      <button
+                        onClick={() => setGarmentType("pull")}
+                        className={`p-6 rounded-lg border-2 transition-all hover:scale-105 ${
+                          garmentType === "pull"
+                            ? "border-primary bg-primary/10 shadow-lg"
+                            : "border-dark/20 dark:border-white/20 hover:border-primary/50"
+                        }`}
+                      >
+                        <Wind
+                          className={`w-12 h-12 mx-auto mb-3 ${
+                            garmentType === "pull"
+                              ? "text-primary"
+                              : "text-dark/40 dark:text-white/40"
+                          }`}
                         />
-                      </div>
-
-                      {/* Position Y */}
-                      <div>
-                        <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                          <span>Position Verticale</span>
-                          <span className="font-mono text-primary">{designY}%</span>
-                        </label>
-                        <input
-                          type="range"
-                          min="20"
-                          max="60"
-                          value={designY}
-                          onChange={(e) => setDesignY(parseInt(e.target.value))}
-                          className="w-full"
-                        />
-                      </div>
-
-                      {/* Rotation */}
-                      <div>
-                        <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                          <span className="flex items-center gap-2">
-                            <RotateCw className="w-4 h-4" />
-                            Rotation
-                          </span>
-                          <span className="font-mono text-primary">{rotation}°</span>
-                        </label>
-                        <input
-                          type="range"
-                          min="-45"
-                          max="45"
-                          value={rotation}
-                          onChange={(e) => setRotation(parseInt(e.target.value))}
-                          className="w-full"
-                        />
-                      </div>
+                        <p
+                          className={`font-body text-lg font-semibold ${
+                            garmentType === "pull"
+                              ? "text-primary"
+                              : "text-dark dark:text-white"
+                          }`}
+                        >
+                          Pull
+                        </p>
+                        <p className="font-body text-sm text-dark/60 dark:text-white/60 mt-1">
+                          Manches longues, confort
+                        </p>
+                      </button>
                     </div>
                   </div>
-                </FadeIn>
-              )}
 
-              {/* Submission Form */}
-              {uploadedImage && (
-                <FadeIn delay={0.3}>
-                  <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
-                    <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
-                      3. Soumettez à la galerie
-                    </h3>
-
-                    {submitted ? (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="text-center py-12"
-                      >
-                        <Check className="w-16 h-16 text-primary mx-auto mb-4" />
-                        <p className="font-display text-2xl font-bold text-primary mb-2">
-                          Design soumis avec succès !
-                        </p>
-                        <p className="font-body text-dark/70 dark:text-white/70">
-                          Découvrez-le dans la galerie
-                        </p>
-                        <a
-                          href="/galerie"
-                          className="inline-block mt-6 font-body font-semibold px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all"
-                        >
-                          Voir la galerie
-                        </a>
-                      </motion.div>
-                    ) : (
-                      <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                          <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                            Nom de l'artiste *
-                          </label>
-                          <input
-                            type="text"
-                            value={artistName}
-                            onChange={(e) => setArtistName(e.target.value)}
-                            required
-                            className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
-                            placeholder="Votre nom"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                            Email *
-                          </label>
-                          <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
-                            placeholder="artiste@example.com"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                            Titre de l'œuvre *
-                          </label>
-                          <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            required
-                            className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
-                            placeholder="Ex: Chaos Intérieur"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                            Philosophie / Inspiration *
-                          </label>
-                          <textarea
-                            value={philosophy}
-                            onChange={(e) => setPhilosophy(e.target.value)}
-                            required
-                            rows={4}
-                            className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary resize-none"
-                            placeholder="Quelle est la philosophie derrière votre création ? Qu'explore-t-elle ?"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
-                            Instagram (optionnel)
-                          </label>
-                          <input
-                            type="text"
-                            value={social}
-                            onChange={(e) => setSocial(e.target.value)}
-                            className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
-                            placeholder="@votre_instagram"
-                          />
-                        </div>
-
+                  {/* Coupe */}
+                  <div className="mb-10">
+                    <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
+                      2. Coupe
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      {["oversize", "regular", "slim"].map((fit) => (
                         <button
-                          type="submit"
-                          className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white rounded-lg transition-all hover:scale-105 shadow-lg"
+                          key={fit}
+                          onClick={() => setGarmentFit(fit as GarmentFit)}
+                          className={`p-4 rounded-lg border-2 transition-all hover:scale-105 ${
+                            garmentFit === fit
+                              ? "border-primary bg-primary/10 shadow-lg"
+                              : "border-dark/20 dark:border-white/20 hover:border-primary/50"
+                          }`}
                         >
-                          <Send className="w-5 h-5" />
-                          Soumettre à la galerie
+                          <Layers
+                            className={`w-8 h-8 mx-auto mb-2 ${
+                              garmentFit === fit
+                                ? "text-primary"
+                                : "text-dark/40 dark:text-white/40"
+                            }`}
+                          />
+                          <p
+                            className={`font-body font-semibold capitalize ${
+                              garmentFit === fit
+                                ? "text-primary"
+                                : "text-dark dark:text-white"
+                            }`}
+                          >
+                            {fit === "oversize" && "Oversize"}
+                            {fit === "regular" && "Regular"}
+                            {fit === "slim" && "Slim Fit"}
+                          </p>
+                          <p className="font-body text-xs text-dark/60 dark:text-white/60 mt-1">
+                            {fit === "oversize" && "Ample, décontracté"}
+                            {fit === "regular" && "Coupe classique"}
+                            {fit === "slim" && "Ajusté, moderne"}
+                          </p>
                         </button>
-                      </form>
-                    )}
+                      ))}
+                    </div>
                   </div>
-                </FadeIn>
-              )}
+
+                  {/* Couleur */}
+                  <div className="mb-10">
+                    <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
+                      3. Couleur
+                    </label>
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                      {ARTERAL_COLORS.map((color) => (
+                        <button
+                          key={color.hex}
+                          onClick={() => setGarmentColor(color.hex)}
+                          className={`group relative aspect-square rounded-lg border-2 transition-all hover:scale-110 ${
+                            garmentColor === color.hex
+                              ? "border-primary shadow-lg ring-2 ring-primary ring-offset-2"
+                              : "border-dark/20 dark:border-white/20"
+                          }`}
+                          style={{ backgroundColor: color.hex }}
+                          title={color.name}
+                        >
+                          {garmentColor === color.hex && (
+                            <Check
+                              className={`w-6 h-6 absolute inset-0 m-auto ${
+                                color.dark ? "text-white" : "text-dark"
+                              }`}
+                            />
+                          )}
+                          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                            <p className="font-body text-xs text-dark dark:text-white bg-white dark:bg-dark px-2 py-1 rounded shadow-lg">
+                              {color.name}
+                            </p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Aperçu de la configuration */}
+                  <div className="bg-light dark:bg-dark/50 p-6 rounded-lg mb-8">
+                    <p className="font-body text-sm font-semibold text-dark dark:text-white mb-3">
+                      Votre configuration :
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      <span className="px-3 py-1 bg-primary/10 text-primary rounded-full font-body text-sm font-semibold">
+                        {garmentType === "tshirt" ? "T-Shirt" : "Pull"}
+                      </span>
+                      <span className="px-3 py-1 bg-accent/10 text-accent rounded-full font-body text-sm font-semibold capitalize">
+                        {garmentFit === "oversize" && "Oversize"}
+                        {garmentFit === "regular" && "Regular"}
+                        {garmentFit === "slim" && "Slim Fit"}
+                      </span>
+                      <span
+                        className="px-3 py-1 rounded-full font-body text-sm font-semibold flex items-center gap-2"
+                        style={{
+                          backgroundColor: `${garmentColor}20`,
+                          color: ARTERAL_COLORS.find((c) => c.hex === garmentColor)
+                            ?.dark
+                            ? "#FFFFFF"
+                            : "#1A1A1A",
+                        }}
+                      >
+                        <div
+                          className="w-4 h-4 rounded-full border"
+                          style={{ backgroundColor: garmentColor }}
+                        />
+                        {ARTERAL_COLORS.find((c) => c.hex === garmentColor)?.name}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Bouton commencer */}
+                  <button
+                    onClick={startDesigning}
+                    className="w-full flex items-center justify-center gap-3 font-body font-semibold text-lg px-8 py-5 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white rounded-lg transition-all hover:scale-105 shadow-lg"
+                  >
+                    <Palette className="w-6 h-6" />
+                    Commencer le design
+                  </button>
+                </div>
+              </FadeIn>
             </div>
-          </div>
-        </div>
-      </section>
+          </motion.section>
+        ) : (
+          // Design Section (existing code adapted)
+          <motion.section
+            key="design"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            className="py-16 md:py-24 bg-light dark:bg-dark/50"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Back button */}
+              <button
+                onClick={() => setStep("config")}
+                className="mb-8 flex items-center gap-2 font-body text-primary hover:text-accent transition-colors"
+              >
+                ← Modifier la configuration
+              </button>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                {/* Left: Preview */}
+                <div>
+                  <FadeIn>
+                    <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20 sticky top-8">
+                      <h2 className="font-display text-2xl md:text-3xl font-bold text-dark dark:text-white mb-6 flex items-center gap-3">
+                        <Move className="w-6 h-6 text-primary" />
+                        Prévisualisation
+                      </h2>
+
+                      {/* Canvas */}
+                      <div className="relative bg-gradient-to-br from-light to-white dark:from-dark/50 dark:to-dark/30 rounded-lg p-4 mb-6">
+                        <canvas
+                          ref={canvasRef}
+                          className="w-full h-auto rounded-lg"
+                          style={{ maxHeight: "700px" }}
+                        />
+
+                        {!uploadedImage && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <Upload className="w-16 h-16 text-dark/20 dark:text-white/20 mx-auto mb-4" />
+                              <p className="font-body text-dark/40 dark:text-white/40">
+                                Uploadez une image pour commencer
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Configuration display */}
+                      <div className="flex items-center justify-between mb-6 p-4 bg-light dark:bg-dark/50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          {garmentType === "tshirt" ? (
+                            <Shirt className="w-5 h-5 text-primary" />
+                          ) : (
+                            <Wind className="w-5 h-5 text-primary" />
+                          )}
+                          <span className="font-body text-sm font-semibold text-dark dark:text-white capitalize">
+                            {garmentType === "tshirt" ? "T-Shirt" : "Pull"} {garmentFit}
+                          </span>
+                        </div>
+                        <div
+                          className="w-8 h-8 rounded-full border-2 border-white shadow-lg"
+                          style={{ backgroundColor: garmentColor }}
+                        />
+                      </div>
+
+                      {/* Download Button */}
+                      {uploadedImage && (
+                        <button
+                          onClick={downloadDesign}
+                          className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-3 bg-accent hover:bg-accent/90 text-white rounded-lg transition-all hover:scale-105"
+                        >
+                          <Download className="w-5 h-5" />
+                          Télécharger le Design
+                        </button>
+                      )}
+                    </div>
+                  </FadeIn>
+                </div>
+
+                {/* Right: Controls & Form */}
+                <div className="space-y-8">
+                  {/* Upload */}
+                  <FadeIn delay={0.1}>
+                    <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
+                      <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-4">
+                        1. Uploadez votre œuvre
+                      </h3>
+
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
+
+                      <button
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all hover:scale-105"
+                      >
+                        <Upload className="w-5 h-5" />
+                        Choisir une image
+                      </button>
+
+                      <p className="font-body text-xs text-dark/60 dark:text-white/60 mt-3 text-center">
+                        PNG, JPG - Max 5 MB
+                      </p>
+                    </div>
+                  </FadeIn>
+
+                  {/* Controls */}
+                  {uploadedImage && (
+                    <FadeIn delay={0.2}>
+                      <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
+                        <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
+                          2. Ajustez le design
+                        </h3>
+
+                        <div className="space-y-6">
+                          {/* Scale */}
+                          <div>
+                            <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <span className="flex items-center gap-2">
+                                <ZoomIn className="w-4 h-4" />
+                                Taille
+                              </span>
+                              <span className="font-mono text-primary">
+                                {Math.round(designScale * 100)}%
+                              </span>
+                            </label>
+                            <input
+                              type="range"
+                              min="0.3"
+                              max="2.5"
+                              step="0.1"
+                              value={designScale}
+                              onChange={(e) => setDesignScale(parseFloat(e.target.value))}
+                              className="w-full"
+                            />
+                          </div>
+
+                          {/* Position X */}
+                          <div>
+                            <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <span>Position Horizontale</span>
+                              <span className="font-mono text-primary">{designX}%</span>
+                            </label>
+                            <input
+                              type="range"
+                              min="25"
+                              max="75"
+                              value={designX}
+                              onChange={(e) => setDesignX(parseInt(e.target.value))}
+                              className="w-full"
+                            />
+                          </div>
+
+                          {/* Position Y */}
+                          <div>
+                            <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <span>Position Verticale</span>
+                              <span className="font-mono text-primary">{designY}%</span>
+                            </label>
+                            <input
+                              type="range"
+                              min="20"
+                              max="70"
+                              value={designY}
+                              onChange={(e) => setDesignY(parseInt(e.target.value))}
+                              className="w-full"
+                            />
+                          </div>
+
+                          {/* Rotation */}
+                          <div>
+                            <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <span className="flex items-center gap-2">
+                                <RotateCw className="w-4 h-4" />
+                                Rotation
+                              </span>
+                              <span className="font-mono text-primary">{rotation}°</span>
+                            </label>
+                            <input
+                              type="range"
+                              min="-45"
+                              max="45"
+                              value={rotation}
+                              onChange={(e) => setRotation(parseInt(e.target.value))}
+                              className="w-full"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </FadeIn>
+                  )}
+
+                  {/* Submission Form */}
+                  {uploadedImage && (
+                    <FadeIn delay={0.3}>
+                      <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
+                        <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
+                          3. Soumettez à la galerie
+                        </h3>
+
+                        {submitted ? (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="text-center py-12"
+                          >
+                            <Check className="w-16 h-16 text-primary mx-auto mb-4" />
+                            <p className="font-display text-2xl font-bold text-primary mb-2">
+                              Design soumis avec succès !
+                            </p>
+                            <p className="font-body text-dark/70 dark:text-white/70">
+                              Découvrez-le dans la galerie
+                            </p>
+                            <a
+                              href="/galerie"
+                              className="inline-block mt-6 font-body font-semibold px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all"
+                            >
+                              Voir la galerie
+                            </a>
+                          </motion.div>
+                        ) : (
+                          <form onSubmit={handleSubmit} className="space-y-4">
+                            <div>
+                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                                Nom de l'artiste *
+                              </label>
+                              <input
+                                type="text"
+                                value={artistName}
+                                onChange={(e) => setArtistName(e.target.value)}
+                                required
+                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                                placeholder="Votre nom"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                                Email *
+                              </label>
+                              <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                                placeholder="artiste@example.com"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                                Titre de l'œuvre *
+                              </label>
+                              <input
+                                type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                required
+                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                                placeholder="Ex: Chaos Intérieur"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                                Philosophie / Inspiration *
+                              </label>
+                              <textarea
+                                value={philosophy}
+                                onChange={(e) => setPhilosophy(e.target.value)}
+                                required
+                                rows={4}
+                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary resize-none"
+                                placeholder="Quelle est la philosophie derrière votre création ?"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                                Instagram (optionnel)
+                              </label>
+                              <input
+                                type="text"
+                                value={social}
+                                onChange={(e) => setSocial(e.target.value)}
+                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                                placeholder="@votre_instagram"
+                              />
+                            </div>
+
+                            <button
+                              type="submit"
+                              className="w-full flex items-center justify-center gap-3 font-body font-semibold px-6 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white rounded-lg transition-all hover:scale-105 shadow-lg"
+                            >
+                              <Send className="w-5 h-5" />
+                              Soumettre à la galerie
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    </FadeIn>
+                  )}
+                </div>
+              </div>
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
 
       {/* CTA */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-dark via-accent/20 to-dark text-white">
