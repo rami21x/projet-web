@@ -90,10 +90,10 @@ export default function ConcoursPage() {
       </section>
 
       {/* Prix */}
-      <section className="py-24 bg-light dark:bg-light">
+      <section className="py-24 bg-light dark:bg-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="font-display text-6xl font-bold text-center text-dark dark:text-dark mb-4">
+            <h2 className="font-display text-6xl font-bold text-center text-dark dark:text-white mb-4">
               Prix: <span className="text-primary">6500€</span>
             </h2>
           </FadeIn>
@@ -147,11 +147,11 @@ export default function ConcoursPage() {
       </section>
 
       {/* Soumission */}
-      <section id="submit" className="py-24 bg-light dark:bg-light">
+      <section id="submit" className="py-24 bg-light dark:bg-dark">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <Sparkles className="w-16 h-16 mx-auto mb-4 text-primary" />
-            <h2 className="font-display text-5xl font-bold text-dark dark:text-dark mb-12 text-center">
+            <h2 className="font-display text-5xl font-bold text-dark dark:text-white mb-12 text-center">
               Soumettre votre Artwork
             </h2>
           </FadeIn>

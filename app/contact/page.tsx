@@ -14,7 +14,23 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Integrate with actual newsletter service
+
+    // Save to localStorage for now - Ready for newsletter service integration
+    // Replace this with actual API call to services like: Mailchimp, ConvertKit, SendGrid, etc.
+    try {
+      const subscribers = JSON.parse(localStorage.getItem("arteral-newsletter") || "[]");
+      const newSubscriber = {
+        email,
+        name,
+        timestamp: Date.now(),
+        source: "contact-page",
+      };
+      subscribers.push(newSubscriber);
+      localStorage.setItem("arteral-newsletter", JSON.stringify(subscribers));
+    } catch (error) {
+      console.error("Error saving newsletter subscription:", error);
+    }
+
     setSubmitted(true);
     setTimeout(() => {
       setEmail("");

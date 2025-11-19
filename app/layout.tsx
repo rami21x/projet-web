@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { defaultMetadata } from "@/lib/metadata";
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-display",
@@ -20,17 +21,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "ARTERAL - Mode Philosophique",
-  description: "Chaque pièce raconte un paradoxe. Art incarné, mode consciente. Collection Amour ↔ Ennuie.",
-  keywords: ["mode", "art", "philosophie", "Arteral", "fashion", "conceptuel"],
-  authors: [{ name: "Arteral" }],
-  openGraph: {
-    title: "ARTERAL - Mode Philosophique",
-    description: "Chaque pièce raconte un paradoxe. Art incarné, mode consciente.",
-    type: "website",
-  },
-};
+export const metadata: Metadata = defaultMetadata;
 
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";

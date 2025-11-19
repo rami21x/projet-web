@@ -45,14 +45,22 @@ export default function GaleriePage() {
   const [selectedDesign, setSelectedDesign] = useState<Design | null>(null);
   const [commentText, setCommentText] = useState("");
   const [commentAuthor, setCommentAuthor] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load designs from localStorage
   useEffect(() => {
     const loadDesigns = () => {
-      const stored = localStorage.getItem("arteral-designs");
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setDesigns(parsed);
+      setIsLoading(true);
+      try {
+        const stored = localStorage.getItem("arteral-designs");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          setDesigns(parsed);
+        }
+      } catch (error) {
+        console.error("Error loading designs from localStorage:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -268,7 +276,23 @@ export default function GaleriePage() {
       {/* Gallery Grid */}
       <section className="py-16 md:py-24 bg-light dark:bg-dark/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredDesigns.length === 0 ? (
+          {isLoading ? (
+            <div className="text-center py-20">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="w-16 h-16 mx-auto mb-4"
+              >
+                <Palette className="w-16 h-16 text-primary" />
+              </motion.div>
+              <h3 className="font-display text-2xl font-bold text-dark dark:text-white mb-2">
+                Chargement des créations...
+              </h3>
+              <p className="font-body text-dark/60 dark:text-white/60">
+                Un instant, l'art se prépare
+              </p>
+            </div>
+          ) : filteredDesigns.length === 0 ? (
             <div className="text-center py-20">
               <Sparkles className="w-16 h-16 text-dark/20 dark:text-white/20 mx-auto mb-4" />
               <h3 className="font-display text-2xl font-bold text-dark dark:text-white mb-2">

@@ -41,6 +41,13 @@ const ARTERAL_COLORS = [
   { name: "Olive", hex: "#6B7353", dark: true, fileName: "olive" },
 ];
 
+interface Comment {
+  id: string;
+  author: string;
+  text: string;
+  timestamp: number;
+}
+
 interface Design {
   id: string;
   artistName: string;
@@ -51,7 +58,7 @@ interface Design {
   designData: string;
   timestamp: number;
   likes: number;
-  comments: number;
+  comments: Comment[];
   social?: string;
   garmentType: GarmentType;
   garmentFit: GarmentFit;
@@ -547,7 +554,7 @@ export default function StudioPage() {
       designData: canvasRef.current.toDataURL("image/png"),
       timestamp: Date.now(),
       likes: 0,
-      comments: 0,
+      comments: [],
       garmentType,
       garmentFit,
       garmentColor,
