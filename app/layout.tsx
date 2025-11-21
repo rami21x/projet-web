@@ -25,7 +25,6 @@ export const metadata: Metadata = defaultMetadata;
 
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import SplashScreen from "@/components/SplashScreen";
 import { ThemeProviders } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import CustomCursor from "@/components/CustomCursor";
@@ -45,7 +44,6 @@ export default function RootLayout({
       >
         <ThemeProviders>
           <LanguageProvider>
-            <SplashScreen />
             <CustomCursor />
             <MuseumSpotlight />
             <PhilosophicalEasterEggs />

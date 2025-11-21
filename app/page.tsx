@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Palette, Brain, Sparkles } from "lucide-react";
 import { useContent } from "@/hooks/useContent";
@@ -19,27 +20,50 @@ export default function Home() {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-dark via-dark/90 to-primary/20 text-white overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,0,0,0.3),transparent_50%)]" />
-        </div>
+      {/* Hero Section with Video Background */}
+      <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden">
+        {/* Video Background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/splash-intro.mp4" type="video/mp4" />
+          <source src="/videos/splash-intro.webm" type="video/webm" />
+        </video>
+
+        {/* Overlay gradients for better text readability */}
+        <div className="absolute inset-0 bg-dark/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/50 via-transparent to-dark/70" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8"
+          {/* Logo instead of text title */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="flex flex-col items-center mb-6 md:mb-8"
           >
-            {heroContent.title}
-          </motion.h1>
+            <div className="relative">
+              <div className="absolute inset-0 blur-3xl bg-primary/30 rounded-full scale-150" />
+              <Image
+                src="/images/logo.png"
+                alt="Arteral Logo"
+                width={200}
+                height={200}
+                className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 object-contain drop-shadow-2xl"
+                priority
+              />
+            </div>
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
             className="font-body text-lg sm:text-xl md:text-2xl mb-4 md:mb-6 leading-relaxed whitespace-pre-line max-w-3xl mx-auto"
           >
             {heroContent.subtitle}
@@ -48,7 +72,7 @@ export default function Home() {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
             className="font-body text-base sm:text-lg md:text-xl mb-8 md:mb-12 text-light/90"
           >
             {heroContent.description}
@@ -57,7 +81,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
             <Link
               href={heroContent.cta.link}
@@ -119,7 +143,7 @@ export default function Home() {
               Mode qui transforme
             </h2>
             <p className="font-body text-base sm:text-lg md:text-xl text-light/95 leading-relaxed mb-8 md:mb-12">
-              Nous croyons que ce qu'on porte affecte la conscience. Chaque
+              Nous croyons que ce qu&apos;on porte affecte la conscience. Chaque
               pièce Arteral est une exploration philosophique incarnée,
               une collaboration artistique, une série limitée qui invite
               à la contemplation.
@@ -150,7 +174,7 @@ export default function Home() {
               </h2>
               <p className="font-body text-base sm:text-lg md:text-xl text-dark/70 leading-relaxed max-w-3xl mx-auto">
                 Notre première collection explore le paradoxe entre passion
-                ardente et introspection silencieuse. Deux pulsations d'un
+                ardente et introspection silencieuse. Deux pulsations d&apos;un
                 même cœur, brodées sur textile premium.
               </p>
             </div>
