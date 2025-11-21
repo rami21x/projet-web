@@ -70,19 +70,19 @@ export default function Navigation() {
           {/* Center Logo */}
           <Link
             href="/"
-            className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-3 group"
+            className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center group"
           >
             <div className="relative">
               <div className="absolute inset-0 bg-primary/10 blur-xl rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <Image
                 src="/images/logo.png"
                 alt="Arteral Logo"
-                width={44}
-                height={44}
-                className="relative w-9 h-9 md:w-11 md:h-11 object-contain transition-transform duration-300 group-hover:scale-110"
+                width={52}
+                height={52}
+                className="relative w-10 h-10 md:w-12 md:h-12 object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </div>
-            <span className="font-display text-xl md:text-2xl font-bold text-dark dark:text-dark group-hover:text-primary transition-colors duration-300 tracking-wider">
+            <span className="font-display text-[10px] md:text-xs font-semibold text-dark dark:text-dark group-hover:text-primary transition-colors duration-300 tracking-[0.25em] mt-1">
               ARTERAL
             </span>
           </Link>
