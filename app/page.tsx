@@ -3,17 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Palette, Brain, Sparkles } from "lucide-react";
 import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 import PhilosophicalQuote from "@/components/PhilosophicalQuote";
 import DualitySlider from "@/components/DualitySlider";
-
-const iconMap = {
-  Palette: Palette,
-  Brain: Brain,
-  Sparkles: Sparkles,
-};
 
 // Sparkling dots around the logo
 const sparkles = [
@@ -171,51 +164,93 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 md:py-24 bg-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {homeFeatures.map((feature, index) => {
-              const Icon = iconMap[feature.icon as keyof typeof iconMap];
-              return (
-                <FadeIn key={feature.title} delay={index * 0.2}>
-                  <div className="text-center group">
-                    <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 mb-6 bg-dark/5 group-hover:bg-primary/10 rounded-full transition-all duration-300">
-                      <Icon className="w-8 h-8 md:w-10 md:h-10 text-primary" />
-                    </div>
-                    <h3 className="font-display text-xl md:text-2xl font-bold text-dark mb-3">
-                      {feature.title}
-                    </h3>
-                    <p className="font-body text-sm md:text-base text-dark/70 leading-relaxed">
-                      {feature.description}
-                    </p>
+      {/* Features Section - Artistic style without emojis */}
+      <section className="py-20 md:py-32 bg-light">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="text-center mb-16 md:mb-20">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4">
+                L&apos;Essence
+              </h2>
+              <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
+            </div>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+            {homeFeatures.map((feature, index) => (
+              <FadeIn key={feature.title} delay={index * 0.2}>
+                <div className="text-center group">
+                  {/* Artistic circle instead of emoji icon */}
+                  <div className="relative w-20 h-20 mx-auto mb-8">
+                    <div className="absolute inset-0 border border-primary/30 rounded-full group-hover:border-primary/60 transition-colors duration-500" />
+                    <div className="absolute inset-2 border border-dark/20 rounded-full group-hover:border-primary/40 transition-colors duration-500" />
+                    <div className="absolute inset-4 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full group-hover:from-primary/20 group-hover:to-accent/20 transition-colors duration-500" />
+                    <span className="absolute inset-0 flex items-center justify-center font-display text-2xl font-bold text-primary/70 group-hover:text-primary transition-colors duration-300">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
                   </div>
-                </FadeIn>
-              );
-            })}
+                  <h3 className="font-display text-xl md:text-2xl font-bold text-dark mb-4">
+                    {feature.title}
+                  </h3>
+                  <p className="font-body text-sm md:text-base text-dark/60 leading-relaxed max-w-xs mx-auto">
+                    {feature.description}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Philosophy Preview Section */}
-      <section className="py-16 md:py-24 bg-dark text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Philosophy Section with integrated artistic CTA */}
+      <section className="py-20 md:py-32 bg-dark text-white relative overflow-hidden">
+        {/* Background artistic elements */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-64 h-64 border border-white rounded-full" />
+          <div className="absolute bottom-20 right-10 w-48 h-48 border border-white rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-white/50 rounded-full" />
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <FadeIn>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8">
+            <p className="font-mono text-xs tracking-[0.3em] text-primary/80 mb-6">
+              PHILOSOPHIE
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-8 md:mb-10 leading-tight">
               Mode qui transforme
             </h2>
-            <p className="font-body text-base sm:text-lg md:text-xl text-light/95 leading-relaxed mb-8 md:mb-12">
+            <p className="font-body text-base sm:text-lg md:text-xl text-light/80 leading-relaxed mb-10 md:mb-14 max-w-2xl mx-auto">
               Nous croyons que ce qu&apos;on porte affecte la conscience. Chaque
               pièce Arteral est une exploration philosophique incarnée,
               une collaboration artistique, une série limitée qui invite
               à la contemplation.
             </p>
-            <Link
-              href="/marque"
-              className="inline-block font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 border-2 border-white hover:bg-white hover:text-dark text-white rounded-sm transition-all hover:scale-105"
+
+            {/* Artistic CTA - NARCISSE AMOUREUX */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative inline-block"
             >
-              Découvrir notre philosophie
-            </Link>
+              <div className="absolute -inset-4 border border-white/10 rounded-sm" />
+              <div className="absolute -inset-2 border border-white/20 rounded-sm" />
+              <Link
+                href="/collection"
+                className="relative block px-12 py-6 bg-transparent border border-white/40 hover:border-primary hover:bg-primary/10 transition-all duration-500 group"
+              >
+                <span className="font-mono text-[10px] tracking-[0.4em] text-white/50 block mb-2">
+                  SÉRIE I
+                </span>
+                <span className="font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider text-white group-hover:text-primary transition-colors duration-300">
+                  NARCISSE AMOUREUX
+                </span>
+                <span className="block mt-3 font-body text-sm text-white/60 group-hover:text-white/80 transition-colors">
+                  Découvrir la collection →
+                </span>
+              </Link>
+            </motion.div>
           </FadeIn>
         </div>
       </section>
@@ -226,30 +261,55 @@ export default function Home() {
       {/* Duality Slider Section */}
       <DualitySlider />
 
-      {/* Collection Teaser */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Collection Teaser - Artistic redesign */}
+      <section className="py-20 md:py-32 bg-light relative">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4 md:mb-6">
-                Amour ↔ Ennuie
-              </h2>
-              <p className="font-body text-base sm:text-lg md:text-xl text-dark/70 leading-relaxed max-w-3xl mx-auto">
-                Notre première collection explore le paradoxe entre passion
-                ardente et introspection silencieuse. Deux pulsations d&apos;un
-                même cœur, brodées sur textile premium.
-              </p>
-            </div>
-          </FadeIn>
+            <div className="text-center">
+              {/* Artistic header */}
+              <div className="relative inline-block mb-8">
+                <span className="font-mono text-[10px] tracking-[0.5em] text-dark/40 block mb-4">
+                  COLLECTION
+                </span>
+                <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-dark">
+                  Harmonie du Chaos
+                </h2>
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent" />
+              </div>
 
-          <FadeIn delay={0.3}>
-            <div className="flex justify-center">
-              <Link
-                href="/collection"
-                className="inline-block font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 bg-primary hover:bg-primary/90 text-white rounded-sm transition-all hover:scale-105 shadow-lg hover:shadow-xl"
+              <p className="font-body text-base sm:text-lg md:text-xl text-dark/60 leading-relaxed max-w-2xl mx-auto mt-12 mb-16">
+                Là où l&apos;ordre rencontre le désordre, où la beauté naît de la contradiction.
+                Notre première série explore les profondeurs du paradoxe humain.
+              </p>
+
+              {/* Series card - artistic */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="relative max-w-lg mx-auto"
               >
-                Explorer la collection
-              </Link>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-sm" />
+                <div className="relative p-10 md:p-14 border border-dark/10">
+                  <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 block mb-4">
+                    PREMIÈRE SÉRIE
+                  </span>
+                  <h3 className="font-display text-3xl md:text-4xl font-bold text-dark mb-4">
+                    Narcisse Amoureux
+                  </h3>
+                  <p className="font-body text-sm md:text-base text-dark/60 leading-relaxed mb-8">
+                    Le paradoxe entre l&apos;amour de soi et l&apos;amour de l&apos;autre.
+                    Une réflexion textile sur le miroir intérieur.
+                  </p>
+                  <Link
+                    href="/collection"
+                    className="inline-flex items-center gap-3 font-body text-sm font-medium text-primary hover:text-primary/70 transition-colors group"
+                  >
+                    <span>Explorer</span>
+                    <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
+                  </Link>
+                </div>
+              </motion.div>
             </div>
           </FadeIn>
         </div>
