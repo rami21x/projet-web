@@ -23,7 +23,7 @@ const sparkles = [
 ];
 
 export default function Home() {
-  const { heroContent, homeFeatures } = useContent();
+  const { homeFeatures } = useContent();
 
   return (
     <div>
@@ -71,7 +71,7 @@ export default function Home() {
           />
         ))}
 
-        {/* Center content - Logo only */}
+        {/* Center content - Logo only, no button */}
         <div className="relative z-10 flex flex-col items-center justify-center px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -92,21 +92,6 @@ export default function Home() {
               className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl"
               priority
             />
-          </motion.div>
-
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-8 md:mt-12"
-          >
-            <Link
-              href={heroContent.cta.link}
-              className="inline-block font-body font-semibold text-sm sm:text-base px-8 sm:px-10 py-3 sm:py-4 bg-primary hover:bg-primary/90 text-white rounded-sm transition-all hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              {heroContent.cta.text}
-            </Link>
           </motion.div>
         </div>
 
@@ -202,7 +187,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Philosophy Section with integrated artistic CTA */}
+      {/* NARCISSE AMOUREUX - Standalone artistic section */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-light via-white to-light relative overflow-hidden">
+        {/* Subtle decorative elements */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-dark rounded-full" />
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <FadeIn>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center"
+            >
+              <Link
+                href="/collection"
+                className="inline-block group"
+              >
+                <span className="font-mono text-[10px] tracking-[0.5em] text-dark/40 block mb-4">
+                  SÉRIE I
+                </span>
+                <div className="relative">
+                  <div className="absolute -inset-6 border border-dark/5 group-hover:border-primary/20 transition-colors duration-500" />
+                  <div className="absolute -inset-3 border border-dark/10 group-hover:border-primary/30 transition-colors duration-500" />
+                  <div className="relative px-12 py-8 md:px-16 md:py-10">
+                    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-dark group-hover:text-primary transition-colors duration-500 tracking-wide">
+                      NARCISSE
+                    </h2>
+                    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-primary group-hover:text-dark transition-colors duration-500 tracking-wide -mt-1">
+                      AMOUREUX
+                    </h2>
+                    <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-6 group-hover:w-24 transition-all duration-500" />
+                    <p className="font-body text-sm text-dark/50 mt-6 group-hover:text-dark/70 transition-colors">
+                      Découvrir la collection →
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Philosophy Section - Clean without the CTA */}
       <section className="py-20 md:py-32 bg-dark text-white relative overflow-hidden">
         {/* Background artistic elements */}
         <div className="absolute inset-0 opacity-5">
@@ -219,38 +249,13 @@ export default function Home() {
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-8 md:mb-10 leading-tight">
               Mode qui transforme
             </h2>
-            <p className="font-body text-base sm:text-lg md:text-xl text-light/80 leading-relaxed mb-10 md:mb-14 max-w-2xl mx-auto">
+            <p className="font-body text-base sm:text-lg md:text-xl text-light/80 leading-relaxed max-w-2xl mx-auto">
               Nous croyons que ce qu&apos;on porte affecte la conscience. Chaque
               pièce Arteral est une exploration philosophique incarnée,
               une collaboration artistique, une série limitée qui invite
               à la contemplation.
             </p>
-
-            {/* Artistic CTA - NARCISSE AMOUREUX */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative inline-block"
-            >
-              <div className="absolute -inset-4 border border-white/10 rounded-sm" />
-              <div className="absolute -inset-2 border border-white/20 rounded-sm" />
-              <Link
-                href="/collection"
-                className="relative block px-12 py-6 bg-transparent border border-white/40 hover:border-primary hover:bg-primary/10 transition-all duration-500 group"
-              >
-                <span className="font-mono text-[10px] tracking-[0.4em] text-white/50 block mb-2">
-                  SÉRIE I
-                </span>
-                <span className="font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider text-white group-hover:text-primary transition-colors duration-300">
-                  NARCISSE AMOUREUX
-                </span>
-                <span className="block mt-3 font-body text-sm text-white/60 group-hover:text-white/80 transition-colors">
-                  Découvrir la collection →
-                </span>
-              </Link>
-            </motion.div>
+            <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-10" />
           </FadeIn>
         </div>
       </section>
@@ -261,7 +266,7 @@ export default function Home() {
       {/* Duality Slider Section */}
       <DualitySlider />
 
-      {/* Collection Teaser - Artistic redesign */}
+      {/* Collection Teaser - Harmonie du Chaos */}
       <section className="py-20 md:py-32 bg-light relative">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
@@ -282,34 +287,14 @@ export default function Home() {
                 Notre première série explore les profondeurs du paradoxe humain.
               </p>
 
-              {/* Series card - artistic */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="relative max-w-lg mx-auto"
+              {/* Link to collection */}
+              <Link
+                href="/collection"
+                className="inline-flex items-center gap-3 font-body text-sm font-medium text-primary hover:text-primary/70 transition-colors group"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-sm" />
-                <div className="relative p-10 md:p-14 border border-dark/10">
-                  <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 block mb-4">
-                    PREMIÈRE SÉRIE
-                  </span>
-                  <h3 className="font-display text-3xl md:text-4xl font-bold text-dark mb-4">
-                    Narcisse Amoureux
-                  </h3>
-                  <p className="font-body text-sm md:text-base text-dark/60 leading-relaxed mb-8">
-                    Le paradoxe entre l&apos;amour de soi et l&apos;amour de l&apos;autre.
-                    Une réflexion textile sur le miroir intérieur.
-                  </p>
-                  <Link
-                    href="/collection"
-                    className="inline-flex items-center gap-3 font-body text-sm font-medium text-primary hover:text-primary/70 transition-colors group"
-                  >
-                    <span>Explorer</span>
-                    <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
-                  </Link>
-                </div>
-              </motion.div>
+                <span>Explorer la collection</span>
+                <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
+              </Link>
             </div>
           </FadeIn>
         </div>
