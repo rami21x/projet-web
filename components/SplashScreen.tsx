@@ -6,7 +6,8 @@ import Image from "next/image";
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Check if splash was already shown this session
@@ -14,35 +15,41 @@ export default function SplashScreen() {
     const hasSeenSplash = sessionStorage.getItem("arteral-splash-seen");
     if (hasSeenSplash) {
       setIsVisible(false);
+    } else {
+      // Show content after a small delay
+      setTimeout(() => setShowContent(true), 300);
     }
   }, []);
 
+  const handleVideoLoad = () => {
+    setVideoLoaded(true);
+  };
+
   const handleVideoEnd = () => {
-    setVideoEnded(true);
-    // Small delay before hiding for smooth transition
+    closeSplash();
+  };
+
+  const closeSplash = () => {
+    setShowContent(false);
     setTimeout(() => {
       setIsVisible(false);
       sessionStorage.setItem("arteral-splash-seen", "true");
-    }, 500);
+    }, 600);
   };
 
   const handleSkip = () => {
     if (videoRef.current) {
       videoRef.current.pause();
     }
-    setVideoEnded(true);
-    setTimeout(() => {
-      setIsVisible(false);
-      sessionStorage.setItem("arteral-splash-seen", "true");
-    }, 300);
+    closeSplash();
   };
 
-  // Fallback: auto-hide after 15 seconds if video doesn't load
+  // Fallback: auto-hide after 12 seconds if video doesn't end
   useEffect(() => {
     if (isVisible) {
       const fallbackTimer = setTimeout(() => {
-        handleSkip();
-      }, 15000);
+        closeSplash();
+      }, 12000);
       return () => clearTimeout(fallbackTimer);
     }
   }, [isVisible]);
@@ -50,81 +57,135 @@ export default function SplashScreen() {
   if (!isVisible) return null;
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isVisible && (
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] bg-dark flex items-center justify-center overflow-hidden"
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          className="fixed inset-0 z-[100] bg-[#0A0A0A] flex items-center justify-center overflow-hidden"
         >
-          {/* Video Background */}
-          <video
+          {/* Video Background - Full cover */}
+          <motion.video
             ref={videoRef}
             autoPlay
             muted
             playsInline
+            onLoadedData={handleVideoLoad}
             onEnded={handleVideoEnd}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: videoLoaded ? 1 : 0 }}
+            transition={{ duration: 1 }}
             className="absolute inset-0 w-full h-full object-cover"
           >
             <source src="/videos/splash-intro.mp4" type="video/mp4" />
             <source src="/videos/splash-intro.webm" type="video/webm" />
-          </video>
+          </motion.video>
 
-          {/* Overlay gradient for better visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-transparent to-dark/50" />
+          {/* Elegant overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/30 via-transparent to-[#0A0A0A]/30" />
 
-          {/* Logo centered (appears during video) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="relative z-10 flex flex-col items-center"
-          >
-            <Image
-              src="/images/logo.png"
-              alt="Arteral Logo"
-              width={200}
-              height={200}
-              className="w-32 h-32 md:w-48 md:h-48 object-contain"
-              priority
-            />
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="font-display text-4xl md:text-6xl font-bold text-white mt-6"
-            >
-              ARTERAL
-            </motion.h1>
-          </motion.div>
+          {/* Centered Logo & Brand */}
+          <AnimatePresence>
+            {showContent && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="relative z-10 flex flex-col items-center text-center px-4"
+              >
+                {/* Logo with glow effect */}
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                  className="relative"
+                >
+                  <div className="absolute inset-0 blur-2xl bg-primary/20 rounded-full scale-150" />
+                  <Image
+                    src="/images/logo.png"
+                    alt="Arteral Logo"
+                    width={180}
+                    height={180}
+                    className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl"
+                    priority
+                  />
+                </motion.div>
 
-          {/* Skip Button */}
+                {/* Brand Name */}
+                <motion.h1
+                  initial={{ opacity: 0, letterSpacing: "0.5em" }}
+                  animate={{ opacity: 1, letterSpacing: "0.2em" }}
+                  transition={{ duration: 1.2, delay: 0.5 }}
+                  className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 md:mt-8 tracking-widest"
+                >
+                  ARTERAL
+                </motion.h1>
+
+                {/* Tagline */}
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.7 }}
+                  transition={{ duration: 1, delay: 1 }}
+                  className="font-body text-sm sm:text-base text-white/60 mt-3 md:mt-4 tracking-wide"
+                >
+                  L&apos;art de porter sa philosophie
+                </motion.p>
+
+                {/* Animated line */}
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "100px" }}
+                  transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
+                  className="h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mt-6"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Skip Button - More elegant */}
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
+            transition={{ delay: 2.5, duration: 0.5 }}
             onClick={handleSkip}
-            className="absolute bottom-8 right-8 z-20 font-body text-sm text-white/70 hover:text-white transition-colors px-4 py-2 border border-white/30 hover:border-white/60 rounded-full backdrop-blur-sm"
+            className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-20 group"
           >
-            Passer &rarr;
+            <span className="font-body text-xs sm:text-sm text-white/40 group-hover:text-white/80 transition-all duration-300 flex items-center gap-2">
+              <span className="hidden sm:inline">Passer</span>
+              <svg
+                className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
           </motion.button>
 
-          {/* Loading indicator / Progress */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: videoEnded ? 0 : 1 }}
-            className="absolute bottom-8 left-8 z-20"
-          >
-            <div className="flex items-center gap-2 text-white/50 text-xs font-body">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="w-4 h-4 border-2 border-white/30 border-t-white/80 rounded-full"
-              />
-              Chargement...
-            </div>
-          </motion.div>
+          {/* Loading state - Only shows if video is loading */}
+          {!videoLoaded && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-20"
+            >
+              <div className="flex items-center gap-3">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  className="w-4 h-4 border border-white/20 border-t-primary/80 rounded-full"
+                />
+                <span className="text-white/30 text-xs font-body tracking-wider">
+                  Chargement...
+                </span>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

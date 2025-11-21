@@ -15,19 +15,27 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Brand Section */}
           <div>
-            <Link href="/" className="inline-flex items-center gap-3 mb-4 group">
-              <Image
-                src="/images/logo.png"
-                alt="Arteral Logo"
-                width={48}
-                height={48}
-                className="w-10 h-10 md:w-12 md:h-12 object-contain group-hover:scale-105 transition-transform"
-              />
-              <h3 className="font-display text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors">
-                ARTERAL
-              </h3>
+            <Link href="/" className="inline-flex items-center gap-4 mb-6 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full scale-125 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <Image
+                  src="/images/logo.png"
+                  alt="Arteral Logo"
+                  width={56}
+                  height={56}
+                  className="relative w-12 h-12 md:w-14 md:h-14 object-contain transition-all duration-300 group-hover:scale-110"
+                />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors duration-300 tracking-wider">
+                  ARTERAL
+                </h3>
+                <span className="text-xs text-light/50 font-body tracking-widest mt-1">
+                  WEAR YOUR PHILOSOPHY
+                </span>
+              </div>
             </Link>
-            <p className="font-body text-sm text-light/95 leading-relaxed whitespace-pre-line">
+            <p className="font-body text-sm text-light/70 leading-relaxed whitespace-pre-line max-w-xs">
               {footerContent.brand.tagline}
             </p>
           </div>
