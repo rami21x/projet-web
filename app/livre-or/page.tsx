@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, Feather, Heart, Star, Sparkles } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import { useContent } from "@/hooks/useContent";
 
 interface GuestEntry {
   id: number;
@@ -19,46 +20,20 @@ const moodIcons = {
   thoughtful: Star,
 };
 
-const moodLabels = {
-  love: "Amour",
-  inspired: "Inspiré",
-  thoughtful: "Pensif",
-};
-
-// Simulated guest entries
-const initialEntries: GuestEntry[] = [
-  {
-    id: 1,
-    name: "Sophie M.",
-    message:
-      "Arteral transcende la mode. C'est une expérience philosophique que je porte chaque jour.",
-    date: "15 Nov 2024",
-    mood: "inspired",
-  },
-  {
-    id: 2,
-    name: "Marc L.",
-    message:
-      "Enfin une marque qui comprend que le vêtement est bien plus qu'un tissu. C'est une pensée incarnée.",
-    date: "12 Nov 2024",
-    mood: "thoughtful",
-  },
-  {
-    id: 3,
-    name: "Amélie D.",
-    message:
-      "La collection Amour ↔ Ennuie m'a touchée profondément. Merci de créer avec autant d'intention.",
-    date: "10 Nov 2024",
-    mood: "love",
-  },
-];
-
 export default function LivreDorPage() {
-  const [entries, setEntries] = useState<GuestEntry[]>(initialEntries);
+  const { guestbookPageContent } = useContent();
+  const [entries, setEntries] = useState<GuestEntry[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [mood, setMood] = useState<"love" | "inspired" | "thoughtful">("inspired");
   const [submitted, setSubmitted] = useState(false);
+
+  // Initialize entries from content
+  useEffect(() => {
+    if (guestbookPageContent?.defaultEntries) {
+      setEntries(guestbookPageContent.defaultEntries as GuestEntry[]);
+    }
+  }, [guestbookPageContent]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,7 +63,7 @@ export default function LivreDorPage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-light dark:bg-dark">
       {/* Hero Section */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-dark via-dark/95 to-accent/20 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -114,11 +89,10 @@ export default function LivreDorPage() {
             </motion.div>
 
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8">
-              Livre d'Or
+              {guestbookPageContent.hero.title}
             </h1>
             <p className="font-body text-lg md:text-xl text-light/90 leading-relaxed max-w-3xl mx-auto">
-              Partagez votre expérience Arteral. Vos impressions, vos réflexions, vos
-              émotions. Chaque visiteur laisse une trace dans notre musée virtuel.
+              {guestbookPageContent.hero.description}
             </p>
           </FadeIn>
         </div>
@@ -132,7 +106,7 @@ export default function LivreDorPage() {
               <div className="flex items-center gap-4 mb-8">
                 <Feather className="w-8 h-8 text-accent" />
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-dark dark:text-white">
-                  Laissez votre empreinte
+                  {guestbookPageContent.form.title}
                 </h2>
               </div>
 
@@ -143,7 +117,7 @@ export default function LivreDorPage() {
                   className="mb-6 p-4 bg-accent/10 border-2 border-accent/30 rounded-lg"
                 >
                   <p className="font-body text-accent font-semibold text-center">
-                    ✨ Merci pour votre contribution au Livre d'Or !
+                    {guestbookPageContent.form.success}
                   </p>
                 </motion.div>
               )}
@@ -152,9 +126,9 @@ export default function LivreDorPage() {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block font-body text-sm font-semibold text-dark dark:text-white/90 mb-2"
+                    className="block font-body text-sm font-semibold text-dark dark:text-white mb-2"
                   >
-                    Votre nom *
+                    {guestbookPageContent.form.nameLabel}
                   </label>
                   <input
                     type="text"
@@ -163,16 +137,16 @@ export default function LivreDorPage() {
                     onChange={(e) => setName(e.target.value)}
                     required
                     className="w-full px-4 py-3 font-body text-base text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-accent transition-colors"
-                    placeholder="Sophie M."
+                    placeholder={guestbookPageContent.form.namePlaceholder}
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="message"
-                    className="block font-body text-sm font-semibold text-dark dark:text-white/90 mb-2"
+                    className="block font-body text-sm font-semibold text-dark dark:text-white mb-2"
                   >
-                    Votre message *
+                    {guestbookPageContent.form.messageLabel}
                   </label>
                   <textarea
                     id="message"
@@ -181,13 +155,13 @@ export default function LivreDorPage() {
                     required
                     rows={5}
                     className="w-full px-4 py-3 font-body text-base text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-accent transition-colors resize-none"
-                    placeholder="Partagez votre expérience Arteral..."
+                    placeholder={guestbookPageContent.form.messagePlaceholder}
                   />
                 </div>
 
                 <div>
-                  <label className="block font-body text-sm font-semibold text-dark dark:text-white/90 mb-3">
-                    Votre humeur
+                  <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-3">
+                    {guestbookPageContent.form.moodLabel}
                   </label>
                   <div className="flex gap-4">
                     {(Object.keys(moodIcons) as Array<keyof typeof moodIcons>).map(
@@ -216,7 +190,7 @@ export default function LivreDorPage() {
                                   : "text-dark/60 dark:text-white/60"
                               }`}
                             >
-                              {moodLabels[moodKey]}
+                              {guestbookPageContent.moods[moodKey]}
                             </p>
                           </button>
                         );
@@ -230,7 +204,7 @@ export default function LivreDorPage() {
                   className="w-full flex items-center justify-center gap-3 font-body font-semibold text-base sm:text-lg px-8 py-4 bg-gradient-to-r from-accent to-primary hover:from-primary hover:to-accent text-white rounded-lg transition-all hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   <Feather className="w-5 h-5" />
-                  <span>Signer le Livre d'Or</span>
+                  <span>{guestbookPageContent.form.submit}</span>
                 </button>
               </form>
             </div>
@@ -243,7 +217,7 @@ export default function LivreDorPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-12 text-center">
-              Les Visiteurs d'Arteral
+              {guestbookPageContent.entries.title}
             </h2>
           </FadeIn>
 
@@ -278,11 +252,11 @@ export default function LivreDorPage() {
                         </div>
 
                         <p className="font-body text-base text-dark/80 dark:text-white/80 leading-relaxed italic">
-                          "{entry.message}"
+                          &ldquo;{entry.message}&rdquo;
                         </p>
 
                         <p className="font-mono text-xs text-accent mt-3 uppercase tracking-wider">
-                          {moodLabels[entry.mood]}
+                          {guestbookPageContent.moods[entry.mood]}
                         </p>
                       </div>
                     </div>

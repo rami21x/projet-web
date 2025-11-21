@@ -758,6 +758,121 @@ export const footerContent = {
   taglineShort: "Mode philosophique · Séries limitées · Art incarné",
 };
 
+// Page Processus
+export const processPageContent = {
+  hero: {
+    title: "Processus de Création",
+    description: "De la philosophie au vêtement : découvrez comment nous transformons des concepts abstraits en pièces tangibles et porteuses de sens.",
+  },
+  stepLabel: "Étape",
+  timeline: {
+    title: "De l'idée au vêtement",
+  },
+  cta: {
+    title: "Découvrez le résultat",
+    description: "Tout ce processus aboutit à la collection Amour ↔ Ennuie. Explorez les pièces finales et découvrez les artistes qui les ont créées.",
+    collection: "Voir la collection",
+    artists: "Rencontrer les artistes",
+  },
+};
+
+// Page Contact
+export const contactPageContent = {
+  hero: {
+    title: "Contact",
+    description: "Rejoignez la communauté Arteral et restez informé de nos nouvelles collections, collaborations artistiques et explorations philosophiques.",
+  },
+  form: {
+    email: "Email *",
+    emailPlaceholder: "votre@email.com",
+    name: "Nom (optionnel)",
+    namePlaceholder: "Votre nom",
+    submit: "S'inscrire",
+  },
+  contactSection: {
+    title: "Nous contacter",
+    email: "Email",
+    instagram: "Instagram",
+  },
+  faq: {
+    title: "Questions Fréquentes",
+  },
+  cta: {
+    title: "Explorez l'univers Arteral",
+    description: "Découvrez notre philosophie, notre processus créatif et la collection Amour ↔ Ennuie.",
+    brand: "Découvrir la marque",
+    collection: "Voir la collection",
+  },
+};
+
+// Page Marque
+export const brandPageContent = {
+  philosophySection: {
+    title: "Univers Philosophique",
+  },
+  processSection: {
+    title: "Processus Créatif",
+  },
+  valuesSection: {
+    title: "Nos Valeurs",
+  },
+  cta: {
+    title: "Prêt à explorer?",
+    description: "Découvrez notre première collection Amour ↔ Ennuie et plongez dans l'univers philosophique d'Arteral.",
+    collection: "Voir la collection",
+    artists: "Découvrir les artistes",
+  },
+};
+
+// Page Livre d'Or
+export const guestbookPageContent = {
+  hero: {
+    title: "Livre d'Or",
+    description: "Partagez votre expérience Arteral. Vos impressions, vos réflexions, vos émotions. Chaque visiteur laisse une trace dans notre musée virtuel.",
+  },
+  form: {
+    title: "Laissez votre empreinte",
+    nameLabel: "Votre nom *",
+    namePlaceholder: "Sophie M.",
+    messageLabel: "Votre message *",
+    messagePlaceholder: "Partagez votre expérience Arteral...",
+    moodLabel: "Votre humeur",
+    submit: "Signer le Livre d'Or",
+    success: "Merci pour votre contribution au Livre d'Or !",
+  },
+  moods: {
+    love: "Amour",
+    inspired: "Inspiré",
+    thoughtful: "Pensif",
+  },
+  entries: {
+    title: "Les Visiteurs d'Arteral",
+  },
+  defaultEntries: [
+    {
+      id: 1,
+      name: "Sophie M.",
+      message: "Arteral transcende la mode. C'est une expérience philosophique que je porte chaque jour.",
+      date: "15 Nov 2024",
+      mood: "inspired",
+    },
+    {
+      id: 2,
+      name: "Marc L.",
+      message: "Enfin une marque qui comprend que le vêtement est bien plus qu'un tissu. C'est une pensée incarnée.",
+      date: "12 Nov 2024",
+      mood: "thoughtful",
+    },
+    {
+      id: 3,
+      name: "Amélie D.",
+      message: "La collection Amour ↔ Ennuie m'a touchée profondément. Merci de créer avec autant d'intention.",
+      date: "10 Nov 2024",
+      mood: "love",
+    },
+  ],
+};
+
 export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },

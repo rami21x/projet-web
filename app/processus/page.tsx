@@ -12,27 +12,26 @@ const iconMap = {
 };
 
 export default function ProcessusPage() {
-  const { processContent } = useContent();
+  const { processContent, processPageContent } = useContent();
 
   return (
-    <div>
+    <div className="bg-light dark:bg-dark">
       {/* Hero Section */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-dark to-dark/95 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8">
-              Processus de Création
+              {processPageContent.hero.title}
             </h1>
             <p className="font-body text-lg md:text-xl text-light/90 leading-relaxed max-w-3xl mx-auto">
-              De la philosophie au vêtement : découvrez comment nous transformons
-              des concepts abstraits en pièces tangibles et porteuses de sens.
+              {processPageContent.hero.description}
             </p>
           </FadeIn>
         </div>
       </section>
 
       {/* Process Sections */}
-      <section className="py-16 md:py-24 bg-light">
+      <section className="py-16 md:py-24 bg-light dark:bg-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16 md:space-y-24">
             {processContent.sections.map((section, index) => {
@@ -50,26 +49,26 @@ export default function ProcessusPage() {
                     <div
                       className={`${
                         !isEven ? "lg:col-start-2" : ""
-                      } bg-gradient-to-br from-primary/10 to-accent/10 p-12 md:p-16 rounded-lg flex items-center justify-center min-h-[300px]`}
+                      } bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-12 md:p-16 rounded-lg flex items-center justify-center min-h-[300px]`}
                     >
                       <div className="text-center">
-                        <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 mb-6 bg-white rounded-full shadow-lg">
+                        <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 mb-6 bg-white dark:bg-dark/80 rounded-full shadow-lg">
                           {Icon && (
                             <Icon className="w-12 h-12 md:w-16 md:h-16 text-primary" />
                           )}
                         </div>
-                        <p className="font-display text-xl md:text-2xl font-bold text-dark">
-                          Étape {index + 1}
+                        <p className="font-display text-xl md:text-2xl font-bold text-dark dark:text-white">
+                          {processPageContent.stepLabel} {index + 1}
                         </p>
                       </div>
                     </div>
 
                     {/* Content Column */}
                     <div className={!isEven ? "lg:col-start-1 lg:row-start-1" : ""}>
-                      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4 md:mb-6">
+                      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-4 md:mb-6">
                         {section.title}
                       </h2>
-                      <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/90 leading-relaxed mb-6 md:mb-8">
+                      <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/70 leading-relaxed mb-6 md:mb-8">
                         {section.description}
                       </p>
 
@@ -79,7 +78,7 @@ export default function ProcessusPage() {
                           {section.subsections.map((subsection) => (
                             <li
                               key={subsection}
-                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/95"
+                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/80"
                             >
                               <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-2" />
                               {subsection}
@@ -94,12 +93,12 @@ export default function ProcessusPage() {
                           {section.steps.map((step, stepIndex) => (
                             <div
                               key={step}
-                              className="flex items-center gap-4 bg-white p-4 rounded-lg"
+                              className="flex items-center gap-4 bg-white dark:bg-dark/60 p-4 rounded-lg"
                             >
                               <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white text-sm font-bold">
                                 {stepIndex + 1}
                               </div>
-                              <p className="font-body text-sm md:text-base text-dark/80 dark:text-white/95">
+                              <p className="font-body text-sm md:text-base text-dark/80 dark:text-white/80">
                                 {step}
                               </p>
                             </div>
@@ -113,7 +112,7 @@ export default function ProcessusPage() {
                           {section.details.map((detail) => (
                             <li
                               key={detail}
-                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/95"
+                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/80"
                             >
                               <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0 mt-2" />
                               {detail}
@@ -131,11 +130,11 @@ export default function ProcessusPage() {
       </section>
 
       {/* Timeline Overview */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-white dark:bg-dark/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-center text-dark mb-12 md:mb-16">
-              De l'idée au vêtement
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-center text-dark dark:text-white mb-12 md:mb-16">
+              {processPageContent.timeline.title}
             </h2>
           </FadeIn>
 
@@ -150,13 +149,13 @@ export default function ProcessusPage() {
                         {Icon && <Icon className="w-8 h-8 md:w-10 md:h-10" />}
                       </div>
                       {index < processContent.sections.length - 1 && (
-                        <div className="hidden lg:block absolute top-1/2 left-full w-full h-0.5 bg-dark/10 -translate-y-1/2" />
+                        <div className="hidden lg:block absolute top-1/2 left-full w-full h-0.5 bg-dark/10 dark:bg-white/10 -translate-y-1/2" />
                       )}
                     </div>
-                    <h3 className="font-display text-lg md:text-xl font-bold text-dark mb-2">
+                    <h3 className="font-display text-lg md:text-xl font-bold text-dark dark:text-white mb-2">
                       {section.title}
                     </h3>
-                    <p className="font-body text-xs md:text-sm text-dark/60 dark:text-white/90 line-clamp-3">
+                    <p className="font-body text-xs md:text-sm text-dark/60 dark:text-white/60 line-clamp-3">
                       {section.description}
                     </p>
                   </div>
@@ -172,25 +171,23 @@ export default function ProcessusPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8">
-              Découvrez le résultat
+              {processPageContent.cta.title}
             </h2>
             <p className="font-body text-base md:text-lg text-light/95 leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto">
-              Tout ce processus aboutit à la collection Amour ↔ Ennuie.
-              Explorez les pièces finales et découvrez les artistes qui
-              les ont créées.
+              {processPageContent.cta.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/collection"
                 className="inline-block font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 bg-primary hover:bg-primary/90 text-white rounded-sm transition-all hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Voir la collection
+                {processPageContent.cta.collection}
               </a>
               <a
                 href="/artistes"
                 className="inline-block font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 border-2 border-white hover:bg-white hover:text-dark text-white rounded-sm transition-all hover:scale-105"
               >
-                Rencontrer les artistes
+                {processPageContent.cta.artists}
               </a>
             </div>
           </FadeIn>

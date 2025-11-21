@@ -758,6 +758,121 @@ export const footerContent = {
   taglineShort: "Philosophical fashion · Limited series · Embodied art",
 };
 
+// Process Page
+export const processPageContent = {
+  hero: {
+    title: "Creation Process",
+    description: "From philosophy to garment: discover how we transform abstract concepts into tangible, meaningful pieces.",
+  },
+  stepLabel: "Step",
+  timeline: {
+    title: "From idea to garment",
+  },
+  cta: {
+    title: "Discover the result",
+    description: "This entire process culminates in the Love ↔ Boredom collection. Explore the final pieces and discover the artists who created them.",
+    collection: "View the collection",
+    artists: "Meet the artists",
+  },
+};
+
+// Contact Page
+export const contactPageContent = {
+  hero: {
+    title: "Contact",
+    description: "Join the Arteral community and stay informed about our new collections, artistic collaborations, and philosophical explorations.",
+  },
+  form: {
+    email: "Email *",
+    emailPlaceholder: "your@email.com",
+    name: "Name (optional)",
+    namePlaceholder: "Your name",
+    submit: "Subscribe",
+  },
+  contactSection: {
+    title: "Contact us",
+    email: "Email",
+    instagram: "Instagram",
+  },
+  faq: {
+    title: "Frequently Asked Questions",
+  },
+  cta: {
+    title: "Explore the Arteral universe",
+    description: "Discover our philosophy, our creative process, and the Love ↔ Boredom collection.",
+    brand: "Discover the brand",
+    collection: "View the collection",
+  },
+};
+
+// Brand Page
+export const brandPageContent = {
+  philosophySection: {
+    title: "Philosophical Universe",
+  },
+  processSection: {
+    title: "Creative Process",
+  },
+  valuesSection: {
+    title: "Our Values",
+  },
+  cta: {
+    title: "Ready to explore?",
+    description: "Discover our first Love ↔ Boredom collection and dive into the philosophical universe of Arteral.",
+    collection: "View the collection",
+    artists: "Discover the artists",
+  },
+};
+
+// Guestbook Page
+export const guestbookPageContent = {
+  hero: {
+    title: "Guestbook",
+    description: "Share your Arteral experience. Your impressions, your reflections, your emotions. Each visitor leaves a trace in our virtual museum.",
+  },
+  form: {
+    title: "Leave your mark",
+    nameLabel: "Your name *",
+    namePlaceholder: "Sophie M.",
+    messageLabel: "Your message *",
+    messagePlaceholder: "Share your Arteral experience...",
+    moodLabel: "Your mood",
+    submit: "Sign the Guestbook",
+    success: "Thank you for your contribution to the Guestbook!",
+  },
+  moods: {
+    love: "Love",
+    inspired: "Inspired",
+    thoughtful: "Thoughtful",
+  },
+  entries: {
+    title: "Arteral Visitors",
+  },
+  defaultEntries: [
+    {
+      id: 1,
+      name: "Sophie M.",
+      message: "Arteral transcends fashion. It's a philosophical experience that I wear every day.",
+      date: "Nov 15, 2024",
+      mood: "inspired",
+    },
+    {
+      id: 2,
+      name: "Marc L.",
+      message: "Finally a brand that understands that clothing is much more than fabric. It's embodied thought.",
+      date: "Nov 12, 2024",
+      mood: "thoughtful",
+    },
+    {
+      id: 3,
+      name: "Amélie D.",
+      message: "The Love ↔ Boredom collection touched me deeply. Thank you for creating with such intention.",
+      date: "Nov 10, 2024",
+      mood: "love",
+    },
+  ],
+};
+
 export const navigation = [
   { name: "Home", href: "/" },
   { name: "Brand", href: "/marque" },
