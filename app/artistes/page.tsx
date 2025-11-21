@@ -31,14 +31,14 @@ export default function ConcoursPage() {
   };
 
   return (
-    <div className="bg-light">
+    <div className="bg-light dark:bg-light">
       {/* Hero Section - Artistic */}
-      <section className="relative min-h-[80vh] flex items-center justify-center bg-dark text-white overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-center justify-center bg-dark dark:bg-light text-white dark:text-dark overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-10 w-64 h-64 border border-white/5 rounded-full" />
+          <div className="absolute top-1/4 left-10 w-64 h-64 border border-white/5 dark:border-dark/10 rounded-full" />
           <div className="absolute bottom-1/4 right-10 w-96 h-96 border border-primary/10 rounded-full" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 dark:border-dark/10 rounded-full" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
@@ -48,11 +48,11 @@ export default function ConcoursPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              <span className="font-mono text-[10px] tracking-[0.5em] text-primary/60 block mb-6">
+              <span className="font-mono text-[10px] tracking-[0.5em] text-primary/60 dark:text-primary block mb-6">
                 APPEL AUX ARTISTES
               </span>
 
-              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-white dark:text-dark">
                 L&apos;Art de
                 <br />
                 <span className="text-primary">Narcisse</span>
@@ -60,7 +60,7 @@ export default function ConcoursPage() {
 
               <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-8" />
 
-              <p className="font-body text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed">
+              <p className="font-body text-lg md:text-xl text-white/60 dark:text-dark/70 max-w-2xl mx-auto mb-12 leading-relaxed">
                 Dessinez l&apos;âme de notre première série. Votre art pourrait habiller
                 des milliers de personnes et raconter l&apos;histoire de Narcisse Amoureux.
               </p>
@@ -68,13 +68,13 @@ export default function ConcoursPage() {
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <a
                   href="#participer"
-                  className="inline-block font-body text-sm px-10 py-4 border border-white/30 hover:border-primary hover:bg-primary/10 text-white transition-all duration-300"
+                  className="inline-block font-body text-sm px-10 py-4 border border-white/30 dark:border-dark/30 hover:border-primary hover:bg-primary/10 text-white dark:text-dark transition-all duration-300"
                 >
                   Soumettre mon œuvre
                 </a>
                 <a
                   href="#regles"
-                  className="inline-flex items-center gap-2 font-body text-sm text-white/50 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 font-body text-sm text-white/50 dark:text-dark/60 hover:text-white dark:hover:text-dark transition-colors"
                 >
                   <span>Lire les règles</span>
                   <span className="w-4 h-[1px] bg-current" />
@@ -94,19 +94,19 @@ export default function ConcoursPage() {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-5 h-8 border border-white/30 rounded-full flex justify-center pt-1.5"
+            className="w-5 h-8 border border-white/30 dark:border-dark/30 rounded-full flex justify-center pt-1.5"
           >
-            <div className="w-1 h-2 bg-white/30 rounded-full" />
+            <div className="w-1 h-2 bg-white/30 dark:bg-dark/30 rounded-full" />
           </motion.div>
         </motion.div>
       </section>
 
       {/* Le Concept */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-20 md:py-32 bg-white dark:bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-16">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-dark/60 block mb-4">
                 LE CONCEPT
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-dark mb-6">
@@ -128,7 +128,7 @@ export default function ConcoursPage() {
             <div className="mt-16 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-sm" />
               <div className="relative p-10 md:p-14 border border-dark/10">
-                <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 block mb-4">
+                <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 dark:text-primary block mb-4">
                   ÉTAPE ESSENTIELLE
                 </span>
                 <h3 className="font-display text-2xl md:text-3xl font-bold text-dark mb-4">
@@ -154,14 +154,14 @@ export default function ConcoursPage() {
       </section>
 
       {/* Les Prix */}
-      <section className="py-20 md:py-32 bg-dark text-white">
+      <section className="py-20 md:py-32 bg-dark dark:bg-light text-white dark:text-dark">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-20">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 dark:text-primary block mb-4">
                 RÉCOMPENSES
               </span>
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 text-white dark:text-dark">
                 Deux façons de gagner
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
@@ -176,32 +176,32 @@ export default function ConcoursPage() {
                 className="relative group"
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm" />
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-10 md:p-12">
-                  <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 block mb-4">
+                <div className="relative bg-white/5 dark:bg-dark/5 backdrop-blur-sm border border-white/10 dark:border-dark/20 p-10 md:p-12">
+                  <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 dark:text-dark/50 block mb-4">
                     PREMIER PRIX
                   </span>
-                  <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-2">
+                  <h3 className="font-display text-3xl md:text-4xl font-bold text-white dark:text-dark mb-2">
                     Prix du Peuple
                   </h3>
                   <p className="font-display text-5xl md:text-6xl font-bold text-primary mb-6">
                     3 500€
                   </p>
-                  <div className="w-12 h-[1px] bg-white/20 mb-6" />
-                  <p className="font-body text-white/60 leading-relaxed mb-6">
-                    Le gagnant sera choisi par <span className="text-white">vous</span>.
+                  <div className="w-12 h-[1px] bg-white/20 dark:bg-dark/20 mb-6" />
+                  <p className="font-body text-white/60 dark:text-dark/70 leading-relaxed mb-6">
+                    Le gagnant sera choisi par <span className="text-white dark:text-dark font-semibold">vous</span>.
                     Toutes les œuvres seront publiées sur notre Instagram.
                     Celle qui recevra le plus de likes remporte le prix.
                   </p>
                   <ul className="space-y-3">
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
+                    <li className="flex items-start gap-3 font-body text-sm text-white/70 dark:text-dark/70">
                       <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
                       Votre art imprimé sur la collection
                     </li>
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
+                    <li className="flex items-start gap-3 font-body text-sm text-white/70 dark:text-dark/70">
                       <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
                       Crédit artiste sur chaque pièce
                     </li>
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
+                    <li className="flex items-start gap-3 font-body text-sm text-white/70 dark:text-dark/70">
                       <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
                       5 pièces de la collection offertes
                     </li>
@@ -217,58 +217,58 @@ export default function ConcoursPage() {
                 className="relative group"
               >
                 <div className="absolute -inset-1 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm" />
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-10 md:p-12">
-                  <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 block mb-4">
+                <div className="relative bg-white/5 dark:bg-dark/5 backdrop-blur-sm border border-white/10 dark:border-dark/20 p-10 md:p-12">
+                  <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 dark:text-dark/50 block mb-4">
                     DEUXIÈME PRIX
                   </span>
-                  <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-2">
+                  <h3 className="font-display text-3xl md:text-4xl font-bold text-white dark:text-dark mb-2">
                     Prix du Cœur
                   </h3>
                   <p className="font-display text-5xl md:text-6xl font-bold text-accent mb-6">
                     1 500€
                   </p>
-                  <div className="w-12 h-[1px] bg-white/20 mb-6" />
-                  <p className="font-body text-white/60 leading-relaxed mb-6">
+                  <div className="w-12 h-[1px] bg-white/20 dark:bg-dark/20 mb-6" />
+                  <p className="font-body text-white/60 dark:text-dark/70 leading-relaxed mb-6">
                     Sélectionné par un jury d&apos;exception. Trois regards, une décision.
                   </p>
 
                   {/* Jury mystère */}
                   <div className="space-y-4 mb-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                        <span className="font-display text-lg text-white/40">?</span>
+                      <div className="w-12 h-12 rounded-full bg-white/10 dark:bg-dark/10 flex items-center justify-center">
+                        <span className="font-display text-lg text-white/40 dark:text-dark/50">?</span>
                       </div>
                       <div>
-                        <p className="font-body text-sm text-white/80">Un artiste reconnu</p>
-                        <p className="font-mono text-[10px] text-white/40">RÉVÉLÉ BIENTÔT</p>
+                        <p className="font-body text-sm text-white/80 dark:text-dark/80">Un artiste reconnu</p>
+                        <p className="font-mono text-[10px] text-white/40 dark:text-dark/50">RÉVÉLÉ BIENTÔT</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                        <span className="font-display text-lg text-white/40">?</span>
+                      <div className="w-12 h-12 rounded-full bg-white/10 dark:bg-dark/10 flex items-center justify-center">
+                        <span className="font-display text-lg text-white/40 dark:text-dark/50">?</span>
                       </div>
                       <div>
-                        <p className="font-body text-sm text-white/80">Une figure de la mode</p>
-                        <p className="font-mono text-[10px] text-white/40">RÉVÉLÉ BIENTÔT</p>
+                        <p className="font-body text-sm text-white/80 dark:text-dark/80">Une figure de la mode</p>
+                        <p className="font-mono text-[10px] text-white/40 dark:text-dark/50">RÉVÉLÉ BIENTÔT</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center">
-                        <span className="font-display text-lg text-white">A</span>
+                        <span className="font-display text-lg text-white dark:text-dark">A</span>
                       </div>
                       <div>
-                        <p className="font-body text-sm text-white/80">L&apos;équipe Arteral</p>
-                        <p className="font-mono text-[10px] text-primary/60">FONDATEURS</p>
+                        <p className="font-body text-sm text-white/80 dark:text-dark/80">L&apos;équipe Arteral</p>
+                        <p className="font-mono text-[10px] text-primary/60 dark:text-primary">FONDATEURS</p>
                       </div>
                     </div>
                   </div>
 
                   <ul className="space-y-3">
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
+                    <li className="flex items-start gap-3 font-body text-sm text-white/70 dark:text-dark/70">
                       <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0" />
                       Mention spéciale sur nos supports
                     </li>
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
+                    <li className="flex items-start gap-3 font-body text-sm text-white/70 dark:text-dark/70">
                       <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0" />
                       3 pièces de la collection offertes
                     </li>
@@ -281,11 +281,11 @@ export default function ConcoursPage() {
       </section>
 
       {/* Règles */}
-      <section id="regles" className="py-20 md:py-32 bg-white">
+      <section id="regles" className="py-20 md:py-32 bg-white dark:bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-16">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-dark/60 block mb-4">
                 PARTICIPATION
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-dark mb-6">
@@ -300,7 +300,7 @@ export default function ConcoursPage() {
             <FadeIn delay={0.1}>
               <div className="flex gap-6">
                 <div className="flex-shrink-0">
-                  <span className="font-display text-4xl font-bold text-primary/20">01</span>
+                  <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">01</span>
                 </div>
                 <div>
                   <h3 className="font-display text-xl font-bold text-dark mb-2">
@@ -319,7 +319,7 @@ export default function ConcoursPage() {
             <FadeIn delay={0.2}>
               <div className="flex gap-6">
                 <div className="flex-shrink-0">
-                  <span className="font-display text-4xl font-bold text-primary/20">02</span>
+                  <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">02</span>
                 </div>
                 <div>
                   <h3 className="font-display text-xl font-bold text-dark mb-2">
@@ -338,7 +338,7 @@ export default function ConcoursPage() {
             <FadeIn delay={0.3}>
               <div className="flex gap-6">
                 <div className="flex-shrink-0">
-                  <span className="font-display text-4xl font-bold text-primary/20">03</span>
+                  <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">03</span>
                 </div>
                 <div>
                   <h3 className="font-display text-xl font-bold text-dark mb-2">
@@ -357,7 +357,7 @@ export default function ConcoursPage() {
             <FadeIn delay={0.4}>
               <div className="flex gap-6">
                 <div className="flex-shrink-0">
-                  <span className="font-display text-4xl font-bold text-primary/20">04</span>
+                  <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">04</span>
                 </div>
                 <div>
                   <h3 className="font-display text-xl font-bold text-dark mb-2">
@@ -375,13 +375,13 @@ export default function ConcoursPage() {
 
           {/* Guide des contraintes */}
           <FadeIn delay={0.5}>
-            <div className="mt-16 p-8 md:p-10 bg-light border border-dark/10">
+            <div className="mt-16 p-8 md:p-10 bg-light dark:bg-light border border-dark/10">
               <h3 className="font-display text-xl font-bold text-dark mb-6">
                 Guide suggéré (non obligatoire)
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 mb-2">PALETTE</p>
+                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-dark/60 mb-2">PALETTE</p>
                   <div className="flex gap-2">
                     <div className="w-8 h-8 bg-[#8B0000] rounded-sm" title="Rouge profond" />
                     <div className="w-8 h-8 bg-[#2B2B2B] rounded-sm" title="Noir charbon" />
@@ -390,7 +390,7 @@ export default function ConcoursPage() {
                   </div>
                 </div>
                 <div>
-                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 mb-2">THÈMES</p>
+                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-dark/60 mb-2">THÈMES</p>
                   <p className="font-body text-sm text-dark/60">
                     Miroir, reflet, dualité, amour, solitude, connexion
                   </p>
@@ -402,11 +402,11 @@ export default function ConcoursPage() {
       </section>
 
       {/* Formulaire de soumission */}
-      <section id="participer" className="py-20 md:py-32 bg-light">
+      <section id="participer" className="py-20 md:py-32 bg-light dark:bg-light">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-dark/60 block mb-4">
                 SOUMISSION
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-dark mb-6">
@@ -423,7 +423,7 @@ export default function ConcoursPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className="bg-white p-12 border border-dark/10 text-center"
+                  className="bg-white dark:bg-white p-12 border border-dark/10 text-center"
                 >
                   <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
                     <span className="font-display text-2xl text-primary">✓</span>
@@ -439,7 +439,7 @@ export default function ConcoursPage() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="bg-white p-10 md:p-12 border border-dark/10"
+                  className="bg-white dark:bg-white p-10 md:p-12 border border-dark/10"
                 >
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
@@ -451,7 +451,7 @@ export default function ConcoursPage() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-dark/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body"
+                        className="w-full px-4 py-3 border border-dark/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark"
                         placeholder="Votre nom"
                       />
                     </div>
@@ -465,7 +465,7 @@ export default function ConcoursPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-dark/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body"
+                        className="w-full px-4 py-3 border border-dark/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark"
                         placeholder="votre@email.com"
                       />
                     </div>
@@ -479,7 +479,7 @@ export default function ConcoursPage() {
                         value={instagram}
                         onChange={(e) => setInstagram(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-dark/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body"
+                        className="w-full px-4 py-3 border border-dark/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark"
                         placeholder="@votre_compte"
                       />
                     </div>
@@ -534,16 +534,16 @@ export default function ConcoursPage() {
       </section>
 
       {/* Deadline */}
-      <section className="py-16 bg-dark text-white">
+      <section className="py-16 bg-dark dark:bg-light text-white dark:text-dark">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <FadeIn>
-            <span className="font-mono text-[10px] tracking-[0.4em] text-white/40 block mb-4">
+            <span className="font-mono text-[10px] tracking-[0.4em] text-white/40 dark:text-dark/50 block mb-4">
               DATE LIMITE
             </span>
-            <p className="font-display text-3xl md:text-4xl font-bold">
+            <p className="font-display text-3xl md:text-4xl font-bold text-white dark:text-dark">
               15 Janvier 2025
             </p>
-            <p className="font-body text-sm text-white/50 mt-4">
+            <p className="font-body text-sm text-white/50 dark:text-dark/60 mt-4">
               Les résultats seront annoncés le 1er Février 2025
             </p>
           </FadeIn>

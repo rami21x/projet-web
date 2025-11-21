@@ -531,7 +531,7 @@ export const navigation = [
   { name: "Studio", href: "/studio" },
   { name: "Gallery", href: "/galerie" },
   { name: "Manifesto", href: "/manifeste" },
-  { name: "€5K Contest", href: "/artistes" },
+  { name: "Art of Narcissus", href: "/artistes" },
   { name: "Guestbook", href: "/livre-or" },
   { name: "Process", href: "/processus" },
   { name: "Contact", href: "/contact" },

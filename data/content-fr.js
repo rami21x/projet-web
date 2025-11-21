@@ -531,7 +531,7 @@ export const navigation = [
   { name: "Studio", href: "/studio" },
   { name: "Galerie", href: "/galerie" },
   { name: "Manifeste", href: "/manifeste" },
-  { name: "Concours 5K€", href: "/artistes" },
+  { name: "L'Art de Narcisse", href: "/artistes" },
   { name: "Livre d'Or", href: "/livre-or" },
   { name: "Processus", href: "/processus" },
   { name: "Contact", href: "/contact" },
