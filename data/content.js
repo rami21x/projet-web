@@ -35,6 +35,240 @@ export const homeFeatures = [
   },
 ];
 
+// Homepage sections
+export const homePageContent = {
+  essence: {
+    title: "The Essence",
+  },
+  series: {
+    label: "SERIES I",
+    title1: "NARCISSUS",
+    title2: "IN LOVE",
+    cta: "Discover the collection →",
+  },
+  philosophy: {
+    label: "PHILOSOPHY",
+    title: "Fashion that transforms",
+    description: "We believe that what we wear affects consciousness. Every Arteral piece is an embodied philosophical exploration, an artistic collaboration, a limited series that invites contemplation.",
+  },
+  collection: {
+    label: "COLLECTION",
+    title: "Harmony of Chaos",
+    description: "Where order meets disorder, where beauty emerges from contradiction. Our first series explores the depths of the human paradox.",
+    cta: "Explore the collection",
+  },
+  heroQuote: {
+    quote: "Every piece tells a paradox.",
+    subquote: "Every paradox transforms the wearer.",
+  },
+};
+
+// Collection Page
+export const collectionPageContent = {
+  hero: {
+    label: "COLLECTION",
+    title1: "Harmony",
+    title2: "of Chaos",
+    description: "Where order meets disorder, where beauty emerges from contradiction.",
+  },
+  series: {
+    label: "FIRST SERIES",
+    title: "Narcissus in Love",
+    description: "The paradox between self-love and love for others. A textile exploration of the inner mirror.",
+    bookTitle: "THE BOOK",
+  },
+  book: [
+    {
+      numero: "I",
+      titre: "The Reflection",
+      texte: "Narcissus did not fall in love with himself, but with the stranger he saw in the water. We all carry this mystery: the one who watches us from the other side of the mirror.",
+    },
+    {
+      numero: "II",
+      titre: "The Paradox",
+      texte: "To love another is to lose oneself. To love oneself is to find oneself. But can one truly love without losing? Can one find oneself without loving?",
+    },
+    {
+      numero: "III",
+      titre: "The Duality",
+      texte: "Between ego and echo, between self and other, exists a space where opposites dance. This is where art is born. This is where Arteral is born.",
+    },
+    {
+      numero: "IV",
+      titre: "The Harmony",
+      texte: "From chaos comes order. From contradiction, beauty. Every piece we create carries this tension: being oneself while being for the other.",
+    },
+  ],
+  citations: {
+    label: "INSPIRATIONS",
+    title: "Thoughts on Paradox",
+  },
+  duality: {
+    narcisse: {
+      label: "SELF-LOVE",
+      title: "Narcissus",
+      description: "To look at oneself without judgment. To accept one's complexity. To find beauty in one's own contradictions.",
+      points: ["Introspection", "Acceptance", "Authenticity"],
+    },
+    amoureux: {
+      label: "LOVE FOR OTHERS",
+      title: "In Love",
+      description: "To lose oneself in the gaze of another. To discover who you are through the one you love.",
+      points: ["Connection", "Vulnerability", "Transcendence"],
+    },
+    paradox: {
+      label: "THE PARADOX",
+      quote: "One cannot love another without loving oneself. One cannot know oneself without the mirror of another.",
+    },
+  },
+  manifesto: {
+    quote: "To wear Arteral is to wear your paradox. It is to accept being multiple, contradictory, human.",
+    author: "ARTERAL MANIFESTO",
+  },
+  cta: {
+    label: "COMING SOON",
+    title: "Be the first",
+    description: "The Narcissus in Love collection is coming soon. Sign up to be notified of the launch.",
+    explore: "Meanwhile, explore our universe",
+    philosophy: "Our philosophy",
+    manifesto: "The manifesto",
+  },
+};
+
+// Contest Page / Art of Narcissus
+export const contestPageContent = {
+  hero: {
+    label: "CALL FOR ARTISTS",
+    title1: "The Art of",
+    title2: "Narcissus",
+    description: "Draw the soul of our first series. Your art could dress thousands of people and tell the story of Narcissus in Love.",
+    cta: "Submit my artwork",
+    rules: "Read the rules",
+  },
+  concept: {
+    label: "THE CONCEPT",
+    title: "Bring Narcissus in Love to Life",
+    description: "We seek the artist who will capture the essence of the paradox: self-love meeting love for others. Your creation will become the visual of our first series, printed on pieces worn by those who embrace their duality.",
+    essential: {
+      label: "ESSENTIAL STEP",
+      title: "Read the Brief",
+      description: "Before creating, immerse yourself in the story. The brief contains the essence of Narcissus in Love: the philosophical texts, visual references, and the soul of the series. It's your source of inspiration.",
+      cta: "Discover Narcissus in Love",
+    },
+  },
+  prizes: {
+    label: "REWARDS",
+    title: "Two ways to win",
+    peuple: {
+      label: "FIRST PRIZE",
+      title: "People's Choice",
+      amount: "€3,500",
+      description: "The winner will be chosen by",
+      you: "you",
+      details: "All artworks will be published on our Instagram. The one receiving the most likes wins the prize.",
+      rewards: [
+        "Your art printed on the collection",
+        "Artist credit on each piece",
+        "5 collection pieces offered",
+      ],
+    },
+    coeur: {
+      label: "SECOND PRIZE",
+      title: "Jury's Choice",
+      amount: "€1,500",
+      description: "Selected by an exceptional jury. Three perspectives, one decision.",
+      jury: [
+        { title: "A renowned artist", status: "REVEALED SOON" },
+        { title: "A fashion figure", status: "REVEALED SOON" },
+        { title: "The Arteral team", status: "FOUNDERS" },
+      ],
+      rewards: [
+        "Special mention on our platforms",
+        "3 collection pieces offered",
+      ],
+    },
+  },
+  rules: {
+    label: "PARTICIPATION",
+    title: "The rules of the game",
+    items: [
+      {
+        num: "01",
+        title: "Immerse yourself in the story",
+        description: "Carefully read the brief for the Narcissus in Love collection. Understand the paradox, feel the duality, let the story nourish your creation.",
+      },
+      {
+        num: "02",
+        title: "Respect the constraints... or not",
+        description: "We suggest a color palette and dimensions, but art knows no boundaries. If your vision demands stepping outside the frame, do it. Surprise us.",
+      },
+      {
+        num: "03",
+        title: "Format and submission",
+        description: "PNG or JPEG in high resolution (minimum 3000x3000px). Include your Instagram account for publication. One submission per artist.",
+      },
+      {
+        num: "04",
+        title: "Rights and publication",
+        description: "By submitting, you authorize Arteral to publish your work on Instagram for voting. The winner transfers exploitation rights for the collection in exchange for the prize and credits.",
+      },
+    ],
+    guide: {
+      title: "Suggested guide (not mandatory)",
+      palette: "PALETTE",
+      themes: "THEMES",
+      themesText: "Mirror, reflection, duality, love, solitude, connection",
+    },
+  },
+  form: {
+    label: "SUBMISSION",
+    title: "Send your artwork",
+    fields: {
+      name: "Full name",
+      namePlaceholder: "Your name",
+      email: "Email",
+      emailPlaceholder: "your@email.com",
+      instagram: "Instagram",
+      instagramPlaceholder: "@your_account",
+      artwork: "Your artwork",
+      uploadText: "Drag or click to upload",
+      uploadHint: "PNG, JPEG - Min 3000x3000px",
+      changeFile: "Click to change",
+    },
+    submit: "Submit my artwork",
+    terms: "By submitting, you accept the participation conditions.",
+    success: {
+      title: "Artwork received",
+      message: "Thank you for your participation. We will contact you soon.",
+    },
+  },
+  deadline: {
+    label: "DEADLINE",
+    date: "January 15, 2025",
+    results: "Results will be announced on February 1, 2025",
+  },
+};
+
+// Philosophical citations
+export const philosophicalCitations = [
+  {
+    text: "I seek myself in the other to find myself.",
+    author: "Oscar Wilde",
+  },
+  {
+    text: "Self-love is the beginning of a lifelong romance.",
+    author: "Oscar Wilde",
+  },
+  {
+    text: "In every mirror, a stranger watches me with my own eyes.",
+    author: "Fernando Pessoa",
+  },
+  {
+    text: "Paradox is the passion of thought.",
+    author: "Søren Kierkegaard",
+  },
+];
+
 export const aboutContent = {
   vision: {
     title: "ARTERAL",

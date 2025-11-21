@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import FadeIn from "@/components/FadeIn";
 import { motion, AnimatePresence } from "framer-motion";
+import { useContent } from "@/hooks/useContent";
 
 export default function ConcoursPage() {
+  const { contestPageContent } = useContent();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -49,20 +51,19 @@ export default function ConcoursPage() {
               transition={{ duration: 1 }}
             >
               <span className="font-mono text-[10px] tracking-[0.5em] text-primary/60 block mb-6">
-                APPEL AUX ARTISTES
+                {contestPageContent.hero.label}
               </span>
 
               <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-                L&apos;Art de
+                {contestPageContent.hero.title1}
                 <br />
-                <span className="text-primary">Narcisse</span>
+                <span className="text-primary">{contestPageContent.hero.title2}</span>
               </h1>
 
               <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-8" />
 
               <p className="font-body text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed">
-                Dessinez l&apos;âme de notre première série. Votre art pourrait habiller
-                des milliers de personnes et raconter l&apos;histoire de Narcisse Amoureux.
+                {contestPageContent.hero.description}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -70,13 +71,13 @@ export default function ConcoursPage() {
                   href="#participer"
                   className="inline-block font-body text-sm px-10 py-4 border border-white/30 hover:border-primary hover:bg-primary/10 text-white transition-all duration-300"
                 >
-                  Soumettre mon œuvre
+                  {contestPageContent.hero.cta}
                 </a>
                 <a
                   href="#regles"
                   className="inline-flex items-center gap-2 font-body text-sm text-white/50 hover:text-white transition-colors"
                 >
-                  <span>Lire les règles</span>
+                  <span>{contestPageContent.hero.rules}</span>
                   <span className="w-4 h-[1px] bg-current" />
                 </a>
               </div>
@@ -107,20 +108,17 @@ export default function ConcoursPage() {
           <FadeIn>
             <div className="text-center mb-16">
               <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-white/40 block mb-4">
-                LE CONCEPT
+                {contestPageContent.concept.label}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-6">
-                Donnez vie à Narcisse Amoureux
+                {contestPageContent.concept.title}
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
             </div>
 
             <div className="prose prose-lg max-w-none">
               <p className="font-body text-dark/70 dark:text-white/70 leading-relaxed mb-6 text-center">
-                Nous cherchons l&apos;artiste qui saura capturer l&apos;essence du paradoxe :
-                l&apos;amour de soi qui rencontre l&apos;amour de l&apos;autre. Votre création
-                deviendra le visuel de notre première série, imprimée sur des pièces
-                portées par ceux qui embrassent leur dualité.
+                {contestPageContent.concept.description}
               </p>
             </div>
 
@@ -129,22 +127,19 @@ export default function ConcoursPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-sm" />
               <div className="relative p-10 md:p-14 border border-dark/10 dark:border-white/10">
                 <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 dark:text-primary block mb-4">
-                  ÉTAPE ESSENTIELLE
+                  {contestPageContent.concept.essential.label}
                 </span>
                 <h3 className="font-display text-2xl md:text-3xl font-bold text-dark dark:text-white mb-4">
-                  Lisez le Livrable
+                  {contestPageContent.concept.essential.title}
                 </h3>
                 <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed mb-6">
-                  Avant de créer, imprégnez-vous de l&apos;histoire. Le livrable contient
-                  l&apos;essence de Narcisse Amoureux : les textes philosophiques, les
-                  références visuelles, et l&apos;âme de la série. C&apos;est votre source
-                  d&apos;inspiration.
+                  {contestPageContent.concept.essential.description}
                 </p>
                 <Link
                   href="/collection"
                   className="inline-flex items-center gap-3 font-body text-sm font-medium text-primary hover:text-primary/70 transition-colors group"
                 >
-                  <span>Découvrir Narcisse Amoureux</span>
+                  <span>{contestPageContent.concept.essential.cta}</span>
                   <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
                 </Link>
               </div>
@@ -159,10 +154,10 @@ export default function ConcoursPage() {
           <FadeIn>
             <div className="text-center mb-20">
               <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 block mb-4">
-                RÉCOMPENSES
+                {contestPageContent.prizes.label}
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
-                Deux façons de gagner
+                {contestPageContent.prizes.title}
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
             </div>
@@ -178,33 +173,26 @@ export default function ConcoursPage() {
                 <div className="absolute -inset-1 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm" />
                 <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-10 md:p-12">
                   <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 block mb-4">
-                    PREMIER PRIX
+                    {contestPageContent.prizes.peuple.label}
                   </span>
                   <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-2">
-                    Prix du Peuple
+                    {contestPageContent.prizes.peuple.title}
                   </h3>
                   <p className="font-display text-5xl md:text-6xl font-bold text-primary mb-6">
-                    3 500€
+                    {contestPageContent.prizes.peuple.amount}
                   </p>
                   <div className="w-12 h-[1px] bg-white/20 mb-6" />
                   <p className="font-body text-white/60 leading-relaxed mb-6">
-                    Le gagnant sera choisi par <span className="text-white font-semibold">vous</span>.
-                    Toutes les œuvres seront publiées sur notre Instagram.
-                    Celle qui recevra le plus de likes remporte le prix.
+                    {contestPageContent.prizes.peuple.description} <span className="text-white font-semibold">{contestPageContent.prizes.peuple.you}</span>.
+                    {contestPageContent.prizes.peuple.details}
                   </p>
                   <ul className="space-y-3">
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
-                      <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                      Votre art imprimé sur la collection
-                    </li>
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
-                      <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                      Crédit artiste sur chaque pièce
-                    </li>
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
-                      <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                      5 pièces de la collection offertes
-                    </li>
+                    {contestPageContent.prizes.peuple.rewards.map((reward, index) => (
+                      <li key={index} className="flex items-start gap-3 font-body text-sm text-white/70">
+                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                        {reward}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </motion.div>
@@ -219,59 +207,45 @@ export default function ConcoursPage() {
                 <div className="absolute -inset-1 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm" />
                 <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-10 md:p-12">
                   <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 block mb-4">
-                    DEUXIÈME PRIX
+                    {contestPageContent.prizes.coeur.label}
                   </span>
                   <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-2">
-                    Prix du Cœur
+                    {contestPageContent.prizes.coeur.title}
                   </h3>
                   <p className="font-display text-5xl md:text-6xl font-bold text-accent mb-6">
-                    1 500€
+                    {contestPageContent.prizes.coeur.amount}
                   </p>
                   <div className="w-12 h-[1px] bg-white/20 mb-6" />
                   <p className="font-body text-white/60 leading-relaxed mb-6">
-                    Sélectionné par un jury d&apos;exception. Trois regards, une décision.
+                    {contestPageContent.prizes.coeur.description}
                   </p>
 
                   {/* Jury mystère */}
                   <div className="space-y-4 mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                        <span className="font-display text-lg text-white/40">?</span>
+                    {contestPageContent.prizes.coeur.jury.map((member, index) => (
+                      <div key={index} className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-full ${index === 2 ? 'bg-primary/30' : 'bg-white/10'} flex items-center justify-center`}>
+                          <span className={`font-display text-lg ${index === 2 ? 'text-white' : 'text-white/40'}`}>
+                            {index === 2 ? 'A' : '?'}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-body text-sm text-white/80">{member.title}</p>
+                          <p className={`font-mono text-[10px] ${index === 2 ? 'text-primary/60' : 'text-white/40'}`}>
+                            {member.status}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-body text-sm text-white/80">Un artiste reconnu</p>
-                        <p className="font-mono text-[10px] text-white/40">RÉVÉLÉ BIENTÔT</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                        <span className="font-display text-lg text-white/40">?</span>
-                      </div>
-                      <div>
-                        <p className="font-body text-sm text-white/80">Une figure de la mode</p>
-                        <p className="font-mono text-[10px] text-white/40">RÉVÉLÉ BIENTÔT</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center">
-                        <span className="font-display text-lg text-white">A</span>
-                      </div>
-                      <div>
-                        <p className="font-body text-sm text-white/80">L&apos;équipe Arteral</p>
-                        <p className="font-mono text-[10px] text-primary/60">FONDATEURS</p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
 
                   <ul className="space-y-3">
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
-                      <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0" />
-                      Mention spéciale sur nos supports
-                    </li>
-                    <li className="flex items-start gap-3 font-body text-sm text-white/70">
-                      <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0" />
-                      3 pièces de la collection offertes
-                    </li>
+                    {contestPageContent.prizes.coeur.rewards.map((reward, index) => (
+                      <li key={index} className="flex items-start gap-3 font-body text-sm text-white/70">
+                        <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0" />
+                        {reward}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </motion.div>
@@ -286,102 +260,46 @@ export default function ConcoursPage() {
           <FadeIn>
             <div className="text-center mb-16">
               <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-white/40 block mb-4">
-                PARTICIPATION
+                {contestPageContent.rules.label}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-6">
-                Les règles du jeu
+                {contestPageContent.rules.title}
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
             </div>
           </FadeIn>
 
           <div className="space-y-8">
-            {/* Règle 1 */}
-            <FadeIn delay={0.1}>
-              <div className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">01</span>
+            {contestPageContent.rules.items.map((rule, index) => (
+              <FadeIn key={index} delay={index * 0.1}>
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0">
+                    <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">{rule.num}</span>
+                  </div>
+                  <div>
+                    <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-2">
+                      {rule.title}
+                    </h3>
+                    <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed">
+                      {rule.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-2">
-                    Imprégnez-vous de l&apos;histoire
-                  </h3>
-                  <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed">
-                    Lisez attentivement le livrable de la collection Narcisse Amoureux.
-                    Comprenez le paradoxe, ressentez la dualité, laissez l&apos;histoire
-                    nourrir votre création.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Règle 2 */}
-            <FadeIn delay={0.2}>
-              <div className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">02</span>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-2">
-                    Respectez les contraintes... ou pas
-                  </h3>
-                  <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed">
-                    Nous suggérons une palette de couleurs et des dimensions, mais
-                    l&apos;art ne connaît pas de frontières. Si votre vision demande
-                    de sortir du cadre, faites-le. Surprenez-nous.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Règle 3 */}
-            <FadeIn delay={0.3}>
-              <div className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">03</span>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-2">
-                    Format et soumission
-                  </h3>
-                  <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed">
-                    PNG ou JPEG en haute résolution (minimum 3000x3000px).
-                    Incluez votre compte Instagram pour la publication.
-                    Une seule soumission par artiste.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Règle 4 */}
-            <FadeIn delay={0.4}>
-              <div className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">04</span>
-                </div>
-                <div>
-                  <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-2">
-                    Droits et publication
-                  </h3>
-                  <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed">
-                    En soumettant, vous autorisez Arteral à publier votre œuvre sur
-                    Instagram pour le vote. Le gagnant cède les droits d&apos;exploitation
-                    pour la collection en échange du prix et des crédits.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
+              </FadeIn>
+            ))}
           </div>
 
           {/* Guide des contraintes */}
           <FadeIn delay={0.5}>
             <div className="mt-16 p-8 md:p-10 bg-light dark:bg-white/5 border border-dark/10 dark:border-white/10">
               <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
-                Guide suggéré (non obligatoire)
+                {contestPageContent.rules.guide.title}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-white/40 mb-2">PALETTE</p>
+                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-white/40 mb-2">
+                    {contestPageContent.rules.guide.palette}
+                  </p>
                   <div className="flex gap-2">
                     <div className="w-8 h-8 bg-[#8B0000] rounded-sm" title="Rouge profond" />
                     <div className="w-8 h-8 bg-[#2B2B2B] rounded-sm" title="Noir charbon" />
@@ -390,9 +308,11 @@ export default function ConcoursPage() {
                   </div>
                 </div>
                 <div>
-                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-white/40 mb-2">THÈMES</p>
+                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-white/40 mb-2">
+                    {contestPageContent.rules.guide.themes}
+                  </p>
                   <p className="font-body text-sm text-dark/60 dark:text-white/60">
-                    Miroir, reflet, dualité, amour, solitude, connexion
+                    {contestPageContent.rules.guide.themesText}
                   </p>
                 </div>
               </div>
@@ -407,10 +327,10 @@ export default function ConcoursPage() {
           <FadeIn>
             <div className="text-center mb-12">
               <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-white/40 block mb-4">
-                SOUMISSION
+                {contestPageContent.form.label}
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-6">
-                Envoyez votre œuvre
+                {contestPageContent.form.title}
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
             </div>
@@ -429,10 +349,10 @@ export default function ConcoursPage() {
                     <span className="font-display text-2xl text-primary">✓</span>
                   </div>
                   <h3 className="font-display text-2xl font-bold text-dark dark:text-white mb-4">
-                    Œuvre reçue
+                    {contestPageContent.form.success.title}
                   </h3>
                   <p className="font-body text-dark/60 dark:text-white/60">
-                    Merci pour votre participation. Nous vous contacterons bientôt.
+                    {contestPageContent.form.success.message}
                   </p>
                 </motion.div>
               ) : (
@@ -444,7 +364,7 @@ export default function ConcoursPage() {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label className="block font-body text-sm text-dark/60 dark:text-white/60 mb-2">
-                        Nom complet
+                        {contestPageContent.form.fields.name}
                       </label>
                       <input
                         type="text"
@@ -452,13 +372,13 @@ export default function ConcoursPage() {
                         onChange={(e) => setName(e.target.value)}
                         required
                         className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark dark:text-white"
-                        placeholder="Votre nom"
+                        placeholder={contestPageContent.form.fields.namePlaceholder}
                       />
                     </div>
 
                     <div>
                       <label className="block font-body text-sm text-dark/60 dark:text-white/60 mb-2">
-                        Email
+                        {contestPageContent.form.fields.email}
                       </label>
                       <input
                         type="email"
@@ -466,13 +386,13 @@ export default function ConcoursPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark dark:text-white"
-                        placeholder="votre@email.com"
+                        placeholder={contestPageContent.form.fields.emailPlaceholder}
                       />
                     </div>
 
                     <div>
                       <label className="block font-body text-sm text-dark/60 dark:text-white/60 mb-2">
-                        Instagram
+                        {contestPageContent.form.fields.instagram}
                       </label>
                       <input
                         type="text"
@@ -480,13 +400,13 @@ export default function ConcoursPage() {
                         onChange={(e) => setInstagram(e.target.value)}
                         required
                         className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark dark:text-white"
-                        placeholder="@votre_compte"
+                        placeholder={contestPageContent.form.fields.instagramPlaceholder}
                       />
                     </div>
 
                     <div>
                       <label className="block font-body text-sm text-dark/60 dark:text-white/60 mb-2">
-                        Votre œuvre
+                        {contestPageContent.form.fields.artwork}
                       </label>
                       <div className="border border-dashed border-dark/20 dark:border-white/20 p-8 text-center hover:border-primary transition-colors cursor-pointer">
                         <input
@@ -501,12 +421,18 @@ export default function ConcoursPage() {
                           {selectedFile ? (
                             <div>
                               <p className="font-body text-primary font-medium">{selectedFile.name}</p>
-                              <p className="font-mono text-[10px] text-dark/40 dark:text-white/40 mt-1">Cliquez pour changer</p>
+                              <p className="font-mono text-[10px] text-dark/40 dark:text-white/40 mt-1">
+                                {contestPageContent.form.fields.changeFile}
+                              </p>
                             </div>
                           ) : (
                             <div>
-                              <p className="font-body text-dark/60 dark:text-white/60 mb-1">Glissez ou cliquez pour uploader</p>
-                              <p className="font-mono text-[10px] text-dark/40 dark:text-white/40">PNG, JPEG - Min 3000x3000px</p>
+                              <p className="font-body text-dark/60 dark:text-white/60 mb-1">
+                                {contestPageContent.form.fields.uploadText}
+                              </p>
+                              <p className="font-mono text-[10px] text-dark/40 dark:text-white/40">
+                                {contestPageContent.form.fields.uploadHint}
+                              </p>
                             </div>
                           )}
                         </label>
@@ -518,12 +444,12 @@ export default function ConcoursPage() {
                         type="submit"
                         className="w-full font-body text-sm py-4 bg-dark hover:bg-primary text-white transition-colors duration-300"
                       >
-                        Soumettre mon œuvre
+                        {contestPageContent.form.submit}
                       </button>
                     </div>
 
                     <p className="font-mono text-[10px] text-dark/40 dark:text-white/40 text-center">
-                      En soumettant, vous acceptez les conditions de participation.
+                      {contestPageContent.form.terms}
                     </p>
                   </form>
                 </motion.div>
@@ -538,13 +464,13 @@ export default function ConcoursPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <FadeIn>
             <span className="font-mono text-[10px] tracking-[0.4em] text-white/40 block mb-4">
-              DATE LIMITE
+              {contestPageContent.deadline.label}
             </span>
             <p className="font-display text-3xl md:text-4xl font-bold">
-              15 Janvier 2025
+              {contestPageContent.deadline.date}
             </p>
             <p className="font-body text-sm text-white/50 mt-4">
-              Les résultats seront annoncés le 1er Février 2025
+              {contestPageContent.deadline.results}
             </p>
           </FadeIn>
         </div>

@@ -35,6 +35,240 @@ export const homeFeatures = [
   },
 ];
 
+// Page d'accueil - sections
+export const homePageContent = {
+  essence: {
+    title: "L'Essence",
+  },
+  series: {
+    label: "SÉRIE I",
+    title1: "NARCISSE",
+    title2: "AMOUREUX",
+    cta: "Découvrir la collection →",
+  },
+  philosophy: {
+    label: "PHILOSOPHIE",
+    title: "Mode qui transforme",
+    description: "Nous croyons que ce qu'on porte affecte la conscience. Chaque pièce Arteral est une exploration philosophique incarnée, une collaboration artistique, une série limitée qui invite à la contemplation.",
+  },
+  collection: {
+    label: "COLLECTION",
+    title: "Harmonie du Chaos",
+    description: "Là où l'ordre rencontre le désordre, où la beauté naît de la contradiction. Notre première série explore les profondeurs du paradoxe humain.",
+    cta: "Explorer la collection",
+  },
+  heroQuote: {
+    quote: "Chaque pièce raconte un paradoxe.",
+    subquote: "Chaque paradoxe change celui qui la porte.",
+  },
+};
+
+// Page Collection
+export const collectionPageContent = {
+  hero: {
+    label: "COLLECTION",
+    title1: "Harmonie",
+    title2: "du Chaos",
+    description: "Là où l'ordre rencontre le désordre, où la beauté naît de la contradiction.",
+  },
+  series: {
+    label: "PREMIÈRE SÉRIE",
+    title: "Narcisse Amoureux",
+    description: "Le paradoxe entre l'amour de soi et l'amour de l'autre. Une exploration textile du miroir intérieur.",
+    bookTitle: "LE LIVRE",
+  },
+  book: [
+    {
+      numero: "I",
+      titre: "Le Reflet",
+      texte: "Narcisse ne tomba pas amoureux de lui-même, mais de l'inconnu qu'il voyait dans l'eau. Nous portons tous ce mystère : celui qui nous regarde depuis l'autre côté du miroir.",
+    },
+    {
+      numero: "II",
+      titre: "Le Paradoxe",
+      texte: "Aimer l'autre, c'est se perdre. S'aimer soi-même, c'est se trouver. Mais peut-on vraiment aimer sans se perdre ? Peut-on se trouver sans aimer ?",
+    },
+    {
+      numero: "III",
+      titre: "La Dualité",
+      texte: "Entre l'ego et l'écho, entre le moi et le toi, existe un espace où les contraires dansent. C'est là que naît l'art. C'est là que naît Arteral.",
+    },
+    {
+      numero: "IV",
+      titre: "L'Harmonie",
+      texte: "Du chaos naît l'ordre. De la contradiction, la beauté. Chaque pièce que nous créons porte cette tension : être soi tout en étant pour l'autre.",
+    },
+  ],
+  citations: {
+    label: "INSPIRATIONS",
+    title: "Pensées sur le Paradoxe",
+  },
+  duality: {
+    narcisse: {
+      label: "L'AMOUR DE SOI",
+      title: "Narcisse",
+      description: "Se regarder sans se juger. S'accepter dans sa complexité. Trouver la beauté dans ses propres contradictions.",
+      points: ["Introspection", "Acceptation", "Authenticité"],
+    },
+    amoureux: {
+      label: "L'AMOUR DE L'AUTRE",
+      title: "Amoureux",
+      description: "Se perdre dans le regard de l'autre. Découvrir qui l'on est à travers celui qu'on aime.",
+      points: ["Connection", "Vulnérabilité", "Transcendance"],
+    },
+    paradox: {
+      label: "LE PARADOXE",
+      quote: "On ne peut aimer l'autre sans s'aimer soi-même. On ne peut se connaître sans le miroir de l'autre.",
+    },
+  },
+  manifesto: {
+    quote: "Porter Arteral, c'est porter son paradoxe. C'est accepter d'être multiple, contradictoire, humain.",
+    author: "MANIFESTE ARTERAL",
+  },
+  cta: {
+    label: "BIENTÔT DISPONIBLE",
+    title: "Soyez les premiers",
+    description: "La collection Narcisse Amoureux arrive bientôt. Inscrivez-vous pour être notifié du lancement.",
+    explore: "En attendant, explorez notre univers",
+    philosophy: "Notre philosophie",
+    manifesto: "Le manifeste",
+  },
+};
+
+// Page Concours / L'Art de Narcisse
+export const contestPageContent = {
+  hero: {
+    label: "APPEL AUX ARTISTES",
+    title1: "L'Art de",
+    title2: "Narcisse",
+    description: "Dessinez l'âme de notre première série. Votre art pourrait habiller des milliers de personnes et raconter l'histoire de Narcisse Amoureux.",
+    cta: "Soumettre mon œuvre",
+    rules: "Lire les règles",
+  },
+  concept: {
+    label: "LE CONCEPT",
+    title: "Donnez vie à Narcisse Amoureux",
+    description: "Nous cherchons l'artiste qui saura capturer l'essence du paradoxe : l'amour de soi qui rencontre l'amour de l'autre. Votre création deviendra le visuel de notre première série, imprimée sur des pièces portées par ceux qui embrassent leur dualité.",
+    essential: {
+      label: "ÉTAPE ESSENTIELLE",
+      title: "Lisez le Livrable",
+      description: "Avant de créer, imprégnez-vous de l'histoire. Le livrable contient l'essence de Narcisse Amoureux : les textes philosophiques, les références visuelles, et l'âme de la série. C'est votre source d'inspiration.",
+      cta: "Découvrir Narcisse Amoureux",
+    },
+  },
+  prizes: {
+    label: "RÉCOMPENSES",
+    title: "Deux façons de gagner",
+    peuple: {
+      label: "PREMIER PRIX",
+      title: "Prix du Peuple",
+      amount: "3 500€",
+      description: "Le gagnant sera choisi par",
+      you: "vous",
+      details: "Toutes les œuvres seront publiées sur notre Instagram. Celle qui recevra le plus de likes remporte le prix.",
+      rewards: [
+        "Votre art imprimé sur la collection",
+        "Crédit artiste sur chaque pièce",
+        "5 pièces de la collection offertes",
+      ],
+    },
+    coeur: {
+      label: "DEUXIÈME PRIX",
+      title: "Prix du Cœur",
+      amount: "1 500€",
+      description: "Sélectionné par un jury d'exception. Trois regards, une décision.",
+      jury: [
+        { title: "Un artiste reconnu", status: "RÉVÉLÉ BIENTÔT" },
+        { title: "Une figure de la mode", status: "RÉVÉLÉ BIENTÔT" },
+        { title: "L'équipe Arteral", status: "FONDATEURS" },
+      ],
+      rewards: [
+        "Mention spéciale sur nos supports",
+        "3 pièces de la collection offertes",
+      ],
+    },
+  },
+  rules: {
+    label: "PARTICIPATION",
+    title: "Les règles du jeu",
+    items: [
+      {
+        num: "01",
+        title: "Imprégnez-vous de l'histoire",
+        description: "Lisez attentivement le livrable de la collection Narcisse Amoureux. Comprenez le paradoxe, ressentez la dualité, laissez l'histoire nourrir votre création.",
+      },
+      {
+        num: "02",
+        title: "Respectez les contraintes... ou pas",
+        description: "Nous suggérons une palette de couleurs et des dimensions, mais l'art ne connaît pas de frontières. Si votre vision demande de sortir du cadre, faites-le. Surprenez-nous.",
+      },
+      {
+        num: "03",
+        title: "Format et soumission",
+        description: "PNG ou JPEG en haute résolution (minimum 3000x3000px). Incluez votre compte Instagram pour la publication. Une seule soumission par artiste.",
+      },
+      {
+        num: "04",
+        title: "Droits et publication",
+        description: "En soumettant, vous autorisez Arteral à publier votre œuvre sur Instagram pour le vote. Le gagnant cède les droits d'exploitation pour la collection en échange du prix et des crédits.",
+      },
+    ],
+    guide: {
+      title: "Guide suggéré (non obligatoire)",
+      palette: "PALETTE",
+      themes: "THÈMES",
+      themesText: "Miroir, reflet, dualité, amour, solitude, connexion",
+    },
+  },
+  form: {
+    label: "SOUMISSION",
+    title: "Envoyez votre œuvre",
+    fields: {
+      name: "Nom complet",
+      namePlaceholder: "Votre nom",
+      email: "Email",
+      emailPlaceholder: "votre@email.com",
+      instagram: "Instagram",
+      instagramPlaceholder: "@votre_compte",
+      artwork: "Votre œuvre",
+      uploadText: "Glissez ou cliquez pour uploader",
+      uploadHint: "PNG, JPEG - Min 3000x3000px",
+      changeFile: "Cliquez pour changer",
+    },
+    submit: "Soumettre mon œuvre",
+    terms: "En soumettant, vous acceptez les conditions de participation.",
+    success: {
+      title: "Œuvre reçue",
+      message: "Merci pour votre participation. Nous vous contacterons bientôt.",
+    },
+  },
+  deadline: {
+    label: "DATE LIMITE",
+    date: "15 Janvier 2025",
+    results: "Les résultats seront annoncés le 1er Février 2025",
+  },
+};
+
+// Citations philosophiques
+export const philosophicalCitations = [
+  {
+    text: "Je me cherche dans l'autre pour me trouver moi-même.",
+    author: "Oscar Wilde",
+  },
+  {
+    text: "L'amour de soi est le commencement d'une romance qui dure toute la vie.",
+    author: "Oscar Wilde",
+  },
+  {
+    text: "Dans chaque miroir, un étranger me regarde avec mes propres yeux.",
+    author: "Fernando Pessoa",
+  },
+  {
+    text: "Le paradoxe est la passion de la pensée.",
+    author: "Søren Kierkegaard",
+  },
+];
+
 export const aboutContent = {
   vision: {
     title: "ARTERAL",

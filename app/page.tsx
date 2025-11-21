@@ -23,7 +23,7 @@ const sparkles = [
 ];
 
 export default function Home() {
-  const { homeFeatures } = useContent();
+  const { homeFeatures, homePageContent } = useContent();
 
   return (
     <div>
@@ -114,10 +114,10 @@ export default function Home() {
               />
 
               <p className="font-display text-base sm:text-lg md:text-xl lg:text-2xl italic text-white/90 leading-relaxed">
-                &ldquo;Chaque pièce raconte un paradoxe.&rdquo;
+                &ldquo;{homePageContent.heroQuote.quote}&rdquo;
               </p>
               <p className="font-body text-xs sm:text-sm md:text-base text-white/60 mt-2 tracking-wider">
-                Chaque paradoxe change celui qui la porte.
+                {homePageContent.heroQuote.subquote}
               </p>
 
               {/* Decorative lines */}
@@ -155,7 +155,7 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-16 md:mb-20">
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-4">
-                L&apos;Essence
+                {homePageContent.essence.title}
               </h2>
               <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
             </div>
@@ -208,21 +208,21 @@ export default function Home() {
                 className="inline-block group"
               >
                 <span className="font-mono text-[10px] tracking-[0.5em] text-dark/40 dark:text-white/40 block mb-4">
-                  SÉRIE I
+                  {homePageContent.series.label}
                 </span>
                 <div className="relative">
                   <div className="absolute -inset-6 border border-dark/5 dark:border-white/5 group-hover:border-primary/20 transition-colors duration-500" />
                   <div className="absolute -inset-3 border border-dark/10 dark:border-white/10 group-hover:border-primary/30 transition-colors duration-500" />
                   <div className="relative px-12 py-8 md:px-16 md:py-10">
                     <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-dark dark:text-white group-hover:text-primary transition-colors duration-500 tracking-wide">
-                      NARCISSE
+                      {homePageContent.series.title1}
                     </h2>
                     <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-primary group-hover:text-dark dark:group-hover:text-white transition-colors duration-500 tracking-wide -mt-1">
-                      AMOUREUX
+                      {homePageContent.series.title2}
                     </h2>
                     <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-6 group-hover:w-24 transition-all duration-500" />
                     <p className="font-body text-sm text-dark/50 dark:text-white/50 mt-6 group-hover:text-dark/70 dark:group-hover:text-white/70 transition-colors">
-                      Découvrir la collection →
+                      {homePageContent.series.cta}
                     </p>
                   </div>
                 </div>
@@ -244,16 +244,13 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <FadeIn>
             <p className="font-mono text-xs tracking-[0.3em] text-primary/80 mb-6">
-              PHILOSOPHIE
+              {homePageContent.philosophy.label}
             </p>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-8 md:mb-10 leading-tight">
-              Mode qui transforme
+              {homePageContent.philosophy.title}
             </h2>
             <p className="font-body text-base sm:text-lg md:text-xl text-light/80 leading-relaxed max-w-2xl mx-auto">
-              Nous croyons que ce qu&apos;on porte affecte la conscience. Chaque
-              pièce Arteral est une exploration philosophique incarnée,
-              une collaboration artistique, une série limitée qui invite
-              à la contemplation.
+              {homePageContent.philosophy.description}
             </p>
             <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-10" />
           </FadeIn>
@@ -274,17 +271,16 @@ export default function Home() {
               {/* Artistic header */}
               <div className="relative inline-block mb-8">
                 <span className="font-mono text-[10px] tracking-[0.5em] text-dark/40 dark:text-white/40 block mb-4">
-                  COLLECTION
+                  {homePageContent.collection.label}
                 </span>
                 <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-dark dark:text-white">
-                  Harmonie du Chaos
+                  {homePageContent.collection.title}
                 </h2>
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent" />
               </div>
 
               <p className="font-body text-base sm:text-lg md:text-xl text-dark/60 dark:text-white/60 leading-relaxed max-w-2xl mx-auto mt-12 mb-16">
-                Là où l&apos;ordre rencontre le désordre, où la beauté naît de la contradiction.
-                Notre première série explore les profondeurs du paradoxe humain.
+                {homePageContent.collection.description}
               </p>
 
               {/* Link to collection */}
@@ -292,7 +288,7 @@ export default function Home() {
                 href="/collection"
                 className="inline-flex items-center gap-3 font-body text-sm font-medium text-primary hover:text-primary/70 transition-colors group"
               >
-                <span>Explorer la collection</span>
+                <span>{homePageContent.collection.cta}</span>
                 <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
               </Link>
             </div>
