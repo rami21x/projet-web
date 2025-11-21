@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Instagram, Mail } from "lucide-react";
 import { useContent } from "@/hooks/useContent";
 
@@ -14,9 +15,18 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Brand Section */}
           <div>
-            <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-4">
-              ARTERAL
-            </h3>
+            <Link href="/" className="inline-flex items-center gap-3 mb-4 group">
+              <Image
+                src="/images/logo.png"
+                alt="Arteral Logo"
+                width={48}
+                height={48}
+                className="w-10 h-10 md:w-12 md:h-12 object-contain group-hover:scale-105 transition-transform"
+              />
+              <h3 className="font-display text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors">
+                ARTERAL
+              </h3>
+            </Link>
             <p className="font-body text-sm text-light/95 leading-relaxed whitespace-pre-line">
               {footerContent.brand.tagline}
             </p>

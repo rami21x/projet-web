@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -69,9 +70,18 @@ export default function Navigation() {
           {/* Center Logo */}
           <Link
             href="/"
-            className="absolute left-1/2 transform -translate-x-1/2 font-display text-2xl md:text-3xl font-bold text-dark dark:text-dark hover:text-primary dark:hover:text-primary transition-colors"
+            className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            ARTERAL
+            <Image
+              src="/images/logo.png"
+              alt="Arteral Logo"
+              width={40}
+              height={40}
+              className="w-8 h-8 md:w-10 md:h-10 object-contain"
+            />
+            <span className="font-display text-xl md:text-2xl font-bold text-dark dark:text-dark hover:text-primary dark:hover:text-primary transition-colors">
+              ARTERAL
+            </span>
           </Link>
 
           {/* Right Navigation - Desktop */}
