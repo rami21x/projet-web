@@ -51,14 +51,14 @@ const livrePages = [
 
 export default function CollectionPage() {
   return (
-    <div className="bg-light">
+    <div className="bg-light dark:bg-dark">
       {/* Hero Section - Minimal & Artistic */}
       <section className="min-h-[70vh] flex items-center justify-center relative overflow-hidden">
         {/* Background artistic elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 border border-dark/5 rounded-full" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 border border-dark/5 dark:border-white/5 rounded-full" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 border border-primary/10 rounded-full" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-dark/5 rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-dark/5 dark:border-white/5 rounded-full" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
@@ -68,16 +68,16 @@ export default function CollectionPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              <span className="font-mono text-[10px] tracking-[0.5em] text-dark/40 block mb-6">
+              <span className="font-mono text-[10px] tracking-[0.5em] text-dark/40 dark:text-white/40 block mb-6">
                 COLLECTION
               </span>
-              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-dark mb-6 leading-tight">
+              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-dark dark:text-white mb-6 leading-tight">
                 Harmonie
                 <br />
                 <span className="text-primary">du Chaos</span>
               </h1>
               <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-8" />
-              <p className="font-body text-lg md:text-xl text-dark/60 max-w-xl mx-auto leading-relaxed">
+              <p className="font-body text-lg md:text-xl text-dark/60 dark:text-white/60 max-w-xl mx-auto leading-relaxed">
                 Là où l&apos;ordre rencontre le désordre, où la beauté naît de la contradiction.
               </p>
             </motion.div>
@@ -148,14 +148,14 @@ export default function CollectionPage() {
       </section>
 
       {/* Citations Section */}
-      <section className="py-20 md:py-32 bg-light relative">
+      <section className="py-20 md:py-32 bg-light dark:bg-dark relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-16">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-white/40 block mb-4">
                 INSPIRATIONS
               </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-dark">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white">
                 Pensées sur le Paradoxe
               </h2>
             </div>
@@ -171,10 +171,10 @@ export default function CollectionPage() {
                   </span>
 
                   <blockquote className="relative pl-8 border-l-2 border-primary/30 group-hover:border-primary/60 transition-colors duration-300">
-                    <p className="font-display text-lg md:text-xl text-dark/80 italic leading-relaxed mb-4">
+                    <p className="font-display text-lg md:text-xl text-dark/80 dark:text-white/80 italic leading-relaxed mb-4">
                       {citation.text}
                     </p>
-                    <footer className="font-body text-sm text-dark/50">
+                    <footer className="font-body text-sm text-dark/50 dark:text-white/50">
                       — {citation.author}
                     </footer>
                   </blockquote>
@@ -186,25 +186,25 @@ export default function CollectionPage() {
       </section>
 
       {/* Duality Visual Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-20 md:py-32 bg-white dark:bg-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-0">
             {/* Left - Narcisse */}
             <FadeIn>
-              <div className="bg-gradient-to-br from-primary/5 to-primary/10 p-12 md:p-16 min-h-[400px] flex flex-col justify-center border-r border-dark/5">
+              <div className="bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 p-12 md:p-16 min-h-[400px] flex flex-col justify-center border-r border-dark/5 dark:border-white/5">
                 <span className="font-mono text-[10px] tracking-[0.3em] text-primary/60 mb-4">
                   L&apos;AMOUR DE SOI
                 </span>
-                <h3 className="font-display text-3xl md:text-4xl font-bold text-dark mb-4">
+                <h3 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-4">
                   Narcisse
                 </h3>
-                <p className="font-body text-dark/60 leading-relaxed mb-6">
+                <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed mb-6">
                   Se regarder sans se juger. S&apos;accepter dans sa complexité.
                   Trouver la beauté dans ses propres contradictions.
                 </p>
                 <ul className="space-y-3">
                   {["Introspection", "Acceptation", "Authenticité"].map((item) => (
-                    <li key={item} className="flex items-center gap-3 font-body text-sm text-dark/70">
+                    <li key={item} className="flex items-center gap-3 font-body text-sm text-dark/70 dark:text-white/70">
                       <div className="w-1.5 h-1.5 bg-primary rounded-full" />
                       {item}
                     </li>
@@ -215,21 +215,21 @@ export default function CollectionPage() {
 
             {/* Right - Amoureux */}
             <FadeIn delay={0.2}>
-              <div className="bg-gradient-to-br from-dark/5 to-dark/10 p-12 md:p-16 min-h-[400px] flex flex-col justify-center">
-                <span className="font-mono text-[10px] tracking-[0.3em] text-dark/40 mb-4">
+              <div className="bg-gradient-to-br from-dark/5 to-dark/10 dark:from-white/5 dark:to-white/10 p-12 md:p-16 min-h-[400px] flex flex-col justify-center">
+                <span className="font-mono text-[10px] tracking-[0.3em] text-dark/40 dark:text-white/40 mb-4">
                   L&apos;AMOUR DE L&apos;AUTRE
                 </span>
-                <h3 className="font-display text-3xl md:text-4xl font-bold text-dark mb-4">
+                <h3 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-4">
                   Amoureux
                 </h3>
-                <p className="font-body text-dark/60 leading-relaxed mb-6">
+                <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed mb-6">
                   Se perdre dans le regard de l&apos;autre. Découvrir qui l&apos;on est
                   à travers celui qu&apos;on aime.
                 </p>
                 <ul className="space-y-3">
                   {["Connection", "Vulnérabilité", "Transcendance"].map((item) => (
-                    <li key={item} className="flex items-center gap-3 font-body text-sm text-dark/70">
-                      <div className="w-1.5 h-1.5 bg-dark rounded-full" />
+                    <li key={item} className="flex items-center gap-3 font-body text-sm text-dark/70 dark:text-white/70">
+                      <div className="w-1.5 h-1.5 bg-dark dark:bg-white rounded-full" />
                       {item}
                     </li>
                   ))}
@@ -280,36 +280,36 @@ export default function CollectionPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-light">
+      <section className="py-20 md:py-32 bg-light dark:bg-dark">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 block mb-4">
+            <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-white/40 block mb-4">
               BIENTÔT DISPONIBLE
             </span>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-6">
               Soyez les premiers
             </h2>
-            <p className="font-body text-base md:text-lg text-dark/60 leading-relaxed mb-10 max-w-xl mx-auto">
+            <p className="font-body text-base md:text-lg text-dark/60 dark:text-white/60 leading-relaxed mb-10 max-w-xl mx-auto">
               La collection Narcisse Amoureux arrive bientôt.
               Inscrivez-vous pour être notifié du lancement.
             </p>
             <NotifyMeButton />
 
-            <div className="mt-16 pt-12 border-t border-dark/10">
-              <p className="font-body text-sm text-dark/50 mb-6">
+            <div className="mt-16 pt-12 border-t border-dark/10 dark:border-white/10">
+              <p className="font-body text-sm text-dark/50 dark:text-white/50 mb-6">
                 En attendant, explorez notre univers
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/marque"
-                  className="inline-flex items-center justify-center gap-2 font-body text-sm text-dark/70 hover:text-primary transition-colors group"
+                  className="inline-flex items-center justify-center gap-2 font-body text-sm text-dark/70 dark:text-white/70 hover:text-primary transition-colors group"
                 >
                   <span>Notre philosophie</span>
                   <span className="w-4 h-[1px] bg-current group-hover:w-6 transition-all" />
                 </Link>
                 <Link
                   href="/manifeste"
-                  className="inline-flex items-center justify-center gap-2 font-body text-sm text-dark/70 hover:text-primary transition-colors group"
+                  className="inline-flex items-center justify-center gap-2 font-body text-sm text-dark/70 dark:text-white/70 hover:text-primary transition-colors group"
                 >
                   <span>Le manifeste</span>
                   <span className="w-4 h-[1px] bg-current group-hover:w-6 transition-all" />
