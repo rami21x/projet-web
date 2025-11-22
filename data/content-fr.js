@@ -966,6 +966,130 @@ export const guestbookPageContent = {
   ],
 };
 
+// Page Manifeste
+export const manifestoPageContent = {
+  hero: {
+    label: "NOTRE PHILOSOPHIE",
+    title: "Le Manifeste",
+    description: "Notre vision, notre engagement, notre refus du conformisme. Ce texte est notre promesse envers ceux qui croient que la mode peut être plus qu'une apparence.",
+  },
+  intro: {
+    quote: "L'Art n'est pas une décoration. La Mode n'est pas une superficialité.",
+    author: "ARTERAL",
+    description: "Nous sommes Arteral, et nous croyons que ce que vous portez influence qui vous êtes.",
+  },
+  chapters: [
+    {
+      number: "I",
+      title: "Le Vêtement comme Pensée",
+      icon: "Brain",
+      text: "Chaque fil est une idée. Chaque couture, un argument philosophique. Nous ne créons pas des habits, nous tissons des réflexions portables. Le textile devient manifeste, la mode devient langage.",
+      quote: "Le style est le vêtement de la pensée.",
+      quoteAuthor: "Lord Chesterfield",
+    },
+    {
+      number: "II",
+      title: "Chaos et Ordre",
+      icon: "Sparkles",
+      text: "La création naît dans le chaos. L'art émerge de la tension entre désordre et structure. Nous embrassons cette dualité : la spontanéité créative rencontre la précision artisanale. Du chaos naît la forme. De l'ordre naît la beauté.",
+      quote: "Il faut avoir du chaos en soi pour enfanter une étoile qui danse.",
+      quoteAuthor: "Friedrich Nietzsche",
+    },
+    {
+      number: "III",
+      title: "Narcisse Amoureux",
+      icon: "Heart",
+      text: "Passion ardente et introspection silencieuse. Deux pulsations d'un même cœur existentiel. L'amour de soi nous consume, l'amour de l'autre nous révèle. Notre première collection explore ce paradoxe fondamental de l'existence humaine.",
+      quote: "S'aimer soi-même est le début d'une histoire d'amour qui durera toute une vie.",
+      quoteAuthor: "Oscar Wilde",
+    },
+    {
+      number: "IV",
+      title: "L'Artiste est Artisan",
+      icon: "Paintbrush",
+      text: "Nous refusons la production de masse. Chaque pièce Arteral est une collaboration artistique, une édition limitée créée avec intention. L'artisan n'est pas obsolète – il est essentiel.",
+      quote: "La main de l'artisan est l'extension de son âme.",
+      quoteAuthor: "Proverbe persan",
+    },
+    {
+      number: "V",
+      title: "La Mode Consciente",
+      icon: "Eye",
+      text: "Porter Arteral, c'est faire un choix. Un acte de conscience. Un refus du conformisme commercial. C'est affirmer que le style n'est pas ce que vous achetez, mais qui vous choisissez d'être.",
+      quote: "La mode passe, le style reste.",
+      quoteAuthor: "Coco Chanel",
+    },
+    {
+      number: "VI",
+      title: "L'Art Incarné",
+      icon: "User",
+      text: "La galerie ne se limite pas aux murs blancs. Votre corps est une exposition vivante. Chaque jour, vous créez une œuvre d'art simplement en existant. Nous vous donnons les outils pour que cette œuvre soit intentionnelle.",
+      quote: "Le corps est le premier vêtement de l'âme.",
+      quoteAuthor: "Proverbe soufi",
+    },
+    {
+      number: "VII",
+      title: "Philosophie Portée",
+      icon: "BookOpen",
+      text: "Nietzsche sur un t-shirt n'est pas de la philosophie. Mais un vêtement qui incarne une question existentielle, qui porte en lui un paradoxe, qui vous force à réfléchir – cela est philosophique.",
+      quote: "Deviens ce que tu es.",
+      quoteAuthor: "Friedrich Nietzsche",
+    },
+    {
+      number: "VIII",
+      title: "La Beauté comme Résistance",
+      icon: "Shield",
+      text: "Dans un monde d'uniformité algorithmique, la beauté intentionnelle est un acte révolutionnaire. Créer quelque chose de beau, de réfléchi, de significatif – c'est résister à la médiocrité commerciale.",
+      quote: "La beauté sauvera le monde.",
+      quoteAuthor: "Fiodor Dostoïevski",
+    },
+    {
+      number: "IX",
+      title: "Collection Permanente",
+      icon: "Infinity",
+      text: "Nous ne suivons pas les tendances. Nous créons des pièces intemporelles. Votre garde-robe Arteral est une collection permanente, un musée personnel que vous construisez au fil des saisons.",
+      quote: "Ce qui est beau est éternel.",
+      quoteAuthor: "Proverbe arabe",
+    },
+    {
+      number: "X",
+      title: "L'Invitation",
+      icon: "Users",
+      text: "Rejoignez-nous. Non pas comme consommateurs, mais comme collaborateurs. Comme penseurs. Comme artistes de votre propre existence.",
+      quote: "Seul on va plus vite, ensemble on va plus loin.",
+      quoteAuthor: "Proverbe africain",
+    },
+  ],
+  antiManifesto: {
+    label: "CE QUE NOUS REFUSONS",
+    title: "L'Anti-Manifeste",
+    items: [
+      "La mode jetable qui détruit notre planète",
+      "Les logos qui remplacent les idées",
+      "L'uniformité qui étouffe l'individualité",
+      "La production de masse sans âme",
+      "Les tendances qui s'effacent en une saison",
+      "Le profit au détriment de l'art",
+    ],
+  },
+  oath: {
+    label: "LE SERMENT",
+    title: "Le Serment du Porteur",
+    text: "En portant Arteral, je m'engage à voir au-delà de l'apparence. Je choisis de porter des idées, pas seulement des vêtements. Je deviens gardien d'une philosophie qui transcende la mode éphémère.",
+    cta: "Prononcer le serment",
+  },
+  signature: {
+    text: "Portez vos idées. Incarnez votre philosophie.",
+    tagline: "Mode Philosophique · Art Incarné",
+  },
+  cta: {
+    title: "Prêt à incarner la philosophie ?",
+    description: "Explorez notre collection et découvrez comment la mode devient pensée.",
+    collection: "Voir la collection",
+    contest: "Participer au concours",
+  },
+};
+
 export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },

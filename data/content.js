@@ -972,6 +972,130 @@ export const guestbookPageContent = {
   ],
 };
 
+// Manifesto Page
+export const manifestoPageContent = {
+  hero: {
+    label: "OUR PHILOSOPHY",
+    title: "The Manifesto",
+    description: "Our vision, our commitment, our refusal of conformity. This text is our promise to those who believe fashion can be more than appearance.",
+  },
+  intro: {
+    quote: "Art is not decoration. Fashion is not superficiality.",
+    author: "ARTERAL",
+    description: "We are Arteral, and we believe that what you wear influences who you are.",
+  },
+  chapters: [
+    {
+      number: "I",
+      title: "Clothing as Thought",
+      icon: "Brain",
+      text: "Every thread is an idea. Every stitch, a philosophical argument. We don't create clothes, we weave wearable reflections. Textile becomes manifesto, fashion becomes language.",
+      quote: "Style is the dress of thoughts.",
+      quoteAuthor: "Lord Chesterfield",
+    },
+    {
+      number: "II",
+      title: "Chaos and Order",
+      icon: "Sparkles",
+      text: "Creation is born in chaos. Art emerges from the tension between disorder and structure. We embrace this duality: creative spontaneity meets artisanal precision. From chaos comes form. From order comes beauty.",
+      quote: "One must still have chaos in oneself to give birth to a dancing star.",
+      quoteAuthor: "Friedrich Nietzsche",
+    },
+    {
+      number: "III",
+      title: "Narcissus in Love",
+      icon: "Heart",
+      text: "Burning passion and silent introspection. Two pulses of the same existential heart. Self-love consumes us, love for others reveals us. Our first collection explores this fundamental paradox of human existence.",
+      quote: "To love oneself is the beginning of a lifelong romance.",
+      quoteAuthor: "Oscar Wilde",
+    },
+    {
+      number: "IV",
+      title: "The Artist is Artisan",
+      icon: "Paintbrush",
+      text: "We refuse mass production. Every Arteral piece is an artistic collaboration, a limited edition created with intention. The artisan is not obsolete – they are essential.",
+      quote: "The artisan's hand is the extension of their soul.",
+      quoteAuthor: "Persian Proverb",
+    },
+    {
+      number: "V",
+      title: "Conscious Fashion",
+      icon: "Eye",
+      text: "Wearing Arteral is making a choice. An act of consciousness. A refusal of commercial conformity. It's affirming that style is not what you buy, but who you choose to be.",
+      quote: "Fashion fades, style remains.",
+      quoteAuthor: "Coco Chanel",
+    },
+    {
+      number: "VI",
+      title: "Embodied Art",
+      icon: "User",
+      text: "The gallery is not limited to white walls. Your body is a living exhibition. Every day, you create a work of art simply by existing. We give you the tools to make that work intentional.",
+      quote: "The body is the first garment of the soul.",
+      quoteAuthor: "Sufi Proverb",
+    },
+    {
+      number: "VII",
+      title: "Worn Philosophy",
+      icon: "BookOpen",
+      text: "Nietzsche on a t-shirt is not philosophy. But a garment that embodies an existential question, that carries a paradox within it, that forces you to reflect – that is philosophical.",
+      quote: "Become who you are.",
+      quoteAuthor: "Friedrich Nietzsche",
+    },
+    {
+      number: "VIII",
+      title: "Beauty as Resistance",
+      icon: "Shield",
+      text: "In a world of algorithmic uniformity, intentional beauty is a revolutionary act. Creating something beautiful, thoughtful, meaningful – that is resisting commercial mediocrity.",
+      quote: "Beauty will save the world.",
+      quoteAuthor: "Fyodor Dostoevsky",
+    },
+    {
+      number: "IX",
+      title: "Permanent Collection",
+      icon: "Infinity",
+      text: "We don't follow trends. We create timeless pieces. Your Arteral wardrobe is a permanent collection, a personal museum you build across seasons.",
+      quote: "What is beautiful is eternal.",
+      quoteAuthor: "Arabic Proverb",
+    },
+    {
+      number: "X",
+      title: "The Invitation",
+      icon: "Users",
+      text: "Join us. Not as consumers, but as collaborators. As thinkers. As artists of your own existence.",
+      quote: "Alone we go faster, together we go further.",
+      quoteAuthor: "African Proverb",
+    },
+  ],
+  antiManifesto: {
+    label: "WHAT WE REFUSE",
+    title: "The Anti-Manifesto",
+    items: [
+      "Disposable fashion that destroys our planet",
+      "Logos that replace ideas",
+      "Uniformity that stifles individuality",
+      "Soulless mass production",
+      "Trends that fade in a season",
+      "Profit at the expense of art",
+    ],
+  },
+  oath: {
+    label: "THE OATH",
+    title: "The Wearer's Oath",
+    text: "By wearing Arteral, I commit to seeing beyond appearance. I choose to wear ideas, not just clothes. I become guardian of a philosophy that transcends ephemeral fashion.",
+    cta: "Take the oath",
+  },
+  signature: {
+    text: "Wear your ideas. Embody your philosophy.",
+    tagline: "Philosophical Fashion · Embodied Art",
+  },
+  cta: {
+    title: "Ready to embody the philosophy?",
+    description: "Explore our collection and discover how fashion becomes thought.",
+    collection: "View the collection",
+    contest: "Join the contest",
+  },
+};
+
 export const navigation = [
   { name: "Home", href: "/" },
   { name: "Brand", href: "/marque" },
