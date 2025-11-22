@@ -42,7 +42,7 @@ export default function Navigation() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-light/95 dark:bg-dark/95 backdrop-blur-sm border-b border-dark/10 dark:border-white/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#E8E8E8]/95 dark:bg-[#0A0A0A]/95 backdrop-blur-sm border-b border-dark/10 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           {/* Left Navigation - Desktop */}
@@ -54,7 +54,7 @@ export default function Navigation() {
                 className={`font-body text-sm font-medium transition-colors relative group ${
                   pathname === item.href
                     ? "text-primary"
-                    : "text-dark dark:text-white hover:text-primary dark:hover:text-primary"
+                    : "text-[#2B2B2B] dark:text-white hover:text-primary dark:hover:text-primary"
                 }`}
               >
                 {item.name}
@@ -82,7 +82,7 @@ export default function Navigation() {
                 className="relative w-10 h-10 md:w-12 md:h-12 object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </div>
-            <span className="font-display text-[10px] md:text-xs font-semibold text-dark dark:text-white group-hover:text-primary transition-colors duration-300 tracking-[0.25em] mt-1">
+            <span className="font-display text-[10px] md:text-xs font-semibold text-[#2B2B2B] dark:text-white group-hover:text-primary transition-colors duration-300 tracking-[0.25em] mt-1">
               ARTERAL
             </span>
           </Link>
@@ -93,7 +93,7 @@ export default function Navigation() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="font-body text-sm font-medium text-dark dark:text-white hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-primary/5"
+                className="font-body text-sm font-medium text-[#2B2B2B] dark:text-white hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-primary/5"
               >
                 <Menu className="w-4 h-4" />
               </button>
@@ -105,7 +105,7 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-2 w-56 bg-white dark:bg-dark shadow-xl rounded-lg border border-dark/10 dark:border-white/10 py-2 overflow-hidden"
+                    className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#1A1A1A] shadow-xl rounded-lg border border-dark/10 dark:border-white/10 py-2 overflow-hidden"
                   >
                     {dropdownItems.map((item) => (
                       <Link
@@ -115,7 +115,7 @@ export default function Navigation() {
                         className={`block px-4 py-2 font-body text-sm transition-colors ${
                           pathname === item.href
                             ? "bg-primary text-white"
-                            : "text-dark dark:text-white hover:bg-primary/10 hover:text-primary"
+                            : "text-[#2B2B2B] dark:text-white hover:bg-primary/10 hover:text-primary"
                         }`}
                       >
                         {item.name}
@@ -136,7 +136,7 @@ export default function Navigation() {
             <DarkModeToggle />
             <button
               onClick={toggleMenu}
-              className="p-2 text-dark dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
+              className="p-2 text-[#2B2B2B] dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -153,7 +153,7 @@ export default function Navigation() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden border-t border-dark/10 dark:border-white/10 bg-light dark:bg-dark"
+            className="lg:hidden border-t border-dark/10 dark:border-white/10 bg-[#E8E8E8] dark:bg-[#0A0A0A]"
           >
             <div className="px-4 py-4 space-y-2">
               {navigation.map((item) => (
@@ -164,7 +164,7 @@ export default function Navigation() {
                   className={`block font-body text-base font-medium py-2 px-4 rounded-lg transition-colors ${
                     pathname === item.href
                       ? "bg-primary text-white"
-                      : "text-dark dark:text-white hover:bg-dark/5 dark:hover:bg-white/10"
+                      : "text-[#2B2B2B] dark:text-white hover:bg-dark/5 dark:hover:bg-white/10"
                   }`}
                 >
                   {item.name}
