@@ -35,7 +35,7 @@ export default function ConcoursPage() {
   return (
     <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A]">
       {/* Hero Section - Artistic */}
-      <section className="relative min-h-[80vh] flex items-center justify-center bg-dark text-white overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-center justify-center bg-[#1A1A1A] text-white overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-10 w-64 h-64 border border-white/5 rounded-full" />
@@ -149,7 +149,7 @@ export default function ConcoursPage() {
       </section>
 
       {/* Les Prix */}
-      <section className="py-20 md:py-32 bg-dark text-white">
+      <section className="py-20 md:py-32 bg-[#1A1A1A] text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-20">
@@ -449,7 +449,7 @@ export default function ConcoursPage() {
                     <div className="pt-4">
                       <button
                         type="submit"
-                        className="w-full font-body text-sm py-4 bg-dark hover:bg-primary text-white transition-colors duration-300"
+                        className="w-full font-body text-sm py-4 bg-[#1A1A1A] hover:bg-primary text-white transition-colors duration-300"
                       >
                         {contestPageContent.form.submit}
                       </button>
@@ -467,7 +467,7 @@ export default function ConcoursPage() {
       </section>
 
       {/* Deadline */}
-      <section className="py-16 bg-dark text-white">
+      <section className="py-16 bg-[#1A1A1A] text-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <FadeIn>
             <span className="font-mono text-[10px] tracking-[0.4em] text-white/40 block mb-4">
