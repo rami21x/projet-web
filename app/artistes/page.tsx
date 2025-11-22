@@ -33,7 +33,7 @@ export default function ConcoursPage() {
   };
 
   return (
-    <div className="bg-light dark:bg-dark">
+    <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A]">
       {/* Hero Section - Artistic */}
       <section className="relative min-h-[80vh] flex items-center justify-center bg-dark text-white overflow-hidden">
         {/* Background elements */}
@@ -103,21 +103,21 @@ export default function ConcoursPage() {
       </section>
 
       {/* Le Concept */}
-      <section className="py-20 md:py-32 bg-white dark:bg-dark">
+      <section className="py-20 md:py-32 bg-white dark:bg-[#0A0A0A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-16">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-white/40 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
                 {contestPageContent.concept.label}
               </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-6">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-6">
                 {contestPageContent.concept.title}
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
             </div>
 
             <div className="prose prose-lg max-w-none">
-              <p className="font-body text-dark/70 dark:text-white/70 leading-relaxed mb-6 text-center">
+              <p className="font-body text-[#4A4A4A] dark:text-gray-300 leading-relaxed mb-6 text-center">
                 {contestPageContent.concept.description}
               </p>
             </div>
@@ -129,10 +129,10 @@ export default function ConcoursPage() {
                 <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 dark:text-primary block mb-4">
                   {contestPageContent.concept.essential.label}
                 </span>
-                <h3 className="font-display text-2xl md:text-3xl font-bold text-dark dark:text-white mb-4">
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-[#2B2B2B] dark:text-white mb-4">
                   {contestPageContent.concept.essential.title}
                 </h3>
-                <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed mb-6">
+                <p className="font-body text-[#5A5A5A] dark:text-gray-400 leading-relaxed mb-6">
                   {contestPageContent.concept.essential.description}
                 </p>
                 <Link
@@ -255,14 +255,14 @@ export default function ConcoursPage() {
       </section>
 
       {/* Règles */}
-      <section id="regles" className="py-20 md:py-32 bg-white dark:bg-dark">
+      <section id="regles" className="py-20 md:py-32 bg-white dark:bg-[#0A0A0A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-16">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-white/40 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
                 {contestPageContent.rules.label}
               </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-6">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-6">
                 {contestPageContent.rules.title}
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
@@ -277,10 +277,10 @@ export default function ConcoursPage() {
                     <span className="font-display text-4xl font-bold text-primary/20 dark:text-primary/30">{rule.num}</span>
                   </div>
                   <div>
-                    <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-2">
+                    <h3 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white mb-2">
                       {rule.title}
                     </h3>
-                    <p className="font-body text-dark/60 dark:text-white/60 leading-relaxed">
+                    <p className="font-body text-[#5A5A5A] dark:text-gray-400 leading-relaxed">
                       {rule.description}
                     </p>
                   </div>
@@ -292,7 +292,7 @@ export default function ConcoursPage() {
           {/* Guide des contraintes - Download Section */}
           <FadeIn delay={0.5}>
             <div className="mt-16 p-8 md:p-10 bg-gradient-to-br from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10 border border-primary/20 dark:border-primary/30 rounded-sm">
-              <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-4">
+              <h3 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white mb-4">
                 {contestPageContent.rules.guide.title}
               </h3>
 
@@ -300,7 +300,7 @@ export default function ConcoursPage() {
                 <h4 className="font-display text-lg font-semibold text-primary mb-2">
                   {contestPageContent.rules.guide.downloadTitle}
                 </h4>
-                <p className="font-body text-sm text-dark/60 dark:text-white/60 mb-4">
+                <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 mb-4">
                   {contestPageContent.rules.guide.downloadDescription}
                 </p>
                 <a
@@ -316,10 +316,10 @@ export default function ConcoursPage() {
               </div>
 
               <div className="pt-6 border-t border-dark/10 dark:border-white/10">
-                <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-white/40 mb-2">
+                <p className="font-mono text-[10px] tracking-[0.2em] text-[#7A7A7A] dark:text-gray-500 mb-2">
                   {contestPageContent.rules.guide.themes}
                 </p>
-                <p className="font-body text-sm text-dark/60 dark:text-white/60">
+                <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400">
                   {contestPageContent.rules.guide.themesText}
                 </p>
               </div>
@@ -329,14 +329,14 @@ export default function ConcoursPage() {
       </section>
 
       {/* Formulaire de soumission */}
-      <section id="participer" className="py-20 md:py-32 bg-light dark:bg-dark">
+      <section id="participer" className="py-20 md:py-32 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-dark/40 dark:text-white/40 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
                 {contestPageContent.form.label}
               </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-6">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-6">
                 {contestPageContent.form.title}
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
@@ -355,10 +355,10 @@ export default function ConcoursPage() {
                   <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
                     <span className="font-display text-2xl text-primary">✓</span>
                   </div>
-                  <h3 className="font-display text-2xl font-bold text-dark dark:text-white mb-4">
+                  <h3 className="font-display text-2xl font-bold text-[#2B2B2B] dark:text-white mb-4">
                     {contestPageContent.form.success.title}
                   </h3>
-                  <p className="font-body text-dark/60 dark:text-white/60">
+                  <p className="font-body text-[#5A5A5A] dark:text-gray-400">
                     {contestPageContent.form.success.message}
                   </p>
                 </motion.div>
@@ -370,7 +370,7 @@ export default function ConcoursPage() {
                 >
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label className="block font-body text-sm text-dark/60 dark:text-white/60 mb-2">
+                      <label className="block font-body text-sm text-[#5A5A5A] dark:text-gray-400 mb-2">
                         {contestPageContent.form.fields.name}
                       </label>
                       <input
@@ -378,13 +378,13 @@ export default function ConcoursPage() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark dark:text-white"
+                        className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-[#2B2B2B] dark:text-white"
                         placeholder={contestPageContent.form.fields.namePlaceholder}
                       />
                     </div>
 
                     <div>
-                      <label className="block font-body text-sm text-dark/60 dark:text-white/60 mb-2">
+                      <label className="block font-body text-sm text-[#5A5A5A] dark:text-gray-400 mb-2">
                         {contestPageContent.form.fields.email}
                       </label>
                       <input
@@ -392,13 +392,13 @@ export default function ConcoursPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark dark:text-white"
+                        className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-[#2B2B2B] dark:text-white"
                         placeholder={contestPageContent.form.fields.emailPlaceholder}
                       />
                     </div>
 
                     <div>
-                      <label className="block font-body text-sm text-dark/60 dark:text-white/60 mb-2">
+                      <label className="block font-body text-sm text-[#5A5A5A] dark:text-gray-400 mb-2">
                         {contestPageContent.form.fields.instagram}
                       </label>
                       <input
@@ -406,13 +406,13 @@ export default function ConcoursPage() {
                         value={instagram}
                         onChange={(e) => setInstagram(e.target.value)}
                         required
-                        className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-dark dark:text-white"
+                        className="w-full px-4 py-3 border border-dark/20 dark:border-white/20 bg-transparent focus:border-primary focus:outline-none transition-colors font-body text-[#2B2B2B] dark:text-white"
                         placeholder={contestPageContent.form.fields.instagramPlaceholder}
                       />
                     </div>
 
                     <div>
-                      <label className="block font-body text-sm text-dark/60 dark:text-white/60 mb-2">
+                      <label className="block font-body text-sm text-[#5A5A5A] dark:text-gray-400 mb-2">
                         {contestPageContent.form.fields.artwork}
                       </label>
                       <div className="border border-dashed border-dark/20 dark:border-white/20 p-8 text-center hover:border-primary transition-colors cursor-pointer">
@@ -428,16 +428,16 @@ export default function ConcoursPage() {
                           {selectedFile ? (
                             <div>
                               <p className="font-body text-primary font-medium">{selectedFile.name}</p>
-                              <p className="font-mono text-[10px] text-dark/40 dark:text-white/40 mt-1">
+                              <p className="font-mono text-[10px] text-[#7A7A7A] dark:text-gray-500 mt-1">
                                 {contestPageContent.form.fields.changeFile}
                               </p>
                             </div>
                           ) : (
                             <div>
-                              <p className="font-body text-dark/60 dark:text-white/60 mb-1">
+                              <p className="font-body text-[#5A5A5A] dark:text-gray-400 mb-1">
                                 {contestPageContent.form.fields.uploadText}
                               </p>
-                              <p className="font-mono text-[10px] text-dark/40 dark:text-white/40">
+                              <p className="font-mono text-[10px] text-[#7A7A7A] dark:text-gray-500">
                                 {contestPageContent.form.fields.uploadHint}
                               </p>
                             </div>
@@ -455,7 +455,7 @@ export default function ConcoursPage() {
                       </button>
                     </div>
 
-                    <p className="font-mono text-[10px] text-dark/40 dark:text-white/40 text-center">
+                    <p className="font-mono text-[10px] text-[#7A7A7A] dark:text-gray-500 text-center">
                       {contestPageContent.form.terms}
                     </p>
                   </form>

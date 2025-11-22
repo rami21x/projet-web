@@ -44,7 +44,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-light dark:bg-dark">
+    <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A]">
       {/* Hero Section */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-dark to-dark/95 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -60,14 +60,14 @@ export default function ContactPage() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]/50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <div className="bg-white dark:bg-dark/80 p-8 md:p-12 rounded-lg shadow-lg">
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-4 md:mb-6 text-center">
+            <div className="bg-white dark:bg-[#1A1A1A] p-8 md:p-12 rounded-lg shadow-lg">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-4 md:mb-6 text-center">
                 {contactContent.newsletter.headline}
               </h2>
-              <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/95 mb-8 md:mb-10 text-center">
+              <p className="font-body text-base md:text-lg text-[#4A4A4A] dark:text-gray-100 mb-8 md:mb-10 text-center">
                 {contactContent.newsletter.subtitle}
               </p>
 
@@ -82,7 +82,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="email"
-                      className="block font-body text-sm font-semibold text-dark dark:text-white mb-2"
+                      className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2"
                     >
                       {contactPageContent.form.email}
                     </label>
@@ -92,7 +92,7 @@ export default function ContactPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full px-4 py-3 md:py-4 font-body text-base text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary transition-colors"
+                      className="w-full px-4 py-3 md:py-4 font-body text-base text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary transition-colors"
                       placeholder={contactPageContent.form.emailPlaceholder}
                     />
                   </div>
@@ -100,7 +100,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="name"
-                      className="block font-body text-sm font-semibold text-dark dark:text-white mb-2"
+                      className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2"
                     >
                       {contactPageContent.form.name}
                     </label>
@@ -109,7 +109,7 @@ export default function ContactPage() {
                       id="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-3 md:py-4 font-body text-base text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary transition-colors"
+                      className="w-full px-4 py-3 md:py-4 font-body text-base text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary transition-colors"
                       placeholder={contactPageContent.form.namePlaceholder}
                     />
                   </div>
@@ -122,7 +122,7 @@ export default function ContactPage() {
                     <Send className="w-5 h-5" />
                   </button>
 
-                  <p className="font-body text-xs md:text-sm text-dark/60 dark:text-white/90 text-center mt-4">
+                  <p className="font-body text-xs md:text-sm text-[#5A5A5A] dark:text-gray-200 text-center mt-4">
                     {contactContent.newsletter.privacy}
                   </p>
                 </form>
@@ -133,10 +133,10 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Info Section */}
-      <section className="py-16 md:py-24 bg-white dark:bg-dark/30">
+      <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-8 md:mb-12 text-center">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-8 md:mb-12 text-center">
               {contactPageContent.contactSection.title}
             </h2>
           </FadeIn>
@@ -151,10 +151,10 @@ export default function ContactPage() {
                   <Mail className="w-6 h-6 md:w-8 md:h-8 text-primary" />
                 </div>
                 <div>
-                  <p className="font-body text-sm font-semibold text-dark/60 dark:text-white/60 uppercase tracking-wider mb-1">
+                  <p className="font-body text-sm font-semibold text-[#5A5A5A] dark:text-gray-400 uppercase tracking-wider mb-1">
                     {contactPageContent.contactSection.email}
                   </p>
-                  <p className="font-body text-base md:text-lg text-dark dark:text-white font-semibold">
+                  <p className="font-body text-base md:text-lg text-[#2B2B2B] dark:text-white font-semibold">
                     {contactContent.info.email}
                   </p>
                 </div>
@@ -172,10 +172,10 @@ export default function ContactPage() {
                   <Instagram className="w-6 h-6 md:w-8 md:h-8 text-accent" />
                 </div>
                 <div>
-                  <p className="font-body text-sm font-semibold text-dark/60 dark:text-white/60 uppercase tracking-wider mb-1">
+                  <p className="font-body text-sm font-semibold text-[#5A5A5A] dark:text-gray-400 uppercase tracking-wider mb-1">
                     {contactPageContent.contactSection.instagram}
                   </p>
-                  <p className="font-body text-base md:text-lg text-dark dark:text-white font-semibold">
+                  <p className="font-body text-base md:text-lg text-[#2B2B2B] dark:text-white font-semibold">
                     {contactContent.info.instagram}
                   </p>
                 </div>
@@ -186,10 +186,10 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-8 md:mb-12 text-center">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-8 md:mb-12 text-center">
               {contactPageContent.faq.title}
             </h2>
           </FadeIn>
@@ -197,12 +197,12 @@ export default function ContactPage() {
           <div className="space-y-4">
             {contactContent.faq.map((item, index) => (
               <FadeIn key={index} delay={index * 0.05}>
-                <div className="bg-white dark:bg-dark/80 rounded-lg shadow-sm overflow-hidden">
+                <div className="bg-white dark:bg-[#1A1A1A] rounded-lg shadow-sm overflow-hidden">
                   <button
                     onClick={() => toggleFaq(index)}
-                    className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-light/50 dark:hover:bg-dark/60 transition-colors"
+                    className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-light/50 dark:hover:bg-[#1A1A1A] transition-colors"
                   >
-                    <h3 className="font-body text-base md:text-lg font-semibold text-dark dark:text-white pr-4">
+                    <h3 className="font-body text-base md:text-lg font-semibold text-[#2B2B2B] dark:text-white pr-4">
                       {item.question}
                     </h3>
                     <ChevronDown
@@ -220,7 +220,7 @@ export default function ContactPage() {
                     }`}
                   >
                     <div className="px-6 md:px-8 pb-6 md:pb-8">
-                      <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/95 leading-relaxed">
+                      <p className="font-body text-sm md:text-base text-[#4A4A4A] dark:text-gray-100 leading-relaxed">
                         {item.answer}
                       </p>
                     </div>

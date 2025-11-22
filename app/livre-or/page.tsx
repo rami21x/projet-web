@@ -63,7 +63,7 @@ export default function LivreDorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-light dark:bg-dark">
+    <div className="min-h-screen bg-[#E8E8E8] dark:bg-[#0A0A0A]">
       {/* Hero Section */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-dark via-dark/95 to-accent/20 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -99,13 +99,13 @@ export default function LivreDorPage() {
       </section>
 
       {/* Form Section */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]/50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <div className="bg-white dark:bg-dark/80 p-8 md:p-12 rounded-lg shadow-2xl border-2 border-accent/20">
+            <div className="bg-white dark:bg-[#1A1A1A] p-8 md:p-12 rounded-lg shadow-2xl border-2 border-accent/20">
               <div className="flex items-center gap-4 mb-8">
                 <Feather className="w-8 h-8 text-accent" />
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-dark dark:text-white">
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#2B2B2B] dark:text-white">
                   {guestbookPageContent.form.title}
                 </h2>
               </div>
@@ -126,7 +126,7 @@ export default function LivreDorPage() {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block font-body text-sm font-semibold text-dark dark:text-white mb-2"
+                    className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2"
                   >
                     {guestbookPageContent.form.nameLabel}
                   </label>
@@ -136,7 +136,7 @@ export default function LivreDorPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="w-full px-4 py-3 font-body text-base text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-accent transition-colors"
+                    className="w-full px-4 py-3 font-body text-base text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-accent transition-colors"
                     placeholder={guestbookPageContent.form.namePlaceholder}
                   />
                 </div>
@@ -144,7 +144,7 @@ export default function LivreDorPage() {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block font-body text-sm font-semibold text-dark dark:text-white mb-2"
+                    className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2"
                   >
                     {guestbookPageContent.form.messageLabel}
                   </label>
@@ -154,13 +154,13 @@ export default function LivreDorPage() {
                     onChange={(e) => setMessage(e.target.value)}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 font-body text-base text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-accent transition-colors resize-none"
+                    className="w-full px-4 py-3 font-body text-base text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-accent transition-colors resize-none"
                     placeholder={guestbookPageContent.form.messagePlaceholder}
                   />
                 </div>
 
                 <div>
-                  <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-3">
+                  <label className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-3">
                     {guestbookPageContent.form.moodLabel}
                   </label>
                   <div className="flex gap-4">
@@ -180,14 +180,14 @@ export default function LivreDorPage() {
                           >
                             <Icon
                               className={`w-6 h-6 mx-auto mb-2 ${
-                                mood === moodKey ? "text-accent" : "text-dark/40 dark:text-white/40"
+                                mood === moodKey ? "text-accent" : "text-[#7A7A7A] dark:text-gray-500"
                               }`}
                             />
                             <p
                               className={`font-body text-xs font-semibold ${
                                 mood === moodKey
                                   ? "text-accent"
-                                  : "text-dark/60 dark:text-white/60"
+                                  : "text-[#5A5A5A] dark:text-gray-400"
                               }`}
                             >
                               {guestbookPageContent.moods[moodKey]}
@@ -213,10 +213,10 @@ export default function LivreDorPage() {
       </section>
 
       {/* Entries Section */}
-      <section className="py-16 md:py-24 bg-white dark:bg-dark/30">
+      <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-12 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-12 text-center">
               {guestbookPageContent.entries.title}
             </h2>
           </FadeIn>
@@ -232,7 +232,7 @@ export default function LivreDorPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-light dark:bg-dark/80 p-6 md:p-8 rounded-lg shadow-lg border-l-4 border-accent"
+                    className="bg-[#E8E8E8] dark:bg-[#0A0A0A]/80 p-6 md:p-8 rounded-lg shadow-lg border-l-4 border-accent"
                   >
                     <div className="flex items-start gap-4">
                       <div className="flex-shrink-0">
@@ -243,15 +243,15 @@ export default function LivreDorPage() {
 
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-3">
-                          <h3 className="font-body text-lg font-bold text-dark dark:text-white">
+                          <h3 className="font-body text-lg font-bold text-[#2B2B2B] dark:text-white">
                             {entry.name}
                           </h3>
-                          <p className="font-mono text-xs text-dark/50 dark:text-white/50">
+                          <p className="font-mono text-xs text-[#6A6A6A] dark:text-gray-500">
                             {entry.date}
                           </p>
                         </div>
 
-                        <p className="font-body text-base text-dark/80 dark:text-white/80 leading-relaxed italic">
+                        <p className="font-body text-base text-[#3A3A3A] dark:text-gray-200 leading-relaxed italic">
                           &ldquo;{entry.message}&rdquo;
                         </p>
 

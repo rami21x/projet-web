@@ -15,7 +15,7 @@ export default function ProcessusPage() {
   const { processContent, processPageContent } = useContent();
 
   return (
-    <div className="bg-light dark:bg-dark">
+    <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A]">
       {/* Hero Section */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-dark to-dark/95 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -31,7 +31,7 @@ export default function ProcessusPage() {
       </section>
 
       {/* Process Sections */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark">
+      <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16 md:space-y-24">
             {processContent.sections.map((section, index) => {
@@ -52,12 +52,12 @@ export default function ProcessusPage() {
                       } bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-12 md:p-16 rounded-lg flex items-center justify-center min-h-[300px]`}
                     >
                       <div className="text-center">
-                        <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 mb-6 bg-white dark:bg-dark/80 rounded-full shadow-lg">
+                        <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 mb-6 bg-white dark:bg-[#1A1A1A] rounded-full shadow-lg">
                           {Icon && (
                             <Icon className="w-12 h-12 md:w-16 md:h-16 text-primary" />
                           )}
                         </div>
-                        <p className="font-display text-xl md:text-2xl font-bold text-dark dark:text-white">
+                        <p className="font-display text-xl md:text-2xl font-bold text-[#2B2B2B] dark:text-white">
                           {processPageContent.stepLabel} {index + 1}
                         </p>
                       </div>
@@ -65,10 +65,10 @@ export default function ProcessusPage() {
 
                     {/* Content Column */}
                     <div className={!isEven ? "lg:col-start-1 lg:row-start-1" : ""}>
-                      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-4 md:mb-6">
+                      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-4 md:mb-6">
                         {section.title}
                       </h2>
-                      <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/70 leading-relaxed mb-6 md:mb-8">
+                      <p className="font-body text-base md:text-lg text-[#4A4A4A] dark:text-gray-300 leading-relaxed mb-6 md:mb-8">
                         {section.description}
                       </p>
 
@@ -78,7 +78,7 @@ export default function ProcessusPage() {
                           {section.subsections.map((subsection) => (
                             <li
                               key={subsection}
-                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/80"
+                              className="flex items-start gap-3 font-body text-sm md:text-base text-[#3A3A3A] dark:text-gray-200"
                             >
                               <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-2" />
                               {subsection}
@@ -93,12 +93,12 @@ export default function ProcessusPage() {
                           {section.steps.map((step, stepIndex) => (
                             <div
                               key={step}
-                              className="flex items-center gap-4 bg-white dark:bg-dark/60 p-4 rounded-lg"
+                              className="flex items-center gap-4 bg-white dark:bg-[#1A1A1A] p-4 rounded-lg"
                             >
                               <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white text-sm font-bold">
                                 {stepIndex + 1}
                               </div>
-                              <p className="font-body text-sm md:text-base text-dark/80 dark:text-white/80">
+                              <p className="font-body text-sm md:text-base text-[#3A3A3A] dark:text-gray-200">
                                 {step}
                               </p>
                             </div>
@@ -112,7 +112,7 @@ export default function ProcessusPage() {
                           {section.details.map((detail) => (
                             <li
                               key={detail}
-                              className="flex items-start gap-3 font-body text-sm md:text-base text-dark/80 dark:text-white/80"
+                              className="flex items-start gap-3 font-body text-sm md:text-base text-[#3A3A3A] dark:text-gray-200"
                             >
                               <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0 mt-2" />
                               {detail}
@@ -130,10 +130,10 @@ export default function ProcessusPage() {
       </section>
 
       {/* Timeline Overview */}
-      <section className="py-16 md:py-24 bg-white dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-center text-dark dark:text-white mb-12 md:mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[#2B2B2B] dark:text-white mb-12 md:mb-16">
               {processPageContent.timeline.title}
             </h2>
           </FadeIn>
@@ -152,10 +152,10 @@ export default function ProcessusPage() {
                         <div className="hidden lg:block absolute top-1/2 left-full w-full h-0.5 bg-dark/10 dark:bg-white/10 -translate-y-1/2" />
                       )}
                     </div>
-                    <h3 className="font-display text-lg md:text-xl font-bold text-dark dark:text-white mb-2">
+                    <h3 className="font-display text-lg md:text-xl font-bold text-[#2B2B2B] dark:text-white mb-2">
                       {section.title}
                     </h3>
-                    <p className="font-body text-xs md:text-sm text-dark/60 dark:text-white/60 line-clamp-3">
+                    <p className="font-body text-xs md:text-sm text-[#5A5A5A] dark:text-gray-400 line-clamp-3">
                       {section.description}
                     </p>
                   </div>

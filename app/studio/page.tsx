@@ -638,18 +638,18 @@ export default function StudioPage() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
-            className="py-16 md:py-24 bg-light dark:bg-dark/50"
+            className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]"
           >
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <FadeIn>
-                <div className="bg-white dark:bg-dark/80 p-8 md:p-12 rounded-lg shadow-2xl border-2 border-primary/20">
-                  <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-8 text-center">
+                <div className="bg-white dark:bg-[#1A1A1A] p-8 md:p-12 rounded-lg shadow-2xl border-2 border-primary/20">
+                  <h2 className="font-display text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-8 text-center">
                     {studioContent.config.title}
                   </h2>
 
                   {/* Type de vêtement */}
                   <div className="mb-10">
-                    <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
+                    <label className="block font-body text-lg font-semibold text-[#2B2B2B] dark:text-white mb-4">
                       {studioContent.config.garmentType.label}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -665,19 +665,19 @@ export default function StudioPage() {
                           className={`w-12 h-12 mx-auto mb-3 ${
                             garmentType === "tshirt"
                               ? "text-primary"
-                              : "text-dark/40 dark:text-white/40"
+                              : "text-[#7A7A7A] dark:text-gray-500"
                           }`}
                         />
                         <p
                           className={`font-body text-lg font-semibold ${
                             garmentType === "tshirt"
                               ? "text-primary"
-                              : "text-dark dark:text-white"
+                              : "text-[#2B2B2B] dark:text-white"
                           }`}
                         >
                           {studioContent.config.garmentType.tshirt.title}
                         </p>
-                        <p className="font-body text-sm text-dark/60 dark:text-white/60 mt-1">
+                        <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 mt-1">
                           {studioContent.config.garmentType.tshirt.description}
                         </p>
                       </button>
@@ -694,19 +694,19 @@ export default function StudioPage() {
                           className={`w-12 h-12 mx-auto mb-3 ${
                             garmentType === "pull"
                               ? "text-primary"
-                              : "text-dark/40 dark:text-white/40"
+                              : "text-[#7A7A7A] dark:text-gray-500"
                           }`}
                         />
                         <p
                           className={`font-body text-lg font-semibold ${
                             garmentType === "pull"
                               ? "text-primary"
-                              : "text-dark dark:text-white"
+                              : "text-[#2B2B2B] dark:text-white"
                           }`}
                         >
                           {studioContent.config.garmentType.pull.title}
                         </p>
-                        <p className="font-body text-sm text-dark/60 dark:text-white/60 mt-1">
+                        <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 mt-1">
                           {studioContent.config.garmentType.pull.description}
                         </p>
                       </button>
@@ -715,7 +715,7 @@ export default function StudioPage() {
 
                   {/* Coupe */}
                   <div className="mb-10">
-                    <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
+                    <label className="block font-body text-lg font-semibold text-[#2B2B2B] dark:text-white mb-4">
                       {studioContent.config.fit.label}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -733,21 +733,21 @@ export default function StudioPage() {
                             className={`w-8 h-8 mx-auto mb-2 ${
                               garmentFit === fit
                                 ? "text-primary"
-                                : "text-dark/40 dark:text-white/40"
+                                : "text-[#7A7A7A] dark:text-gray-500"
                             }`}
                           />
                           <p
                             className={`font-body font-semibold capitalize ${
                               garmentFit === fit
                                 ? "text-primary"
-                                : "text-dark dark:text-white"
+                                : "text-[#2B2B2B] dark:text-white"
                             }`}
                           >
                             {fit === "oversize" && studioContent.config.fit.oversize.title}
                             {fit === "regular" && studioContent.config.fit.regular.title}
                             {fit === "slim" && studioContent.config.fit.slim.title}
                           </p>
-                          <p className="font-body text-xs text-dark/60 dark:text-white/60 mt-1">
+                          <p className="font-body text-xs text-[#5A5A5A] dark:text-gray-400 mt-1">
                             {fit === "oversize" && studioContent.config.fit.oversize.description}
                             {fit === "regular" && studioContent.config.fit.regular.description}
                             {fit === "slim" && studioContent.config.fit.slim.description}
@@ -759,7 +759,7 @@ export default function StudioPage() {
 
                   {/* Couleur */}
                   <div className="mb-10">
-                    <label className="block font-body text-lg font-semibold text-dark dark:text-white mb-4">
+                    <label className="block font-body text-lg font-semibold text-[#2B2B2B] dark:text-white mb-4">
                       {studioContent.config.color.label}
                     </label>
                     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
@@ -783,7 +783,7 @@ export default function StudioPage() {
                             />
                           )}
                           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                            <p className="font-body text-xs text-dark dark:text-white bg-white dark:bg-dark px-2 py-1 rounded shadow-lg">
+                            <p className="font-body text-xs text-[#2B2B2B] dark:text-white bg-white dark:bg-dark px-2 py-1 rounded shadow-lg">
                               {color.name}
                             </p>
                           </div>
@@ -793,8 +793,8 @@ export default function StudioPage() {
                   </div>
 
                   {/* Aperçu de la configuration */}
-                  <div className="bg-light dark:bg-dark/50 p-6 rounded-lg mb-8">
-                    <p className="font-body text-sm font-semibold text-dark dark:text-white mb-3">
+                  <div className="bg-[#F0F0F0] dark:bg-[#0A0A0A] p-6 rounded-lg mb-8">
+                    <p className="font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-3">
                       {studioContent.config.summary}
                     </p>
                     <div className="flex flex-wrap gap-3">
@@ -844,7 +844,7 @@ export default function StudioPage() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
-            className="py-16 md:py-24 bg-light dark:bg-dark/50"
+            className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               {/* Back button */}
@@ -868,7 +868,7 @@ export default function StudioPage() {
                       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full" />
                       <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-accent/10 to-transparent rounded-tr-full" />
 
-                      <h2 className="font-display text-3xl md:text-4xl font-bold text-dark dark:text-white mb-8 flex items-center gap-3 relative z-10">
+                      <h2 className="font-display text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-8 flex items-center gap-3 relative z-10">
                         <motion.div
                           animate={{ rotate: uploadedImage ? 360 : 0 }}
                           transition={{ duration: 0.6 }}
@@ -917,7 +917,7 @@ export default function StudioPage() {
                               >
                                 <Upload className="w-20 h-20 text-primary/30 dark:text-primary/40 mx-auto mb-4" />
                               </motion.div>
-                              <p className="font-body text-lg text-dark/50 dark:text-white/50 font-semibold">
+                              <p className="font-body text-lg text-[#6A6A6A] dark:text-gray-500 font-semibold">
                                 {studioContent.design.preview.uploadPrompt}
                               </p>
                               <p className="font-body text-sm text-dark/30 dark:text-white/30 mt-2">
@@ -929,14 +929,14 @@ export default function StudioPage() {
                       </motion.div>
 
                       {/* Configuration display */}
-                      <div className="flex items-center justify-between mb-6 p-4 bg-light dark:bg-dark/50 rounded-lg">
+                      <div className="flex items-center justify-between mb-6 p-4 bg-[#F0F0F0] dark:bg-[#0A0A0A] rounded-lg">
                         <div className="flex items-center gap-2">
                           {garmentType === "tshirt" ? (
                             <Shirt className="w-5 h-5 text-primary" />
                           ) : (
                             <Wind className="w-5 h-5 text-primary" />
                           )}
-                          <span className="font-body text-sm font-semibold text-dark dark:text-white capitalize">
+                          <span className="font-body text-sm font-semibold text-[#2B2B2B] dark:text-white capitalize">
                             {garmentType === "tshirt" ? studioContent.config.garmentType.tshirt.title : studioContent.config.garmentType.pull.title} {garmentFit}
                           </span>
                         </div>
@@ -947,8 +947,8 @@ export default function StudioPage() {
                       </div>
 
                       {/* Front/Back Toggle */}
-                      <div className="mb-6 p-4 bg-light dark:bg-dark/50 rounded-lg">
-                        <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-3">
+                      <div className="mb-6 p-4 bg-[#F0F0F0] dark:bg-[#0A0A0A] rounded-lg">
+                        <label className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-3">
                           {studioContent.design.sides.label}
                         </label>
                         <div className="grid grid-cols-2 gap-3">
@@ -964,14 +964,14 @@ export default function StudioPage() {
                               className={`w-6 h-6 mx-auto mb-1 ${
                                 garmentSide === "front"
                                   ? "text-primary"
-                                  : "text-dark/40 dark:text-white/40"
+                                  : "text-[#7A7A7A] dark:text-gray-500"
                               }`}
                             />
                             <p
                               className={`font-body text-sm font-semibold ${
                                 garmentSide === "front"
                                   ? "text-primary"
-                                  : "text-dark dark:text-white"
+                                  : "text-[#2B2B2B] dark:text-white"
                               }`}
                             >
                               {studioContent.design.sides.front}
@@ -990,14 +990,14 @@ export default function StudioPage() {
                               className={`w-6 h-6 mx-auto mb-1 ${
                                 garmentSide === "back"
                                   ? "text-primary"
-                                  : "text-dark/40 dark:text-white/40"
+                                  : "text-[#7A7A7A] dark:text-gray-500"
                               }`}
                             />
                             <p
                               className={`font-body text-sm font-semibold ${
                                 garmentSide === "back"
                                   ? "text-primary"
-                                  : "text-dark dark:text-white"
+                                  : "text-[#2B2B2B] dark:text-white"
                               }`}
                             >
                               {studioContent.design.sides.back}
@@ -1034,8 +1034,8 @@ export default function StudioPage() {
                 <div className="lg:col-span-2 space-y-8">
                   {/* Upload */}
                   <FadeIn delay={0.1}>
-                    <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
-                      <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-4">
+                    <div className="bg-white dark:bg-[#1A1A1A] p-8 rounded-lg shadow-2xl border-2 border-primary/20">
+                      <h3 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white mb-4">
                         {studioContent.design.upload.title}
                       </h3>
 
@@ -1055,7 +1055,7 @@ export default function StudioPage() {
                         {getActiveLayers().length > 0 ? studioContent.design.upload.buttonMultiple : studioContent.design.upload.button}
                       </button>
 
-                      <p className="font-body text-xs text-dark/60 dark:text-white/60 mt-3 text-center">
+                      <p className="font-body text-xs text-[#5A5A5A] dark:text-gray-400 mt-3 text-center">
                         {studioContent.design.upload.hint}
                       </p>
 
@@ -1063,7 +1063,7 @@ export default function StudioPage() {
                       {getActiveLayers().length > 0 && (
                         <div className="mt-6 pt-6 border-t-2 border-dark/10 dark:border-white/10">
                           <div className="flex items-center justify-between mb-3">
-                            <h4 className="font-body text-sm font-semibold text-dark dark:text-white flex items-center gap-2">
+                            <h4 className="font-body text-sm font-semibold text-[#2B2B2B] dark:text-white flex items-center gap-2">
                               <Layers className="w-4 h-4" />
                               {studioContent.design.layers.title} {garmentSide === "front" ? studioContent.design.layers.frontSide : studioContent.design.layers.backSide}
                             </h4>
@@ -1103,10 +1103,10 @@ export default function StudioPage() {
 
                                 {/* Layer info */}
                                 <div className="flex-1 min-w-0">
-                                  <p className="font-body text-sm font-semibold text-dark dark:text-white truncate">
+                                  <p className="font-body text-sm font-semibold text-[#2B2B2B] dark:text-white truncate">
                                     Image {index + 1}
                                   </p>
-                                  <p className="font-mono text-xs text-dark/60 dark:text-white/60">
+                                  <p className="font-mono text-xs text-[#5A5A5A] dark:text-gray-400">
                                     {Math.round(layer.scale * 100)}% · {layer.rotation}°
                                   </p>
                                 </div>
@@ -1142,7 +1142,7 @@ export default function StudioPage() {
                             ))}
                           </div>
 
-                          <p className="font-body text-xs text-dark/50 dark:text-white/50 mt-3 text-center italic">
+                          <p className="font-body text-xs text-[#6A6A6A] dark:text-gray-500 mt-3 text-center italic">
                             {studioContent.design.layers.helpText}
                           </p>
                         </div>
@@ -1153,15 +1153,15 @@ export default function StudioPage() {
                   {/* Controls */}
                   {uploadedImage && (
                     <FadeIn delay={0.2}>
-                      <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
-                        <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
+                      <div className="bg-white dark:bg-[#1A1A1A] p-8 rounded-lg shadow-2xl border-2 border-primary/20">
+                        <h3 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white mb-6">
                           {studioContent.design.controls.title}
                         </h3>
 
                         <div className="space-y-6">
                           {/* Scale */}
                           <div>
-                            <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                            <label className="flex items-center justify-between font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                               <span className="flex items-center gap-2">
                                 <ZoomIn className="w-4 h-4" />
                                 {studioContent.design.controls.scale}
@@ -1187,7 +1187,7 @@ export default function StudioPage() {
 
                           {/* Position X */}
                           <div>
-                            <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                            <label className="flex items-center justify-between font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                               <span>{studioContent.design.controls.positionX}</span>
                               <span className="font-mono text-primary">{designX}%</span>
                             </label>
@@ -1207,7 +1207,7 @@ export default function StudioPage() {
 
                           {/* Position Y */}
                           <div>
-                            <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                            <label className="flex items-center justify-between font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                               <span>{studioContent.design.controls.positionY}</span>
                               <span className="font-mono text-primary">{designY}%</span>
                             </label>
@@ -1227,7 +1227,7 @@ export default function StudioPage() {
 
                           {/* Rotation */}
                           <div>
-                            <label className="flex items-center justify-between font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                            <label className="flex items-center justify-between font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                               <span className="flex items-center gap-2">
                                 <RotateCw className="w-4 h-4" />
                                 {studioContent.design.controls.rotation}
@@ -1255,8 +1255,8 @@ export default function StudioPage() {
                   {/* Submission Form */}
                   {uploadedImage && (
                     <FadeIn delay={0.3}>
-                      <div className="bg-white dark:bg-dark/80 p-8 rounded-lg shadow-2xl border-2 border-primary/20">
-                        <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
+                      <div className="bg-white dark:bg-[#1A1A1A] p-8 rounded-lg shadow-2xl border-2 border-primary/20">
+                        <h3 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white mb-6">
                           {studioContent.design.submit.title}
                         </h3>
 
@@ -1270,7 +1270,7 @@ export default function StudioPage() {
                             <p className="font-display text-2xl font-bold text-primary mb-2">
                               {studioContent.design.submit.success.title}
                             </p>
-                            <p className="font-body text-dark/70 dark:text-white/70">
+                            <p className="font-body text-[#4A4A4A] dark:text-gray-300">
                               {studioContent.design.submit.success.message}
                             </p>
                             <a
@@ -1283,7 +1283,7 @@ export default function StudioPage() {
                         ) : (
                           <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <label className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                                 {studioContent.design.submit.fields.artistName.label}
                               </label>
                               <input
@@ -1291,13 +1291,13 @@ export default function StudioPage() {
                                 value={artistName}
                                 onChange={(e) => setArtistName(e.target.value)}
                                 required
-                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                                className="w-full px-4 py-3 font-body text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
                                 placeholder={studioContent.design.submit.fields.artistName.placeholder}
                               />
                             </div>
 
                             <div>
-                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <label className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                                 {studioContent.design.submit.fields.email.label}
                               </label>
                               <input
@@ -1305,13 +1305,13 @@ export default function StudioPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                                className="w-full px-4 py-3 font-body text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
                                 placeholder={studioContent.design.submit.fields.email.placeholder}
                               />
                             </div>
 
                             <div>
-                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <label className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                                 {studioContent.design.submit.fields.title.label}
                               </label>
                               <input
@@ -1319,13 +1319,13 @@ export default function StudioPage() {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
-                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                                className="w-full px-4 py-3 font-body text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
                                 placeholder={studioContent.design.submit.fields.title.placeholder}
                               />
                             </div>
 
                             <div>
-                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <label className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                                 {studioContent.design.submit.fields.philosophy.label}
                               </label>
                               <textarea
@@ -1333,20 +1333,20 @@ export default function StudioPage() {
                                 onChange={(e) => setPhilosophy(e.target.value)}
                                 required
                                 rows={4}
-                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary resize-none"
+                                className="w-full px-4 py-3 font-body text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary resize-none"
                                 placeholder={studioContent.design.submit.fields.philosophy.placeholder}
                               />
                             </div>
 
                             <div>
-                              <label className="block font-body text-sm font-semibold text-dark dark:text-white mb-2">
+                              <label className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                                 {studioContent.design.submit.fields.instagram.label}
                               </label>
                               <input
                                 type="text"
                                 value={social}
                                 onChange={(e) => setSocial(e.target.value)}
-                                className="w-full px-4 py-3 font-body text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                                className="w-full px-4 py-3 font-body text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
                                 placeholder={studioContent.design.submit.fields.instagram.placeholder}
                               />
                             </div>

@@ -150,11 +150,11 @@ export default function Home() {
       </section>
 
       {/* Features Section - Artistic style without emojis */}
-      <section className="py-20 md:py-32 bg-light dark:bg-dark">
+      <section className="py-20 md:py-32 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-16 md:mb-20">
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-4">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-4">
                 {homePageContent.essence.title}
               </h2>
               <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
@@ -168,16 +168,16 @@ export default function Home() {
                   {/* Artistic circle instead of emoji icon */}
                   <div className="relative w-20 h-20 mx-auto mb-8">
                     <div className="absolute inset-0 border border-primary/30 rounded-full group-hover:border-primary/60 transition-colors duration-500" />
-                    <div className="absolute inset-2 border border-dark/20 dark:border-white/20 rounded-full group-hover:border-primary/40 transition-colors duration-500" />
+                    <div className="absolute inset-2 border border-[#2B2B2B]/20 dark:border-white/20 rounded-full group-hover:border-primary/40 transition-colors duration-500" />
                     <div className="absolute inset-4 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full group-hover:from-primary/20 group-hover:to-accent/20 transition-colors duration-500" />
                     <span className="absolute inset-0 flex items-center justify-center font-display text-2xl font-bold text-primary/70 group-hover:text-primary transition-colors duration-300">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <h3 className="font-display text-xl md:text-2xl font-bold text-dark dark:text-white mb-4">
+                  <h3 className="font-display text-xl md:text-2xl font-bold text-[#2B2B2B] dark:text-white mb-4">
                     {feature.title}
                   </h3>
-                  <p className="font-body text-sm md:text-base text-dark/60 dark:text-white/60 leading-relaxed max-w-xs mx-auto">
+                  <p className="font-body text-sm md:text-base text-[#5A5A5A] dark:text-gray-400 leading-relaxed max-w-xs mx-auto">
                     {feature.description}
                   </p>
                 </div>
@@ -188,10 +188,10 @@ export default function Home() {
       </section>
 
       {/* NARCISSE AMOUREUX - Standalone artistic section */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-light via-white to-light dark:from-dark dark:via-dark dark:to-dark relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-[#E8E8E8] via-white to-[#E8E8E8] dark:from-[#0A0A0A] dark:via-[#0A0A0A] dark:to-[#0A0A0A] relative overflow-hidden">
         {/* Subtle decorative elements */}
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-dark dark:border-white rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-[#2B2B2B] dark:border-white rounded-full" />
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -207,21 +207,21 @@ export default function Home() {
                 href="/collection"
                 className="inline-block group"
               >
-                <span className="font-mono text-[10px] tracking-[0.5em] text-dark/40 dark:text-white/40 block mb-4">
+                <span className="font-mono text-[10px] tracking-[0.5em] text-[#6A6A6A] dark:text-gray-500 block mb-4">
                   {homePageContent.series.label}
                 </span>
                 <div className="relative">
-                  <div className="absolute -inset-6 border border-dark/5 dark:border-white/5 group-hover:border-primary/20 transition-colors duration-500" />
-                  <div className="absolute -inset-3 border border-dark/10 dark:border-white/10 group-hover:border-primary/30 transition-colors duration-500" />
+                  <div className="absolute -inset-6 border border-[#2B2B2B]/5 dark:border-white/5 group-hover:border-primary/20 transition-colors duration-500" />
+                  <div className="absolute -inset-3 border border-[#2B2B2B]/10 dark:border-white/10 group-hover:border-primary/30 transition-colors duration-500" />
                   <div className="relative px-12 py-8 md:px-16 md:py-10">
-                    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-dark dark:text-white group-hover:text-primary transition-colors duration-500 tracking-wide">
+                    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-[#2B2B2B] dark:text-white group-hover:text-primary transition-colors duration-500 tracking-wide">
                       {homePageContent.series.title1}
                     </h2>
-                    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-primary group-hover:text-dark dark:group-hover:text-white transition-colors duration-500 tracking-wide -mt-1">
+                    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-primary group-hover:text-[#2B2B2B] dark:group-hover:text-white transition-colors duration-500 tracking-wide -mt-1">
                       {homePageContent.series.title2}
                     </h2>
                     <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-6 group-hover:w-24 transition-all duration-500" />
-                    <p className="font-body text-sm text-dark/50 dark:text-white/50 mt-6 group-hover:text-dark/70 dark:group-hover:text-white/70 transition-colors">
+                    <p className="font-body text-sm text-[#6A6A6A] dark:text-gray-500 mt-6 group-hover:text-[#4A4A4A] dark:group-hover:text-gray-300 transition-colors">
                       {homePageContent.series.cta}
                     </p>
                   </div>
@@ -264,22 +264,22 @@ export default function Home() {
       <DualitySlider />
 
       {/* Collection Teaser - Harmonie du Chaos */}
-      <section className="py-20 md:py-32 bg-light dark:bg-dark relative">
+      <section className="py-20 md:py-32 bg-[#E8E8E8] dark:bg-[#0A0A0A] relative">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center">
               {/* Artistic header */}
               <div className="relative inline-block mb-8">
-                <span className="font-mono text-[10px] tracking-[0.5em] text-dark/40 dark:text-white/40 block mb-4">
+                <span className="font-mono text-[10px] tracking-[0.5em] text-[#6A6A6A] dark:text-gray-500 block mb-4">
                   {homePageContent.collection.label}
                 </span>
-                <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-dark dark:text-white">
+                <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-[#2B2B2B] dark:text-white">
                   {homePageContent.collection.title}
                 </h2>
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent" />
               </div>
 
-              <p className="font-body text-base sm:text-lg md:text-xl text-dark/60 dark:text-white/60 leading-relaxed max-w-2xl mx-auto mt-12 mb-16">
+              <p className="font-body text-base sm:text-lg md:text-xl text-[#5A5A5A] dark:text-gray-400 leading-relaxed max-w-2xl mx-auto mt-12 mb-16">
                 {homePageContent.collection.description}
               </p>
 

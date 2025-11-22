@@ -225,12 +225,12 @@ export default function GaleriePage() {
       </section>
 
       {/* Filters */}
-      <section className="py-8 bg-white dark:bg-dark/30 border-b border-dark/10 dark:border-white/10">
+      <section className="py-8 bg-white dark:bg-[#1A1A1A] border-b border-dark/10 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <Palette className="w-5 h-5 text-primary" />
-              <p className="font-body text-dark dark:text-white font-semibold">
+              <p className="font-body text-[#2B2B2B] dark:text-white font-semibold">
                 {filteredDesigns.length} design{filteredDesigns.length !== 1 ? "s" : ""}
               </p>
             </div>
@@ -241,7 +241,7 @@ export default function GaleriePage() {
                 className={`px-4 py-2 rounded-lg font-body text-sm font-semibold transition-all ${
                   filter === "all"
                     ? "bg-primary text-white"
-                    : "bg-dark/10 dark:bg-white/10 text-dark dark:text-white hover:bg-dark/20 dark:hover:bg-white/20"
+                    : "bg-dark/10 dark:bg-white/10 text-[#2B2B2B] dark:text-white hover:bg-dark/20 dark:hover:bg-white/20"
                 }`}
               >
                 Tous
@@ -251,7 +251,7 @@ export default function GaleriePage() {
                 className={`px-4 py-2 rounded-lg font-body text-sm font-semibold transition-all flex items-center gap-2 ${
                   filter === "recent"
                     ? "bg-primary text-white"
-                    : "bg-dark/10 dark:bg-white/10 text-dark dark:text-white hover:bg-dark/20 dark:hover:bg-white/20"
+                    : "bg-dark/10 dark:bg-white/10 text-[#2B2B2B] dark:text-white hover:bg-dark/20 dark:hover:bg-white/20"
                 }`}
               >
                 <Clock className="w-4 h-4" />
@@ -262,7 +262,7 @@ export default function GaleriePage() {
                 className={`px-4 py-2 rounded-lg font-body text-sm font-semibold transition-all flex items-center gap-2 ${
                   filter === "popular"
                     ? "bg-primary text-white"
-                    : "bg-dark/10 dark:bg-white/10 text-dark dark:text-white hover:bg-dark/20 dark:hover:bg-white/20"
+                    : "bg-dark/10 dark:bg-white/10 text-[#2B2B2B] dark:text-white hover:bg-dark/20 dark:hover:bg-white/20"
                 }`}
               >
                 <TrendingUp className="w-4 h-4" />
@@ -274,7 +274,7 @@ export default function GaleriePage() {
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading ? (
             <div className="text-center py-20">
@@ -285,20 +285,20 @@ export default function GaleriePage() {
               >
                 <Palette className="w-16 h-16 text-primary" />
               </motion.div>
-              <h3 className="font-display text-2xl font-bold text-dark dark:text-white mb-2">
+              <h3 className="font-display text-2xl font-bold text-[#2B2B2B] dark:text-white mb-2">
                 Chargement des créations...
               </h3>
-              <p className="font-body text-dark/60 dark:text-white/60">
+              <p className="font-body text-[#5A5A5A] dark:text-gray-400">
                 Un instant, l'art se prépare
               </p>
             </div>
           ) : filteredDesigns.length === 0 ? (
             <div className="text-center py-20">
-              <Sparkles className="w-16 h-16 text-dark/20 dark:text-white/20 mx-auto mb-4" />
-              <h3 className="font-display text-2xl font-bold text-dark dark:text-white mb-2">
+              <Sparkles className="w-16 h-16 text-[#9A9A9A] dark:text-gray-600 mx-auto mb-4" />
+              <h3 className="font-display text-2xl font-bold text-[#2B2B2B] dark:text-white mb-2">
                 Aucun design pour le moment
               </h3>
-              <p className="font-body text-dark/60 dark:text-white/60 mb-8">
+              <p className="font-body text-[#5A5A5A] dark:text-gray-400 mb-8">
                 Soyez le premier à créer !
               </p>
               <a
@@ -318,11 +318,11 @@ export default function GaleriePage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-white dark:bg-dark/80 rounded-lg shadow-lg overflow-hidden border-2 border-primary/10 hover:border-primary/30 transition-all group cursor-pointer"
+                    className="bg-white dark:bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border-2 border-primary/10 hover:border-primary/30 transition-all group cursor-pointer"
                     onClick={() => setSelectedDesign(design)}
                   >
                     {/* Design Image */}
-                    <div className="relative aspect-square bg-light dark:bg-dark/50 overflow-hidden">
+                    <div className="relative aspect-square bg-[#E8E8E8] dark:bg-[#0A0A0A] overflow-hidden">
                       <img
                         src={design.designData}
                         alt={design.title}
@@ -332,18 +332,18 @@ export default function GaleriePage() {
 
                     {/* Info */}
                     <div className="p-6">
-                      <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-2">
+                      <h3 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white mb-2">
                         {design.title}
                       </h3>
 
                       <div className="flex items-center gap-2 mb-3">
                         <User className="w-4 h-4 text-primary" />
-                        <p className="font-body text-sm text-dark/70 dark:text-white/70">
+                        <p className="font-body text-sm text-[#4A4A4A] dark:text-gray-300">
                           {design.artistName}
                         </p>
                         {design.social && (
                           <>
-                            <span className="text-dark/30 dark:text-white/30">·</span>
+                            <span className="text-[#8A8A8A] dark:text-gray-600">·</span>
                             <Instagram className="w-4 h-4 text-accent" />
                             <p className="font-body text-sm text-accent">
                               {design.social}
@@ -352,7 +352,7 @@ export default function GaleriePage() {
                         )}
                       </div>
 
-                      <p className="font-body text-sm text-dark/60 dark:text-white/60 line-clamp-3 mb-4">
+                      <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 line-clamp-3 mb-4">
                         {design.philosophy}
                       </p>
 
@@ -366,7 +366,7 @@ export default function GaleriePage() {
                           className={`flex items-center gap-2 font-body text-sm font-semibold transition-all hover:scale-110 ${
                             isLiked(design.id)
                               ? "text-primary"
-                              : "text-dark/60 dark:text-white/60"
+                              : "text-[#5A5A5A] dark:text-gray-400"
                           }`}
                         >
                           <Heart
@@ -377,12 +377,12 @@ export default function GaleriePage() {
                           {design.likes}
                         </button>
 
-                        <div className="flex items-center gap-2 font-body text-sm text-dark/60 dark:text-white/60">
+                        <div className="flex items-center gap-2 font-body text-sm text-[#5A5A5A] dark:text-gray-400">
                           <MessageCircle className="w-5 h-5" />
                           {design.comments?.length || 0}
                         </div>
 
-                        <div className="flex items-center gap-2 font-body text-xs text-dark/40 dark:text-white/40">
+                        <div className="flex items-center gap-2 font-body text-xs text-[#7A7A7A] dark:text-gray-500">
                           <Calendar className="w-4 h-4" />
                           {new Date(design.timestamp).toLocaleDateString("fr-FR")}
                         </div>
@@ -410,7 +410,7 @@ export default function GaleriePage() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-dark/95 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-[#0A0A0A] rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -418,7 +418,7 @@ export default function GaleriePage() {
                 onClick={() => setSelectedDesign(null)}
                 className="absolute top-4 right-4 w-10 h-10 bg-dark/10 dark:bg-white/10 hover:bg-dark/20 dark:hover:bg-white/20 rounded-full flex items-center justify-center transition-all z-10"
               >
-                <X className="w-5 h-5 text-dark dark:text-white" />
+                <X className="w-5 h-5 text-[#2B2B2B] dark:text-white" />
               </button>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
@@ -436,7 +436,7 @@ export default function GaleriePage() {
                     className={`w-full mt-4 flex items-center justify-center gap-3 font-body font-semibold px-6 py-3 rounded-lg transition-all hover:scale-105 ${
                       isLiked(selectedDesign.id)
                         ? "bg-primary text-white"
-                        : "bg-dark/10 dark:bg-white/10 text-dark dark:text-white"
+                        : "bg-dark/10 dark:bg-white/10 text-[#2B2B2B] dark:text-white"
                     }`}
                   >
                     <Heart
@@ -452,18 +452,18 @@ export default function GaleriePage() {
                 {/* Right: Details & Comments */}
                 <div className="flex flex-col">
                   <div className="flex-shrink-0 mb-6">
-                    <h2 className="font-display text-3xl font-bold text-dark dark:text-white mb-4">
+                    <h2 className="font-display text-3xl font-bold text-[#2B2B2B] dark:text-white mb-4">
                       {selectedDesign.title}
                     </h2>
 
                     <div className="flex items-center gap-2 mb-4">
                       <User className="w-5 h-5 text-primary" />
-                      <p className="font-body text-lg text-dark dark:text-white font-semibold">
+                      <p className="font-body text-lg text-[#2B2B2B] dark:text-white font-semibold">
                         {selectedDesign.artistName}
                       </p>
                       {selectedDesign.social && (
                         <>
-                          <span className="text-dark/30 dark:text-white/30">·</span>
+                          <span className="text-[#8A8A8A] dark:text-gray-600">·</span>
                           <Instagram className="w-5 h-5 text-accent" />
                           <a
                             href={`https://instagram.com/${selectedDesign.social.replace("@", "")}`}
@@ -477,16 +477,16 @@ export default function GaleriePage() {
                       )}
                     </div>
 
-                    <div className="bg-light dark:bg-dark/50 p-4 rounded-lg mb-4">
+                    <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A] p-4 rounded-lg mb-4">
                       <p className="font-body text-xs font-semibold text-primary uppercase tracking-wider mb-2">
                         Philosophie
                       </p>
-                      <p className="font-body text-sm text-dark dark:text-white leading-relaxed">
+                      <p className="font-body text-sm text-[#2B2B2B] dark:text-white leading-relaxed">
                         {selectedDesign.philosophy}
                       </p>
                     </div>
 
-                    <p className="font-body text-xs text-dark/50 dark:text-white/50">
+                    <p className="font-body text-xs text-[#6A6A6A] dark:text-gray-500">
                       Créé le{" "}
                       {new Date(selectedDesign.timestamp).toLocaleDateString("fr-FR", {
                         day: "numeric",
@@ -498,7 +498,7 @@ export default function GaleriePage() {
 
                   {/* Comments Section */}
                   <div className="flex-1 overflow-y-auto border-t border-dark/10 dark:border-white/10 pt-6">
-                    <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-4 flex items-center gap-2">
+                    <h3 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white mb-4 flex items-center gap-2">
                       <MessageCircle className="w-5 h-5 text-primary" />
                       Commentaires ({selectedDesign.comments?.length || 0})
                     </h3>
@@ -506,24 +506,24 @@ export default function GaleriePage() {
                     {/* Comment List */}
                     <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
                       {selectedDesign.comments?.length === 0 ? (
-                        <p className="font-body text-sm text-dark/50 dark:text-white/50 italic">
+                        <p className="font-body text-sm text-[#6A6A6A] dark:text-gray-500 italic">
                           Aucun commentaire pour le moment. Soyez le premier !
                         </p>
                       ) : (
                         selectedDesign.comments?.map((comment) => (
                           <div
                             key={comment.id}
-                            className="bg-light dark:bg-dark/50 p-4 rounded-lg"
+                            className="bg-[#E8E8E8] dark:bg-[#0A0A0A] p-4 rounded-lg"
                           >
                             <div className="flex items-center justify-between mb-2">
-                              <p className="font-body text-sm font-semibold text-dark dark:text-white">
+                              <p className="font-body text-sm font-semibold text-[#2B2B2B] dark:text-white">
                                 {comment.author}
                               </p>
-                              <p className="font-body text-xs text-dark/40 dark:text-white/40">
+                              <p className="font-body text-xs text-[#7A7A7A] dark:text-gray-500">
                                 {new Date(comment.timestamp).toLocaleDateString("fr-FR")}
                               </p>
                             </div>
-                            <p className="font-body text-sm text-dark/80 dark:text-white/80">
+                            <p className="font-body text-sm text-[#3A3A3A] dark:text-gray-200">
                               {comment.text}
                             </p>
                           </div>
@@ -538,14 +538,14 @@ export default function GaleriePage() {
                         value={commentAuthor}
                         onChange={(e) => setCommentAuthor(e.target.value)}
                         placeholder="Votre nom"
-                        className="w-full px-4 py-2 mb-2 font-body text-sm text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
+                        className="w-full px-4 py-2 mb-2 font-body text-sm text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary"
                       />
                       <textarea
                         value={commentText}
                         onChange={(e) => setCommentText(e.target.value)}
                         placeholder="Partagez vos pensées philosophiques..."
                         rows={3}
-                        className="w-full px-4 py-2 mb-2 font-body text-sm text-dark dark:text-white bg-white dark:bg-dark/60 border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary resize-none"
+                        className="w-full px-4 py-2 mb-2 font-body text-sm text-[#2B2B2B] dark:text-white bg-white dark:bg-[#1A1A1A] border-2 border-dark/20 dark:border-white/20 rounded-lg focus:outline-none focus:border-primary resize-none"
                       />
                       <button
                         onClick={() => handleAddComment(selectedDesign.id)}
