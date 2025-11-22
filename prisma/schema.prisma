@@ -1,0 +1,226 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USERS & AUTH
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  artistName    String?
+  instagram     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  designs       Design[]
+  likes         Like[]
+  comments      Comment[]
+  votes         Vote[]
+  guestbookEntries GuestbookEntry[]
+
+  @@index([email])
+}
+
+// ============================================
+// DESIGNS / ARTWORKS
+// ============================================
+
+model Design {
+  id            String    @id @default(cuid())
+  title         String
+  philosophy    String
+  imageUrl      String?   // URL to stored image
+  imageData     String?   // Base64 for small images
+  garmentType   String    // tshirt, pull
+  garmentFit    String    // slim, regular, oversize
+  garmentColor  String
+  status        String    @default("pending") // pending, approved, rejected, featured
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  authorId      String
+  author        User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes         Like[]
+  comments      Comment[]
+  votes         Vote[]
+
+  @@index([authorId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ============================================
+// LIKES
+// ============================================
+
+model Like {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+
+  // Relations
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  designId      String?
+  design        Design?   @relation(fields: [designId], references: [id], onDelete: Cascade)
+  guestbookId   String?
+  guestbook     GuestbookEntry? @relation(fields: [guestbookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, designId])
+  @@unique([userId, guestbookId])
+  @@index([designId])
+  @@index([guestbookId])
+}
+
+// ============================================
+// COMMENTS
+// ============================================
+
+model Comment {
+  id            String    @id @default(cuid())
+  content       String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  authorId      String
+  author        User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  designId      String
+  design        Design    @relation(fields: [designId], references: [id], onDelete: Cascade)
+
+  @@index([designId])
+  @@index([authorId])
+}
+
+// ============================================
+// VOTES (for contest)
+// ============================================
+
+model Vote {
+  id            String    @id @default(cuid())
+  type          String    @default("people") // people, heart
+  createdAt     DateTime  @default(now())
+
+  // Relations
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  designId      String
+  design        Design    @relation(fields: [designId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, designId, type])
+  @@index([designId])
+  @@index([type])
+}
+
+// ============================================
+// GUESTBOOK
+// ============================================
+
+model GuestbookEntry {
+  id            String    @id @default(cuid())
+  message       String
+  mood          String    // love, inspired, thoughtful
+  createdAt     DateTime  @default(now())
+
+  // Relations
+  authorId      String
+  author        User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes         Like[]
+
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+// ============================================
+// NEWSLETTER
+// ============================================
+
+model NewsletterSubscriber {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  status        String    @default("active") // active, unsubscribed
+  source        String?   // homepage, footer, popup
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([email])
+  @@index([status])
+}
+
+// ============================================
+// CONTEST SUBMISSIONS
+// ============================================
+
+model ContestSubmission {
+  id            String    @id @default(cuid())
+  artistName    String
+  email         String
+  instagram     String?
+  artworkUrl    String?
+  artworkData   String?   // Base64
+  description   String?
+  accepted      Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+// ============================================
+// ANALYTICS
+// ============================================
+
+model PageView {
+  id            String    @id @default(cuid())
+  path          String
+  referrer      String?
+  userAgent     String?
+  country       String?
+  sessionId     String?
+  createdAt     DateTime  @default(now())
+
+  @@index([path])
+  @@index([createdAt])
+  @@index([sessionId])
+}
+
+model Event {
+  id            String    @id @default(cuid())
+  name          String    // click, submit, download, share, etc.
+  category      String?   // button, form, link, etc.
+  label         String?   // specific identifier
+  value         Int?      // numeric value if applicable
+  sessionId     String?
+  createdAt     DateTime  @default(now())
+
+  @@index([name])
+  @@index([category])
+  @@index([createdAt])
+}
+
+// ============================================
+// SITE STATS (cached aggregations)
+// ============================================
+
+model SiteStats {
+  id            String    @id @default("main")
+  totalVisitors Int       @default(0)
+  totalDesigns  Int       @default(0)
+  totalVotes    Int       @default(0)
+  totalMessages Int       @default(0)
+  updatedAt     DateTime  @updatedAt
+}
