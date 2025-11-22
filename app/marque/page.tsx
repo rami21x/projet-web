@@ -10,7 +10,7 @@ export default function MarquePage() {
   const { brandPageContent } = useContent();
 
   return (
-    <div className="bg-light dark:bg-dark">
+    <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A]">
       {/* Hero Section */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-dark via-dark/95 to-accent/20 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -41,14 +41,14 @@ export default function MarquePage() {
       </section>
 
       {/* Story Section */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark">
+      <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
               <p className="font-mono text-xs tracking-[0.3em] text-accent mb-4">
                 {brandPageContent.story.label}
               </p>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white">
                 {brandPageContent.story.title}
               </h2>
             </div>
@@ -59,10 +59,10 @@ export default function MarquePage() {
               <FadeIn key={chapter.title} delay={index * 0.15}>
                 <div className="relative pl-8 md:pl-12 border-l-2 border-accent/30">
                   <div className="absolute left-0 top-0 w-4 h-4 -translate-x-[9px] bg-accent rounded-full" />
-                  <h3 className="font-display text-xl md:text-2xl font-bold text-dark dark:text-white mb-3">
+                  <h3 className="font-display text-xl md:text-2xl font-bold text-[#2B2B2B] dark:text-white mb-3">
                     {chapter.title}
                   </h3>
-                  <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/70 leading-relaxed">
+                  <p className="font-body text-base md:text-lg text-[#4A4A4A] dark:text-gray-300 leading-relaxed">
                     {chapter.text}
                   </p>
                 </div>
@@ -73,14 +73,14 @@ export default function MarquePage() {
       </section>
 
       {/* Founders Section */}
-      <section className="py-16 md:py-24 bg-white dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
               <p className="font-mono text-xs tracking-[0.3em] text-accent mb-4">
                 {brandPageContent.founders.label}
               </p>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white">
                 {brandPageContent.founders.title}
               </h2>
             </div>
@@ -89,13 +89,13 @@ export default function MarquePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
             {brandPageContent.founders.profiles.map((founder: { name: string; role: string; origin: string; bio: string; quote: string }, index: number) => (
               <FadeIn key={founder.name} delay={index * 0.2}>
-                <div className="bg-light dark:bg-dark/80 p-6 md:p-8 rounded-lg border-2 border-accent/20 hover:border-accent/40 transition-all duration-300">
+                <div className="bg-[#F5F5F5] dark:bg-[#1A1A1A] p-6 md:p-8 rounded-lg border-2 border-accent/20 hover:border-accent/40 transition-all duration-300">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-lg">
                       {founder.name.charAt(0)}
                     </div>
                     <div>
-                      <h3 className="font-display text-xl md:text-2xl font-bold text-dark dark:text-white">
+                      <h3 className="font-display text-xl md:text-2xl font-bold text-[#2B2B2B] dark:text-white">
                         {founder.name}
                       </h3>
                       <p className="font-body text-sm text-accent font-semibold">
@@ -104,18 +104,18 @@ export default function MarquePage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 mb-4 text-dark/50 dark:text-white/50">
+                  <div className="flex items-center gap-2 mb-4 text-[#6A6A6A] dark:text-gray-400">
                     <MapPin className="w-4 h-4" />
                     <span className="font-mono text-xs tracking-wider">{founder.origin}</span>
                   </div>
 
-                  <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/70 leading-relaxed mb-6">
+                  <p className="font-body text-sm md:text-base text-[#4A4A4A] dark:text-gray-300 leading-relaxed mb-6">
                     {founder.bio}
                   </p>
 
                   <div className="bg-accent/10 p-4 rounded-lg border-l-4 border-accent">
                     <Quote className="w-5 h-5 text-accent mb-2" />
-                    <p className="font-body text-sm italic text-dark/80 dark:text-white/80">
+                    <p className="font-body text-sm italic text-[#3A3A3A] dark:text-gray-200">
                       &ldquo;{founder.quote}&rdquo;
                     </p>
                   </div>
@@ -126,7 +126,7 @@ export default function MarquePage() {
 
           <FadeIn delay={0.4}>
             <div className="text-center max-w-3xl mx-auto">
-              <p className="font-body text-base md:text-lg text-dark/80 dark:text-white/80 leading-relaxed italic">
+              <p className="font-body text-base md:text-lg text-[#3A3A3A] dark:text-gray-200 leading-relaxed italic">
                 {brandPageContent.founders.sharedVision}
               </p>
             </div>
@@ -168,14 +168,14 @@ export default function MarquePage() {
       </section>
 
       {/* Vision Section */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark">
+      <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
               <p className="font-mono text-xs tracking-[0.3em] text-accent mb-4">
                 {brandPageContent.vision.label}
               </p>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white">
                 {brandPageContent.vision.title}
               </h2>
             </div>
@@ -187,14 +187,14 @@ export default function MarquePage() {
               const Icon = icons[index % icons.length];
               return (
                 <FadeIn key={item.title} delay={index * 0.15}>
-                  <div className="text-center p-6 md:p-8 bg-white dark:bg-dark/60 rounded-lg hover:shadow-lg transition-all duration-300 group">
+                  <div className="text-center p-6 md:p-8 bg-white dark:bg-[#1A1A1A] rounded-lg hover:shadow-lg transition-all duration-300 group">
                     <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 group-hover:bg-primary/20 rounded-full flex items-center justify-center transition-all">
                       <Icon className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="font-display text-xl md:text-2xl font-bold text-dark dark:text-white mb-3">
+                    <h3 className="font-display text-xl md:text-2xl font-bold text-[#2B2B2B] dark:text-white mb-3">
                       {item.title}
                     </h3>
-                    <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/70 leading-relaxed">
+                    <p className="font-body text-sm md:text-base text-[#4A4A4A] dark:text-gray-300 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -206,14 +206,14 @@ export default function MarquePage() {
       </section>
 
       {/* Commitments Section */}
-      <section className="py-16 md:py-24 bg-white dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
               <p className="font-mono text-xs tracking-[0.3em] text-accent mb-4">
                 {brandPageContent.commitments.label}
               </p>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white">
                 {brandPageContent.commitments.title}
               </h2>
             </div>
@@ -225,14 +225,14 @@ export default function MarquePage() {
               const Icon = icons[index % icons.length];
               return (
                 <FadeIn key={item.title} delay={index * 0.15}>
-                  <div className="relative p-6 md:p-8 bg-light dark:bg-dark/80 rounded-lg border-l-4 border-accent">
+                  <div className="relative p-6 md:p-8 bg-[#F5F5F5] dark:bg-[#1A1A1A] rounded-lg border-l-4 border-accent">
                     <div className="absolute -top-3 -left-3 w-10 h-10 bg-accent rounded-full flex items-center justify-center">
                       <Icon className="w-5 h-5 text-white" />
                     </div>
-                    <h3 className="font-display text-lg md:text-xl font-bold text-dark dark:text-white mb-3 mt-2">
+                    <h3 className="font-display text-lg md:text-xl font-bold text-[#2B2B2B] dark:text-white mb-3 mt-2">
                       {item.title}
                     </h3>
-                    <p className="font-body text-sm md:text-base text-dark/70 dark:text-white/70 leading-relaxed">
+                    <p className="font-body text-sm md:text-base text-[#4A4A4A] dark:text-gray-300 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -244,14 +244,14 @@ export default function MarquePage() {
       </section>
 
       {/* Gallery Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-dark/5 to-primary/5 dark:from-dark/80 dark:to-primary/10">
+      <section className="py-16 md:py-24 bg-[#F0F0F0] dark:bg-[#0A0A0A]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
               <p className="font-mono text-xs tracking-[0.3em] text-accent mb-4">
                 {brandPageContent.gallery.label}
               </p>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white">
                 {brandPageContent.gallery.title}
               </h2>
             </div>
@@ -262,9 +262,9 @@ export default function MarquePage() {
               <FadeIn key={image.alt} delay={index * 0.1}>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="aspect-square bg-dark/10 dark:bg-white/10 rounded-lg overflow-hidden relative group"
+                  className="aspect-square bg-[#2B2B2B]/10 dark:bg-white/10 rounded-lg overflow-hidden relative group"
                 >
-                  <div className="absolute inset-0 flex items-center justify-center text-dark/30 dark:text-white/30 font-body text-sm">
+                  <div className="absolute inset-0 flex items-center justify-center text-[#5A5A5A] dark:text-gray-400 font-body text-sm">
                     {image.alt}
                   </div>
                   <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/20 transition-colors duration-300" />
