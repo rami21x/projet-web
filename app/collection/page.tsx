@@ -45,20 +45,20 @@ export default function CollectionPage() {
       </section>
 
       {/* Série Narcisse Amoureux */}
-      <section className="py-20 md:py-32 bg-dark text-white relative overflow-hidden">
+      <section className="py-20 md:py-32 bg-[#1A1A1A] text-white relative overflow-hidden">
         {/* Subtle background */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(139,0,0,0.1),transparent_50%)]" />
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeIn>
             <div className="text-center mb-16 md:mb-24">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-primary/60 block mb-4">
+              <span className="font-mono text-[10px] tracking-[0.4em] text-primary block mb-4">
                 {collectionPageContent.series.label}
               </span>
-              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
+              <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white">
                 {collectionPageContent.series.title}
               </h2>
-              <p className="font-body text-base md:text-lg text-white/60 max-w-2xl mx-auto">
+              <p className="font-body text-base md:text-lg text-white/80 max-w-2xl mx-auto">
                 {collectionPageContent.series.description}
               </p>
             </div>
@@ -68,7 +68,7 @@ export default function CollectionPage() {
           <div className="relative">
             <FadeIn>
               <div className="text-center mb-12">
-                <span className="font-display text-sm tracking-[0.3em] text-white/40">
+                <span className="font-display text-sm tracking-[0.3em] text-white/60">
                   ─── {collectionPageContent.series.bookTitle} ───
                 </span>
               </div>
@@ -84,16 +84,16 @@ export default function CollectionPage() {
                     {/* Page decoration */}
                     <div className="absolute -inset-1 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm" />
 
-                    <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-10 rounded-sm">
+                    <div className="relative bg-white/10 backdrop-blur-sm border border-white/20 p-8 md:p-10 rounded-sm">
                       {/* Page number */}
-                      <span className="absolute top-4 right-4 font-display text-4xl font-bold text-white/10">
+                      <span className="absolute top-4 right-4 font-display text-4xl font-bold text-white/20">
                         {page.numero}
                       </span>
 
                       <h3 className="font-display text-xl md:text-2xl font-bold text-white mb-4">
                         {page.titre}
                       </h3>
-                      <p className="font-body text-sm md:text-base text-white/70 leading-relaxed italic">
+                      <p className="font-body text-sm md:text-base text-white/90 leading-relaxed italic">
                         &ldquo;{page.texte}&rdquo;
                       </p>
                     </div>
@@ -197,7 +197,7 @@ export default function CollectionPage() {
           {/* Center paradox */}
           <FadeIn delay={0.3}>
             <div className="relative -mt-8 md:-mt-12 z-10">
-              <div className="max-w-md mx-auto bg-dark text-white p-8 md:p-10 text-center">
+              <div className="max-w-md mx-auto bg-[#1A1A1A] text-white p-8 md:p-10 text-center">
                 <span className="font-mono text-[10px] tracking-[0.3em] text-primary/80 block mb-3">
                   {collectionPageContent.duality.paradox.label}
                 </span>
@@ -211,7 +211,7 @@ export default function CollectionPage() {
       </section>
 
       {/* Manifesto Quote */}
-      <section className="py-24 md:py-36 bg-gradient-to-br from-dark via-dark to-primary/20 text-white relative">
+      <section className="py-24 md:py-36 bg-gradient-to-br from-[#1A1A1A] via-[#1A1A1A] to-primary/20 text-white relative">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,0.1),transparent_30%)]" />
           <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_100%_100%,rgba(139,0,0,0.2),transparent_30%)]" />
