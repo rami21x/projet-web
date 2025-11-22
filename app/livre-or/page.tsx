@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   BookOpen,
   Feather,
   Heart,
-  Star,
   Sparkles,
   MessageCircle,
   Users,
@@ -17,116 +15,188 @@ import {
   Twitter,
   Send,
   Trophy,
-  Vote,
-  Flame
+  Flame,
+  Loader2
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import { useContent } from "@/hooks/useContent";
 
 interface GuestEntry {
-  id: number;
-  name: string;
+  id: string;
   message: string;
-  date: string;
-  mood: "love" | "inspired" | "thoughtful";
-  likes?: number;
+  mood: "love" | "inspired";
+  createdAt: string;
+  author: {
+    id: string;
+    name: string;
+  };
+  _count: {
+    likes: number;
+  };
 }
 
-interface ArtworkVote {
-  id: number;
-  artist: string;
+interface Design {
+  id: string;
   title: string;
-  image: string;
-  votes: number;
+  philosophy: string;
+  imageUrl: string | null;
+  author: {
+    name: string;
+  };
+  _count: {
+    votes: number;
+  };
   hasVoted?: boolean;
 }
 
+interface SiteStats {
+  totalVisitors: number;
+  totalMessages: number;
+  totalVotes: number;
+}
+
+// Reduced to 2 moods only
 const moodIcons = {
   love: Heart,
   inspired: Sparkles,
-  thoughtful: Star,
 };
 
 const moodEmojis = {
-  love: "💖",
+  love: "❤️",
   inspired: "✨",
-  thoughtful: "🤔",
 };
 
 export default function LivreDorPage() {
   const { guestbookPageContent } = useContent();
   const [entries, setEntries] = useState<GuestEntry[]>([]);
+  const [designs, setDesigns] = useState<Design[]>([]);
+  const [stats, setStats] = useState<SiteStats>({ totalVisitors: 0, totalMessages: 0, totalVotes: 0 });
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [mood, setMood] = useState<"love" | "inspired" | "thoughtful">("inspired");
+  const [mood, setMood] = useState<"love" | "inspired">("love");
   const [submitted, setSubmitted] = useState(false);
-  const [activeTab, setActiveTab] = useState<"write" | "vote">("write");
-  const [artworks, setArtworks] = useState<ArtworkVote[]>([
-    { id: 1, artist: "Marie L.", title: "Dualité Urbaine", image: "/images/art1.jpg", votes: 127 },
-    { id: 2, artist: "Thomas B.", title: "L'Écho du Chaos", image: "/images/art2.jpg", votes: 98 },
-    { id: 3, artist: "Clara M.", title: "Narcisse Digital", image: "/images/art3.jpg", votes: 156 },
-  ]);
-  const [totalVisitors, setTotalVisitors] = useState(2847);
-  const [totalMessages, setTotalMessages] = useState(423);
+  const [submitting, setSubmitting] = useState(false);
 
-  // Initialize entries from content
+  // Fetch real data from API
   useEffect(() => {
-    if (guestbookPageContent?.defaultEntries) {
-      const entriesWithLikes = guestbookPageContent.defaultEntries.map((entry: GuestEntry) => ({
-        ...entry,
-        likes: Math.floor(Math.random() * 50) + 5,
-      }));
-      setEntries(entriesWithLikes as GuestEntry[]);
-    }
-  }, [guestbookPageContent]);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Fetch stats, guestbook entries, and designs in parallel
+        const [statsRes, guestbookRes, designsRes] = await Promise.all([
+          fetch('/api/stats'),
+          fetch('/api/guestbook?limit=50'),
+          fetch('/api/designs?status=approved&limit=10')
+        ]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats({
+            totalVisitors: statsData.totalVisitors || 0,
+            totalMessages: statsData.totalMessages || 0,
+            totalVotes: statsData.totalVotes || 0
+          });
+        }
 
-    if (!name.trim() || !message.trim()) return;
+        if (guestbookRes.ok) {
+          const guestbookData = await guestbookRes.json();
+          setEntries(guestbookData.entries || []);
+        }
 
-    const newEntry: GuestEntry = {
-      id: Date.now(),
-      name: name.trim(),
-      message: message.trim(),
-      date: new Date().toLocaleDateString("fr-FR", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      }),
-      mood,
-      likes: 0,
+        if (designsRes.ok) {
+          const designsData = await designsRes.json();
+          setDesigns(designsData.designs || []);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    setEntries([newEntry, ...entries]);
-    setName("");
-    setMessage("");
-    setSubmitted(true);
-    setTotalMessages(prev => prev + 1);
+    fetchData();
+  }, []);
 
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 3000);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !message.trim() || !email.trim()) return;
+
+    setSubmitting(true);
+    try {
+      const response = await fetch('/api/guestbook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, mood }),
+      });
+
+      if (response.ok) {
+        const newEntry = await response.json();
+        setEntries([newEntry, ...entries]);
+        setStats(prev => ({ ...prev, totalMessages: prev.totalMessages + 1 }));
+        setName("");
+        setEmail("");
+        setMessage("");
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 3000);
+      }
+    } catch (error) {
+      console.error('Error submitting entry:', error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const handleVote = (artworkId: number) => {
-    setArtworks(artworks.map(art =>
-      art.id === artworkId
-        ? { ...art, votes: art.hasVoted ? art.votes - 1 : art.votes + 1, hasVoted: !art.hasVoted }
-        : art
-    ));
+  const handleVote = async (designId: string) => {
+    try {
+      const response = await fetch(`/api/designs/${designId}/vote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ visitorId: localStorage.getItem('visitorId') || Date.now().toString() }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setDesigns(designs.map(d =>
+          d.id === designId
+            ? { ...d, _count: { votes: data.votes }, hasVoted: data.hasVoted }
+            : d
+        ));
+        // Update total votes
+        const newTotalVotes = designs.reduce((acc, d) =>
+          acc + (d.id === designId ? data.votes : d._count.votes), 0
+        );
+        setStats(prev => ({ ...prev, totalVotes: newTotalVotes }));
+      }
+    } catch (error) {
+      console.error('Error voting:', error);
+    }
   };
 
-  const handleLike = (entryId: number) => {
-    setEntries(entries.map(entry =>
-      entry.id === entryId
-        ? { ...entry, likes: (entry.likes || 0) + 1 }
-        : entry
-    ));
+  const handleLike = async (entryId: string) => {
+    try {
+      const response = await fetch(`/api/guestbook/${entryId}/like`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ visitorId: localStorage.getItem('visitorId') || Date.now().toString() }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setEntries(entries.map(entry =>
+          entry.id === entryId
+            ? { ...entry, _count: { likes: data.likes } }
+            : entry
+        ));
+      }
+    } catch (error) {
+      console.error('Error liking entry:', error);
+    }
   };
 
   const shareOnSocial = (platform: string) => {
-    const text = encodeURIComponent(guestbookPageContent.social?.shareText || "Découvrez ARTERAL - L'art rencontre la mode");
+    const text = encodeURIComponent(guestbookPageContent.social?.shareText || "Découvrez ARTERAL");
     const url = encodeURIComponent(typeof window !== 'undefined' ? window.location.href : 'https://arteral.com');
 
     const urls: Record<string, string> = {
@@ -139,26 +209,28 @@ export default function LivreDorPage() {
     }
   };
 
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#E8E8E8] dark:bg-[#0A0A0A]">
-      {/* Hero Section - More Engaging */}
+      {/* Hero Section */}
       <section className="relative py-20 md:py-32 bg-[#1A1A1A] text-white overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
           <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
             transition={{ duration: 8, repeat: Infinity }}
             className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/30 rounded-full blur-3xl"
           />
           <motion.div
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.1, 0.2, 0.1],
-            }}
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.1, 0.2, 0.1] }}
             transition={{ duration: 8, repeat: Infinity, delay: 2 }}
             className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/30 rounded-full blur-3xl"
           />
@@ -190,7 +262,7 @@ export default function LivreDorPage() {
                   {guestbookPageContent.hero.description}
                 </p>
 
-                {/* Why Share - Importance Message */}
+                {/* Why Share */}
                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6 mb-8">
                   <h3 className="font-display text-lg font-bold text-primary mb-3 flex items-center gap-2">
                     <Flame className="w-5 h-5" />
@@ -201,35 +273,53 @@ export default function LivreDorPage() {
                   </p>
                 </div>
 
-                {/* Stats */}
+                {/* Real Stats */}
                 <div className="flex gap-8">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 }}
-                    className="text-center"
-                  >
-                    <div className="font-display text-3xl font-bold text-primary">{totalVisitors.toLocaleString()}</div>
-                    <div className="font-mono text-xs text-white/50 uppercase tracking-wider">{guestbookPageContent.stats?.visitors}</div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="text-center"
-                  >
-                    <div className="font-display text-3xl font-bold text-accent">{totalMessages}</div>
-                    <div className="font-mono text-xs text-white/50 uppercase tracking-wider">{guestbookPageContent.stats?.messages}</div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="text-center"
-                  >
-                    <div className="font-display text-3xl font-bold text-white">{artworks.reduce((acc, a) => acc + a.votes, 0)}</div>
-                    <div className="font-mono text-xs text-white/50 uppercase tracking-wider">{guestbookPageContent.stats?.votes}</div>
-                  </motion.div>
+                  {stats.totalVisitors > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 }}
+                      className="text-center"
+                    >
+                      <div className="font-display text-3xl font-bold text-primary">
+                        {stats.totalVisitors.toLocaleString()}
+                      </div>
+                      <div className="font-mono text-xs text-white/50 uppercase tracking-wider">
+                        {guestbookPageContent.stats?.visitors}
+                      </div>
+                    </motion.div>
+                  )}
+                  {stats.totalMessages > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 }}
+                      className="text-center"
+                    >
+                      <div className="font-display text-3xl font-bold text-accent">
+                        {stats.totalMessages}
+                      </div>
+                      <div className="font-mono text-xs text-white/50 uppercase tracking-wider">
+                        {guestbookPageContent.stats?.messages}
+                      </div>
+                    </motion.div>
+                  )}
+                  {stats.totalVotes > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-center"
+                    >
+                      <div className="font-display text-3xl font-bold text-white">
+                        {stats.totalVotes}
+                      </div>
+                      <div className="font-mono text-xs text-white/50 uppercase tracking-wider">
+                        {guestbookPageContent.stats?.votes}
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
               </div>
             </FadeIn>
@@ -242,18 +332,11 @@ export default function LivreDorPage() {
                   transition={{ duration: 4, repeat: Infinity }}
                   className="relative aspect-square max-w-md mx-auto"
                 >
-                  {/* Floating Cards Effect */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative w-full h-full">
-                      {/* Background glow */}
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-2xl" />
-
-                      {/* Main visual - Community illustration */}
                       <div className="relative bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 h-full flex flex-col items-center justify-center">
-                        <motion.div
-                          animate={{ rotate: [0, 5, -5, 0] }}
-                          transition={{ duration: 6, repeat: Infinity }}
-                        >
+                        <motion.div animate={{ rotate: [0, 5, -5, 0] }} transition={{ duration: 6, repeat: Infinity }}>
                           <Users className="w-24 h-24 text-primary/80 mb-6" />
                         </motion.div>
                         <p className="font-display text-2xl font-bold text-white text-center mb-2">
@@ -263,15 +346,11 @@ export default function LivreDorPage() {
                           {guestbookPageContent.hero.communitySubtitle}
                         </p>
 
-                        {/* Floating reaction bubbles */}
                         <div className="absolute -top-4 -right-4 bg-primary rounded-full p-3 shadow-lg">
                           <Heart className="w-6 h-6 text-white" fill="white" />
                         </div>
                         <div className="absolute -bottom-4 -left-4 bg-accent rounded-full p-3 shadow-lg">
                           <Sparkles className="w-6 h-6 text-white" />
-                        </div>
-                        <div className="absolute top-1/4 -left-6 bg-white rounded-full p-2 shadow-lg">
-                          <Star className="w-4 h-4 text-primary" fill="currentColor" />
                         </div>
                       </div>
                     </div>
@@ -313,116 +392,98 @@ export default function LivreDorPage() {
         </div>
       </section>
 
-      {/* Vote for Artwork Section */}
-      <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn>
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <Trophy className="w-8 h-8 text-primary" />
-                <span className="font-mono text-xs tracking-[0.3em] text-primary uppercase">
-                  {guestbookPageContent.voting?.label}
-                </span>
+      {/* Vote for Artwork Section - Only show if there are designs */}
+      {designs.length > 0 && (
+        <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn>
+              <div className="text-center mb-12">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Trophy className="w-8 h-8 text-primary" />
+                  <span className="font-mono text-xs tracking-[0.3em] text-primary uppercase">
+                    {guestbookPageContent.voting?.label}
+                  </span>
+                </div>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-4">
+                  {guestbookPageContent.voting?.title}
+                </h2>
+                <p className="font-body text-[#5A5A5A] dark:text-gray-400 max-w-2xl mx-auto">
+                  {guestbookPageContent.voting?.description}
+                </p>
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-4">
-                {guestbookPageContent.voting?.title}
-              </h2>
-              <p className="font-body text-[#5A5A5A] dark:text-gray-400 max-w-2xl mx-auto">
-                {guestbookPageContent.voting?.description}
-              </p>
-            </div>
-          </FadeIn>
+            </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {artworks.map((artwork, index) => (
-              <FadeIn key={artwork.id} delay={index * 0.1}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="bg-[#E8E8E8] dark:bg-[#0A0A0A] rounded-xl overflow-hidden shadow-lg border border-dark/10 dark:border-white/10"
-                >
-                  {/* Artwork Preview */}
-                  <div className="relative aspect-[4/3] bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <Sparkles className="w-12 h-12 text-primary/50 mx-auto mb-2" />
-                      <p className="font-mono text-xs text-[#5A5A5A] dark:text-gray-500">{guestbookPageContent.voting?.artworkPlaceholder}</p>
-                    </div>
-                    {/* Rank Badge */}
-                    <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-white font-bold text-sm ${
-                      index === 0 ? 'bg-yellow-500' : index === 1 ? 'bg-gray-400' : 'bg-amber-700'
-                    }`}>
-                      #{index + 1}
-                    </div>
-                  </div>
-
-                  <div className="p-5">
-                    <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">
-                      {artwork.title}
-                    </h3>
-                    <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 mb-4">
-                      {guestbookPageContent.voting?.by} {artwork.artist}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <ThumbsUp className={`w-5 h-5 ${artwork.hasVoted ? 'text-primary' : 'text-[#7A7A7A] dark:text-gray-500'}`} />
-                        <span className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white">{artwork.votes}</span>
-                        <span className="font-mono text-xs text-[#7A7A7A] dark:text-gray-500">{guestbookPageContent.voting?.votesLabel}</span>
+            <div className="grid md:grid-cols-3 gap-6">
+              {designs.map((design, index) => (
+                <FadeIn key={design.id} delay={index * 0.1}>
+                  <motion.div
+                    whileHover={{ y: -5 }}
+                    className="bg-[#E8E8E8] dark:bg-[#0A0A0A] rounded-xl overflow-hidden shadow-lg border border-dark/10 dark:border-white/10"
+                  >
+                    <div className="relative aspect-[4/3] bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                      {design.imageUrl ? (
+                        <img src={design.imageUrl} alt={design.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="text-center p-4">
+                          <Sparkles className="w-12 h-12 text-primary/50 mx-auto mb-2" />
+                          <p className="font-mono text-xs text-[#5A5A5A] dark:text-gray-500">
+                            {design.philosophy.substring(0, 50)}...
+                          </p>
+                        </div>
+                      )}
+                      <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-white font-bold text-sm ${
+                        index === 0 ? 'bg-yellow-500' : index === 1 ? 'bg-gray-400' : 'bg-amber-700'
+                      }`}>
+                        #{index + 1}
                       </div>
-
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => handleVote(artwork.id)}
-                        className={`px-4 py-2 rounded-lg font-body text-sm font-semibold transition-all ${
-                          artwork.hasVoted
-                            ? 'bg-primary text-white'
-                            : 'bg-[#2B2B2B] dark:bg-white/10 text-white hover:bg-primary'
-                        }`}
-                      >
-                        {artwork.hasVoted ? guestbookPageContent.voting?.voted : guestbookPageContent.voting?.voteButton}
-                      </motion.button>
                     </div>
-                  </div>
-                </motion.div>
-              </FadeIn>
-            ))}
-          </div>
 
-          {/* Share your vote */}
-          <FadeIn delay={0.4}>
-            <div className="mt-10 text-center">
-              <p className="font-body text-[#5A5A5A] dark:text-gray-400 mb-4">
-                {guestbookPageContent.voting?.sharePrompt}
-              </p>
-              <div className="flex justify-center gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => shareOnSocial('twitter')}
-                  className="flex items-center gap-2 px-5 py-2 bg-[#1DA1F2] text-white rounded-full font-body text-sm"
-                >
-                  <Twitter className="w-4 h-4" />
-                  {guestbookPageContent.voting?.shareTwitter}
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => shareOnSocial('instagram')}
-                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-body text-sm"
-                >
-                  <Instagram className="w-4 h-4" />
-                  {guestbookPageContent.voting?.shareInstagram}
-                </motion.button>
-              </div>
+                    <div className="p-5">
+                      <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">
+                        {design.title}
+                      </h3>
+                      <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 mb-4">
+                        {guestbookPageContent.voting?.by} {design.author.name}
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <ThumbsUp className={`w-5 h-5 ${design.hasVoted ? 'text-primary' : 'text-[#7A7A7A] dark:text-gray-500'}`} />
+                          <span className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white">
+                            {design._count.votes}
+                          </span>
+                          <span className="font-mono text-xs text-[#7A7A7A] dark:text-gray-500">
+                            {guestbookPageContent.voting?.votesLabel}
+                          </span>
+                        </div>
+
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleVote(design.id)}
+                          className={`px-4 py-2 rounded-lg font-body text-sm font-semibold transition-all ${
+                            design.hasVoted
+                              ? 'bg-primary text-white'
+                              : 'bg-[#2B2B2B] dark:bg-white/10 text-white hover:bg-primary'
+                          }`}
+                        >
+                          {design.hasVoted ? guestbookPageContent.voting?.voted : guestbookPageContent.voting?.voteButton}
+                        </motion.button>
+                      </div>
+                    </div>
+                  </motion.div>
+                </FadeIn>
+              ))}
             </div>
-          </FadeIn>
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
-      {/* Form Section - More Interactive */}
+      {/* Form Section */}
       <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl overflow-hidden">
-              {/* Form Header with Tabs */}
               <div className="bg-gradient-to-r from-primary to-accent p-6">
                 <div className="flex items-center gap-4 mb-4">
                   <Feather className="w-8 h-8 text-white" />
@@ -443,12 +504,7 @@ export default function LivreDorPage() {
                     className="mb-6 p-5 bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-primary/30 rounded-xl"
                   >
                     <div className="flex items-center gap-3">
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 0.5, repeat: 3 }}
-                      >
-                        <Heart className="w-8 h-8 text-primary" fill="currentColor" />
-                      </motion.div>
+                      <Heart className="w-8 h-8 text-primary" fill="currentColor" />
                       <div>
                         <p className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white">
                           {guestbookPageContent.form.success}
@@ -462,29 +518,39 @@ export default function LivreDorPage() {
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2"
-                    >
-                      {guestbookPageContent.form.nameLabel}
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className="w-full px-4 py-3 font-body text-base text-[#2B2B2B] dark:text-white bg-[#E8E8E8] dark:bg-[#0A0A0A] border-2 border-transparent rounded-xl focus:outline-none focus:border-primary transition-colors"
-                      placeholder={guestbookPageContent.form.namePlaceholder}
-                    />
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="name" className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
+                        {guestbookPageContent.form.nameLabel}
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        className="w-full px-4 py-3 font-body text-base text-[#2B2B2B] dark:text-white bg-[#E8E8E8] dark:bg-[#0A0A0A] border-2 border-transparent rounded-xl focus:outline-none focus:border-primary transition-colors"
+                        placeholder={guestbookPageContent.form.namePlaceholder}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="w-full px-4 py-3 font-body text-base text-[#2B2B2B] dark:text-white bg-[#E8E8E8] dark:bg-[#0A0A0A] border-2 border-transparent rounded-xl focus:outline-none focus:border-primary transition-colors"
+                        placeholder="votre@email.com"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="message"
-                      className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2"
-                    >
+                    <label htmlFor="message" className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-2">
                       {guestbookPageContent.form.messageLabel}
                     </label>
                     <textarea
@@ -502,55 +568,47 @@ export default function LivreDorPage() {
                     <label className="block font-body text-sm font-semibold text-[#2B2B2B] dark:text-white mb-3">
                       {guestbookPageContent.form.moodLabel}
                     </label>
-                    <div className="flex gap-3">
-                      {(Object.keys(moodIcons) as Array<keyof typeof moodIcons>).map(
-                        (moodKey) => {
-                          const Icon = moodIcons[moodKey];
-                          const emoji = moodEmojis[moodKey];
-                          return (
-                            <motion.button
-                              key={moodKey}
-                              type="button"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              onClick={() => setMood(moodKey)}
-                              className={`flex-1 p-4 rounded-xl border-2 transition-all ${
-                                mood === moodKey
-                                  ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-                                  : "border-transparent bg-[#E8E8E8] dark:bg-[#0A0A0A] hover:border-primary/50"
-                              }`}
-                            >
-                              <motion.div
-                                animate={mood === moodKey ? { scale: [1, 1.2, 1] } : {}}
-                                transition={{ duration: 0.3 }}
-                                className="text-2xl mb-2"
-                              >
-                                {emoji}
-                              </motion.div>
-                              <p
-                                className={`font-body text-xs font-semibold ${
-                                  mood === moodKey
-                                    ? "text-primary"
-                                    : "text-[#5A5A5A] dark:text-gray-400"
-                                }`}
-                              >
-                                {guestbookPageContent.moods[moodKey]}
-                              </p>
-                            </motion.button>
-                          );
-                        }
-                      )}
+                    <div className="flex gap-4">
+                      {(Object.keys(moodIcons) as Array<keyof typeof moodIcons>).map((moodKey) => {
+                        const emoji = moodEmojis[moodKey];
+                        return (
+                          <motion.button
+                            key={moodKey}
+                            type="button"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setMood(moodKey)}
+                            className={`flex-1 p-4 rounded-xl border-2 transition-all ${
+                              mood === moodKey
+                                ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+                                : "border-transparent bg-[#E8E8E8] dark:bg-[#0A0A0A] hover:border-primary/50"
+                            }`}
+                          >
+                            <div className="text-2xl mb-2">{emoji}</div>
+                            <p className={`font-body text-xs font-semibold ${
+                              mood === moodKey ? "text-primary" : "text-[#5A5A5A] dark:text-gray-400"
+                            }`}>
+                              {guestbookPageContent.moods[moodKey]}
+                            </p>
+                          </motion.button>
+                        );
+                      })}
                     </div>
                   </div>
 
                   <motion.button
                     type="submit"
+                    disabled={submitting}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full flex items-center justify-center gap-3 font-body font-bold text-base sm:text-lg px-8 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white rounded-xl transition-all shadow-lg hover:shadow-xl"
+                    className="w-full flex items-center justify-center gap-3 font-body font-bold text-base sm:text-lg px-8 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white rounded-xl transition-all shadow-lg hover:shadow-xl disabled:opacity-50"
                   >
-                    <Send className="w-5 h-5" />
-                    <span>{guestbookPageContent.form.submit}</span>
+                    {submitting ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <Send className="w-5 h-5" />
+                    )}
+                    <span>{submitting ? 'Envoi...' : guestbookPageContent.form.submit}</span>
                   </motion.button>
                 </form>
               </div>
@@ -559,7 +617,7 @@ export default function LivreDorPage() {
         </div>
       </section>
 
-      {/* Entries Section - More Fun */}
+      {/* Entries Section */}
       <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
@@ -573,68 +631,80 @@ export default function LivreDorPage() {
             </div>
           </FadeIn>
 
-          <div className="space-y-6">
-            <AnimatePresence>
-              {entries.map((entry, index) => {
-                const Icon = moodIcons[entry.mood];
-                const emoji = moodEmojis[entry.mood];
-                return (
-                  <motion.div
-                    key={entry.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="group"
-                  >
-                    <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A] p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-transparent hover:border-primary/20">
-                      <div className="flex items-start gap-4">
-                        <motion.div
-                          whileHover={{ rotate: [0, -10, 10, 0] }}
-                          className="flex-shrink-0"
-                        >
-                          <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center text-2xl">
-                            {emoji}
-                          </div>
-                        </motion.div>
+          {loading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : entries.length === 0 ? (
+            <FadeIn>
+              <div className="text-center py-12 bg-[#E8E8E8] dark:bg-[#0A0A0A] rounded-2xl">
+                <MessageCircle className="w-12 h-12 text-primary/50 mx-auto mb-4" />
+                <p className="font-body text-[#5A5A5A] dark:text-gray-400">
+                  Soyez le premier à laisser un message !
+                </p>
+              </div>
+            </FadeIn>
+          ) : (
+            <div className="space-y-6">
+              <AnimatePresence>
+                {entries.map((entry, index) => {
+                  const validMood = entry.mood === 'love' || entry.mood === 'inspired' ? entry.mood : 'love';
+                  const emoji = moodEmojis[validMood];
+                  return (
+                    <motion.div
+                      key={entry.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="group"
+                    >
+                      <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A] p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-transparent hover:border-primary/20">
+                        <div className="flex items-start gap-4">
+                          <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} className="flex-shrink-0">
+                            <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center text-2xl">
+                              {emoji}
+                            </div>
+                          </motion.div>
 
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-3">
-                            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white">
-                              {entry.name}
-                            </h3>
-                            <p className="font-mono text-xs text-[#6A6A6A] dark:text-gray-500">
-                              {entry.date}
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-3">
+                              <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white">
+                                {entry.author.name}
+                              </h3>
+                              <p className="font-mono text-xs text-[#6A6A6A] dark:text-gray-500">
+                                {formatDate(entry.createdAt)}
+                              </p>
+                            </div>
+
+                            <p className="font-body text-base text-[#3A3A3A] dark:text-gray-200 leading-relaxed mb-4">
+                              &ldquo;{entry.message}&rdquo;
                             </p>
-                          </div>
 
-                          <p className="font-body text-base text-[#3A3A3A] dark:text-gray-200 leading-relaxed mb-4">
-                            &ldquo;{entry.message}&rdquo;
-                          </p>
+                            <div className="flex items-center justify-between">
+                              <span className="font-mono text-xs text-primary uppercase tracking-wider bg-primary/10 px-3 py-1 rounded-full">
+                                {guestbookPageContent.moods[validMood]}
+                              </span>
 
-                          <div className="flex items-center justify-between">
-                            <span className="font-mono text-xs text-primary uppercase tracking-wider bg-primary/10 px-3 py-1 rounded-full">
-                              {guestbookPageContent.moods[entry.mood]}
-                            </span>
-
-                            <motion.button
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                              onClick={() => handleLike(entry.id)}
-                              className="flex items-center gap-2 text-[#7A7A7A] dark:text-gray-500 hover:text-primary transition-colors"
-                            >
-                              <Heart className="w-4 h-4" />
-                              <span className="font-mono text-sm">{entry.likes || 0}</span>
-                            </motion.button>
+                              <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => handleLike(entry.id)}
+                                className="flex items-center gap-2 text-[#7A7A7A] dark:text-gray-500 hover:text-primary transition-colors"
+                              >
+                                <Heart className="w-4 h-4" />
+                                <span className="font-mono text-sm">{entry._count.likes}</span>
+                              </motion.button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
       </section>
 

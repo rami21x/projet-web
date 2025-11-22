@@ -980,7 +980,6 @@ export const guestbookPageContent = {
   moods: {
     love: "In Love",
     inspired: "Inspired",
-    thoughtful: "Thoughtful",
   },
   entries: {
     title: "The Community Voice",
@@ -992,29 +991,6 @@ export const guestbookPageContent = {
     shareTwitter: "Follow on X",
     shareInstagram: "Follow on Instagram",
   },
-  defaultEntries: [
-    {
-      id: 1,
-      name: "Sophie M.",
-      message: "ARTERAL transcends fashion. It's a philosophical experience that I wear every day. The duality concept really made me reflect on my own identity.",
-      date: "Nov 15, 2024",
-      mood: "inspired",
-    },
-    {
-      id: 2,
-      name: "Marc L.",
-      message: "Finally a brand that understands that clothing is much more than fabric. It's embodied thought. I voted for three contest artworks!",
-      date: "Nov 12, 2024",
-      mood: "thoughtful",
-    },
-    {
-      id: 3,
-      name: "Amélie D.",
-      message: "The Love ↔ Boredom collection touched me deeply. Thank you for creating with such intention. I shared it on Instagram!",
-      date: "Nov 10, 2024",
-      mood: "love",
-    },
-  ],
 };
 
 // Manifesto Page

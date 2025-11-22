@@ -974,7 +974,6 @@ export const guestbookPageContent = {
   moods: {
     love: "Amoureux",
     inspired: "Inspiré",
-    thoughtful: "Pensif",
   },
   entries: {
     title: "La Voix de la Communauté",
@@ -986,29 +985,6 @@ export const guestbookPageContent = {
     shareTwitter: "Suivre sur X",
     shareInstagram: "Suivre sur Instagram",
   },
-  defaultEntries: [
-    {
-      id: 1,
-      name: "Sophie M.",
-      message: "ARTERAL transcende la mode. C'est une expérience philosophique que je porte chaque jour. Le concept de dualité m'a vraiment fait réfléchir sur ma propre identité.",
-      date: "15 Nov 2024",
-      mood: "inspired",
-    },
-    {
-      id: 2,
-      name: "Marc L.",
-      message: "Enfin une marque qui comprend que le vêtement est bien plus qu'un tissu. C'est une pensée incarnée. J'ai voté pour trois œuvres du concours !",
-      date: "12 Nov 2024",
-      mood: "thoughtful",
-    },
-    {
-      id: 3,
-      name: "Amélie D.",
-      message: "La collection Amour ↔ Ennuie m'a touchée profondément. Merci de créer avec autant d'intention. J'ai partagé sur Instagram !",
-      date: "10 Nov 2024",
-      mood: "love",
-    },
-  ],
 };
 
 // Page Manifeste
