@@ -2,34 +2,18 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-// Citations progressives selon la position du slider
-const citations = {
-  chaos: [
-    { text: "Du chaos naît l'étoile qui danse.", author: "Friedrich Nietzsche" },
-    { text: "Le désordre est simplement l'ordre que nous ne cherchons pas.", author: "Henri Bergson" },
-    { text: "Dans le chaos, il y a la fertilité.", author: "Anaïs Nin" },
-  ],
-  equilibre: [
-    { text: "L'harmonie naît de la tension des contraires.", author: "Héraclite" },
-    { text: "La beauté est l'accord du divers avec l'un.", author: "Plotin" },
-    { text: "Entre l'ordre et le chaos danse la création.", author: "Arteral" },
-  ],
-  ordre: [
-    { text: "La simplicité est la sophistication suprême.", author: "Léonard de Vinci" },
-    { text: "L'ordre est le plaisir de la raison.", author: "Paul Claudel" },
-    { text: "La géométrie est la musique gelée de l'architecture.", author: "Goethe" },
-  ],
-};
+import { useContent } from "@/hooks/useContent";
 
 export default function DualitySlider() {
+  const { dualitySliderContent } = useContent();
   const [value, setValue] = useState(50);
 
   const chaosPercentage = 100 - value;
   const orderPercentage = value;
 
-  // Sélection de la citation basée sur la position
+  // Citation selection based on position
   const currentCitation = useMemo(() => {
+    const citations = dualitySliderContent.citations;
     if (chaosPercentage > 66) {
       const index = Math.floor((chaosPercentage - 66) / 12) % citations.chaos.length;
       return citations.chaos[index];
@@ -40,13 +24,13 @@ export default function DualitySlider() {
       const index = Math.floor(chaosPercentage / 12) % citations.ordre.length;
       return citations.ordre[index];
     }
-  }, [chaosPercentage]);
+  }, [chaosPercentage, dualitySliderContent.citations]);
 
-  // État actuel
+  // Current state
   const currentState = chaosPercentage > 66 ? "chaos" : chaosPercentage > 33 ? "equilibre" : "ordre";
 
   return (
-    <div className="relative overflow-hidden bg-dark py-20 md:py-32">
+    <div className="relative overflow-hidden bg-[#0A0A0A] py-20 md:py-32">
       {/* Subtle animated background */}
       <div className="absolute inset-0">
         <motion.div
@@ -74,7 +58,7 @@ export default function DualitySlider() {
             viewport={{ once: true }}
             className="font-mono text-[10px] tracking-[0.5em] text-primary/60 mb-4"
           >
-            EXPLOREZ
+            {dualitySliderContent.label}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -82,7 +66,7 @@ export default function DualitySlider() {
             viewport={{ once: true }}
             className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4"
           >
-            Harmonie du Chaos
+            {dualitySliderContent.title}
           </motion.h2>
           <motion.div
             initial={{ width: 0 }}
@@ -97,7 +81,7 @@ export default function DualitySlider() {
             transition={{ delay: 0.2 }}
             className="font-body text-sm md:text-base text-white/50"
           >
-            Déplacez le curseur pour naviguer entre les extrêmes
+            {dualitySliderContent.subtitle}
           </motion.p>
         </div>
 
@@ -120,10 +104,10 @@ export default function DualitySlider() {
                 <h3 className={`font-display text-2xl md:text-3xl font-bold tracking-wider transition-colors duration-500 ${
                   chaosPercentage > 50 ? 'text-primary' : 'text-white/40'
                 }`}>
-                  CHAOS
+                  {dualitySliderContent.chaos.label}
                 </h3>
                 <p className="font-body text-xs text-white/30 mt-1 max-w-[120px]">
-                  Créativité, passion, liberté
+                  {dualitySliderContent.chaos.description}
                 </p>
               </motion.div>
             </div>
@@ -141,7 +125,7 @@ export default function DualitySlider() {
                   <span className={`font-display text-lg md:text-xl font-bold tracking-widest ${
                     currentState === "equilibre" ? "text-white" : "text-white/50"
                   }`}>
-                    {currentState === "chaos" ? "← CHAOS" : currentState === "ordre" ? "ORDRE →" : "ÉQUILIBRE"}
+                    {dualitySliderContent.states[currentState]}
                   </span>
                 </motion.div>
               </AnimatePresence>
@@ -162,10 +146,10 @@ export default function DualitySlider() {
                 <h3 className={`font-display text-2xl md:text-3xl font-bold tracking-wider transition-colors duration-500 ${
                   orderPercentage > 50 ? 'text-accent' : 'text-white/40'
                 }`}>
-                  ORDRE
+                  {dualitySliderContent.order.label}
                 </h3>
                 <p className="font-body text-xs text-white/30 mt-1 max-w-[120px] ml-auto">
-                  Structure, harmonie, précision
+                  {dualitySliderContent.order.description}
                 </p>
               </motion.div>
             </div>
@@ -263,8 +247,7 @@ export default function DualitySlider() {
         >
           <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mb-6" />
           <p className="font-body text-sm text-white/40 max-w-xl mx-auto leading-relaxed">
-            Chaque création Arteral porte en elle cette tension entre le chaos de l&apos;inspiration
-            et la précision de l&apos;artisanat. C&apos;est dans cet équilibre que naît la beauté.
+            {dualitySliderContent.bottomText}
           </p>
         </motion.div>
       </div>

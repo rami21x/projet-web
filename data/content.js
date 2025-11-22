@@ -1096,6 +1096,44 @@ export const manifestoPageContent = {
   },
 };
 
+// DualitySlider Component
+export const dualitySliderContent = {
+  label: "EXPLORE",
+  title: "Harmony of Chaos",
+  subtitle: "Move the cursor to navigate between extremes",
+  chaos: {
+    label: "CHAOS",
+    description: "Creativity, passion, freedom",
+  },
+  order: {
+    label: "ORDER",
+    description: "Structure, harmony, precision",
+  },
+  states: {
+    chaos: "← CHAOS",
+    equilibre: "EQUILIBRIUM",
+    ordre: "ORDER →",
+  },
+  bottomText: "Every Arteral creation carries within it this tension between the chaos of inspiration and the precision of craftsmanship. It is in this balance that beauty is born.",
+  citations: {
+    chaos: [
+      { text: "From chaos is born the dancing star.", author: "Friedrich Nietzsche" },
+      { text: "Disorder is simply the order we are not looking for.", author: "Henri Bergson" },
+      { text: "In chaos, there is fertility.", author: "Anaïs Nin" },
+    ],
+    equilibre: [
+      { text: "Harmony is born from the tension of opposites.", author: "Heraclitus" },
+      { text: "Beauty is the accord of the diverse with the one.", author: "Plotinus" },
+      { text: "Between order and chaos, creation dances.", author: "Arteral" },
+    ],
+    ordre: [
+      { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+      { text: "Order is the pleasure of reason.", author: "Paul Claudel" },
+      { text: "Geometry is the frozen music of architecture.", author: "Goethe" },
+    ],
+  },
+};
+
 export const navigation = [
   { name: "Home", href: "/" },
   { name: "Brand", href: "/marque" },

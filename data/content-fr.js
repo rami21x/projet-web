@@ -1090,6 +1090,44 @@ export const manifestoPageContent = {
   },
 };
 
+// DualitySlider Component
+export const dualitySliderContent = {
+  label: "EXPLOREZ",
+  title: "Harmonie du Chaos",
+  subtitle: "Déplacez le curseur pour naviguer entre les extrêmes",
+  chaos: {
+    label: "CHAOS",
+    description: "Créativité, passion, liberté",
+  },
+  order: {
+    label: "ORDRE",
+    description: "Structure, harmonie, précision",
+  },
+  states: {
+    chaos: "← CHAOS",
+    equilibre: "ÉQUILIBRE",
+    ordre: "ORDRE →",
+  },
+  bottomText: "Chaque création Arteral porte en elle cette tension entre le chaos de l'inspiration et la précision de l'artisanat. C'est dans cet équilibre que naît la beauté.",
+  citations: {
+    chaos: [
+      { text: "Du chaos naît l'étoile qui danse.", author: "Friedrich Nietzsche" },
+      { text: "Le désordre est simplement l'ordre que nous ne cherchons pas.", author: "Henri Bergson" },
+      { text: "Dans le chaos, il y a la fertilité.", author: "Anaïs Nin" },
+    ],
+    equilibre: [
+      { text: "L'harmonie naît de la tension des contraires.", author: "Héraclite" },
+      { text: "La beauté est l'accord du divers avec l'un.", author: "Plotin" },
+      { text: "Entre l'ordre et le chaos danse la création.", author: "Arteral" },
+    ],
+    ordre: [
+      { text: "La simplicité est la sophistication suprême.", author: "Léonard de Vinci" },
+      { text: "L'ordre est le plaisir de la raison.", author: "Paul Claudel" },
+      { text: "La géométrie est la musique gelée de l'architecture.", author: "Goethe" },
+    ],
+  },
+};
+
 export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },
