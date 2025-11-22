@@ -5,16 +5,6 @@ import { motion } from "framer-motion";
 import {
   Scroll,
   Quote,
-  Brain,
-  Sparkles,
-  Heart,
-  Paintbrush,
-  Eye,
-  User,
-  BookOpen,
-  Shield,
-  Infinity,
-  Users,
   X,
   Check,
   ArrowRight,
@@ -22,23 +12,9 @@ import {
 import FadeIn from "@/components/FadeIn";
 import { useContent } from "@/hooks/useContent";
 
-const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
-  Brain,
-  Sparkles,
-  Heart,
-  Paintbrush,
-  Eye,
-  User,
-  BookOpen,
-  Shield,
-  Infinity,
-  Users,
-};
-
 interface Chapter {
   number: string;
   title: string;
-  icon: string;
   text: string;
   quote: string;
   quoteAuthor: string;
@@ -104,7 +80,6 @@ export default function ManifestePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16 md:space-y-24">
             {manifestoPageContent.chapters.map((chapter: Chapter, index: number) => {
-              const Icon = iconMap[chapter.icon] || BookOpen;
               const isEven = index % 2 === 0;
 
               return (
@@ -114,7 +89,7 @@ export default function ManifestePage() {
                       !isEven ? "lg:grid-flow-dense" : ""
                     }`}
                   >
-                    {/* Number & Icon Column */}
+                    {/* Number Column */}
                     <div
                       className={`lg:col-span-4 ${!isEven ? "lg:col-start-9" : ""}`}
                     >
@@ -122,13 +97,15 @@ export default function ManifestePage() {
                         <div className="text-[120px] md:text-[180px] font-display font-bold text-dark/5 dark:text-white/5 absolute -top-8 -left-4 select-none">
                           {chapter.number}
                         </div>
-                        <div className="relative z-10 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-8 md:p-12 rounded-lg">
-                          <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-white dark:bg-dark/80 rounded-full flex items-center justify-center shadow-lg mb-4">
-                            <Icon className="w-8 h-8 md:w-10 md:h-10 text-primary" />
+                        <div className="relative z-10 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-8 md:p-12 rounded-lg flex items-center justify-center">
+                          <div className="text-center">
+                            <p className="font-display text-5xl md:text-6xl font-bold text-primary mb-2">
+                              {chapter.number}
+                            </p>
+                            <p className="font-mono text-xs text-dark/50 dark:text-white/50 tracking-wider">
+                              CHAPITRE
+                            </p>
                           </div>
-                          <p className="font-mono text-xs text-center text-dark/50 dark:text-white/50 tracking-wider">
-                            CHAPITRE {chapter.number}
-                          </p>
                         </div>
                       </div>
                     </div>
