@@ -214,8 +214,10 @@ export const contestPageContent = {
       },
     ],
     guide: {
-      title: "Suggested guide (not mandatory)",
-      palette: "PALETTE",
+      title: "Resources for your creation",
+      downloadTitle: "Download the complete brief",
+      downloadDescription: "Everything you need: visual references, philosophical texts, suggested color palette, and inspirations.",
+      downloadButton: "Download ZIP",
       themes: "THEMES",
       themesText: "Mirror, reflection, duality, love, solitude, connection",
     },

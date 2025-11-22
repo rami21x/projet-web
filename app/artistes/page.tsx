@@ -289,32 +289,39 @@ export default function ConcoursPage() {
             ))}
           </div>
 
-          {/* Guide des contraintes */}
+          {/* Guide des contraintes - Download Section */}
           <FadeIn delay={0.5}>
-            <div className="mt-16 p-8 md:p-10 bg-light dark:bg-white/5 border border-dark/10 dark:border-white/10">
-              <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-6">
+            <div className="mt-16 p-8 md:p-10 bg-gradient-to-br from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10 border border-primary/20 dark:border-primary/30 rounded-sm">
+              <h3 className="font-display text-xl font-bold text-dark dark:text-white mb-4">
                 {contestPageContent.rules.guide.title}
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-white/40 mb-2">
-                    {contestPageContent.rules.guide.palette}
-                  </p>
-                  <div className="flex gap-2">
-                    <div className="w-8 h-8 bg-[#8B0000] rounded-sm" title="Rouge profond" />
-                    <div className="w-8 h-8 bg-[#2B2B2B] rounded-sm" title="Noir charbon" />
-                    <div className="w-8 h-8 bg-[#E8E8E8] rounded-sm border" title="Blanc" />
-                    <div className="w-8 h-8 bg-[#A0522D] rounded-sm" title="Brun/or" />
-                  </div>
-                </div>
-                <div>
-                  <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-white/40 mb-2">
-                    {contestPageContent.rules.guide.themes}
-                  </p>
-                  <p className="font-body text-sm text-dark/60 dark:text-white/60">
-                    {contestPageContent.rules.guide.themesText}
-                  </p>
-                </div>
+
+              <div className="mb-6">
+                <h4 className="font-display text-lg font-semibold text-primary mb-2">
+                  {contestPageContent.rules.guide.downloadTitle}
+                </h4>
+                <p className="font-body text-sm text-dark/60 dark:text-white/60 mb-4">
+                  {contestPageContent.rules.guide.downloadDescription}
+                </p>
+                <a
+                  href="/downloads/arteral-concours-brief.zip"
+                  download
+                  className="inline-flex items-center gap-3 font-body text-sm font-semibold px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-sm transition-all hover:scale-105 shadow-lg"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  {contestPageContent.rules.guide.downloadButton}
+                </a>
+              </div>
+
+              <div className="pt-6 border-t border-dark/10 dark:border-white/10">
+                <p className="font-mono text-[10px] tracking-[0.2em] text-dark/40 dark:text-white/40 mb-2">
+                  {contestPageContent.rules.guide.themes}
+                </p>
+                <p className="font-body text-sm text-dark/60 dark:text-white/60">
+                  {contestPageContent.rules.guide.themesText}
+                </p>
               </div>
             </div>
           </FadeIn>
