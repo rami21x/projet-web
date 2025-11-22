@@ -303,38 +303,28 @@ async function main() {
 
   console.log('✅ Site stats initialized')
 
-  // Create some page views
+  // Create some page views (using createMany for better SQLite performance)
   const paths = ['/', '/collection', '/studio', '/artistes', '/galerie', '/livre-or']
-  const pageViews = await Promise.all(
-    Array.from({ length: 50 }).map(() =>
-      prisma.pageView.create({
-        data: {
-          path: paths[Math.floor(Math.random() * paths.length)],
-          sessionId: `session-${Math.random().toString(36).substr(2, 9)}`,
-          createdAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000), // Last 7 days
-        },
-      })
-    )
-  )
+  const pageViewsData = Array.from({ length: 20 }).map(() => ({
+    path: paths[Math.floor(Math.random() * paths.length)],
+    sessionId: `session-${Math.random().toString(36).substr(2, 9)}`,
+    createdAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+  }))
+  await prisma.pageView.createMany({ data: pageViewsData })
 
-  console.log(`✅ Created ${pageViews.length} page views`)
+  console.log(`✅ Created ${pageViewsData.length} page views`)
 
-  // Create some events
+  // Create some events (using createMany for better SQLite performance)
   const eventNames = ['click_cta', 'submit_form', 'download_design', 'share_social', 'vote']
-  const events = await Promise.all(
-    Array.from({ length: 30 }).map(() =>
-      prisma.event.create({
-        data: {
-          name: eventNames[Math.floor(Math.random() * eventNames.length)],
-          category: 'engagement',
-          sessionId: `session-${Math.random().toString(36).substr(2, 9)}`,
-          createdAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
-        },
-      })
-    )
-  )
+  const eventsData = Array.from({ length: 15 }).map(() => ({
+    name: eventNames[Math.floor(Math.random() * eventNames.length)],
+    category: 'engagement',
+    sessionId: `session-${Math.random().toString(36).substr(2, 9)}`,
+    createdAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+  }))
+  await prisma.event.createMany({ data: eventsData })
 
-  console.log(`✅ Created ${events.length} events`)
+  console.log(`✅ Created ${eventsData.length} events`)
 
   console.log('🎉 Seeding completed!')
 }
