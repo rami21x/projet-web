@@ -2,21 +2,23 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Instagram, ChevronDown, Send, Users, Paintbrush, Globe, Sparkles, MessageCircle } from "lucide-react";
+import { Mail, Instagram, ChevronDown, Send, Sparkles, MessageCircle } from "lucide-react";
 import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 
 export default function ContactPage() {
-  const { contactContent, siteConfig, contactPageContent } = useContent();
+  const { contactContent, contactPageContent } = useContent();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim()) return;
 
-    // Use real API if available, fallback to localStorage
+    setSubmitting(true);
     try {
       const response = await fetch('/api/newsletter', {
         method: 'POST',
@@ -35,6 +37,7 @@ export default function ContactPage() {
     }
 
     setSubmitted(true);
+    setSubmitting(false);
     setTimeout(() => {
       setEmail("");
       setName("");
@@ -45,12 +48,6 @@ export default function ContactPage() {
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
-
-  const stats = [
-    { icon: Users, value: "2,847", label: contactPageContent.stats?.community || "Community members" },
-    { icon: Paintbrush, value: "12", label: contactPageContent.stats?.artists || "Artists" },
-    { icon: Globe, value: "15", label: contactPageContent.stats?.countries || "Countries" },
-  ];
 
   return (
     <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A]">
@@ -92,25 +89,6 @@ export default function ContactPage() {
             <p className="font-body text-base md:text-lg text-light/80 leading-relaxed max-w-2xl mx-auto">
               {contactPageContent.hero.description}
             </p>
-          </FadeIn>
-
-          {/* Stats */}
-          <FadeIn delay={0.2}>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-16 mt-12 md:mt-16">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="text-center"
-                >
-                  <stat.icon className="w-6 h-6 md:w-8 md:h-8 text-primary mx-auto mb-2" />
-                  <p className="font-display text-2xl md:text-3xl font-bold text-white">{stat.value}</p>
-                  <p className="font-body text-xs md:text-sm text-light/70">{stat.label}</p>
-                </motion.div>
-              ))}
-            </div>
           </FadeIn>
         </div>
       </section>
@@ -184,9 +162,10 @@ export default function ContactPage() {
 
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center gap-3 font-body font-semibold text-base sm:text-lg px-8 py-4 sm:py-5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-white rounded-xl transition-all hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                      disabled={submitting}
+                      className="w-full flex items-center justify-center gap-3 font-body font-semibold text-base sm:text-lg px-8 py-4 sm:py-5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-white rounded-xl transition-all hover:scale-[1.02] shadow-lg hover:shadow-xl disabled:opacity-50"
                     >
-                      <span>{contactPageContent.form.submit}</span>
+                      <span>{submitting ? 'Envoi...' : contactPageContent.form.submit}</span>
                       <Send className="w-5 h-5" />
                     </button>
 

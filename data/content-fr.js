@@ -809,11 +809,6 @@ export const contactPageContent = {
     brand: "Notre histoire",
     collection: "La collection",
   },
-  stats: {
-    community: "Membres de la communauté",
-    artists: "Artistes collaborateurs",
-    countries: "Pays touchés",
-  },
 };
 
 // Page Marque - Contenu complet
