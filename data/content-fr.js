@@ -470,10 +470,10 @@ export const processContent = {
 
 export const contactContent = {
   newsletter: {
-    headline: "Restez connecté à la conscience",
-    subtitle: "Recevez les updates Amour ↔ Ennui et accès anticipé",
-    privacy: "Nous respectons votre vie privée",
-    successMessage: "Merci! Vérifiez votre email.",
+    headline: "Rejoignez le mouvement",
+    subtitle: "Accès exclusif aux nouvelles collections, invitations aux événements et réflexions philosophiques sur l'art de se vêtir.",
+    privacy: "Votre vie privée est sacrée. Nous ne partageons jamais vos données.",
+    successMessage: "Bienvenue dans la communauté Arteral !",
   },
   info: {
     email: "contact@arteral.com",
@@ -781,29 +781,38 @@ export const processPageContent = {
 // Page Contact
 export const contactPageContent = {
   hero: {
-    title: "Contact",
-    description: "Rejoignez la communauté Arteral et restez informé de nos nouvelles collections, collaborations artistiques et explorations philosophiques.",
+    label: "REJOIGNEZ-NOUS",
+    title: "Entrons en dialogue",
+    subtitle: "Chaque connexion est une opportunité de partager une vision",
+    description: "Nous croyons que la mode est un dialogue entre le créateur et celui qui la porte. Rejoignez notre communauté de penseurs, d'artistes et d'âmes curieuses.",
   },
   form: {
-    email: "Email *",
+    email: "Votre email *",
     emailPlaceholder: "votre@email.com",
-    name: "Nom (optionnel)",
-    namePlaceholder: "Votre nom",
-    submit: "S'inscrire",
+    name: "Comment vous appelle-t-on ?",
+    namePlaceholder: "Votre prénom",
+    submit: "Rejoindre la communauté",
   },
   contactSection: {
-    title: "Nous contacter",
-    email: "Email",
-    instagram: "Instagram",
+    title: "Tissons des liens",
+    subtitle: "Nous sommes à votre écoute pour toute question, collaboration ou simplement pour échanger sur l'art et la philosophie.",
+    email: "Par email",
+    instagram: "Sur Instagram",
   },
   faq: {
-    title: "Questions Fréquentes",
+    title: "Vos Questions",
+    subtitle: "Les réponses aux interrogations les plus fréquentes de notre communauté",
   },
   cta: {
-    title: "Explorez l'univers Arteral",
-    description: "Découvrez notre philosophie, notre processus créatif et la collection Amour ↔ Ennuie.",
-    brand: "Découvrir la marque",
-    collection: "Voir la collection",
+    title: "Plongez dans l'univers Arteral",
+    description: "Découvrez une marque où chaque pièce raconte une histoire, où l'art devient vêtement et où la philosophie se porte.",
+    brand: "Notre histoire",
+    collection: "La collection",
+  },
+  stats: {
+    community: "Membres de la communauté",
+    artists: "Artistes collaborateurs",
+    countries: "Pays touchés",
   },
 };
 

@@ -781,29 +781,38 @@ export const processPageContent = {
 // Contact Page
 export const contactPageContent = {
   hero: {
-    title: "Contact",
-    description: "Join the Arteral community and stay informed about our new collections, artistic collaborations, and philosophical explorations.",
+    label: "JOIN US",
+    title: "Let's Start a Dialogue",
+    subtitle: "Every connection is an opportunity to share a vision",
+    description: "We believe fashion is a dialogue between creator and wearer. Join our community of thinkers, artists, and curious souls.",
   },
   form: {
-    email: "Email *",
+    email: "Your email *",
     emailPlaceholder: "your@email.com",
-    name: "Name (optional)",
+    name: "What should we call you?",
     namePlaceholder: "Your name",
-    submit: "Subscribe",
+    submit: "Join the community",
   },
   contactSection: {
-    title: "Contact us",
-    email: "Email",
-    instagram: "Instagram",
+    title: "Let's Connect",
+    subtitle: "We're here for any questions, collaborations, or simply to discuss art and philosophy.",
+    email: "By email",
+    instagram: "On Instagram",
   },
   faq: {
-    title: "Frequently Asked Questions",
+    title: "Your Questions",
+    subtitle: "Answers to our community's most frequent inquiries",
   },
   cta: {
-    title: "Explore the Arteral universe",
-    description: "Discover our philosophy, our creative process, and the Love ↔ Boredom collection.",
-    brand: "Discover the brand",
-    collection: "View the collection",
+    title: "Dive into the Arteral Universe",
+    description: "Discover a brand where every piece tells a story, where art becomes clothing, and philosophy is worn.",
+    brand: "Our story",
+    collection: "The collection",
+  },
+  stats: {
+    community: "Community members",
+    artists: "Collaborating artists",
+    countries: "Countries reached",
   },
 };
 
