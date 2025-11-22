@@ -58,17 +58,17 @@ export default function ManifestePage() {
       </section>
 
       {/* Intro Quote Section */}
-      <section className="py-16 md:py-24 bg-white dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
-            <Quote className="w-12 h-12 text-accent/40 mx-auto mb-6" />
-            <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-dark dark:text-white mb-4 leading-relaxed">
+            <Quote className="w-12 h-12 text-accent mx-auto mb-6" />
+            <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-4 leading-relaxed">
               {manifestoPageContent.intro.quote}
             </p>
             <p className="font-mono text-sm text-accent tracking-wider mb-8">
               — {manifestoPageContent.intro.author}
             </p>
-            <p className="font-body text-lg text-dark/70 dark:text-white/70 max-w-2xl mx-auto">
+            <p className="font-body text-lg text-[#4A4A4A] dark:text-gray-300 max-w-2xl mx-auto">
               {manifestoPageContent.intro.description}
             </p>
           </FadeIn>
@@ -76,7 +76,7 @@ export default function ManifestePage() {
       </section>
 
       {/* Chapters Section */}
-      <section className="py-16 md:py-24 bg-light dark:bg-dark">
+      <section className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16 md:space-y-24">
             {manifestoPageContent.chapters.map((chapter: Chapter, index: number) => {
@@ -94,7 +94,7 @@ export default function ManifestePage() {
                       className={`lg:col-span-4 ${!isEven ? "lg:col-start-9" : ""}`}
                     >
                       <div className="relative">
-                        <div className="text-[120px] md:text-[180px] font-display font-bold text-dark/5 dark:text-white/5 absolute -top-8 -left-4 select-none">
+                        <div className="text-[120px] md:text-[180px] font-display font-bold text-[#2B2B2B]/5 dark:text-white/5 absolute -top-8 -left-4 select-none">
                           {chapter.number}
                         </div>
                         <div className="relative z-10 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-8 md:p-12 rounded-lg flex items-center justify-center">
@@ -102,7 +102,7 @@ export default function ManifestePage() {
                             <p className="font-display text-5xl md:text-6xl font-bold text-primary mb-2">
                               {chapter.number}
                             </p>
-                            <p className="font-mono text-xs text-dark/50 dark:text-white/50 tracking-wider">
+                            <p className="font-mono text-xs text-[#5A5A5A] dark:text-gray-400 tracking-wider">
                               CHAPITRE
                             </p>
                           </div>
@@ -116,16 +116,16 @@ export default function ManifestePage() {
                         !isEven ? "lg:col-start-1 lg:row-start-1" : ""
                       }`}
                     >
-                      <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-dark dark:text-white mb-4 md:mb-6">
+                      <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-4 md:mb-6">
                         {chapter.title}
                       </h2>
-                      <p className="font-body text-base md:text-lg text-dark/70 dark:text-white/70 leading-relaxed mb-6">
+                      <p className="font-body text-base md:text-lg text-[#4A4A4A] dark:text-gray-300 leading-relaxed mb-6">
                         {chapter.text}
                       </p>
 
                       {/* Quote */}
                       <div className="bg-accent/5 dark:bg-accent/10 border-l-4 border-accent p-4 md:p-6 rounded-r-lg">
-                        <p className="font-body text-sm md:text-base italic text-dark/80 dark:text-white/80 mb-2">
+                        <p className="font-body text-sm md:text-base italic text-[#3A3A3A] dark:text-gray-200 mb-2">
                           &ldquo;{chapter.quote}&rdquo;
                         </p>
                         <p className="font-mono text-xs text-accent">
@@ -184,12 +184,12 @@ export default function ManifestePage() {
             <p className="font-mono text-xs tracking-[0.3em] text-accent mb-4">
               {manifestoPageContent.oath.label}
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white mb-8">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-8">
               {manifestoPageContent.oath.title}
             </h2>
 
-            <div className="bg-white dark:bg-dark/80 p-8 md:p-12 rounded-lg shadow-2xl border-2 border-accent/20 mb-8">
-              <p className="font-body text-lg md:text-xl text-dark/80 dark:text-white/80 leading-relaxed italic">
+            <div className="bg-white dark:bg-[#1A1A1A] p-8 md:p-12 rounded-lg shadow-2xl border-2 border-accent/20 mb-8">
+              <p className="font-body text-lg md:text-xl text-[#3A3A3A] dark:text-gray-200 leading-relaxed italic">
                 &ldquo;{manifestoPageContent.oath.text}&rdquo;
               </p>
             </div>
@@ -221,17 +221,17 @@ export default function ManifestePage() {
       </section>
 
       {/* Signature Section */}
-      <section className="py-16 md:py-24 bg-white dark:bg-dark/50">
+      <section className="py-16 md:py-24 bg-white dark:bg-[#1A1A1A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <div className="w-32 h-1 bg-gradient-to-r from-primary via-accent to-primary mx-auto mb-8" />
-            <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-dark dark:text-white mb-4">
+            <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-[#2B2B2B] dark:text-white mb-4">
               {manifestoPageContent.signature.text}
             </p>
             <p className="font-display text-3xl md:text-4xl font-bold text-primary italic mb-4">
               Arteral
             </p>
-            <p className="font-mono text-sm text-dark/60 dark:text-white/60">
+            <p className="font-mono text-sm text-[#5A5A5A] dark:text-gray-400">
               {manifestoPageContent.signature.tagline}
             </p>
           </FadeIn>
