@@ -807,22 +807,113 @@ export const contactPageContent = {
   },
 };
 
-// Page Marque
+// Page Marque - Contenu complet
 export const brandPageContent = {
-  philosophySection: {
-    title: "Univers Philosophique",
+  hero: {
+    label: "NOTRE IDENTITÉ",
+    title: "ARTERAL",
+    subtitle: "Quand l'art rencontre la conscience",
+    description: "Nous croyons que ce qu'on porte façonne qui l'on devient. Chaque pièce Arteral est une invitation à la réflexion, une collaboration artistique, une oeuvre que l'on incarne.",
   },
-  processSection: {
-    title: "Processus Créatif",
+  story: {
+    label: "NOTRE HISTOIRE",
+    title: "La Genèse",
+    chapters: [
+      {
+        title: "L'Étincelle",
+        text: "Tout a commencé par une question simple : pourquoi la mode devrait-elle être superficielle ? Nous rêvions d'une marque où chaque vêtement porterait une histoire, où l'art ne serait pas seulement contemplé mais vécu. Après des mois de recherche sur l'art surréaliste, contemporain, et les cultures iranienne et syrienne qui nous sont chères, nous avons trouvé notre voie : l'art conceptuel ancré dans l'histoire de l'humanité.",
+      },
+      {
+        title: "Le Concept",
+        text: "Notre première série s'est construite autour des origines de l'être humain. Nous avons collaboré avec des artistes émergents pour donner vie à nos visions, traduisant des récits philosophiques en broderies sur textile premium. Chaque pièce raconte un paradoxe, chaque paradoxe invite à l'introspection.",
+      },
+      {
+        title: "La Vision",
+        text: "Arteral n'est pas qu'une marque de mode. C'est un mouvement pour redonner du sens à ce que l'on porte. Nous voulons que chaque client ressente l'histoire transmise, qu'il développe un sentiment d'appartenance à quelque chose de plus grand que lui. Porter Arteral, c'est porter sa philosophie.",
+      },
+    ],
   },
-  valuesSection: {
-    title: "Nos Valeurs",
+  founders: {
+    label: "LES FONDATEURS",
+    title: "Deux âmes, une vision",
+    description: "Arteral est né de la rencontre de deux parcours marqués par l'exil et la quête d'expression. Unis par la passion de l'art et la conviction que les vêtements sont l'identité silencieuse de celui qui les porte.",
+    profiles: [
+      {
+        name: "Soheil",
+        role: "Direction Artistique & Marketing",
+        origin: "Iran",
+        description: "Immigré d'Iran, Soheil a grandi entre deux cultures, nourrissant une passion profonde pour l'art conceptuel et la poésie française. Inspiré par Baudelaire, Rimbaud et Verlaine, il voit dans chaque création une forme de résistance poétique.",
+        quote: "L'art est la seule langue que la censure ne peut pas étouffer.",
+        image: "/images/founders/soheil.jpg",
+      },
+      {
+        name: "Rami",
+        role: "Design & Direction Créative",
+        origin: "Syrie",
+        description: "Syrien passionné de philosophie et de mode, Rami trouve dans Nietzsche et la pensée existentialiste les fondements de sa vision créative. Pour lui, le vêtement est une extension de l'âme, une déclaration silencieuse de qui nous sommes.",
+        quote: "Le vêtement est le miroir de l'âme que les mots ne peuvent exprimer.",
+        image: "/images/founders/rami.jpg",
+      },
+    ],
+    sharedVision: "Notre vision d'Arteral dépasse la simple mode. Nous voulons faire réfléchir, enrichir les esprits, collaborer avec des artistes et des penseurs. Les vêtements déterminent inconsciemment l'identité de celui qui les porte. Nous voulons transmettre notre message par le moyen le plus intime qui soit : ce que l'on choisit de porter chaque jour.",
+  },
+  manifesto: {
+    label: "MANIFESTE",
+    quote: "Porter Arteral, c'est refuser la mode jetable. C'est choisir de raconter une histoire plutôt que de suivre une tendance. C'est croire que l'art mérite d'être vécu, pas seulement contemplé.",
+    cta: "Lire le manifeste complet",
+  },
+  vision: {
+    label: "NOTRE VISION",
+    title: "Ce que nous croyons",
+    items: [
+      {
+        title: "L'art accessible",
+        description: "Nous valorisons les talents émergents et l'esprit créatif. Chaque série se conclut par une exposition artistique, célébrant les artistes qui donnent vie à nos collections.",
+      },
+      {
+        title: "L'exclusivité consciente",
+        description: "Nos productions sont limitées et exclusives. Comme le disait Nietzsche : « Il ne faut pas mettre la philosophie à la portée du vulgaire. » Nous créons pour ceux qui valorisent l'art, la philosophie et la conscience environnementale.",
+      },
+      {
+        title: "La qualité responsable",
+        description: "Nous luttons contre la production de masse en utilisant des matières biologiques ou recyclées, alliant haute qualité et confort. Chaque pièce est conçue pour durer et porter du sens.",
+      },
+    ],
+  },
+  commitments: {
+    label: "NOS ENGAGEMENTS",
+    title: "Ce pour quoi nous luttons",
+    items: [
+      {
+        title: "Production Responsable",
+        description: "Matières éco-responsables, production locale, respect de l'environnement à chaque étape.",
+      },
+      {
+        title: "Collaboration Équitable",
+        description: "Les artistes sont nos partenaires, pas nos fournisseurs. Rémunération juste et crédit sur chaque pièce.",
+      },
+      {
+        title: "Anti Fast-Fashion",
+        description: "Séries limitées, qualité premium, pièces intemporelles. Nous créons pour durer, pas pour être jeté.",
+      },
+    ],
+  },
+  gallery: {
+    label: "DANS L'ATELIER",
+    title: "Les coulisses de la création",
+    description: "Des premières esquisses aux broderies finales, découvrez l'artisanat derrière chaque pièce Arteral.",
+    images: [
+      { src: "/images/atelier/atelier-1.jpg", alt: "Esquisses et recherches" },
+      { src: "/images/atelier/atelier-2.jpg", alt: "Sélection des matières" },
+      { src: "/images/atelier/atelier-3.jpg", alt: "Broderie artisanale" },
+      { src: "/images/atelier/atelier-4.jpg", alt: "Contrôle qualité" },
+    ],
   },
   cta: {
-    title: "Prêt à explorer?",
-    description: "Découvrez notre première collection Amour ↔ Ennuie et plongez dans l'univers philosophique d'Arteral.",
-    collection: "Voir la collection",
-    artists: "Découvrir les artistes",
+    title: "Rejoignez le mouvement",
+    description: "Découvrez notre première collection et participez à redéfinir ce que signifie porter un vêtement.",
+    collection: "Explorer la collection",
+    contest: "Participer au concours",
   },
 };
 

@@ -809,6 +809,109 @@ export const contactPageContent = {
 
 // Brand Page
 export const brandPageContent = {
+  hero: {
+    label: "OUR IDENTITY",
+    title: "ARTERAL",
+    subtitle: "When art meets consciousness",
+    description: "We believe that what we wear shapes who we become. ARTERAL was born from this conviction: fashion can be a vector of meaning, a philosophical experience, embodied art.",
+  },
+  story: {
+    label: "OUR STORY",
+    title: "The Genesis",
+    chapters: [
+      {
+        title: "The Spark",
+        text: "Everything started from a question: what if clothing could carry a message deeper than a logo? What if each piece could tell a story, embody an idea, invite contemplation? From a simple conversation between two friends emerged a revolutionary vision of fashion.",
+      },
+      {
+        title: "The Concept",
+        text: "ARTERAL is born from the fusion of two words: ART and REAL. It's the idea that art should not be confined to galleries, but live in everyday life, be touched, worn, embodied. Each piece becomes a moving canvas, an intimate philosophical dialogue between the wearer and the world.",
+      },
+      {
+        title: "The Vision",
+        text: "We create fashion that asks questions rather than giving answers. Limited collections, each exploring a philosophical paradox. Collaborations with artists who share our quest for meaning. Pieces that become mirrors of who we are and who we're becoming.",
+      },
+    ],
+  },
+  founders: {
+    label: "THE FOUNDERS",
+    title: "Two souls, one vision",
+    profiles: [
+      {
+        name: "Soheil",
+        role: "Artistic Direction & Marketing",
+        origin: "Iran",
+        bio: "Born in Iran, in the shadow of mountains and ancient poetry, Soheil carries within him the Persian heritage of mystics and calligraphers. His exile brought him both the pain of uprooting and the chance of a fresh start. In the tension between his roots and his journey, he found his voice: creating bridges between cultures, transforming the invisible into the visible.",
+        quote: "Beauty has no borders. Art is the universal language that unites what history divides.",
+      },
+      {
+        name: "Rami",
+        role: "Design & Creative Direction",
+        origin: "Syria",
+        bio: "Rami grew up in Syria, a land of contrasts where ancient civilizations meet the storm of modernity. Forced to leave, he carried in his suitcases dreams and sketches, the memory of Damascus courtyards and bazaars. His creativity is nourished by this duality: preserving the beauty of the past while imagining the future.",
+        quote: "Every line I draw is a bridge between the world I left and the one I'm building.",
+      },
+    ],
+    sharedVision: "United by exile and shared dreams, Soheil and Rami founded ARTERAL to prove that beauty can emerge from chaos, that difference is a strength, and that fashion can be an act of philosophical resistance.",
+  },
+  manifesto: {
+    label: "MANIFESTO",
+    quote: "Fashion has become noise. We seek silence. In a world of ephemeral trends, we create pieces that endure. In a sea of logos, we embroider ideas. We don't sell clothing. We offer mirrors.",
+    cta: "Read the full manifesto",
+  },
+  vision: {
+    label: "OUR VISION",
+    title: "What we believe",
+    items: [
+      {
+        title: "Fashion as philosophy",
+        description: "Each piece embodies a philosophical paradox. We don't create fashion, we create matter for reflection.",
+      },
+      {
+        title: "Art in the everyday",
+        description: "Art should not be locked in museums. We bring it to the street, to the body, to life.",
+      },
+      {
+        title: "Conscious creation",
+        description: "Limited production, exceptional materials, fair artisanal work. Quality over quantity, always.",
+      },
+    ],
+  },
+  commitments: {
+    label: "OUR COMMITMENTS",
+    title: "What we stand for",
+    items: [
+      {
+        title: "Artistic authenticity",
+        description: "True collaboration with conceptual artists. Each creation is unique, never replicated industrial work.",
+      },
+      {
+        title: "Total transparency",
+        description: "Open and documented creative process. We share every step, from concept to finished piece.",
+      },
+      {
+        title: "Inclusive beauty",
+        description: "Fashion that transcends genders and origins. Our philosophy welcomes everyone who seeks meaning.",
+      },
+    ],
+  },
+  gallery: {
+    label: "IN THE WORKSHOP",
+    title: "Behind the scenes of creation",
+    images: [
+      { src: "/images/atelier/atelier-1.jpg", alt: "Creative sketches" },
+      { src: "/images/atelier/atelier-2.jpg", alt: "Fabric selection" },
+      { src: "/images/atelier/atelier-3.jpg", alt: "Embroidery detail" },
+      { src: "/images/atelier/atelier-4.jpg", alt: "Photo session" },
+    ],
+  },
+  cta: {
+    title: "Join the movement",
+    description: "ARTERAL is more than a brand. It's a community of those who believe that fashion can be a vector of change, a space for reflection, a form of philosophical resistance.",
+    collection: "Discover Narcissus in Love",
+    contest: "Participate in the contest",
+  },
+  // Keep old properties for backwards compatibility
   philosophySection: {
     title: "Philosophical Universe",
   },
@@ -817,12 +920,6 @@ export const brandPageContent = {
   },
   valuesSection: {
     title: "Our Values",
-  },
-  cta: {
-    title: "Ready to explore?",
-    description: "Discover our first Love ↔ Boredom collection and dive into the philosophical universe of Arteral.",
-    collection: "View the collection",
-    artists: "Discover the artists",
   },
 };
 
