@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { validate, likeDesignSchema, emailSchema } from '@/lib/validations'
+import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rate-limit'
+import { handleApiError } from '@/lib/error-handler'
 
 // POST /api/designs/[id]/like - Like/unlike a design
 export async function POST(
@@ -7,15 +10,30 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.write, identifier: 'design-like' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
+
     const { id: designId } = await params
     const body = await request.json()
-    const { email } = body
 
-    if (!email) {
+    // Validate
+    const validation = validate(likeDesignSchema, body)
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Email invalide', details: validation.errors },
         { status: 400 }
       )
+    }
+
+    const { email } = validation.data
+
+    // Verify design exists
+    const design = await prisma.design.findUnique({ where: { id: designId } })
+    if (!design) {
+      return NextResponse.json({ error: 'Design non trouvé' }, { status: 404 })
     }
 
     // Find or create user
@@ -69,11 +87,7 @@ export async function POST(
       })
     }
   } catch (error) {
-    console.error('Error toggling like:', error)
-    return NextResponse.json(
-      { error: 'Failed to toggle like' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/designs/[id]/like', method: 'POST' })
   }
 }
 
@@ -83,19 +97,31 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.general, identifier: 'design-like-get' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
+
     const { id: designId } = await params
     const { searchParams } = new URL(request.url)
-    const email = searchParams.get('email')
+    const emailParam = searchParams.get('email')
 
     const likeCount = await prisma.like.count({
       where: { designId }
     })
 
-    if (!email) {
+    if (!emailParam) {
       return NextResponse.json({ liked: false, likeCount })
     }
 
-    const user = await prisma.user.findUnique({ where: { email } })
+    // Validate email
+    const emailResult = emailSchema.safeParse(emailParam)
+    if (!emailResult.success) {
+      return NextResponse.json({ liked: false, likeCount })
+    }
+
+    const user = await prisma.user.findUnique({ where: { email: emailResult.data } })
     if (!user) {
       return NextResponse.json({ liked: false, likeCount })
     }
@@ -114,10 +140,6 @@ export async function GET(
       likeCount
     })
   } catch (error) {
-    console.error('Error checking like:', error)
-    return NextResponse.json(
-      { error: 'Failed to check like' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/designs/[id]/like', method: 'GET' })
   }
 }

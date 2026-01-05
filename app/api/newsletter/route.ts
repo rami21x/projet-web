@@ -1,18 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { validate, newsletterSubscribeSchema, newsletterUnsubscribeSchema } from '@/lib/validations'
+import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rate-limit'
+import { handleApiError } from '@/lib/error-handler'
 
 // POST /api/newsletter - Subscribe to newsletter
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const { email, name, source } = body
+    // Rate limiting - very strict for newsletter
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.newsletter, identifier: 'newsletter-subscribe' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
 
-    if (!email) {
+    const body = await request.json()
+
+    // Validate request body
+    const validation = validate(newsletterSubscribeSchema, body)
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Données invalides', details: validation.errors },
         { status: 400 }
       )
     }
+
+    const { email, name, source } = validation.data
 
     // Check if already subscribed
     const existing = await prisma.newsletterSubscriber.findUnique({
@@ -28,12 +40,12 @@ export async function POST(request: NextRequest) {
         })
         return NextResponse.json({
           success: true,
-          message: 'Successfully resubscribed!'
+          message: 'Réabonnement réussi !'
         })
       }
       return NextResponse.json({
         success: false,
-        message: 'Email already subscribed'
+        message: 'Cette adresse email est déjà inscrite'
       })
     }
 
@@ -42,34 +54,52 @@ export async function POST(request: NextRequest) {
       data: {
         email,
         name,
-        source: source || 'website'
+        source
       }
     })
 
     return NextResponse.json({
       success: true,
-      message: 'Successfully subscribed!'
+      message: 'Inscription réussie !'
     }, { status: 201 })
   } catch (error) {
-    console.error('Error subscribing to newsletter:', error)
-    return NextResponse.json(
-      { error: 'Failed to subscribe' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/newsletter', method: 'POST' })
   }
 }
 
 // DELETE /api/newsletter - Unsubscribe from newsletter
 export async function DELETE(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
-    const email = searchParams.get('email')
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.write, identifier: 'newsletter-unsubscribe' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
 
-    if (!email) {
+    const { searchParams } = new URL(request.url)
+    const emailParam = searchParams.get('email')
+
+    // Validate email
+    const validation = validate(newsletterUnsubscribeSchema, { email: emailParam })
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Email invalide', details: validation.errors },
         { status: 400 }
       )
+    }
+
+    const { email } = validation.data
+
+    // Check if subscriber exists
+    const existing = await prisma.newsletterSubscriber.findUnique({
+      where: { email }
+    })
+
+    if (!existing) {
+      return NextResponse.json({
+        success: false,
+        message: 'Cette adresse email n\'est pas inscrite'
+      }, { status: 404 })
     }
 
     await prisma.newsletterSubscriber.update({
@@ -79,13 +109,9 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Successfully unsubscribed'
+      message: 'Désinscription réussie'
     })
   } catch (error) {
-    console.error('Error unsubscribing:', error)
-    return NextResponse.json(
-      { error: 'Failed to unsubscribe' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/newsletter', method: 'DELETE' })
   }
 }

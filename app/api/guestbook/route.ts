@@ -1,13 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { validate, createGuestbookSchema, guestbookQuerySchema } from '@/lib/validations'
+import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rate-limit'
+import { handleApiError } from '@/lib/error-handler'
 
 // GET /api/guestbook - Get all guestbook entries
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '20')
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.general, identifier: 'guestbook-get' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
 
+    const { searchParams } = new URL(request.url)
+
+    // Validate query params
+    const queryResult = validate(guestbookQuerySchema, {
+      page: searchParams.get('page'),
+      limit: searchParams.get('limit')
+    })
+
+    if (!queryResult.success) {
+      return NextResponse.json(
+        { error: 'Paramètres invalides', details: queryResult.errors },
+        { status: 400 }
+      )
+    }
+
+    const { page, limit } = queryResult.data
     const skip = (page - 1) * limit
 
     const [entries, total] = await Promise.all([
@@ -27,7 +48,7 @@ export async function GET(request: NextRequest) {
       prisma.guestbookEntry.count()
     ])
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       entries,
       pagination: {
         page,
@@ -36,27 +57,37 @@ export async function GET(request: NextRequest) {
         totalPages: Math.ceil(total / limit)
       }
     })
+
+    // Add cache headers
+    response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=60')
+
+    return response
   } catch (error) {
-    console.error('Error fetching guestbook:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch guestbook entries' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/guestbook', method: 'GET' })
   }
 }
 
 // POST /api/guestbook - Create a new guestbook entry
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const { email, name, message, mood } = body
+    // Rate limiting - stricter for guestbook
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.guestbook, identifier: 'guestbook-post' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
 
-    if (!email || !name || !message || !mood) {
+    const body = await request.json()
+
+    // Validate request body
+    const validation = validate(createGuestbookSchema, body)
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Données invalides', details: validation.errors },
         { status: 400 }
       )
     }
+
+    const { email, name, message, mood } = validation.data
 
     // Find or create user
     let user = await prisma.user.findUnique({ where: { email } })
@@ -92,10 +123,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(entry, { status: 201 })
   } catch (error) {
-    console.error('Error creating guestbook entry:', error)
-    return NextResponse.json(
-      { error: 'Failed to create entry' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/guestbook', method: 'POST' })
   }
 }

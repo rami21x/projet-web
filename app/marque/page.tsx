@@ -3,17 +3,98 @@
 import { motion } from "framer-motion";
 import { MapPin, Quote, ArrowRight, Sparkles, Eye, Heart, Users, Paintbrush, FileText } from "lucide-react";
 import { useContent } from "@/hooks/useContent";
+import { useTheme } from "next-themes";
+import { useState, useEffect } from "react";
 import FadeIn from "@/components/FadeIn";
 import Image from "next/image";
+
+// Dynamic Hero Image Component - Changes based on light/dark mode
+function HeroImage() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Fallback gradient while loading
+  if (!mounted) {
+    return (
+      <div className="absolute inset-0 bg-gradient-to-br from-dark via-dark/95 to-accent/20" />
+    );
+  }
+
+  // Switch image based on theme
+  // Light mode: brand-hero-light.jpg (bright, airy, artistic)
+  // Dark mode: brand-hero-dark.jpg (moody, dramatic, sophisticated)
+  const imageSrc = resolvedTheme === "dark"
+    ? "/images/brand-hero-dark.jpg"
+    : "/images/brand-hero-light.jpg";
+
+  return (
+    <>
+      {/* Background Image with parallax effect */}
+      <motion.div
+        initial={{ scale: 1.1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute inset-0"
+      >
+        <Image
+          src={imageSrc}
+          alt="Arteral Brand"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+          onError={(e) => {
+            // Fallback if image not found
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+      </motion.div>
+
+      {/* Artistic overlay gradients for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+
+      {/* Animated accent line at bottom */}
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: "100%" }}
+        transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
+        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent"
+      />
+
+      {/* Corner artistic frames */}
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 0.6, x: 0 }}
+        transition={{ duration: 1, delay: 0.8 }}
+        className="absolute top-8 left-8 w-24 h-24 border-l-2 border-t-2 border-accent/50"
+      />
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 0.6, x: 0 }}
+        transition={{ duration: 1, delay: 0.8 }}
+        className="absolute bottom-8 right-8 w-24 h-24 border-r-2 border-b-2 border-accent/50"
+      />
+    </>
+  );
+}
 
 export default function MarquePage() {
   const { brandPageContent } = useContent();
 
   return (
     <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A]">
-      {/* Hero Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-dark via-dark/95 to-accent/20 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+      {/* Hero Section with Dynamic Photo */}
+      <section className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden">
+        {/* Dynamic Background Image (changes with light/dark mode) */}
+        <HeroImage />
+
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div
             className="absolute inset-0"
             style={{
@@ -22,20 +103,41 @@ export default function MarquePage() {
           />
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        {/* Content */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-20 md:py-32">
           <FadeIn>
-            <p className="font-mono text-xs md:text-sm tracking-[0.3em] text-accent mb-6">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="font-mono text-xs md:text-sm tracking-[0.3em] text-accent mb-6"
+            >
               {brandPageContent.hero.label}
-            </p>
-            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6">
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4 }}
+              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-white drop-shadow-2xl"
+            >
               {brandPageContent.hero.title}
-            </h1>
-            <p className="font-display text-xl md:text-2xl text-light/90 mb-8">
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="font-display text-xl md:text-2xl text-white/90 mb-8 drop-shadow-lg"
+            >
               {brandPageContent.hero.subtitle}
-            </p>
-            <p className="font-body text-base md:text-lg text-light/80 leading-relaxed max-w-2xl mx-auto">
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="font-body text-base md:text-lg text-white/80 leading-relaxed max-w-2xl mx-auto drop-shadow-md"
+            >
               {brandPageContent.hero.description}
-            </p>
+            </motion.p>
           </FadeIn>
         </div>
       </section>

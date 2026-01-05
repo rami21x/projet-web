@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { validate, likeGuestbookSchema } from '@/lib/validations'
+import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rate-limit'
+import { handleApiError } from '@/lib/error-handler'
 
 // POST /api/guestbook/[id]/like - Like/unlike a guestbook entry
 export async function POST(
@@ -7,15 +10,30 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.write, identifier: 'guestbook-like' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
+
     const { id: guestbookId } = await params
     const body = await request.json()
-    const { email } = body
 
-    if (!email) {
+    // Validate
+    const validation = validate(likeGuestbookSchema, body)
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Email invalide', details: validation.errors },
         { status: 400 }
       )
+    }
+
+    const { email } = validation.data
+
+    // Verify guestbook entry exists
+    const entry = await prisma.guestbookEntry.findUnique({ where: { id: guestbookId } })
+    if (!entry) {
+      return NextResponse.json({ error: 'Entrée non trouvée' }, { status: 404 })
     }
 
     // Find or create user
@@ -69,10 +87,6 @@ export async function POST(
       })
     }
   } catch (error) {
-    console.error('Error toggling like:', error)
-    return NextResponse.json(
-      { error: 'Failed to toggle like' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/guestbook/[id]/like', method: 'POST' })
   }
 }

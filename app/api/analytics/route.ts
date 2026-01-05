@@ -1,11 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { validate, pageViewSchema } from '@/lib/validations'
+import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rate-limit'
+import { handleApiError } from '@/lib/error-handler'
+import { z } from 'zod'
 
-// POST /api/analytics/pageview - Track page view
+// POST /api/analytics - Track page view
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting - allow many page views but protect against abuse
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.general, identifier: 'analytics-pageview' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
+
     const body = await request.json()
-    const { path, referrer, sessionId } = body
+
+    // Validate
+    const validation = validate(pageViewSchema, body)
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: 'Données invalides', details: validation.errors },
+        { status: 400 }
+      )
+    }
+
+    const { path, referrer, sessionId } = validation.data
 
     // Get user agent and try to get country from headers
     const userAgent = request.headers.get('user-agent') || undefined
@@ -43,19 +63,26 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Error tracking pageview:', error)
-    return NextResponse.json(
-      { error: 'Failed to track pageview' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/analytics', method: 'POST' })
   }
 }
 
 // GET /api/analytics - Get analytics data (for admin)
 export async function GET(request: NextRequest) {
   try {
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.general, identifier: 'analytics-get' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
+
     const { searchParams } = new URL(request.url)
-    const days = parseInt(searchParams.get('days') || '7')
+    const daysParam = searchParams.get('days') || '7'
+
+    // Validate days param
+    const daysSchema = z.coerce.number().int().min(1).max(365)
+    const daysResult = daysSchema.safeParse(daysParam)
+    const days = daysResult.success ? daysResult.data : 7
 
     const startDate = new Date()
     startDate.setDate(startDate.getDate() - days)
@@ -99,16 +126,16 @@ export async function GET(request: NextRequest) {
       })
     ])
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       pageViews,
       topPages,
       events
     })
+
+    response.headers.set('Cache-Control', 'private, s-maxage=60')
+
+    return response
   } catch (error) {
-    console.error('Error fetching analytics:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch analytics' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/analytics', method: 'GET' })
   }
 }

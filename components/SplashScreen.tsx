@@ -1,14 +1,23 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const closeSplash = useCallback(() => {
+    setShowContent(false);
+    setTimeout(() => {
+      setIsVisible(false);
+      sessionStorage.setItem("arteral-splash-seen", "true");
+    }, 600);
+  }, []);
 
   // Check if splash was already shown this session
   useEffect(() => {
@@ -21,28 +30,28 @@ export default function SplashScreen() {
     }
   }, []);
 
-  const handleVideoLoad = () => {
+  const handleVideoLoad = useCallback(() => {
     setVideoLoaded(true);
-  };
+    setVideoError(false);
+  }, []);
 
-  const handleVideoEnd = () => {
+  const handleVideoError = useCallback(() => {
+    setVideoError(true);
+    setVideoLoaded(false);
+    // Show fallback content immediately
+    setShowContent(true);
+  }, []);
+
+  const handleVideoEnd = useCallback(() => {
     closeSplash();
-  };
+  }, [closeSplash]);
 
-  const closeSplash = () => {
-    setShowContent(false);
-    setTimeout(() => {
-      setIsVisible(false);
-      sessionStorage.setItem("arteral-splash-seen", "true");
-    }, 600);
-  };
-
-  const handleSkip = () => {
+  const handleSkip = useCallback(() => {
     if (videoRef.current) {
       videoRef.current.pause();
     }
     closeSplash();
-  };
+  }, [closeSplash]);
 
   // Fallback: auto-hide after 12 seconds if video doesn't end
   useEffect(() => {
@@ -52,6 +61,30 @@ export default function SplashScreen() {
       }, 12000);
       return () => clearTimeout(fallbackTimer);
     }
+  }, [isVisible, closeSplash]);
+
+  // Lazy load video only when visible
+  useEffect(() => {
+    if (!isVisible || !videoRef.current) return;
+
+    const video = videoRef.current;
+
+    // Intersection observer for lazy loading
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.load();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+
+    return () => observer.disconnect();
   }, [isVisible]);
 
   if (!isVisible) return null;
@@ -65,22 +98,55 @@ export default function SplashScreen() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-[#0A0A0A] flex items-center justify-center overflow-hidden"
         >
-          {/* Video Background - Full cover */}
-          <motion.video
-            ref={videoRef}
-            autoPlay
-            muted
-            playsInline
-            onLoadedData={handleVideoLoad}
-            onEnded={handleVideoEnd}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: videoLoaded ? 1 : 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src="/videos/splash-intro.mp4" type="video/mp4" />
-            <source src="/videos/splash-intro.webm" type="video/webm" />
-          </motion.video>
+          {/* Video Background - Full cover with lazy loading */}
+          {!videoError && (
+            <motion.video
+              ref={videoRef}
+              autoPlay
+              muted
+              playsInline
+              preload="metadata"
+              onLoadedData={handleVideoLoad}
+              onEnded={handleVideoEnd}
+              onError={handleVideoError}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: videoLoaded ? 1 : 0 }}
+              transition={{ duration: 1 }}
+              className="absolute inset-0 w-full h-full object-cover"
+              poster="/images/splash-poster.jpg"
+            >
+              {/* WebM first for better compression */}
+              <source src="/videos/splash-intro.webm" type="video/webm" />
+              <source src="/videos/splash-intro.mp4" type="video/mp4" />
+            </motion.video>
+          )}
+
+          {/* Fallback animated background when video fails or not available */}
+          {(videoError || !videoLoaded) && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-primary/20"
+            >
+              {/* Animated shapes */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl"
+              />
+              <motion.div
+                animate={{
+                  scale: [1.2, 1, 1.2],
+                  rotate: [360, 180, 0],
+                }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
+              />
+            </motion.div>
+          )}
 
           {/* Elegant overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
@@ -167,7 +233,7 @@ export default function SplashScreen() {
           </motion.button>
 
           {/* Loading state - Only shows if video is loading */}
-          {!videoLoaded && (
+          {!videoLoaded && !videoError && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

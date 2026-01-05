@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { validate, voteDesignSchema, emailSchema } from '@/lib/validations'
+import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rate-limit'
+import { handleApiError } from '@/lib/error-handler'
+import { z } from 'zod'
 
 // POST /api/designs/[id]/vote - Vote for a design
 export async function POST(
@@ -7,15 +11,30 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.write, identifier: 'design-vote' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
+
     const { id: designId } = await params
     const body = await request.json()
-    const { email, type = 'people' } = body
 
-    if (!email) {
+    // Validate
+    const validation = validate(voteDesignSchema, body)
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Données invalides', details: validation.errors },
         { status: 400 }
       )
+    }
+
+    const { email, type } = validation.data
+
+    // Verify design exists
+    const design = await prisma.design.findUnique({ where: { id: designId } })
+    if (!design) {
+      return NextResponse.json({ error: 'Design non trouvé' }, { status: 404 })
     }
 
     // Find or create user
@@ -85,11 +104,7 @@ export async function POST(
       })
     }
   } catch (error) {
-    console.error('Error toggling vote:', error)
-    return NextResponse.json(
-      { error: 'Failed to toggle vote' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/designs/[id]/vote', method: 'POST' })
   }
 }
 
@@ -99,20 +114,37 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.general, identifier: 'design-vote-get' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
+
     const { id: designId } = await params
     const { searchParams } = new URL(request.url)
-    const email = searchParams.get('email')
-    const type = searchParams.get('type') || 'people'
+    const emailParam = searchParams.get('email')
+    const typeParam = searchParams.get('type') || 'people'
+
+    // Validate type
+    const typeSchema = z.enum(['people', 'heart'])
+    const typeResult = typeSchema.safeParse(typeParam)
+    const type = typeResult.success ? typeResult.data : 'people'
 
     const voteCount = await prisma.vote.count({
       where: { designId, type }
     })
 
-    if (!email) {
+    if (!emailParam) {
       return NextResponse.json({ voted: false, voteCount })
     }
 
-    const user = await prisma.user.findUnique({ where: { email } })
+    // Validate email
+    const emailResult = emailSchema.safeParse(emailParam)
+    if (!emailResult.success) {
+      return NextResponse.json({ voted: false, voteCount })
+    }
+
+    const user = await prisma.user.findUnique({ where: { email: emailResult.data } })
     if (!user) {
       return NextResponse.json({ voted: false, voteCount })
     }
@@ -132,10 +164,6 @@ export async function GET(
       voteCount
     })
   } catch (error) {
-    console.error('Error checking vote:', error)
-    return NextResponse.json(
-      { error: 'Failed to check vote' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/designs/[id]/vote', method: 'GET' })
   }
 }

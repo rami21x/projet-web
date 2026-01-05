@@ -1,18 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { validate, createDesignSchema, designQuerySchema } from '@/lib/validations'
+import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rate-limit'
+import { handleApiError } from '@/lib/error-handler'
 
 // GET /api/designs - Get all designs with pagination
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '12')
-    const status = searchParams.get('status') || 'approved'
-    const sort = searchParams.get('sort') || 'recent' // recent, popular, votes
+    // Rate limiting
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.general, identifier: 'designs-get' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
 
+    const { searchParams } = new URL(request.url)
+
+    // Validate query params
+    const queryResult = validate(designQuerySchema, {
+      page: searchParams.get('page'),
+      limit: searchParams.get('limit'),
+      status: searchParams.get('status'),
+      sort: searchParams.get('sort')
+    })
+
+    if (!queryResult.success) {
+      return NextResponse.json(
+        { error: 'Paramètres invalides', details: queryResult.errors },
+        { status: 400 }
+      )
+    }
+
+    const { page, limit, status, sort } = queryResult.data
     const skip = (page - 1) * limit
 
-    let orderBy: any = { createdAt: 'desc' }
+    let orderBy: Record<string, unknown> = { createdAt: 'desc' }
     if (sort === 'popular') {
       orderBy = { likes: { _count: 'desc' } }
     } else if (sort === 'votes') {
@@ -37,7 +58,7 @@ export async function GET(request: NextRequest) {
       prisma.design.count({ where: { status } })
     ])
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       designs,
       pagination: {
         page,
@@ -46,19 +67,36 @@ export async function GET(request: NextRequest) {
         totalPages: Math.ceil(total / limit)
       }
     })
+
+    // Add cache headers
+    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=120')
+
+    return response
   } catch (error) {
-    console.error('Error fetching designs:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch designs' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/designs', method: 'GET' })
   }
 }
 
 // POST /api/designs - Create a new design
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting - stricter for submissions
+    const rateLimit = checkRateLimit(request, { ...rateLimitConfigs.designSubmit, identifier: 'designs-post' })
+    if (!rateLimit.success) {
+      return rateLimitedResponse(rateLimit)
+    }
+
     const body = await request.json()
+
+    // Validate request body
+    const validation = validate(createDesignSchema, body)
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: 'Données invalides', details: validation.errors },
+        { status: 400 }
+      )
+    }
+
     const {
       email,
       name,
@@ -69,7 +107,7 @@ export async function POST(request: NextRequest) {
       garmentType,
       garmentFit,
       garmentColor
-    } = body
+    } = validation.data
 
     // Find or create user
     let user = await prisma.user.findUnique({ where: { email } })
@@ -110,10 +148,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(design, { status: 201 })
   } catch (error) {
-    console.error('Error creating design:', error)
-    return NextResponse.json(
-      { error: 'Failed to create design' },
-      { status: 500 }
-    )
+    return handleApiError(error, { path: '/api/designs', method: 'POST' })
   }
 }
