@@ -31,7 +31,7 @@ function HeroImage() {
   }
 
   const isDark = resolvedTheme === "dark";
-  const imageSrc = isDark ? "/images/brand-hero-dark.jpg" : "/images/brand-hero-light.jpg";
+  const imageSrc = isDark ? "/images/brand-hero-dark.png" : "/images/brand-hero-light.png";
 
   return (
     <AnimatePresence mode="wait">
