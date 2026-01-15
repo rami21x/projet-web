@@ -10,55 +10,72 @@ import Image from "next/image";
 
 // Dynamic Hero Image Component - Changes based on light/dark mode
 function HeroImage() {
-  const { resolvedTheme, theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<string | undefined>(undefined);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Update currentTheme when resolvedTheme changes
+  // Reset image error when theme changes
   useEffect(() => {
-    if (mounted && resolvedTheme) {
-      setCurrentTheme(resolvedTheme);
-    }
-  }, [mounted, resolvedTheme]);
+    setImageError(false);
+  }, [resolvedTheme]);
 
   // Fallback gradient while loading
-  if (!mounted || !currentTheme) {
+  if (!mounted) {
     return (
-      <div className="absolute inset-0 bg-gradient-to-br from-dark via-dark/95 to-accent/20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#2a2a2a] to-[#8B0000]/30" />
     );
   }
 
-  const isDark = currentTheme === "dark";
+  const isDark = resolvedTheme === "dark";
+  const imageSrc = isDark ? "/images/brand-hero-dark.jpg" : "/images/brand-hero-light.jpg";
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={currentTheme}
+        key={resolvedTheme}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.8, ease: "easeInOut" }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
         className="absolute inset-0"
       >
-        {/* Background Image */}
-        <Image
-          src={isDark ? "/images/brand-hero-dark.jpg" : "/images/brand-hero-light.jpg"}
-          alt="Arteral Brand"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
+        {/* Fallback gradient background - different for each mode */}
+        <div className={`absolute inset-0 ${
+          isDark
+            ? "bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#8B0000]/40"
+            : "bg-gradient-to-br from-[#f5f5f5] via-[#e8e8e8] to-[#A0522D]/30"
+        }`}>
+          {/* Decorative elements for fallback */}
+          <div className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl ${
+            isDark ? "bg-primary/20" : "bg-accent/20"
+          }`} />
+          <div className={`absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full blur-3xl ${
+            isDark ? "bg-accent/15" : "bg-primary/15"
+          }`} />
+        </div>
+
+        {/* Try to load the actual image */}
+        {!imageError && (
+          <Image
+            src={imageSrc}
+            alt="Arteral Brand"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+            onError={() => setImageError(true)}
+          />
+        )}
 
         {/* Overlay adapté au mode */}
         <div className={`absolute inset-0 ${
           isDark
             ? "bg-gradient-to-b from-black/60 via-black/40 to-black/80"
-            : "bg-gradient-to-b from-black/40 via-black/20 to-black/60"
+            : "bg-gradient-to-b from-white/30 via-transparent to-black/60"
         }`} />
       </motion.div>
     </AnimatePresence>
