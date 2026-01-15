@@ -65,7 +65,7 @@ function HeroImage() {
             alt="Arteral Brand"
             fill
             priority
-            className="object-cover object-center"
+            className="object-contain md:object-cover object-center"
             sizes="100vw"
             onError={() => setImageError(true)}
           />
@@ -88,7 +88,7 @@ export default function MarquePage() {
   return (
     <div className="bg-[#E8E8E8] dark:bg-[#0A0A0A]">
       {/* Hero Section - Design minimaliste et artistique */}
-      <section className="relative min-h-[80vh] md:min-h-[90vh] flex items-end justify-center overflow-hidden">
+      <section className="relative min-h-[50vh] md:min-h-[70vh] lg:min-h-[80vh] flex items-end justify-center overflow-hidden">
         {/* Dynamic Background Image */}
         <HeroImage />
 
