@@ -6,24 +6,16 @@ import { useContent } from "@/hooks/useContent";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import FadeIn from "@/components/FadeIn";
-import GlitchImage from "@/components/GlitchImage";
 
 // Dynamic Hero Image Component - Changes based on light/dark mode with Glitch Effect
 function HeroImage() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Reset image error when theme changes
-  useEffect(() => {
-    setImageError(false);
-  }, [resolvedTheme]);
-
-  // Fallback gradient while loading
   if (!mounted) {
     return (
       <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#2a2a2a] to-[#8B0000]/30" />
@@ -43,38 +35,33 @@ function HeroImage() {
         transition={{ duration: 0.6, ease: "easeInOut" }}
         className="absolute inset-0"
       >
-        {/* Fallback gradient background - different for each mode */}
-        <div className={`absolute inset-0 ${
-          isDark
-            ? "bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#8B0000]/40"
-            : "bg-gradient-to-br from-[#f5f5f5] via-[#e8e8e8] to-[#A0522D]/30"
-        }`}>
-          {/* Decorative elements for fallback */}
-          <div className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl ${
-            isDark ? "bg-primary/20" : "bg-accent/20"
-          }`} />
-          <div className={`absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full blur-3xl ${
-            isDark ? "bg-accent/15" : "bg-primary/15"
-          }`} />
-        </div>
-
-        {/* Glitch Image with effects */}
-        {!imageError && (
-          <GlitchImage
+        {/* Main Image with Glitch Effect */}
+        <div className="absolute inset-0 glitch-container">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={imageSrc}
             alt="Arteral Brand"
-            priority
-            className="absolute inset-0"
-            glitchIntensity="medium"
-            onError={() => setImageError(true)}
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
-        )}
+          {/* Glitch layers */}
+          <div className="glitch-layer glitch-r" style={{ backgroundImage: `url(${imageSrc})` }} />
+          <div className="glitch-layer glitch-b" style={{ backgroundImage: `url(${imageSrc})` }} />
+        </div>
+
+        {/* Scanlines */}
+        <div className="absolute inset-0 pointer-events-none scanlines" />
+
+        {/* Vignette */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.4) 100%)" }}
+        />
 
         {/* Overlay adapté au mode */}
         <div className={`absolute inset-0 ${
           isDark
-            ? "bg-gradient-to-b from-black/50 via-black/30 to-black/70"
-            : "bg-gradient-to-b from-white/20 via-transparent to-black/50"
+            ? "bg-gradient-to-b from-black/40 via-transparent to-black/60"
+            : "bg-gradient-to-b from-white/10 via-transparent to-black/40"
         }`} />
       </motion.div>
     </AnimatePresence>
