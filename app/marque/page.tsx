@@ -6,9 +6,9 @@ import { useContent } from "@/hooks/useContent";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import FadeIn from "@/components/FadeIn";
-import Image from "next/image";
+import GlitchImage from "@/components/GlitchImage";
 
-// Dynamic Hero Image Component - Changes based on light/dark mode
+// Dynamic Hero Image Component - Changes based on light/dark mode with Glitch Effect
 function HeroImage() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -58,15 +58,14 @@ function HeroImage() {
           }`} />
         </div>
 
-        {/* Try to load the actual image */}
+        {/* Glitch Image with effects */}
         {!imageError && (
-          <Image
+          <GlitchImage
             src={imageSrc}
             alt="Arteral Brand"
-            fill
             priority
-            className="object-contain md:object-cover object-center"
-            sizes="100vw"
+            className="absolute inset-0"
+            glitchIntensity="medium"
             onError={() => setImageError(true)}
           />
         )}
@@ -74,8 +73,8 @@ function HeroImage() {
         {/* Overlay adapté au mode */}
         <div className={`absolute inset-0 ${
           isDark
-            ? "bg-gradient-to-b from-black/60 via-black/40 to-black/80"
-            : "bg-gradient-to-b from-white/30 via-transparent to-black/60"
+            ? "bg-gradient-to-b from-black/50 via-black/30 to-black/70"
+            : "bg-gradient-to-b from-white/20 via-transparent to-black/50"
         }`} />
       </motion.div>
     </AnimatePresence>
