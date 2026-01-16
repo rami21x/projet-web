@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 interface GlitchImageProps {
   src: string;
@@ -94,13 +93,11 @@ export default function GlitchImage({
         }}
         transition={{ duration: 0.15 }}
       >
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={src}
           alt={alt}
-          fill
-          priority={priority}
-          className="object-contain md:object-cover object-center"
-          sizes="100vw"
+          className="absolute inset-0 w-full h-full object-contain md:object-cover object-center"
           onLoad={handleLoad}
           onError={handleError}
           style={{
