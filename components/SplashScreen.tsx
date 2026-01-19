@@ -171,8 +171,9 @@ export default function SplashScreen() {
                 >
                   <div className="absolute inset-0 blur-2xl bg-primary/20 rounded-full scale-150" />
                   <Image
-                    src="/images/logo.png"
+                    src="/images/logo.gif"
                     alt="Arteral Logo"
+                    unoptimized
                     width={180}
                     height={180}
                     className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl"

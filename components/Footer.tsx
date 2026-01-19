@@ -19,8 +19,9 @@ export default function Footer() {
               <div className="relative">
                 <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full scale-125 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <Image
-                  src="/images/logo.png"
+                  src="/images/logo.gif"
                   alt="Arteral Logo"
+                  unoptimized
                   width={56}
                   height={56}
                   className="relative w-12 h-12 md:w-14 md:h-14 object-contain transition-all duration-300 group-hover:scale-110"

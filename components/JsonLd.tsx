@@ -11,7 +11,7 @@ interface OrganizationJsonLdProps {
 export function OrganizationJsonLd({
   name = 'ARTERAL',
   url = 'https://arteral.com',
-  logo = 'https://arteral.com/images/logo.png',
+  logo = 'https://arteral.com/images/logo.gif',
   description = 'ARTERAL - Where art meets fashion. Unique wearable art pieces that explore the duality of human experience.',
   sameAs = [
     'https://instagram.com/arteral',
@@ -111,7 +111,7 @@ export function WebPageJsonLd({
     publisher: {
       '@type': 'Organization',
       name: 'ARTERAL',
-      logo: 'https://arteral.com/images/logo.png',
+      logo: 'https://arteral.com/images/logo.gif',
     },
   }
 

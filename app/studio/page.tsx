@@ -23,6 +23,21 @@ import {
   ChevronDown,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import Image from "next/image";
+
+// Photo mappings for philosophers and artists
+const PHILOSOPHER_IMAGES: Record<string, string> = {
+  "Friedrich Nietzsche": "/images/studio/nietzsche.jpeg",
+  "Carl Jung": "/images/studio/Jung.jpeg",
+  "Lao-Tzu": "/images/studio/laotzu.jpeg",
+  "Lao-Tseu": "/images/studio/laotzu.jpeg",
+};
+
+const ARTIST_IMAGES: Record<string, string> = {
+  "Francis Bacon": "/images/studio/bacon.jpeg",
+  "Jean Dubuffet": "/images/studio/Dubuffet.jpeg",
+  "Willem de Kooning": "/images/studio/kooning.jpeg",
+};
 
 // Types
 type Step = "comprendre" | "interpreter" | "creer" | "visualiser";
@@ -457,11 +472,22 @@ function ComprendreStep({
             {content.comprendre.philosophers.map((philosopher, index) => (
               <FadeIn key={philosopher.name} delay={index * 0.1}>
                 <div className={`group ${bgCard} overflow-hidden border ${borderColor} hover:border-accent/30 transition-all duration-500`}>
-                  {/* Image placeholder - sharp corners */}
-                  <div className={`aspect-[3/4] ${isDark ? "bg-gradient-to-br from-primary/10 to-accent/10" : "bg-gradient-to-br from-primary/5 to-accent/5"} flex items-center justify-center relative`}>
-                    <span className={`font-display text-6xl font-bold ${textMuted}`}>
-                      {philosopher.name.charAt(0)}
-                    </span>
+                  {/* Philosopher image */}
+                  <div className={`aspect-[3/4] relative overflow-hidden ${isDark ? "bg-gradient-to-br from-primary/10 to-accent/10" : "bg-gradient-to-br from-primary/5 to-accent/5"}`}>
+                    {PHILOSOPHER_IMAGES[philosopher.name] ? (
+                      <Image
+                        src={PHILOSOPHER_IMAGES[philosopher.name]}
+                        alt={philosopher.name}
+                        fill
+                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className={`font-display text-6xl font-bold ${textMuted}`}>
+                          {philosopher.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="p-6">
@@ -532,9 +558,20 @@ function ComprendreStep({
             {content.comprendre.artists.map((artist, index) => (
               <FadeIn key={artist.name} delay={index * 0.1}>
                 <div className={`group relative ${bgCard} overflow-hidden border ${borderColor}`}>
-                  {/* Image - sharp corners, larger */}
-                  <div className={`aspect-[4/5] ${isDark ? "bg-gradient-to-br from-accent/10 to-primary/10" : "bg-gradient-to-br from-accent/5 to-primary/5"} flex items-center justify-center`}>
-                    <ImageIcon className={`w-20 h-20 ${textMuted}`} />
+                  {/* Artist image */}
+                  <div className={`aspect-[4/5] relative overflow-hidden ${isDark ? "bg-gradient-to-br from-accent/10 to-primary/10" : "bg-gradient-to-br from-accent/5 to-primary/5"}`}>
+                    {ARTIST_IMAGES[artist.name] ? (
+                      <Image
+                        src={ARTIST_IMAGES[artist.name]}
+                        alt={artist.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <ImageIcon className={`w-20 h-20 ${textMuted}`} />
+                      </div>
+                    )}
                   </div>
 
                   <div className={`absolute inset-0 bg-gradient-to-t ${isDark ? "from-black via-black/60" : "from-black/80 via-black/40"} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />

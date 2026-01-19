@@ -85,8 +85,9 @@ export default function Home() {
 
             {/* Logo - Much larger */}
             <Image
-              src="/images/logo.png"
+              src="/images/logo.gif"
               alt="Arteral Logo"
+              unoptimized
               width={400}
               height={400}
               className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl"

@@ -75,8 +75,9 @@ export default function Navigation() {
             <div className="relative">
               <div className="absolute inset-0 bg-primary/10 blur-xl rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <Image
-                src="/images/logo.png"
+                src="/images/logo.gif"
                 alt="Arteral Logo"
+                unoptimized
                 width={52}
                 height={52}
                 className="relative w-10 h-10 md:w-12 md:h-12 object-contain transition-transform duration-300 group-hover:scale-110"
