@@ -26,46 +26,20 @@ function HeroImage() {
   const imageSrc = isDark ? "/images/brand-hero-dark.png" : "/images/brand-hero-light.png";
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={resolvedTheme}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
-        className="absolute inset-0"
-      >
-        {/* Main Image with Glitch Effect */}
-        <div
-          className="absolute inset-0 glitch-container"
-          style={{
-            backgroundImage: `url(${imageSrc})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          {/* Glitch layers */}
-          <div className="glitch-layer glitch-r" style={{ backgroundImage: `url(${imageSrc})` }} />
-          <div className="glitch-layer glitch-b" style={{ backgroundImage: `url(${imageSrc})` }} />
-        </div>
+    <div className="absolute inset-0">
+      {/* Image de fond simple */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url('${imageSrc}')` }}
+      />
 
-        {/* Scanlines */}
-        <div className="absolute inset-0 pointer-events-none scanlines" />
-
-        {/* Vignette */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.4) 100%)" }}
-        />
-
-        {/* Overlay adapté au mode */}
-        <div className={`absolute inset-0 ${
-          isDark
-            ? "bg-gradient-to-b from-black/40 via-transparent to-black/60"
-            : "bg-gradient-to-b from-white/10 via-transparent to-black/40"
-        }`} />
-      </motion.div>
-    </AnimatePresence>
+      {/* Overlay */}
+      <div className={`absolute inset-0 ${
+        isDark
+          ? "bg-gradient-to-b from-black/40 via-transparent to-black/60"
+          : "bg-gradient-to-b from-white/10 via-transparent to-black/40"
+      }`} />
+    </div>
   );
 }
 
