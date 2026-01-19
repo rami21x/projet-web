@@ -36,13 +36,14 @@ function HeroImage() {
         className="absolute inset-0"
       >
         {/* Main Image with Glitch Effect */}
-        <div className="absolute inset-0 glitch-container">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageSrc}
-            alt="Arteral Brand"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
+        <div
+          className="absolute inset-0 glitch-container"
+          style={{
+            backgroundImage: `url(${imageSrc})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
           {/* Glitch layers */}
           <div className="glitch-layer glitch-r" style={{ backgroundImage: `url(${imageSrc})` }} />
           <div className="glitch-layer glitch-b" style={{ backgroundImage: `url(${imageSrc})` }} />
