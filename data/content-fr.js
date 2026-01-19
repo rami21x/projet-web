@@ -1144,6 +1144,178 @@ export const dualitySliderContent = {
   },
 };
 
+// Page Studio
+export const studioPageContent = {
+  header: {
+    title: "ARTERAL STUDIO",
+    subtitle: "PORTAIL D'INTERPRÉTATION",
+  },
+  steps: {
+    comprendre: "Comprendre",
+    interpreter: "Interpréter",
+    creer: "Créer",
+    visualiser: "Visualiser",
+  },
+  comprendre: {
+    series: "SÉRIE NARCISSE AMOUREUX",
+    title1: "L'Harmonie",
+    title2: "du Chaos",
+    intro: "Dans chaque acte d'amour réside une part d'égoïsme.",
+    intro2: "Dans chaque égoïsme, une quête d'amour.",
+    intro3: "C'est le chaos qui crée l'harmonie.",
+    whatWeSeek: {
+      title: "Ce que nous cherchons",
+      items: [
+        "Une œuvre qui QUESTIONNE, pas qui répond",
+        "Une tension entre deux forces opposées",
+        "Un miroir tendu au spectateur",
+        "Votre vérité, pas la nôtre",
+      ],
+    },
+    whatWeAvoid: {
+      title: "Ce que nous ne cherchons pas",
+      items: [
+        "Un style imposé ou des couleurs obligatoires",
+        "Une copie de notre univers visuel",
+        "Une illustration littérale du concept",
+        "Une œuvre sans profondeur philosophique",
+      ],
+    },
+    philosophersLabel: "NOS INSPIRATIONS",
+    philosophersTitle: "Les Penseurs du Chaos",
+    philosophers: [
+      {
+        name: "Friedrich Nietzsche",
+        quote: "Il faut porter en soi un chaos pour enfanter une étoile dansante.",
+        concept: "Le chaos comme matrice de la création",
+      },
+      {
+        name: "Carl Jung",
+        quote: "L'ombre est cette partie de nous-mêmes que nous refusons de voir.",
+        concept: "L'union de l'ombre et de la lumière",
+      },
+      {
+        name: "Lao-Tseu",
+        quote: "La douceur surpasse la dureté, et la faiblesse surpasse la force.",
+        concept: "L'équilibre du Yin et du Yang",
+      },
+    ],
+    symbolsLabel: "LANGAGE VISUEL",
+    symbolsTitle: "Les Symboles de la Dualité",
+    symbols: [
+      { name: "Le Feu", meaning: "Yang extrême - passion, transformation, conscience" },
+      { name: "L'Éclipse", meaning: "L'union des opposés - lumière et ombre en harmonie" },
+      { name: "La Danse", meaning: "Transformation de la souffrance en beauté" },
+      { name: "Le Miroir", meaning: "Narcisse - se chercher soi-même dans l'autre" },
+    ],
+    artistsLabel: "RÉFÉRENCES ARTISTIQUES",
+    artistsTitle: "L'Art du Chaos Ordonné",
+    artistsSubtitle: "Ces artistes ne sont pas des modèles à copier, mais des portes d'entrée vers une compréhension de l'expression émotionnelle brute.",
+    artists: [
+      { name: "Francis Bacon", style: "Expressionnisme figuratif", description: "La distorsion émotionnelle du corps humain" },
+      { name: "Jean Dubuffet", style: "Art Brut", description: "Le chaos ordonné, la matière brute" },
+      { name: "Willem de Kooning", style: "Expressionnisme abstrait", description: "La tension entre forme et chaos" },
+    ],
+    questionsTitle: "Questions pour Guider Votre Création",
+    questions: [
+      "Qu'est-ce que l'amour vous a pris ?",
+      "Qu'est-ce que l'égoïsme vous a donné ?",
+      "Où commence l'un, où finit l'autre ?",
+      "Peut-on aimer sans se perdre ?",
+    ],
+    confirmButton: "J'ai compris le concept et je suis prêt(e) à créer",
+  },
+  interpreter: {
+    title: "Votre Interprétation",
+    subtitle: "Avant de créer, exprimez votre vision. Ces réponses nous aideront à comprendre la profondeur de votre œuvre.",
+    questions: [
+      {
+        id: "duality",
+        question: "Quelle dualité explorez-vous dans votre œuvre ?",
+        placeholder: "Ex: La frontière entre l'amour qui donne et celui qui consume...",
+        hint: "Amour ↔ Égoïsme, Lumière ↔ Ombre, Ordre ↔ Chaos...",
+      },
+      {
+        id: "harmony",
+        question: "Comment votre création transmet-elle l'harmonie du chaos ?",
+        placeholder: "Décrivez comment les éléments opposés coexistent dans votre design...",
+        hint: "Le chaos n'est pas le vide, c'est le trop-plein de forces avant la forme.",
+      },
+      {
+        id: "feeling",
+        question: "Quel sentiment voulez-vous provoquer chez celui qui portera ce vêtement ?",
+        placeholder: "Ex: Une prise de conscience, un questionnement sur ses propres contradictions...",
+        hint: "Le vêtement devient miroir de l'âme.",
+      },
+      {
+        id: "message",
+        question: "En une phrase : quel est le message de votre œuvre ?",
+        placeholder: "Ex: Aimer, c'est parfois se perdre pour mieux se retrouver.",
+        hint: "La clarté naît de la contemplation du chaos.",
+      },
+    ],
+    minChars: "min",
+  },
+  creer: {
+    title: "Uploadez Votre Œuvre",
+    subtitle: "Créez votre design avec vos outils préférés (Photoshop, Procreate, dessin scanné...) puis uploadez-le ici.",
+    dropzone: "Cliquez ou glissez votre fichier ici",
+    formats: "PNG, JPG, WEBP • Max 10MB • Haute résolution recommandée",
+    uploaded: "Image uploadée",
+    delete: "Supprimer",
+    tips: {
+      title: "Conseils pour votre design",
+      items: [
+        "Utilisez un fond transparent (PNG) pour une meilleure intégration",
+        "Haute résolution : minimum 2000x2000px recommandé",
+        "Le design sera centré sur le vêtement",
+        "Les couleurs vives ressortent mieux sur les vêtements clairs",
+      ],
+    },
+  },
+  visualiser: {
+    title: "Visualisez & Soumettez",
+    subtitle: "Choisissez le support de votre œuvre et finalisez votre soumission.",
+    preview: "Aperçu",
+    garmentType: "Type",
+    garmentFit: "Coupe",
+    garmentColor: "Couleur",
+    types: { tshirt: "T-Shirt", pull: "Sweatshirt" },
+    fits: { slim: "Slim", regular: "Regular", oversize: "Oversize" },
+    artistInfo: "Informations Artiste",
+    fields: {
+      title: "Titre de l'œuvre *",
+      titlePlaceholder: "Ex: Le Reflet Brisé",
+      name: "Votre nom *",
+      namePlaceholder: "Nom ou pseudonyme",
+      email: "Email *",
+      emailPlaceholder: "pour vous contacter",
+      instagram: "Instagram (optionnel)",
+      instagramPlaceholder: "@votre_compte",
+    },
+    yourMessage: "Votre message",
+    submit: "Soumettre mon œuvre",
+    submitting: "Envoi en cours...",
+    terms: "En soumettant, vous acceptez que votre œuvre soit utilisée dans le cadre du concours ARTERAL.",
+    success: {
+      title: "Œuvre Soumise !",
+      message: "Votre interprétation de l'Harmonie du Chaos a été reçue. Nous vous contacterons par email après la délibération du jury.",
+    },
+  },
+  navigation: {
+    back: "Retour",
+    continue: "Continuer",
+  },
+  colors: [
+    { name: "Blanc", hex: "#FFFFFF", dark: false },
+    { name: "Beige", hex: "#D4C5B9", dark: false },
+    { name: "Gris", hex: "#B8B8B8", dark: false },
+    { name: "Noir", hex: "#1A1A1A", dark: true },
+    { name: "Rouge Arteral", hex: "#8B0000", dark: true },
+    { name: "Camel", hex: "#A0522D", dark: true },
+  ],
+};
+
 export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },

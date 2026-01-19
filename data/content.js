@@ -1150,6 +1150,178 @@ export const dualitySliderContent = {
   },
 };
 
+// Studio Page
+export const studioPageContent = {
+  header: {
+    title: "ARTERAL STUDIO",
+    subtitle: "INTERPRETATION PORTAL",
+  },
+  steps: {
+    comprendre: "Understand",
+    interpreter: "Interpret",
+    creer: "Create",
+    visualiser: "Visualize",
+  },
+  comprendre: {
+    series: "NARCISSUS IN LOVE SERIES",
+    title1: "The Harmony",
+    title2: "of Chaos",
+    intro: "In every act of love resides a part of selfishness.",
+    intro2: "In every selfishness, a quest for love.",
+    intro3: "It is chaos that creates harmony.",
+    whatWeSeek: {
+      title: "What we're looking for",
+      items: [
+        "An artwork that QUESTIONS, not one that answers",
+        "A tension between two opposing forces",
+        "A mirror held up to the viewer",
+        "Your truth, not ours",
+      ],
+    },
+    whatWeAvoid: {
+      title: "What we're not looking for",
+      items: [
+        "An imposed style or mandatory colors",
+        "A copy of our visual universe",
+        "A literal illustration of the concept",
+        "An artwork without philosophical depth",
+      ],
+    },
+    philosophersLabel: "OUR INSPIRATIONS",
+    philosophersTitle: "The Thinkers of Chaos",
+    philosophers: [
+      {
+        name: "Friedrich Nietzsche",
+        quote: "One must still have chaos in oneself to give birth to a dancing star.",
+        concept: "Chaos as the matrix of creation",
+      },
+      {
+        name: "Carl Jung",
+        quote: "The shadow is that part of ourselves we refuse to see.",
+        concept: "The union of shadow and light",
+      },
+      {
+        name: "Lao-Tzu",
+        quote: "Gentleness surpasses hardness, and weakness surpasses strength.",
+        concept: "The balance of Yin and Yang",
+      },
+    ],
+    symbolsLabel: "VISUAL LANGUAGE",
+    symbolsTitle: "The Symbols of Duality",
+    symbols: [
+      { name: "Fire", meaning: "Extreme Yang - passion, transformation, consciousness" },
+      { name: "Eclipse", meaning: "The union of opposites - light and shadow in harmony" },
+      { name: "Dance", meaning: "Transformation of suffering into beauty" },
+      { name: "Mirror", meaning: "Narcissus - seeking oneself in the other" },
+    ],
+    artistsLabel: "ARTISTIC REFERENCES",
+    artistsTitle: "The Art of Ordered Chaos",
+    artistsSubtitle: "These artists are not models to copy, but gateways to understanding raw emotional expression.",
+    artists: [
+      { name: "Francis Bacon", style: "Figurative Expressionism", description: "The emotional distortion of the human body" },
+      { name: "Jean Dubuffet", style: "Art Brut", description: "Ordered chaos, raw material" },
+      { name: "Willem de Kooning", style: "Abstract Expressionism", description: "The tension between form and chaos" },
+    ],
+    questionsTitle: "Questions to Guide Your Creation",
+    questions: [
+      "What has love taken from you?",
+      "What has selfishness given you?",
+      "Where does one begin, where does the other end?",
+      "Can one love without losing oneself?",
+    ],
+    confirmButton: "I understand the concept and I'm ready to create",
+  },
+  interpreter: {
+    title: "Your Interpretation",
+    subtitle: "Before creating, express your vision. These answers will help us understand the depth of your work.",
+    questions: [
+      {
+        id: "duality",
+        question: "What duality are you exploring in your work?",
+        placeholder: "Ex: The boundary between love that gives and love that consumes...",
+        hint: "Love ↔ Selfishness, Light ↔ Shadow, Order ↔ Chaos...",
+      },
+      {
+        id: "harmony",
+        question: "How does your creation convey the harmony of chaos?",
+        placeholder: "Describe how opposing elements coexist in your design...",
+        hint: "Chaos is not emptiness, it's the overflow of forces before form.",
+      },
+      {
+        id: "feeling",
+        question: "What feeling do you want to evoke in the wearer?",
+        placeholder: "Ex: An awakening, a questioning of one's own contradictions...",
+        hint: "The garment becomes a mirror of the soul.",
+      },
+      {
+        id: "message",
+        question: "In one sentence: what is the message of your work?",
+        placeholder: "Ex: To love is sometimes to lose oneself to better find oneself.",
+        hint: "Clarity is born from contemplating chaos.",
+      },
+    ],
+    minChars: "min",
+  },
+  creer: {
+    title: "Upload Your Artwork",
+    subtitle: "Create your design with your favorite tools (Photoshop, Procreate, scanned drawing...) then upload it here.",
+    dropzone: "Click or drag your file here",
+    formats: "PNG, JPG, WEBP • Max 10MB • High resolution recommended",
+    uploaded: "Image uploaded",
+    delete: "Delete",
+    tips: {
+      title: "Tips for your design",
+      items: [
+        "Use a transparent background (PNG) for better integration",
+        "High resolution: minimum 2000x2000px recommended",
+        "The design will be centered on the garment",
+        "Bright colors stand out better on light garments",
+      ],
+    },
+  },
+  visualiser: {
+    title: "Visualize & Submit",
+    subtitle: "Choose the support for your work and finalize your submission.",
+    preview: "Preview",
+    garmentType: "Type",
+    garmentFit: "Fit",
+    garmentColor: "Color",
+    types: { tshirt: "T-Shirt", pull: "Sweatshirt" },
+    fits: { slim: "Slim", regular: "Regular", oversize: "Oversize" },
+    artistInfo: "Artist Information",
+    fields: {
+      title: "Artwork title *",
+      titlePlaceholder: "Ex: The Broken Reflection",
+      name: "Your name *",
+      namePlaceholder: "Name or pseudonym",
+      email: "Email *",
+      emailPlaceholder: "to contact you",
+      instagram: "Instagram (optional)",
+      instagramPlaceholder: "@your_account",
+    },
+    yourMessage: "Your message",
+    submit: "Submit my artwork",
+    submitting: "Sending...",
+    terms: "By submitting, you accept that your work may be used as part of the ARTERAL contest.",
+    success: {
+      title: "Artwork Submitted!",
+      message: "Your interpretation of the Harmony of Chaos has been received. We will contact you by email after jury deliberation.",
+    },
+  },
+  navigation: {
+    back: "Back",
+    continue: "Continue",
+  },
+  colors: [
+    { name: "White", hex: "#FFFFFF", dark: false },
+    { name: "Beige", hex: "#D4C5B9", dark: false },
+    { name: "Gray", hex: "#B8B8B8", dark: false },
+    { name: "Black", hex: "#1A1A1A", dark: true },
+    { name: "Arteral Red", hex: "#8B0000", dark: true },
+    { name: "Camel", hex: "#A0522D", dark: true },
+  ],
+};
+
 export const navigation = [
   { name: "Home", href: "/" },
   { name: "Brand", href: "/marque" },
