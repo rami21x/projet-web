@@ -296,7 +296,7 @@ export default function StudioPage() {
             <button
               onClick={goToPrevStep}
               disabled={currentStep === "comprendre"}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl transition-all duration-300 ${
+              className={`flex items-center gap-2 px-5 py-3 transition-all duration-300 ${
                 currentStep === "comprendre"
                   ? "opacity-0 pointer-events-none"
                   : `${bgCard} ${textSecondary} border ${borderColor} hover:border-primary/30`
@@ -309,7 +309,7 @@ export default function StudioPage() {
             <button
               onClick={goToNextStep}
               disabled={!canGoNext()}
-              className={`group flex items-center gap-2 px-7 py-3 rounded-xl font-semibold transition-all duration-300 ${
+              className={`group flex items-center gap-2 px-7 py-3 font-semibold transition-all duration-300 ${
                 canGoNext()
                   ? "bg-primary text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
                   : `${bgCard} ${textMuted} border ${borderColor} cursor-not-allowed`
@@ -395,11 +395,11 @@ function ComprendreStep({
       {/* What we seek / avoid */}
       <section className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             <FadeIn>
-              <div className={`${bgCard} rounded-2xl p-8 border ${borderColor} h-full`}>
+              <div className={`${bgCard} p-8 border ${borderColor} h-full`}>
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
+                  <div className="w-10 h-10 bg-green-500/10 flex items-center justify-center">
                     <Check className="w-5 h-5 text-green-500" />
                   </div>
                   <h3 className={`font-display text-xl font-semibold ${textPrimary}`}>
@@ -418,9 +418,9 @@ function ComprendreStep({
             </FadeIn>
 
             <FadeIn delay={0.1}>
-              <div className={`${bgCard} rounded-2xl p-8 border ${borderColor} h-full`}>
+              <div className={`${bgCard} p-8 border ${borderColor} h-full`}>
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
+                  <div className="w-10 h-10 bg-red-500/10 flex items-center justify-center">
                     <X className="w-5 h-5 text-red-500" />
                   </div>
                   <h3 className={`font-display text-xl font-semibold ${textPrimary}`}>
@@ -453,21 +453,19 @@ function ComprendreStep({
             </h3>
           </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {content.comprendre.philosophers.map((philosopher, index) => (
               <FadeIn key={philosopher.name} delay={index * 0.1}>
-                <div className={`group ${bgCard} rounded-2xl overflow-hidden border ${borderColor} hover:border-accent/30 transition-all duration-500`}>
-                  {/* Placeholder for image */}
-                  <div className={`aspect-[4/3] ${isDark ? "bg-gradient-to-br from-primary/10 to-accent/10" : "bg-gradient-to-br from-primary/5 to-accent/5"} flex items-center justify-center relative`}>
-                    <div className={`w-20 h-20 rounded-full ${isDark ? "bg-white/10" : "bg-black/5"} flex items-center justify-center`}>
-                      <span className={`font-display text-3xl font-bold ${textMuted}`}>
-                        {philosopher.name.charAt(0)}
-                      </span>
-                    </div>
+                <div className={`group ${bgCard} overflow-hidden border ${borderColor} hover:border-accent/30 transition-all duration-500`}>
+                  {/* Image placeholder - sharp corners */}
+                  <div className={`aspect-[3/4] ${isDark ? "bg-gradient-to-br from-primary/10 to-accent/10" : "bg-gradient-to-br from-primary/5 to-accent/5"} flex items-center justify-center relative`}>
+                    <span className={`font-display text-6xl font-bold ${textMuted}`}>
+                      {philosopher.name.charAt(0)}
+                    </span>
                   </div>
 
                   <div className="p-6">
-                    <h4 className={`font-display text-lg font-semibold ${textPrimary} mb-1`}>
+                    <h4 className={`font-display text-xl font-semibold ${textPrimary} mb-2`}>
                       {philosopher.name}
                     </h4>
                     <p className="text-sm text-accent mb-4">{philosopher.concept}</p>
@@ -494,19 +492,19 @@ function ComprendreStep({
             </h3>
           </FadeIn>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {content.comprendre.symbols.map((symbol, index) => {
               const Icon = SYMBOL_ICONS[index as keyof typeof SYMBOL_ICONS];
               return (
                 <FadeIn key={symbol.name} delay={index * 0.08}>
-                  <div className={`group ${bgCard} rounded-xl p-6 border ${borderColor} hover:border-primary/30 transition-all text-center`}>
-                    <div className={`w-14 h-14 mx-auto mb-4 rounded-full ${isDark ? "bg-primary/10" : "bg-primary/5"} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="w-6 h-6 text-primary" />
+                  <div className={`group ${bgCard} p-8 border ${borderColor} hover:border-primary/30 transition-all text-center`}>
+                    <div className={`w-16 h-16 mx-auto mb-5 ${isDark ? "bg-primary/10" : "bg-primary/5"} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h4 className={`font-display text-base font-semibold ${textPrimary} mb-2`}>
+                    <h4 className={`font-display text-lg font-semibold ${textPrimary} mb-2`}>
                       {symbol.name}
                     </h4>
-                    <p className={`text-xs ${textMuted} leading-relaxed`}>{symbol.meaning}</p>
+                    <p className={`text-sm ${textMuted} leading-relaxed`}>{symbol.meaning}</p>
                   </div>
                 </FadeIn>
               );
@@ -530,13 +528,13 @@ function ComprendreStep({
             </p>
           </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {content.comprendre.artists.map((artist, index) => (
               <FadeIn key={artist.name} delay={index * 0.1}>
-                <div className={`group relative ${bgCard} rounded-2xl overflow-hidden border ${borderColor}`}>
-                  {/* Placeholder */}
-                  <div className={`aspect-square ${isDark ? "bg-gradient-to-br from-accent/10 to-primary/10" : "bg-gradient-to-br from-accent/5 to-primary/5"} flex items-center justify-center`}>
-                    <ImageIcon className={`w-16 h-16 ${textMuted}`} />
+                <div className={`group relative ${bgCard} overflow-hidden border ${borderColor}`}>
+                  {/* Image - sharp corners, larger */}
+                  <div className={`aspect-[4/5] ${isDark ? "bg-gradient-to-br from-accent/10 to-primary/10" : "bg-gradient-to-br from-accent/5 to-primary/5"} flex items-center justify-center`}>
+                    <ImageIcon className={`w-20 h-20 ${textMuted}`} />
                   </div>
 
                   <div className={`absolute inset-0 bg-gradient-to-t ${isDark ? "from-black via-black/60" : "from-black/80 via-black/40"} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -563,10 +561,7 @@ function ComprendreStep({
       <section className="py-24 px-6">
         <div className="max-w-3xl mx-auto">
           <FadeIn>
-            <div className={`${bgCard} rounded-3xl p-8 md:p-12 border ${borderColor} relative overflow-hidden`}>
-              {/* Subtle accent gradient */}
-              <div className={`absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] ${isDark ? "bg-accent/10" : "bg-accent/5"} -translate-y-1/2 translate-x-1/2`} />
-
+            <div className={`${bgCard} p-8 md:p-12 border ${borderColor} relative overflow-hidden`}>
               <div className="relative">
                 <Quote className={`w-10 h-10 ${textMuted} mb-6`} />
                 <h3 className={`font-display text-2xl md:text-3xl font-bold ${textPrimary} mb-8`}>
@@ -575,7 +570,7 @@ function ComprendreStep({
                 <ul className="space-y-5">
                   {content.comprendre.questions.map((question, i) => (
                     <li key={i} className="flex items-start gap-4">
-                      <span className={`w-8 h-8 rounded-full ${isDark ? "bg-primary/20" : "bg-primary/10"} flex items-center justify-center text-primary font-mono text-sm flex-shrink-0`}>
+                      <span className={`w-8 h-8 ${isDark ? "bg-primary/20" : "bg-primary/10"} flex items-center justify-center text-primary font-mono text-sm flex-shrink-0`}>
                         {i + 1}
                       </span>
                       <span className={`text-lg ${textSecondary} font-light italic`}>
@@ -644,7 +639,7 @@ function InterpreterStep({
       <div className="max-w-3xl mx-auto">
         <FadeIn>
           <div className="text-center mb-14">
-            <div className={`w-16 h-16 mx-auto mb-6 rounded-full ${isDark ? "bg-accent/10" : "bg-accent/5"} flex items-center justify-center`}>
+            <div className={`w-16 h-16 mx-auto mb-6 ${isDark ? "bg-accent/10" : "bg-accent/5"} flex items-center justify-center`}>
               <Feather className="w-7 h-7 text-accent" />
             </div>
             <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
@@ -659,7 +654,7 @@ function InterpreterStep({
         <div className="space-y-6">
           {content.interpreter.questions.map((q, index) => (
             <FadeIn key={q.id} delay={index * 0.08}>
-              <div className={`${bgCard} rounded-2xl p-6 md:p-8 border ${borderColor}`}>
+              <div className={`${bgCard} p-6 md:p-8 border ${borderColor}`}>
                 <label className="block mb-5">
                   <span className="text-xs text-accent font-mono tracking-wider">
                     {String(index + 1).padStart(2, "0")}
@@ -676,7 +671,7 @@ function InterpreterStep({
                   }
                   placeholder={q.placeholder}
                   rows={4}
-                  className={`w-full ${inputBg} border ${borderColor} rounded-xl px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 resize-none transition-all`}
+                  className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 resize-none transition-all`}
                 />
                 <div className="flex justify-between items-center mt-3">
                   <span className={`text-xs ${
@@ -687,7 +682,7 @@ function InterpreterStep({
                     {interpretation[q.id]?.length || 0} / 20 {content.interpreter.minChars}
                   </span>
                   {(interpretation[q.id]?.length || 0) >= 20 && (
-                    <div className="w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center">
+                    <div className="w-5 h-5 bg-green-500/10 flex items-center justify-center">
                       <Check className="w-3 h-3 text-green-500" />
                     </div>
                   )}
@@ -732,7 +727,7 @@ function CreerStep({
       <div className="max-w-3xl mx-auto">
         <FadeIn>
           <div className="text-center mb-14">
-            <div className={`w-16 h-16 mx-auto mb-6 rounded-full ${isDark ? "bg-accent/10" : "bg-accent/5"} flex items-center justify-center`}>
+            <div className={`w-16 h-16 mx-auto mb-6 ${isDark ? "bg-accent/10" : "bg-accent/5"} flex items-center justify-center`}>
               <Upload className="w-7 h-7 text-accent" />
             </div>
             <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
@@ -745,13 +740,13 @@ function CreerStep({
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <div className={`${bgCard} rounded-2xl border ${borderColor} p-6 md:p-8`}>
+          <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
             {!uploadedImage ? (
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className={`border-2 border-dashed ${borderColor} rounded-xl p-12 md:p-16 text-center cursor-pointer hover:border-primary/50 ${isDark ? "hover:bg-primary/5" : "hover:bg-primary/[0.02]"} transition-all group`}
+                className={`border-2 border-dashed ${borderColor} p-12 md:p-16 text-center cursor-pointer hover:border-primary/50 ${isDark ? "hover:bg-primary/5" : "hover:bg-primary/[0.02]"} transition-all group`}
               >
-                <div className={`w-20 h-20 mx-auto mb-6 rounded-full ${isDark ? "bg-white/5" : "bg-black/5"} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                <div className={`w-20 h-20 mx-auto mb-6 ${isDark ? "bg-white/5" : "bg-black/5"} flex items-center justify-center group-hover:scale-110 transition-transform`}>
                   <ImageIcon className={`w-10 h-10 ${textMuted}`} />
                 </div>
                 <p className={`${textSecondary} mb-2 font-medium`}>
@@ -763,11 +758,11 @@ function CreerStep({
               </div>
             ) : (
               <div className="space-y-6">
-                <div className={`relative aspect-square max-w-md mx-auto ${isDark ? "bg-black/50" : "bg-gray-100"} rounded-xl overflow-hidden`}>
+                <div className={`relative aspect-square max-w-md mx-auto ${isDark ? "bg-black/50" : "bg-gray-100"} overflow-hidden`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={uploadedImage}
-                    alt="Design uploadé"
+                    alt="Design uploade"
                     className="w-full h-full object-contain"
                   />
                 </div>
@@ -782,7 +777,7 @@ function CreerStep({
                       setUploadedImage(null);
                       if (fileInputRef.current) fileInputRef.current.value = "";
                     }}
-                    className={`px-4 py-2 ${isDark ? "bg-white/10" : "bg-gray-100"} rounded-lg ${textSecondary} hover:bg-red-500/10 hover:text-red-500 transition-all`}
+                    className={`px-4 py-2 ${isDark ? "bg-white/10" : "bg-gray-100"} ${textSecondary} hover:bg-red-500/10 hover:text-red-500 transition-all`}
                   >
                     {content.creer.delete}
                   </button>
@@ -801,14 +796,14 @@ function CreerStep({
         </FadeIn>
 
         <FadeIn delay={0.2}>
-          <div className={`mt-8 p-6 rounded-xl border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
+          <div className={`mt-8 p-6 border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
             <h4 className={`font-display text-base font-semibold ${textPrimary} mb-4`}>
               {content.creer.tips.title}
             </h4>
             <ul className={`space-y-2 ${textSecondary} text-sm`}>
               {content.creer.tips.items.map((tip, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <span className="text-accent">•</span>
+                  <span className="text-accent">-</span>
                   <span>{tip}</span>
                 </li>
               ))}
@@ -874,7 +869,7 @@ function VisualiserStep({
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="text-center max-w-md"
         >
-          <div className="w-24 h-24 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-8">
+          <div className="w-24 h-24 bg-green-500/10 flex items-center justify-center mx-auto mb-8">
             <Check className="w-12 h-12 text-green-500" />
           </div>
           <h2 className={`font-display text-3xl font-bold ${textPrimary} mb-4`}>
@@ -883,7 +878,7 @@ function VisualiserStep({
           <p className={`${textSecondary} mb-8`}>
             {content.visualiser.success.message}
           </p>
-          <div className={`p-5 ${bgCard} rounded-xl border ${borderColor} text-left`}>
+          <div className={`p-5 ${bgCard} border ${borderColor} text-left`}>
             <p className={`text-sm ${textMuted} mb-2`}>{content.visualiser.yourMessage}</p>
             <p className={`${textPrimary} italic`}>"{interpretation.message}"</p>
           </div>
@@ -897,7 +892,7 @@ function VisualiserStep({
       <div className="max-w-6xl mx-auto">
         <FadeIn>
           <div className="text-center mb-14">
-            <div className={`w-16 h-16 mx-auto mb-6 rounded-full ${isDark ? "bg-accent/10" : "bg-accent/5"} flex items-center justify-center`}>
+            <div className={`w-16 h-16 mx-auto mb-6 ${isDark ? "bg-accent/10" : "bg-accent/5"} flex items-center justify-center`}>
               <Eye className="w-7 h-7 text-accent" />
             </div>
             <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
@@ -912,13 +907,13 @@ function VisualiserStep({
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Preview */}
           <FadeIn delay={0.1}>
-            <div className={`${bgCard} rounded-2xl border ${borderColor} p-6 md:p-8`}>
+            <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
                 {content.visualiser.preview}
               </h3>
 
               <div
-                className="aspect-square rounded-xl flex items-center justify-center relative overflow-hidden mb-8"
+                className="aspect-square flex items-center justify-center relative overflow-hidden mb-8"
                 style={{ backgroundColor: garmentColor.hex }}
               >
                 {/* Garment silhouette */}
@@ -953,7 +948,7 @@ function VisualiserStep({
                       <button
                         key={type}
                         onClick={() => setGarmentType(type)}
-                        className={`flex-1 py-3 rounded-xl border transition-all ${
+                        className={`flex-1 py-3 border transition-all ${
                           garmentType === type
                             ? "bg-primary border-primary text-white"
                             : `${inputBg} ${borderColor} ${textSecondary} hover:border-primary/30`
@@ -973,7 +968,7 @@ function VisualiserStep({
                       <button
                         key={fit}
                         onClick={() => setGarmentFit(fit)}
-                        className={`flex-1 py-3 rounded-xl border transition-all capitalize ${
+                        className={`flex-1 py-3 border transition-all capitalize ${
                           garmentFit === fit
                             ? "bg-primary border-primary text-white"
                             : `${inputBg} ${borderColor} ${textSecondary} hover:border-primary/30`
@@ -988,15 +983,15 @@ function VisualiserStep({
                 {/* Color */}
                 <div>
                   <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.garmentColor}</label>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-3">
                     {content.colors.map((color) => (
                       <button
                         key={color.hex}
                         onClick={() => setGarmentColor(color)}
                         title={color.name}
-                        className={`w-10 h-10 rounded-full border-2 transition-all ${
+                        className={`w-10 h-10 border-2 transition-all ${
                           garmentColor.hex === color.hex
-                            ? "border-primary scale-110 shadow-lg"
+                            ? "border-primary scale-110"
                             : `border-transparent hover:scale-105 ${isDark ? "ring-1 ring-white/10" : "ring-1 ring-black/10"}`
                         }`}
                         style={{ backgroundColor: color.hex }}
@@ -1014,7 +1009,7 @@ function VisualiserStep({
 
           {/* Form */}
           <FadeIn delay={0.2}>
-            <div className={`${bgCard} rounded-2xl border ${borderColor} p-6 md:p-8`}>
+            <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
                 {content.visualiser.artistInfo}
               </h3>
@@ -1027,7 +1022,7 @@ function VisualiserStep({
                     value={artistInfo.title}
                     onChange={(e) => setArtistInfo({ ...artistInfo, title: e.target.value })}
                     placeholder={content.visualiser.fields.titlePlaceholder}
-                    className={`w-full ${inputBg} border ${borderColor} rounded-xl px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
                   />
                 </div>
 
@@ -1038,7 +1033,7 @@ function VisualiserStep({
                     value={artistInfo.name}
                     onChange={(e) => setArtistInfo({ ...artistInfo, name: e.target.value })}
                     placeholder={content.visualiser.fields.namePlaceholder}
-                    className={`w-full ${inputBg} border ${borderColor} rounded-xl px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
                   />
                 </div>
 
@@ -1049,7 +1044,7 @@ function VisualiserStep({
                     value={artistInfo.email}
                     onChange={(e) => setArtistInfo({ ...artistInfo, email: e.target.value })}
                     placeholder={content.visualiser.fields.emailPlaceholder}
-                    className={`w-full ${inputBg} border ${borderColor} rounded-xl px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
                   />
                 </div>
 
@@ -1060,12 +1055,12 @@ function VisualiserStep({
                     value={artistInfo.instagram}
                     onChange={(e) => setArtistInfo({ ...artistInfo, instagram: e.target.value })}
                     placeholder={content.visualiser.fields.instagramPlaceholder}
-                    className={`w-full ${inputBg} border ${borderColor} rounded-xl px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
                   />
                 </div>
 
                 {/* Message summary */}
-                <div className={`mt-6 p-5 rounded-xl border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
+                <div className={`mt-6 p-5 border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
                   <h4 className="text-sm text-accent mb-2">{content.visualiser.yourMessage}</h4>
                   <p className={`${textPrimary} italic`}>"{interpretation.message}"</p>
                 </div>
@@ -1073,7 +1068,7 @@ function VisualiserStep({
                 <button
                   onClick={handleSubmit}
                   disabled={!canSubmit || isSubmitting}
-                  className={`w-full mt-6 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 transition-all ${
+                  className={`w-full mt-6 py-4 font-semibold flex items-center justify-center gap-3 transition-all ${
                     canSubmit && !isSubmitting
                       ? "bg-primary text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
                       : `${inputBg} ${textMuted} cursor-not-allowed border ${borderColor}`
