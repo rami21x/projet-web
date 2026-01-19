@@ -26,20 +26,49 @@ function HeroImage() {
   const imageSrc = isDark ? "/images/brand-hero-dark.png" : "/images/brand-hero-light.png";
 
   return (
-    <div className="absolute inset-0">
-      {/* Image de fond simple */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url('${imageSrc}')` }}
-      />
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={resolvedTheme}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+        className="absolute inset-0"
+      >
+        {/* Image de fond */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('${imageSrc}')` }}
+        />
 
-      {/* Overlay */}
-      <div className={`absolute inset-0 ${
-        isDark
-          ? "bg-gradient-to-b from-black/40 via-transparent to-black/60"
-          : "bg-gradient-to-b from-white/10 via-transparent to-black/40"
-      }`} />
-    </div>
+        {/* Scanlines subtiles */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-30"
+          style={{
+            background: `repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 2px,
+              rgba(0, 0, 0, 0.03) 2px,
+              rgba(0, 0, 0, 0.03) 4px
+            )`
+          }}
+        />
+
+        {/* Vignette */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.4) 100%)" }}
+        />
+
+        {/* Overlay adapté au mode */}
+        <div className={`absolute inset-0 ${
+          isDark
+            ? "bg-gradient-to-b from-black/40 via-transparent to-black/60"
+            : "bg-gradient-to-b from-white/10 via-transparent to-black/40"
+        }`} />
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
