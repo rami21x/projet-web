@@ -21,6 +21,10 @@ import {
   Image as ImageIcon,
   X,
   ChevronDown,
+  Download,
+  Trophy,
+  Heart,
+  Users,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Image from "next/image";
@@ -654,6 +658,213 @@ function ComprendreStep({
                 </FadeIn>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* Brief Download Section */}
+      {content.contest && (
+        <section className={`py-24 px-6 ${isDark ? "bg-primary/5" : "bg-primary/[0.02]"}`}>
+          <div className="max-w-4xl mx-auto">
+            <FadeIn>
+              <div className={`${bgCard} p-8 md:p-12 border ${borderColor} relative overflow-hidden`}>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-3xl" />
+                <div className="relative flex flex-col md:flex-row gap-8 items-center">
+                  <div className={`w-20 h-20 ${isDark ? "bg-primary/20" : "bg-primary/10"} flex items-center justify-center flex-shrink-0`}>
+                    <Download className="w-10 h-10 text-primary" />
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <p className="text-xs text-accent font-mono tracking-wider mb-2">
+                      {content.contest.briefSection.label}
+                    </p>
+                    <h3 className={`font-display text-2xl md:text-3xl font-bold ${textPrimary} mb-3`}>
+                      {content.contest.briefSection.title}
+                    </h3>
+                    <p className={`${textSecondary} mb-4`}>
+                      {content.contest.briefSection.description}
+                    </p>
+                    <p className={`text-sm ${textMuted} mb-6`}>
+                      <span className="text-accent font-mono text-xs">{content.contest.briefSection.themes}:</span> {content.contest.briefSection.themesText}
+                    </p>
+                    <a
+                      href="/downloads/arteral-concours-brief.zip"
+                      download
+                      className="inline-flex items-center gap-3 px-6 py-3 bg-primary hover:bg-primary/90 text-white font-semibold transition-all hover:scale-105 shadow-lg"
+                    >
+                      <Download className="w-5 h-5" />
+                      {content.contest.briefSection.downloadButton}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+      )}
+
+      {/* Prizes Section */}
+      {content.contest && (
+        <section className="py-24 px-6 bg-[#1A1A1A] text-white">
+          <div className="max-w-5xl mx-auto">
+            <FadeIn>
+              <div className="text-center mb-16">
+                <p className="font-mono text-xs tracking-[0.3em] text-primary/60 mb-3">
+                  {content.contest.prizes.label}
+                </p>
+                <h3 className="font-display text-3xl md:text-4xl font-bold mb-4">
+                  {content.contest.prizes.title}
+                </h3>
+                <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
+              </div>
+            </FadeIn>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Prix du Peuple */}
+              <FadeIn delay={0.1}>
+                <div className="group relative">
+                  <div className="absolute -inset-1 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-10 h-full">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-primary/20 flex items-center justify-center">
+                        <Trophy className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-mono text-[10px] tracking-[0.3em] text-white/40">
+                          {content.contest.prizes.peuple.label}
+                        </p>
+                        <h4 className="font-display text-xl font-bold text-white">
+                          {content.contest.prizes.peuple.title}
+                        </h4>
+                      </div>
+                    </div>
+                    <p className="font-display text-4xl md:text-5xl font-bold text-primary mb-4">
+                      {content.contest.prizes.peuple.amount}
+                    </p>
+                    <p className="text-white/60 mb-6">
+                      {content.contest.prizes.peuple.description} <span className="text-white font-semibold">{content.contest.prizes.peuple.you}</span>. {content.contest.prizes.peuple.details}
+                    </p>
+                    <ul className="space-y-2">
+                      {content.contest.prizes.peuple.rewards.map((reward, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-white/70">
+                          <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                          {reward}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Prix du Cœur */}
+              <FadeIn delay={0.2}>
+                <div className="group relative">
+                  <div className="absolute -inset-1 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-10 h-full">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-accent/20 flex items-center justify-center">
+                        <Heart className="w-6 h-6 text-accent" />
+                      </div>
+                      <div>
+                        <p className="font-mono text-[10px] tracking-[0.3em] text-white/40">
+                          {content.contest.prizes.coeur.label}
+                        </p>
+                        <h4 className="font-display text-xl font-bold text-white">
+                          {content.contest.prizes.coeur.title}
+                        </h4>
+                      </div>
+                    </div>
+                    <p className="font-display text-4xl md:text-5xl font-bold text-accent mb-4">
+                      {content.contest.prizes.coeur.amount}
+                    </p>
+                    <p className="text-white/60 mb-6">
+                      {content.contest.prizes.coeur.description}
+                    </p>
+                    {/* Jury */}
+                    <div className="space-y-3 mb-6">
+                      {content.contest.prizes.coeur.jury.map((member, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <div className={`w-10 h-10 ${i === 2 ? "bg-primary/30" : "bg-white/10"} flex items-center justify-center`}>
+                            <Users className={`w-5 h-5 ${i === 2 ? "text-white" : "text-white/40"}`} />
+                          </div>
+                          <div>
+                            <p className="text-sm text-white/80">{member.title}</p>
+                            <p className={`font-mono text-[10px] ${i === 2 ? "text-primary/60" : "text-white/40"}`}>
+                              {member.status}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <ul className="space-y-2">
+                      {content.contest.prizes.coeur.rewards.map((reward, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-white/70">
+                          <span className="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0" />
+                          {reward}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Rules Section */}
+      {content.contest && (
+        <section className="py-24 px-6">
+          <div className="max-w-4xl mx-auto">
+            <FadeIn>
+              <div className="text-center mb-16">
+                <p className={`font-mono text-xs tracking-[0.3em] text-accent mb-3`}>
+                  {content.contest.rules.label}
+                </p>
+                <h3 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
+                  {content.contest.rules.title}
+                </h3>
+                <div className={`w-16 h-[1px] bg-gradient-to-r from-transparent ${isDark ? "via-white/20" : "via-black/20"} to-transparent mx-auto`} />
+              </div>
+            </FadeIn>
+
+            <div className="space-y-6">
+              {content.contest.rules.items.map((rule, index) => (
+                <FadeIn key={index} delay={index * 0.1}>
+                  <div className={`flex gap-6 ${bgCard} p-6 border ${borderColor}`}>
+                    <div className="flex-shrink-0">
+                      <span className="font-display text-3xl font-bold text-primary/30">{rule.num}</span>
+                    </div>
+                    <div>
+                      <h4 className={`font-display text-lg font-bold ${textPrimary} mb-2`}>
+                        {rule.title}
+                      </h4>
+                      <p className={`${textSecondary}`}>
+                        {rule.description}
+                      </p>
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Deadline Banner */}
+      {content.contest && (
+        <section className="py-12 bg-primary text-white">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <FadeIn>
+              <p className="font-mono text-xs tracking-[0.4em] text-white/60 mb-2">
+                {content.contest.deadline.label}
+              </p>
+              <p className="font-display text-2xl md:text-3xl font-bold mb-2">
+                {content.contest.deadline.date}
+              </p>
+              <p className="text-sm text-white/70">
+                {content.contest.deadline.results}
+              </p>
+            </FadeIn>
           </div>
         </section>
       )}

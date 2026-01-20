@@ -1363,6 +1363,80 @@ export const studioPageContent = {
       },
     ],
   },
+  // Contest info integrated from Art de Narcisse
+  contest: {
+    briefSection: {
+      label: "ESSENTIAL STEP",
+      title: "Download the Brief",
+      description: "Before creating, immerse yourself in the story. The brief contains the essence of Narcissus in Love: philosophical texts, visual references, and the soul of the series.",
+      downloadButton: "Download ZIP",
+      themes: "THEMES",
+      themesText: "Mirror, reflection, duality, love, solitude, connection",
+    },
+    prizes: {
+      label: "REWARDS",
+      title: "Two ways to win",
+      peuple: {
+        label: "FIRST PRIZE",
+        title: "People's Choice",
+        amount: "€3,500",
+        description: "The winner will be chosen by",
+        you: "you",
+        details: "All artworks will be published on our Instagram. The one receiving the most likes wins the prize.",
+        rewards: [
+          "Your art printed on the collection",
+          "Artist credit on each piece",
+          "5 collection pieces offered",
+        ],
+      },
+      coeur: {
+        label: "SECOND PRIZE",
+        title: "Jury's Choice",
+        amount: "€1,500",
+        description: "Selected by an exceptional jury. Three perspectives, one decision.",
+        jury: [
+          { title: "A renowned artist", status: "REVEALED SOON" },
+          { title: "A fashion figure", status: "REVEALED SOON" },
+          { title: "The Arteral team", status: "FOUNDERS" },
+        ],
+        rewards: [
+          "Special mention on our platforms",
+          "3 collection pieces offered",
+        ],
+      },
+    },
+    rules: {
+      label: "PARTICIPATION",
+      title: "The rules of the game",
+      items: [
+        {
+          num: "01",
+          title: "Immerse yourself in the story",
+          description: "Carefully read the brief for the Narcissus in Love collection. Understand the paradox, feel the duality.",
+        },
+        {
+          num: "02",
+          title: "Respect the constraints... or not",
+          description: "We suggest a palette and dimensions, but art knows no boundaries. If your vision demands stepping outside the frame, do it.",
+        },
+        {
+          num: "03",
+          title: "Format and submission",
+          description: "PNG or JPEG in high resolution (minimum 3000x3000px). One submission per artist.",
+        },
+        {
+          num: "04",
+          title: "Rights and publication",
+          description: "By submitting, you authorize Arteral to publish your work. The winner transfers exploitation rights for the collection.",
+        },
+      ],
+    },
+    deadline: {
+      label: "DEADLINE",
+      date: "January 15, 2025",
+      results: "Results announced February 1, 2025",
+    },
+  },
 };
 
 export const navigation = [
@@ -1372,7 +1446,6 @@ export const navigation = [
   { name: "Studio", href: "/studio" },
   { name: "Gallery", href: "/galerie" },
   { name: "Manifesto", href: "/manifeste" },
-  { name: "Art of Narcissus", href: "/artistes" },
   { name: "Guestbook", href: "/livre-or" },
   { name: "Process", href: "/processus" },
   { name: "Contact", href: "/contact" },

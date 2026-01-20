@@ -1357,6 +1357,80 @@ export const studioPageContent = {
       },
     ],
   },
+  // Infos concours intégrées depuis L'Art de Narcisse
+  contest: {
+    briefSection: {
+      label: "ÉTAPE ESSENTIELLE",
+      title: "Télécharger le Livrable",
+      description: "Avant de créer, imprégnez-vous de l'histoire. Le livrable contient l'essence de Narcisse Amoureux : textes philosophiques, références visuelles, et l'âme de la série.",
+      downloadButton: "Télécharger le ZIP",
+      themes: "THÈMES",
+      themesText: "Miroir, reflet, dualité, amour, solitude, connexion",
+    },
+    prizes: {
+      label: "RÉCOMPENSES",
+      title: "Deux façons de gagner",
+      peuple: {
+        label: "PREMIER PRIX",
+        title: "Prix du Peuple",
+        amount: "3 500€",
+        description: "Le gagnant sera choisi par",
+        you: "vous",
+        details: "Toutes les œuvres seront publiées sur notre Instagram. Celle qui recevra le plus de likes remporte le prix.",
+        rewards: [
+          "Votre art imprimé sur la collection",
+          "Crédit artiste sur chaque pièce",
+          "5 pièces de la collection offertes",
+        ],
+      },
+      coeur: {
+        label: "DEUXIÈME PRIX",
+        title: "Prix du Cœur",
+        amount: "1 500€",
+        description: "Sélectionné par un jury d'exception. Trois regards, une décision.",
+        jury: [
+          { title: "Un artiste reconnu", status: "RÉVÉLÉ BIENTÔT" },
+          { title: "Une figure de la mode", status: "RÉVÉLÉ BIENTÔT" },
+          { title: "L'équipe Arteral", status: "FONDATEURS" },
+        ],
+        rewards: [
+          "Mention spéciale sur nos supports",
+          "3 pièces de la collection offertes",
+        ],
+      },
+    },
+    rules: {
+      label: "PARTICIPATION",
+      title: "Les règles du jeu",
+      items: [
+        {
+          num: "01",
+          title: "Imprégnez-vous de l'histoire",
+          description: "Lisez attentivement le livrable de la collection Narcisse Amoureux. Comprenez le paradoxe, ressentez la dualité.",
+        },
+        {
+          num: "02",
+          title: "Respectez les contraintes... ou pas",
+          description: "Nous suggérons une palette et des dimensions, mais l'art ne connaît pas de frontières. Si votre vision demande de sortir du cadre, faites-le.",
+        },
+        {
+          num: "03",
+          title: "Format et soumission",
+          description: "PNG ou JPEG en haute résolution (minimum 3000x3000px). Une seule soumission par artiste.",
+        },
+        {
+          num: "04",
+          title: "Droits et publication",
+          description: "En soumettant, vous autorisez Arteral à publier votre œuvre. Le gagnant cède les droits d'exploitation pour la collection.",
+        },
+      ],
+    },
+    deadline: {
+      label: "DATE LIMITE",
+      date: "15 Janvier 2025",
+      results: "Résultats annoncés le 1er Février 2025",
+    },
+  },
 };
 
 export const navigation = [
@@ -1366,7 +1440,6 @@ export const navigation = [
   { name: "Studio", href: "/studio" },
   { name: "Galerie", href: "/galerie" },
   { name: "Manifeste", href: "/manifeste" },
-  { name: "L'Art de Narcisse", href: "/artistes" },
   { name: "Livre d'Or", href: "/livre-or" },
   { name: "Processus", href: "/processus" },
   { name: "Contact", href: "/contact" },
