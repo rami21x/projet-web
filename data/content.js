@@ -1320,6 +1320,49 @@ export const studioPageContent = {
     { name: "Arteral Red", hex: "#8B0000", dark: true },
     { name: "Camel", hex: "#A0522D", dark: true },
   ],
+  // Artwork throughout the journey - theme: Love vs Selfishness (Narcissus)
+  artwork: {
+    sectionTitle: "Visual Inspirations",
+    sectionSubtitle: "These masterpieces explore the same duality between love and selfishness that we invite you to interpret.",
+    pieces: [
+      {
+        id: "narcissus",
+        title: "Narcissus",
+        artist: "Caravaggio",
+        year: "1597-1599",
+        description: "The myth of self-love pushed to its extreme - Narcissus contemplates his own reflection, incapable of loving anything but himself.",
+        theme: "selfishness",
+        file: "narcissus.jpg",
+      },
+      {
+        id: "kiss",
+        title: "The Kiss",
+        artist: "Gustav Klimt",
+        year: "1907-1908",
+        description: "The fusion of two beings in an embrace where gold and patterns merge - love as transcendence of the self.",
+        theme: "love",
+        file: "kiss.jpg",
+      },
+      {
+        id: "echo",
+        title: "Echo and Narcissus",
+        artist: "John William Waterhouse",
+        year: "1903",
+        description: "Echo, consumed by unrequited love, watches Narcissus who can only love his own image.",
+        theme: "duality",
+        file: "echo.jpg",
+      },
+      {
+        id: "pygmalion",
+        title: "Pygmalion and Galatea",
+        artist: "Jean-Léon Gérôme",
+        year: "1890",
+        description: "The sculptor who falls in love with his own creation - where does love for the other end and love for oneself begin?",
+        theme: "duality",
+        file: "pygmalion.jpg",
+      },
+    ],
+  },
 };
 
 export const navigation = [

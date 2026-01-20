@@ -599,6 +599,65 @@ function ComprendreStep({
         </div>
       </section>
 
+      {/* Artwork Gallery - Visual Inspirations */}
+      {content.artwork && (
+        <section className="py-24 px-6">
+          <div className="max-w-6xl mx-auto">
+            <FadeIn>
+              <p className={`font-mono text-xs tracking-[0.3em] text-primary text-center mb-3`}>
+                NARCISSE AMOUREUX
+              </p>
+              <h3 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} text-center mb-4`}>
+                {content.artwork.sectionTitle}
+              </h3>
+              <p className={`${textMuted} text-center max-w-2xl mx-auto mb-16`}>
+                {content.artwork.sectionSubtitle}
+              </p>
+            </FadeIn>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {content.artwork.pieces.map((piece, index) => (
+                <FadeIn key={piece.id} delay={index * 0.1}>
+                  <div className={`group ${bgCard} overflow-hidden border ${borderColor} hover:border-primary/30 transition-all duration-500`}>
+                    {/* Artwork image */}
+                    <div className={`aspect-[3/4] relative overflow-hidden ${isDark ? "bg-gradient-to-br from-primary/10 to-accent/10" : "bg-gradient-to-br from-primary/5 to-accent/5"}`}>
+                      <Image
+                        src={`/images/studio/artwork/${piece.file}`}
+                        alt={piece.title}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      {/* Theme badge */}
+                      <div className={`absolute top-3 right-3 px-2 py-1 text-[10px] font-mono uppercase tracking-wider ${
+                        piece.theme === "love"
+                          ? "bg-pink-500/80 text-white"
+                          : piece.theme === "selfishness"
+                          ? "bg-amber-500/80 text-white"
+                          : "bg-primary/80 text-white"
+                      }`}>
+                        {piece.theme === "love" ? "Amour" : piece.theme === "selfishness" ? "Égoïsme" : "Dualité"}
+                      </div>
+                    </div>
+
+                    <div className="p-5">
+                      <p className="text-xs text-accent font-mono mb-1">
+                        {piece.artist}, {piece.year}
+                      </p>
+                      <h4 className={`font-display text-lg font-semibold ${textPrimary} mb-2`}>
+                        {piece.title}
+                      </h4>
+                      <p className={`text-sm ${textSecondary} leading-relaxed`}>
+                        {piece.description}
+                      </p>
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Questions */}
       <section className="py-24 px-6">
         <div className="max-w-3xl mx-auto">

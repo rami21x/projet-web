@@ -1314,6 +1314,49 @@ export const studioPageContent = {
     { name: "Rouge Arteral", hex: "#8B0000", dark: true },
     { name: "Camel", hex: "#A0522D", dark: true },
   ],
+  // Œuvres d'art tout au long du parcours - thème : Amour vs Égoïsme (Narcisse)
+  artwork: {
+    sectionTitle: "Inspirations Visuelles",
+    sectionSubtitle: "Ces chefs-d'œuvre explorent la même dualité entre amour et égoïsme que nous vous invitons à interpréter.",
+    pieces: [
+      {
+        id: "narcissus",
+        title: "Narcisse",
+        artist: "Le Caravage",
+        year: "1597-1599",
+        description: "Le mythe de l'amour de soi poussé à l'extrême - Narcisse contemple son propre reflet, incapable d'aimer autre chose que lui-même.",
+        theme: "selfishness",
+        file: "narcissus.jpg",
+      },
+      {
+        id: "kiss",
+        title: "Le Baiser",
+        artist: "Gustav Klimt",
+        year: "1907-1908",
+        description: "La fusion de deux êtres dans une étreinte où l'or et les motifs se confondent - l'amour comme transcendance du soi.",
+        theme: "love",
+        file: "kiss.jpg",
+      },
+      {
+        id: "echo",
+        title: "Écho et Narcisse",
+        artist: "John William Waterhouse",
+        year: "1903",
+        description: "Écho, consumée par un amour non réciproque, observe Narcisse qui ne peut aimer que sa propre image.",
+        theme: "duality",
+        file: "echo.jpg",
+      },
+      {
+        id: "pygmalion",
+        title: "Pygmalion et Galatée",
+        artist: "Jean-Léon Gérôme",
+        year: "1890",
+        description: "Le sculpteur qui tombe amoureux de sa propre création - où finit l'amour de l'autre et où commence l'amour de soi ?",
+        theme: "duality",
+        file: "pygmalion.jpg",
+      },
+    ],
+  },
 };
 
 export const navigation = [
