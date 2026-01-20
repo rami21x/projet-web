@@ -13,9 +13,6 @@ import {
   ArrowRight,
   ArrowLeft,
   Quote,
-  Flame,
-  Moon,
-  Sparkles,
   Check,
   Shirt,
   Image as ImageIcon,
@@ -48,13 +45,82 @@ type Step = "comprendre" | "interpreter" | "creer" | "visualiser";
 type GarmentType = "tshirt" | "pull";
 type GarmentFit = "oversize" | "regular" | "slim";
 
-// Symbol icons mapping
-const SYMBOL_ICONS = {
-  0: Flame,
-  1: Moon,
-  2: Sparkles,
-  3: Eye,
-};
+// Custom SVG symbols - elegant geometric designs
+const SymbolFire = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 48 48" fill="none" className={className}>
+    <path
+      d="M24 4C24 4 12 16 12 28C12 34.627 17.373 40 24 40C30.627 40 36 34.627 36 28C36 16 24 4 24 4Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      fill="none"
+    />
+    <path
+      d="M24 16C24 16 18 22 18 28C18 31.314 20.686 34 24 34C27.314 34 30 31.314 30 28C30 22 24 16 24 16Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      fill="none"
+      opacity="0.6"
+    />
+  </svg>
+);
+
+const SymbolEclipse = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 48 48" fill="none" className={className}>
+    <circle cx="24" cy="24" r="16" stroke="currentColor" strokeWidth="1.5" fill="none" />
+    <circle cx="24" cy="24" r="10" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.5" />
+    <path
+      d="M24 8C15.163 8 8 15.163 8 24C8 32.837 15.163 40 24 40"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const SymbolDance = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 48 48" fill="none" className={className}>
+    <path
+      d="M8 40C8 40 16 32 24 24C32 16 40 8 40 8"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      fill="none"
+    />
+    <path
+      d="M8 8C8 8 16 16 24 24C32 32 40 40 40 40"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      fill="none"
+      opacity="0.5"
+    />
+    <circle cx="24" cy="24" r="4" stroke="currentColor" strokeWidth="1.5" fill="none" />
+  </svg>
+);
+
+const SymbolMirror = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 48 48" fill="none" className={className}>
+    <line x1="24" y1="6" x2="24" y2="42" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 2" opacity="0.4" />
+    <path
+      d="M12 14L20 24L12 34"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    <path
+      d="M36 14L28 24L36 34"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  </svg>
+);
+
+const SYMBOL_COMPONENTS = [SymbolFire, SymbolEclipse, SymbolDance, SymbolMirror];
 
 export default function StudioPage() {
   const { studioPageContent: content } = useContent();
@@ -522,24 +588,45 @@ function ComprendreStep({
             <p className={`font-mono text-xs tracking-[0.3em] text-accent text-center mb-3`}>
               {content.comprendre.symbolsLabel}
             </p>
-            <h3 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} text-center mb-16`}>
+            <h3 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} text-center mb-6`}>
               {content.comprendre.symbolsTitle}
             </h3>
+            <p className={`${textMuted} text-center max-w-2xl mx-auto mb-16`}>
+              Quatre symboles universels qui incarnent la tension entre forces opposées
+            </p>
           </FadeIn>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
             {content.comprendre.symbols.map((symbol, index) => {
-              const Icon = SYMBOL_ICONS[index as keyof typeof SYMBOL_ICONS];
+              const SymbolSvg = SYMBOL_COMPONENTS[index];
               return (
-                <FadeIn key={symbol.name} delay={index * 0.08}>
-                  <div className={`group ${bgCard} p-8 border ${borderColor} hover:border-primary/30 transition-all text-center`}>
-                    <div className={`w-16 h-16 mx-auto mb-5 ${isDark ? "bg-primary/10" : "bg-primary/5"} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="w-7 h-7 text-primary" />
+                <FadeIn key={symbol.name} delay={index * 0.1}>
+                  <div className="group relative">
+                    {/* Subtle gradient border on hover */}
+                    <div className={`absolute -inset-[1px] bg-gradient-to-br from-primary/20 via-transparent to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+
+                    <div className={`relative ${bgCard} p-8 lg:p-6 border ${borderColor} group-hover:border-transparent transition-all duration-500 h-full`}>
+                      {/* Symbol SVG */}
+                      <div className="relative w-20 h-20 mx-auto mb-6">
+                        {/* Background glow */}
+                        <div className={`absolute inset-0 ${isDark ? "bg-primary/5" : "bg-primary/[0.03]"} rounded-full blur-xl group-hover:bg-primary/10 transition-all duration-500`} />
+                        {/* SVG */}
+                        <SymbolSvg className="relative w-full h-full text-primary group-hover:scale-110 transition-transform duration-500" />
+                      </div>
+
+                      {/* Content */}
+                      <div className="text-center">
+                        <h4 className={`font-display text-lg font-semibold ${textPrimary} mb-3 group-hover:text-primary transition-colors duration-300`}>
+                          {symbol.name}
+                        </h4>
+                        <p className={`text-sm ${textSecondary} leading-relaxed`}>
+                          {symbol.meaning}
+                        </p>
+                      </div>
+
+                      {/* Decorative line */}
+                      <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent group-hover:w-3/4 transition-all duration-500`} />
                     </div>
-                    <h4 className={`font-display text-lg font-semibold ${textPrimary} mb-2`}>
-                      {symbol.name}
-                    </h4>
-                    <p className={`text-sm ${textMuted} leading-relaxed`}>{symbol.meaning}</p>
                   </div>
                 </FadeIn>
               );
