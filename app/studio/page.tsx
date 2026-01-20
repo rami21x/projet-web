@@ -128,22 +128,27 @@ export default function StudioPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          artistName: artistInfo.name,
+          name: artistInfo.name,
+          artistName: artistInfo.instagram || artistInfo.name,
           email: artistInfo.email,
-          instagram: artistInfo.instagram,
           title: artistInfo.title,
           philosophy: `DUALITÉ: ${interpretation.duality}\n\nHARMONIE DU CHAOS: ${interpretation.harmony}\n\nSENTIMENT: ${interpretation.feeling}\n\nMESSAGE: ${interpretation.message}`,
           garmentType,
           garmentFit,
           garmentColor: garmentColor.hex,
-          canvasData: uploadedImage,
+          imageData: uploadedImage,
         }),
       });
       if (response.ok) {
         setIsSubmitted(true);
+      } else {
+        const errorData = await response.json();
+        console.error("Erreur API:", errorData);
+        alert(errorData.error || "Une erreur est survenue lors de la soumission.");
       }
     } catch (error) {
       console.error("Erreur lors de la soumission:", error);
+      alert("Erreur de connexion. Veuillez réessayer.");
     } finally {
       setIsSubmitting(false);
     }
