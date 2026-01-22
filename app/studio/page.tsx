@@ -1309,7 +1309,11 @@ function VisualiserStep({
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Preview */}
-          <FadeIn delay={0.1}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
                 {content.visualiser?.preview || "Aperçu"}
@@ -1412,10 +1416,14 @@ function VisualiserStep({
                 </div>
               </div>
             </div>
-          </FadeIn>
+          </motion.div>
 
           {/* Form */}
-          <FadeIn delay={0.2}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
                 {content.visualiser?.artistInfo || "Informations Artiste"}
@@ -1499,7 +1507,7 @@ function VisualiserStep({
                 </p>
               </div>
             </div>
-          </FadeIn>
+          </motion.div>
         </div>
       </div>
     </div>
