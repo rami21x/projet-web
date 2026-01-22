@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useContent } from "@/hooks/useContent";
@@ -22,6 +22,10 @@ import {
   Trophy,
   Heart,
   Users,
+  Move,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Image from "next/image";
@@ -324,10 +328,10 @@ const FallbackMockup = ({ color, type, children }: { color: string; type: 'tshir
   );
 };
 
-// T-Shirt Mockup - uses SVG with blend mode for color, falls back to enhanced SVG
+// T-Shirt Mockup - uses PNG with blend mode for color, falls back to enhanced SVG
 const TShirtMockup = ({ color, children }: { color: string; children?: React.ReactNode }) => (
   <MockupWithBlendMode
-    imageSrc="/images/mockups/tshirt-white.svg"
+    imageSrc="/images/mockups/tshirt-white.png"
     color={color}
     designPosition={{ top: '28%', left: '28%', width: '44%', height: '32%' }}
     garmentType="tshirt"
@@ -336,10 +340,10 @@ const TShirtMockup = ({ color, children }: { color: string; children?: React.Rea
   </MockupWithBlendMode>
 );
 
-// Sweatshirt/Hoodie Mockup - uses SVG with blend mode for color, falls back to enhanced SVG
+// Sweatshirt/Hoodie Mockup - uses JPG with blend mode for color, falls back to enhanced SVG
 const SweatshirtMockup = ({ color, children }: { color: string; children?: React.ReactNode }) => (
   <MockupWithBlendMode
-    imageSrc="/images/mockups/hoodie-white.svg"
+    imageSrc="/images/mockups/hoodie-white.jpg"
     color={color}
     designPosition={{ top: '32%', left: '30%', width: '40%', height: '28%' }}
     garmentType="hoodie"
@@ -347,6 +351,239 @@ const SweatshirtMockup = ({ color, children }: { color: string; children?: React
     {children}
   </MockupWithBlendMode>
 );
+
+// Interactive Artwork Editor Component
+type ArtworkTransform = {
+  x: number;
+  y: number;
+  scale: number;
+};
+
+const InteractiveArtworkEditor = ({
+  uploadedImage,
+  garmentType,
+  garmentColor,
+  transform,
+  onTransformChange,
+  isDark,
+}: {
+  uploadedImage: string | null;
+  garmentType: GarmentType;
+  garmentColor: { name: string; hex: string; dark: boolean };
+  transform: ArtworkTransform;
+  onTransformChange: (transform: ArtworkTransform) => void;
+  isDark: boolean;
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  const bgCard = isDark ? "bg-[#111111]" : "bg-white";
+  const borderColor = isDark ? "border-white/10" : "border-black/10";
+  const textMuted = isDark ? "text-white/40" : "text-gray-400";
+
+  // Handle mouse/touch drag start
+  const handleDragStart = useCallback((clientX: number, clientY: number) => {
+    setIsDragging(true);
+    setDragStart({
+      x: clientX - transform.x,
+      y: clientY - transform.y,
+    });
+  }, [transform.x, transform.y]);
+
+  // Handle mouse/touch drag move
+  const handleDragMove = useCallback((clientX: number, clientY: number) => {
+    if (!isDragging || !containerRef.current) return;
+
+    const container = containerRef.current;
+    const rect = container.getBoundingClientRect();
+
+    // Calculate movement as percentage of container
+    const newX = ((clientX - dragStart.x) / rect.width) * 100;
+    const newY = ((clientY - dragStart.y) / rect.height) * 100;
+
+    // Clamp values to reasonable bounds (-50% to 50%)
+    const clampedX = Math.max(-50, Math.min(50, newX));
+    const clampedY = Math.max(-50, Math.min(50, newY));
+
+    onTransformChange({
+      ...transform,
+      x: clampedX,
+      y: clampedY,
+    });
+  }, [isDragging, dragStart, transform, onTransformChange]);
+
+  // Handle drag end
+  const handleDragEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Mouse events
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleDragStart(e.clientX, e.clientY);
+  };
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    handleDragMove(e.clientX, e.clientY);
+  }, [handleDragMove]);
+
+  const handleMouseUp = useCallback(() => {
+    handleDragEnd();
+  }, [handleDragEnd]);
+
+  // Touch events
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    handleDragStart(touch.clientX, touch.clientY);
+  };
+
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    const touch = e.touches[0];
+    handleDragMove(touch.clientX, touch.clientY);
+  }, [handleDragMove]);
+
+  // Add/remove global event listeners for drag
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchend', handleDragEnd);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleDragEnd);
+    };
+  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleDragEnd]);
+
+  // Scale controls
+  const handleScaleChange = (delta: number) => {
+    const newScale = Math.max(0.3, Math.min(2, transform.scale + delta));
+    onTransformChange({ ...transform, scale: newScale });
+  };
+
+  // Reset transform
+  const handleReset = () => {
+    onTransformChange({ x: 0, y: 0, scale: 1 });
+  };
+
+  const safeGarmentColor = garmentColor || { name: "White", hex: "#FFFFFF", dark: false };
+
+  return (
+    <div className="space-y-4">
+      {/* Mockup Preview with Interactive Artwork */}
+      <div
+        ref={containerRef}
+        className={`aspect-[3/4] relative overflow-hidden rounded-lg ${isDark ? "bg-neutral-900" : "bg-neutral-100"}`}
+      >
+        {/* Background color layer for blend mode */}
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: safeGarmentColor.hex }}
+        />
+
+        {/* Garment mockup image */}
+        <div className="absolute inset-0">
+          <Image
+            src={garmentType === "tshirt" ? "/images/mockups/tshirt-white.png" : "/images/mockups/hoodie-white.jpg"}
+            alt="Garment mockup"
+            fill
+            className="object-contain mix-blend-multiply"
+            style={{ filter: 'contrast(1.05)' }}
+            onError={(e) => {
+              // Fallback if image doesn't load
+              e.currentTarget.style.display = 'none';
+            }}
+          />
+        </div>
+
+        {/* Interactive Artwork Overlay */}
+        {uploadedImage && (
+          <div
+            className={`absolute cursor-move transition-shadow ${isDragging ? 'ring-2 ring-primary ring-offset-2' : 'hover:ring-2 hover:ring-primary/50'}`}
+            style={{
+              top: garmentType === "tshirt" ? '25%' : '28%',
+              left: '25%',
+              width: '50%',
+              height: '40%',
+              transform: `translate(${transform.x}%, ${transform.y}%) scale(${transform.scale})`,
+              transformOrigin: 'center center',
+            }}
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={uploadedImage}
+              alt="Your artwork"
+              className="w-full h-full object-contain pointer-events-none select-none"
+              draggable={false}
+            />
+
+            {/* Drag indicator */}
+            <div className={`absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 hover:opacity-100 transition-opacity rounded ${isDragging ? 'opacity-100' : ''}`}>
+              <Move className="w-8 h-8 text-white drop-shadow-lg" />
+            </div>
+          </div>
+        )}
+
+        {/* Label */}
+        <div className={`absolute bottom-3 left-3 right-3 flex justify-between items-center text-xs font-mono ${isDark ? "text-white/40" : "text-black/40"}`}>
+          <span>{garmentType === "tshirt" ? "T-Shirt" : "Hoodie"}</span>
+          <span>{safeGarmentColor.name}</span>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className={`flex items-center justify-between gap-2 p-3 ${bgCard} border ${borderColor} rounded-lg`}>
+        {/* Scale controls */}
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => handleScaleChange(-0.1)}
+            className={`p-2 rounded-lg border ${borderColor} ${isDark ? "hover:bg-white/10" : "hover:bg-black/5"} transition-colors`}
+            title="Reduire"
+          >
+            <ZoomOut className="w-4 h-4" />
+          </button>
+          <span className={`px-3 py-1 text-sm font-mono ${textMuted} min-w-[60px] text-center`}>
+            {Math.round(transform.scale * 100)}%
+          </span>
+          <button
+            onClick={() => handleScaleChange(0.1)}
+            className={`p-2 rounded-lg border ${borderColor} ${isDark ? "hover:bg-white/10" : "hover:bg-black/5"} transition-colors`}
+            title="Agrandir"
+          >
+            <ZoomIn className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Position indicator */}
+        <div className={`text-xs ${textMuted} font-mono hidden sm:block`}>
+          <Move className="w-3 h-3 inline mr-1" />
+          Glissez pour deplacer
+        </div>
+
+        {/* Reset button */}
+        <button
+          onClick={handleReset}
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${borderColor} ${isDark ? "hover:bg-white/10" : "hover:bg-black/5"} transition-colors text-sm`}
+          title="Reinitialiser"
+        >
+          <RotateCcw className="w-4 h-4" />
+          <span className="hidden sm:inline">Reset</span>
+        </button>
+      </div>
+
+      {/* Helper text */}
+      <p className={`text-xs ${textMuted} text-center`}>
+        Glissez l'image pour la repositionner. Utilisez les boutons +/- pour ajuster la taille.
+      </p>
+    </div>
+  );
+};
 
 export default function StudioPage() {
   const { studioPageContent: content } = useContent();
@@ -384,6 +621,13 @@ export default function StudioPage() {
   const [acceptNewsletter, setAcceptNewsletter] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Artwork transform state (position and scale)
+  const [artworkTransform, setArtworkTransform] = useState({
+    x: 0,      // horizontal offset in %
+    y: 0,      // vertical offset in %
+    scale: 1,  // scale factor (1 = 100%)
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -595,6 +839,8 @@ export default function StudioPage() {
               setGarmentFit={setGarmentFit}
               garmentColor={garmentColor}
               setGarmentColor={setGarmentColor}
+              artworkTransform={artworkTransform}
+              setArtworkTransform={setArtworkTransform}
               artistInfo={artistInfo}
               setArtistInfo={setArtistInfo}
               interpretation={interpretation}
@@ -1457,6 +1703,8 @@ function VisualiserStep({
   setGarmentFit,
   garmentColor,
   setGarmentColor,
+  artworkTransform,
+  setArtworkTransform,
   artistInfo,
   setArtistInfo,
   interpretation,
@@ -1476,6 +1724,8 @@ function VisualiserStep({
   setGarmentFit: (v: GarmentFit) => void;
   garmentColor: typeof content.colors[0];
   setGarmentColor: (v: typeof content.colors[0]) => void;
+  artworkTransform: ArtworkTransform;
+  setArtworkTransform: (v: ArtworkTransform) => void;
   artistInfo: { name: string; email: string; instagram: string; title: string };
   setArtistInfo: (v: { name: string; email: string; instagram: string; title: string }) => void;
   interpretation: Record<string, string>;
@@ -1669,7 +1919,7 @@ function VisualiserStep({
         </FadeIn>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Preview */}
+          {/* Preview with Interactive Editor */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1677,56 +1927,21 @@ function VisualiserStep({
           >
             <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
-                {content.visualiser?.preview || "Aperçu"}
+                {content.visualiser?.preview || "Aperçu"} - <span className="text-accent font-normal text-base">Positionnez votre design</span>
               </h3>
 
-              <div
-                className={`aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-8 rounded-lg ${isDark ? "bg-neutral-900" : "bg-neutral-100"}`}
-              >
-                {/* Garment Mockup */}
-                <div className="w-full h-full p-4">
-                  {garmentType === "tshirt" ? (
-                    <TShirtMockup color={safeGarmentColor.hex}>
-                      {uploadedImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={uploadedImage}
-                          alt="Design preview"
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <p className={`font-mono text-xs ${safeGarmentColor.dark ? "text-white/30" : "text-black/30"}`}>
-                          Design
-                        </p>
-                      )}
-                    </TShirtMockup>
-                  ) : (
-                    <SweatshirtMockup color={safeGarmentColor.hex}>
-                      {uploadedImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={uploadedImage}
-                          alt="Design preview"
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <p className={`font-mono text-xs ${safeGarmentColor.dark ? "text-white/30" : "text-black/30"}`}>
-                          Design
-                        </p>
-                      )}
-                    </SweatshirtMockup>
-                  )}
-                </div>
-
-                {/* Label */}
-                <div className={`absolute bottom-3 left-3 right-3 flex justify-between items-center text-xs font-mono ${isDark ? "text-white/40" : "text-black/40"}`}>
-                  <span>{content.visualiser?.types?.[garmentType] || garmentType}</span>
-                  <span>{content.visualiser?.fits?.[garmentFit] || garmentFit}</span>
-                </div>
-              </div>
+              {/* Interactive Artwork Editor */}
+              <InteractiveArtworkEditor
+                uploadedImage={uploadedImage}
+                garmentType={garmentType}
+                garmentColor={safeGarmentColor}
+                transform={artworkTransform}
+                onTransformChange={setArtworkTransform}
+                isDark={isDark}
+              />
 
               {/* Disclaimer */}
-              <div className={`mb-6 p-4 border ${borderColor} ${isDark ? "bg-amber-500/5 border-amber-500/20" : "bg-amber-50 border-amber-200"} rounded-lg`}>
+              <div className={`mt-6 mb-6 p-4 border ${borderColor} ${isDark ? "bg-amber-500/5 border-amber-500/20" : "bg-amber-50 border-amber-200"} rounded-lg`}>
                 <p className={`text-xs ${isDark ? "text-amber-200/80" : "text-amber-700"} leading-relaxed`}>
                   <span className="font-semibold">Note :</span> Cet apercu est une visualisation approximative et ne represente pas le design final de l'oeuvre.
                   Il permet aux artistes et au public de se projeter sur le rendu potentiel du vetement.
