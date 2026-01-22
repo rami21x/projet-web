@@ -381,6 +381,7 @@ export default function StudioPage() {
     instagram: "",
     title: "",
   });
+  const [acceptNewsletter, setAcceptNewsletter] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -597,6 +598,8 @@ export default function StudioPage() {
               artistInfo={artistInfo}
               setArtistInfo={setArtistInfo}
               interpretation={interpretation}
+              acceptNewsletter={acceptNewsletter}
+              setAcceptNewsletter={setAcceptNewsletter}
               isSubmitting={isSubmitting}
               isSubmitted={isSubmitted}
               canSubmit={canSubmit}
@@ -1457,6 +1460,8 @@ function VisualiserStep({
   artistInfo,
   setArtistInfo,
   interpretation,
+  acceptNewsletter,
+  setAcceptNewsletter,
   isSubmitting,
   isSubmitted,
   canSubmit,
@@ -1474,6 +1479,8 @@ function VisualiserStep({
   artistInfo: { name: string; email: string; instagram: string; title: string };
   setArtistInfo: (v: { name: string; email: string; instagram: string; title: string }) => void;
   interpretation: Record<string, string>;
+  acceptNewsletter: boolean;
+  setAcceptNewsletter: (v: boolean) => void;
   isSubmitting: boolean;
   isSubmitted: boolean;
   canSubmit: boolean;
@@ -1489,29 +1496,157 @@ function VisualiserStep({
   // Fallback for garmentColor if undefined
   const safeGarmentColor = garmentColor || { name: "White", hex: "#FFFFFF", dark: false };
 
+  // Livret - Submission Success Screen
   if (isSubmitted) {
     return (
-      <div className="min-h-[70vh] flex items-center justify-center px-6">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center max-w-md"
-        >
-          <div className="w-24 h-24 bg-green-500/10 flex items-center justify-center mx-auto mb-8">
-            <Check className="w-12 h-12 text-green-500" />
-          </div>
-          <h2 className={`font-display text-3xl font-bold ${textPrimary} mb-4`}>
-            {content.visualiser.success.title}
-          </h2>
-          <p className={`${textSecondary} mb-8`}>
-            {content.visualiser.success.message}
-          </p>
-          <div className={`p-5 ${bgCard} border ${borderColor} text-left`}>
-            <p className={`text-sm ${textMuted} mb-2`}>{content.visualiser.yourMessage}</p>
-            <p className={`${textPrimary} italic`}>"{interpretation.message}"</p>
-          </div>
-        </motion.div>
+      <div className="py-16 px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {/* Success Header */}
+            <div className="text-center mb-12">
+              <div className="w-20 h-20 bg-green-500/10 flex items-center justify-center mx-auto mb-6">
+                <Check className="w-10 h-10 text-green-500" />
+              </div>
+              <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-3`}>
+                {content.visualiser?.success?.title || "Soumission envoyee !"}
+              </h2>
+              <p className={`${textSecondary} max-w-lg mx-auto`}>
+                {content.visualiser?.success?.message || "Votre oeuvre a ete soumise avec succes. Voici le recapitulatif de votre participation."}
+              </p>
+            </div>
+
+            {/* Livret Card */}
+            <div className={`${bgCard} border ${borderColor} overflow-hidden`}>
+              {/* Header with artist info */}
+              <div className={`p-6 md:p-8 border-b ${borderColor} ${isDark ? "bg-primary/5" : "bg-primary/[0.02]"}`}>
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-primary/10 flex items-center justify-center text-primary font-display text-xl font-bold">
+                    {artistInfo.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <h3 className={`font-display text-xl font-semibold ${textPrimary}`}>
+                      {artistInfo.title}
+                    </h3>
+                    <p className={`${textSecondary} text-sm`}>
+                      par {artistInfo.name} {artistInfo.instagram && `(@${artistInfo.instagram.replace('@', '')})`}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Visual Section - Side by side */}
+              <div className="grid md:grid-cols-2 gap-0">
+                {/* Original Artwork */}
+                <div className={`p-6 md:p-8 border-b md:border-b-0 md:border-r ${borderColor}`}>
+                  <p className={`text-xs font-mono tracking-wider text-accent mb-4`}>OEUVRE ORIGINALE</p>
+                  <div className={`aspect-square relative overflow-hidden rounded-lg ${isDark ? "bg-black/50" : "bg-gray-100"}`}>
+                    {uploadedImage ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={uploadedImage}
+                        alt="Oeuvre soumise"
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <ImageIcon className={`w-16 h-16 ${textMuted}`} />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Mockup Preview */}
+                <div className={`p-6 md:p-8`}>
+                  <p className={`text-xs font-mono tracking-wider text-accent mb-4`}>APERCU SUR VETEMENT</p>
+                  <div className={`aspect-square relative overflow-hidden rounded-lg ${isDark ? "bg-neutral-900" : "bg-neutral-100"}`}>
+                    <div className="w-full h-full p-4">
+                      {garmentType === "tshirt" ? (
+                        <TShirtMockup color={safeGarmentColor.hex}>
+                          {uploadedImage && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={uploadedImage}
+                              alt="Design preview"
+                              className="w-full h-full object-contain"
+                            />
+                          )}
+                        </TShirtMockup>
+                      ) : (
+                        <SweatshirtMockup color={safeGarmentColor.hex}>
+                          {uploadedImage && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={uploadedImage}
+                              alt="Design preview"
+                              className="w-full h-full object-contain"
+                            />
+                          )}
+                        </SweatshirtMockup>
+                      )}
+                    </div>
+                    {/* Garment info */}
+                    <div className={`absolute bottom-2 left-2 right-2 flex justify-between text-[10px] font-mono ${textMuted}`}>
+                      <span>{content.visualiser?.types?.[garmentType] || garmentType}</span>
+                      <span>{safeGarmentColor.name}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Artist Writings */}
+              <div className={`p-6 md:p-8 border-t ${borderColor}`}>
+                <p className={`text-xs font-mono tracking-wider text-accent mb-6`}>VOTRE INTERPRETATION</p>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Duality */}
+                  <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
+                    <h4 className={`text-sm font-semibold ${textPrimary} mb-2`}>La Dualite</h4>
+                    <p className={`text-sm ${textSecondary} italic`}>"{interpretation.duality || ""}"</p>
+                  </div>
+
+                  {/* Harmony */}
+                  <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
+                    <h4 className={`text-sm font-semibold ${textPrimary} mb-2`}>L'Harmonie du Chaos</h4>
+                    <p className={`text-sm ${textSecondary} italic`}>"{interpretation.harmony || ""}"</p>
+                  </div>
+
+                  {/* Feeling */}
+                  <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
+                    <h4 className={`text-sm font-semibold ${textPrimary} mb-2`}>Le Sentiment</h4>
+                    <p className={`text-sm ${textSecondary} italic`}>"{interpretation.feeling || ""}"</p>
+                  </div>
+
+                  {/* Message */}
+                  <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
+                    <h4 className={`text-sm font-semibold ${textPrimary} mb-2`}>Le Message</h4>
+                    <p className={`text-sm ${textSecondary} italic`}>"{interpretation.message || ""}"</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className={`px-6 md:px-8 py-4 border-t ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"} flex items-center justify-between`}>
+                <p className={`text-xs ${textMuted}`}>
+                  ARTERAL - Narcisse Amoureux
+                </p>
+                <p className={`text-xs ${textMuted}`}>
+                  {new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </p>
+              </div>
+            </div>
+
+            {/* Additional Info */}
+            <div className="mt-8 text-center">
+              <p className={`text-sm ${textSecondary}`}>
+                Vous recevrez un email de confirmation a <span className="text-primary">{artistInfo.email}</span>
+              </p>
+            </div>
+          </motion.div>
+        </div>
       </div>
     );
   }
@@ -1588,6 +1723,14 @@ function VisualiserStep({
                   <span>{content.visualiser?.types?.[garmentType] || garmentType}</span>
                   <span>{content.visualiser?.fits?.[garmentFit] || garmentFit}</span>
                 </div>
+              </div>
+
+              {/* Disclaimer */}
+              <div className={`mb-6 p-4 border ${borderColor} ${isDark ? "bg-amber-500/5 border-amber-500/20" : "bg-amber-50 border-amber-200"} rounded-lg`}>
+                <p className={`text-xs ${isDark ? "text-amber-200/80" : "text-amber-700"} leading-relaxed`}>
+                  <span className="font-semibold">Note :</span> Cet apercu est une visualisation approximative et ne represente pas le design final de l'oeuvre.
+                  Il permet aux artistes et au public de se projeter sur le rendu potentiel du vetement.
+                </p>
               </div>
 
               {/* Options */}
@@ -1720,6 +1863,26 @@ function VisualiserStep({
                   <h4 className="text-sm text-accent mb-2">{content.visualiser?.yourMessage || "Votre message"}</h4>
                   <p className={`${textPrimary} italic`}>"{interpretation.message || ""}"</p>
                 </div>
+
+                {/* Newsletter checkbox */}
+                <label className="flex items-start gap-3 mt-6 cursor-pointer group">
+                  <div className="relative flex-shrink-0 mt-0.5">
+                    <input
+                      type="checkbox"
+                      checked={acceptNewsletter}
+                      onChange={(e) => setAcceptNewsletter(e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className={`w-5 h-5 border-2 ${borderColor} transition-all peer-checked:bg-primary peer-checked:border-primary group-hover:border-primary/50`}>
+                      {acceptNewsletter && (
+                        <Check className="w-4 h-4 text-white" />
+                      )}
+                    </div>
+                  </div>
+                  <span className={`text-sm ${textSecondary} leading-relaxed`}>
+                    J'accepte de recevoir des nouvelles concernant mon oeuvre et les resultats du concours ARTERAL par email.
+                  </span>
+                </label>
 
                 <button
                   onClick={handleSubmit}
