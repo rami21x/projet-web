@@ -1299,10 +1299,10 @@ function VisualiserStep({
               <Eye className="w-7 h-7 text-accent" />
             </div>
             <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
-              {content.visualiser.title}
+              {content.visualiser?.title || "Visualisez & Soumettez"}
             </h2>
             <p className={`${textSecondary} max-w-xl mx-auto`}>
-              {content.visualiser.subtitle}
+              {content.visualiser?.subtitle || "Choisissez le support de votre œuvre et finalisez votre soumission."}
             </p>
           </div>
         </FadeIn>
@@ -1312,7 +1312,7 @@ function VisualiserStep({
           <FadeIn delay={0.1}>
             <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
-                {content.visualiser.preview}
+                {content.visualiser?.preview || "Aperçu"}
               </h3>
 
               <div
@@ -1341,7 +1341,7 @@ function VisualiserStep({
                 )}
 
                 <p className={`absolute bottom-4 left-4 text-xs font-mono ${safeGarmentColor.dark ? "text-white/30" : "text-black/30"}`}>
-                  {content.visualiser.types[garmentType]} • {content.visualiser.fits[garmentFit]}
+                  {content.visualiser?.types?.[garmentType] || garmentType} • {content.visualiser?.fits?.[garmentFit] || garmentFit}
                 </p>
               </div>
 
@@ -1349,7 +1349,7 @@ function VisualiserStep({
               <div className="space-y-5">
                 {/* Type */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.garmentType}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.garmentType || "Type"}</label>
                   <div className="flex gap-2">
                     {(["tshirt", "pull"] as GarmentType[]).map((type) => (
                       <button
@@ -1361,7 +1361,7 @@ function VisualiserStep({
                             : `${inputBg} ${borderColor} ${textSecondary} hover:border-primary/30`
                         }`}
                       >
-                        {content.visualiser.types[type]}
+                        {content.visualiser?.types?.[type] || type}
                       </button>
                     ))}
                   </div>
@@ -1369,7 +1369,7 @@ function VisualiserStep({
 
                 {/* Fit */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.garmentFit}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.garmentFit || "Coupe"}</label>
                   <div className="flex gap-2">
                     {(["slim", "regular", "oversize"] as GarmentFit[]).map((fit) => (
                       <button
@@ -1381,7 +1381,7 @@ function VisualiserStep({
                             : `${inputBg} ${borderColor} ${textSecondary} hover:border-primary/30`
                         }`}
                       >
-                        {content.visualiser.fits[fit]}
+                        {content.visualiser?.fits?.[fit] || fit}
                       </button>
                     ))}
                   </div>
@@ -1389,9 +1389,9 @@ function VisualiserStep({
 
                 {/* Color */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.garmentColor}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.garmentColor || "Couleur"}</label>
                   <div className="flex flex-wrap gap-3">
-                    {content.colors.map((color) => (
+                    {(content.colors || []).map((color) => (
                       <button
                         key={color.hex}
                         onClick={() => setGarmentColor(color)}
@@ -1418,58 +1418,58 @@ function VisualiserStep({
           <FadeIn delay={0.2}>
             <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
-                {content.visualiser.artistInfo}
+                {content.visualiser?.artistInfo || "Informations Artiste"}
               </h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.title}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.fields?.title || "Titre de l'œuvre *"}</label>
                   <input
                     type="text"
                     value={artistInfo.title}
                     onChange={(e) => setArtistInfo({ ...artistInfo, title: e.target.value })}
-                    placeholder={content.visualiser.fields.titlePlaceholder}
+                    placeholder={content.visualiser?.fields?.titlePlaceholder || "Ex: Le Reflet Brisé"}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
                   />
                 </div>
 
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.name}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.fields?.name || "Votre nom *"}</label>
                   <input
                     type="text"
                     value={artistInfo.name}
                     onChange={(e) => setArtistInfo({ ...artistInfo, name: e.target.value })}
-                    placeholder={content.visualiser.fields.namePlaceholder}
+                    placeholder={content.visualiser?.fields?.namePlaceholder || "Nom ou pseudonyme"}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
                   />
                 </div>
 
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.email}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.fields?.email || "Email *"}</label>
                   <input
                     type="email"
                     value={artistInfo.email}
                     onChange={(e) => setArtistInfo({ ...artistInfo, email: e.target.value })}
-                    placeholder={content.visualiser.fields.emailPlaceholder}
+                    placeholder={content.visualiser?.fields?.emailPlaceholder || "pour vous contacter"}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
                   />
                 </div>
 
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.instagram}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.fields?.instagram || "Instagram (optionnel)"}</label>
                   <input
                     type="text"
                     value={artistInfo.instagram}
                     onChange={(e) => setArtistInfo({ ...artistInfo, instagram: e.target.value })}
-                    placeholder={content.visualiser.fields.instagramPlaceholder}
+                    placeholder={content.visualiser?.fields?.instagramPlaceholder || "@votre_compte"}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
                   />
                 </div>
 
                 {/* Message summary */}
                 <div className={`mt-6 p-5 border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
-                  <h4 className="text-sm text-accent mb-2">{content.visualiser.yourMessage}</h4>
-                  <p className={`${textPrimary} italic`}>"{interpretation.message}"</p>
+                  <h4 className="text-sm text-accent mb-2">{content.visualiser?.yourMessage || "Votre message"}</h4>
+                  <p className={`${textPrimary} italic`}>"{interpretation.message || ""}"</p>
                 </div>
 
                 <button
@@ -1484,18 +1484,18 @@ function VisualiserStep({
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>{content.visualiser.submitting}</span>
+                      <span>{content.visualiser?.submitting || "Envoi..."}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5" />
-                      <span>{content.visualiser.submit}</span>
+                      <span>{content.visualiser?.submit || "Soumettre"}</span>
                     </>
                   )}
                 </button>
 
                 <p className={`text-xs ${textMuted} text-center mt-4`}>
-                  {content.visualiser.terms}
+                  {content.visualiser?.terms || "En soumettant, vous acceptez que votre œuvre soit utilisée dans le cadre du concours ARTERAL."}
                 </p>
               </div>
             </div>
