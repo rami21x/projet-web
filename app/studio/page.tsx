@@ -145,7 +145,8 @@ export default function StudioPage() {
   // Garment selection state
   const [garmentType, setGarmentType] = useState<GarmentType>("tshirt");
   const [garmentFit, setGarmentFit] = useState<GarmentFit>("oversize");
-  const [garmentColor, setGarmentColor] = useState(content.colors[0]);
+  const defaultColor = { name: "White", hex: "#FFFFFF", dark: false };
+  const [garmentColor, setGarmentColor] = useState(content.colors?.[0] || defaultColor);
 
   // Submission state
   const [artistInfo, setArtistInfo] = useState({
@@ -1259,6 +1260,9 @@ function VisualiserStep({
   const textMuted = isDark ? "text-white/40" : "text-gray-400";
   const inputBg = isDark ? "bg-black/30" : "bg-gray-50";
 
+  // Fallback for garmentColor if undefined
+  const safeGarmentColor = garmentColor || { name: "White", hex: "#FFFFFF", dark: false };
+
   if (isSubmitted) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-6">
@@ -1313,15 +1317,15 @@ function VisualiserStep({
 
               <div
                 className="aspect-square flex items-center justify-center relative overflow-hidden mb-8"
-                style={{ backgroundColor: garmentColor.hex }}
+                style={{ backgroundColor: safeGarmentColor.hex }}
               >
                 {/* Garment silhouette */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                  <Shirt className={`w-64 h-64 ${garmentColor.dark ? "text-white" : "text-black"}`} />
+                  <Shirt className={`w-64 h-64 ${safeGarmentColor.dark ? "text-white" : "text-black"}`} />
                 </div>
 
                 {/* Design preview */}
-                {uploadedImage && (
+                {uploadedImage ? (
                   <div className="relative w-1/2 h-1/2">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -1330,9 +1334,13 @@ function VisualiserStep({
                       className="w-full h-full object-contain"
                     />
                   </div>
+                ) : (
+                  <div className={`absolute inset-0 flex items-center justify-center ${safeGarmentColor.dark ? "text-white/20" : "text-black/20"}`}>
+                    <p className="font-mono text-sm">Aucun design chargé</p>
+                  </div>
                 )}
 
-                <p className={`absolute bottom-4 left-4 text-xs font-mono ${garmentColor.dark ? "text-white/30" : "text-black/30"}`}>
+                <p className={`absolute bottom-4 left-4 text-xs font-mono ${safeGarmentColor.dark ? "text-white/30" : "text-black/30"}`}>
                   {content.visualiser.types[garmentType]} • {content.visualiser.fits[garmentFit]}
                 </p>
               </div>
@@ -1389,13 +1397,13 @@ function VisualiserStep({
                         onClick={() => setGarmentColor(color)}
                         title={color.name}
                         className={`w-10 h-10 border-2 transition-all ${
-                          garmentColor.hex === color.hex
+                          safeGarmentColor.hex === color.hex
                             ? "border-primary scale-110"
                             : `border-transparent hover:scale-105 ${isDark ? "ring-1 ring-white/10" : "ring-1 ring-black/10"}`
                         }`}
                         style={{ backgroundColor: color.hex }}
                       >
-                        {garmentColor.hex === color.hex && (
+                        {safeGarmentColor.hex === color.hex && (
                           <Check className={`w-5 h-5 mx-auto ${color.dark ? "text-white" : "text-black"}`} />
                         )}
                       </button>
