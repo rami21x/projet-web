@@ -1,0 +1,54 @@
+<svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tshirtHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,1)" />
+      <stop offset="50%" stop-color="rgba(250,250,250,1)" />
+      <stop offset="100%" stop-color="rgba(245,245,245,1)" />
+    </linearGradient>
+    <linearGradient id="tshirtShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(0,0,0,0.02)" />
+      <stop offset="50%" stop-color="rgba(0,0,0,0)" />
+      <stop offset="100%" stop-color="rgba(0,0,0,0.04)" />
+    </linearGradient>
+    <filter id="fabricTexture" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+      <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="1" result="light">
+        <feDistantLight azimuth="45" elevation="60"/>
+      </feDiffuseLighting>
+      <feComposite in="SourceGraphic" in2="light" operator="arithmetic" k1="1" k2="0" k3="0" k4="0"/>
+    </filter>
+  </defs>
+
+  <!-- Main body -->
+  <path
+    d="M105 70 L65 105 L25 90 L50 165 L85 150 L85 440 L315 440 L315 150 L350 165 L375 90 L335 105 L295 70 L250 70 C242 100 225 120 200 120 C175 120 158 100 150 70 L105 70 Z"
+    fill="#FFFFFF"
+    stroke="#E5E5E5"
+    stroke-width="1"
+  />
+
+  <!-- Subtle shadows for depth -->
+  <path
+    d="M85 150 L85 440"
+    fill="none"
+    stroke="rgba(0,0,0,0.06)"
+    stroke-width="2"
+  />
+  <path
+    d="M315 150 L315 440"
+    fill="none"
+    stroke="rgba(0,0,0,0.06)"
+    stroke-width="2"
+  />
+
+  <!-- Collar band -->
+  <ellipse cx="200" cy="75" rx="52" ry="18" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" />
+  <ellipse cx="200" cy="75" rx="40" ry="12" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="3" />
+
+  <!-- Sleeve shadows -->
+  <path d="M50 155 L85 145" stroke="rgba(0,0,0,0.05)" stroke-width="2" />
+  <path d="M350 155 L315 145" stroke="rgba(0,0,0,0.05)" stroke-width="2" />
+
+  <!-- Bottom hem -->
+  <rect x="85" y="428" width="230" height="14" rx="3" fill="rgba(0,0,0,0.04)" />
+</svg>

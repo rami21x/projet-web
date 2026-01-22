@@ -122,77 +122,230 @@ const SymbolMirror = ({ className }: { className?: string }) => (
 
 const SYMBOL_COMPONENTS = [SymbolFire, SymbolEclipse, SymbolDance, SymbolMirror];
 
-// Realistic T-Shirt SVG Mockup
-const TShirtMockup = ({ color, children }: { color: string; children?: React.ReactNode }) => (
-  <div className="relative w-full h-full">
-    <svg viewBox="0 0 300 350" className="w-full h-full">
-      {/* T-Shirt shape */}
-      <path
-        d="M75 50 L50 80 L20 70 L35 120 L60 110 L60 320 L240 320 L240 110 L265 120 L280 70 L250 80 L225 50 L190 50 C185 70 165 85 150 85 C135 85 115 70 110 50 L75 50 Z"
-        fill={color}
-        stroke={color === "#FFFFFF" ? "#E5E5E5" : "transparent"}
-        strokeWidth="2"
-      />
-      {/* Collar */}
-      <ellipse cx="150" cy="55" rx="40" ry="15" fill={color} stroke={color === "#FFFFFF" ? "#E5E5E5" : "transparent"} strokeWidth="1" />
-      <ellipse cx="150" cy="55" rx="30" ry="10" fill="none" stroke={color === "#FFFFFF" ? "#CCCCCC" : "rgba(0,0,0,0.1)"} strokeWidth="2" />
-      {/* Sleeve lines */}
-      <path d="M60 110 Q40 95 35 120" fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth="2" />
-      <path d="M240 110 Q260 95 265 120" fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth="2" />
-      {/* Body shadow for depth */}
-      <path
-        d="M60 110 L60 320 L240 320 L240 110"
-        fill="none"
-        stroke="rgba(0,0,0,0.03)"
-        strokeWidth="40"
-      />
-    </svg>
-    {/* Design overlay area */}
-    <div className="absolute top-[28%] left-[28%] w-[44%] h-[35%] flex items-center justify-center">
-      {children}
+// CSS Blend Mode Mockup Component - Uses PNG with multiply blend for realistic coloring
+const MockupWithBlendMode = ({
+  imageSrc,
+  color,
+  children,
+  designPosition,
+  garmentType
+}: {
+  imageSrc: string;
+  color: string;
+  children?: React.ReactNode;
+  designPosition: { top: string; left: string; width: string; height: string };
+  garmentType: 'tshirt' | 'hoodie';
+}) => {
+  const [imageExists, setImageExists] = useState(true);
+
+  return (
+    <div className="relative w-full h-full flex items-center justify-center">
+      {imageExists ? (
+        <>
+          {/* Color layer - appears behind the white mockup with multiply blend */}
+          <div
+            className="absolute inset-0 rounded-lg"
+            style={{ backgroundColor: color }}
+          />
+          {/* White PNG mockup with multiply blend mode */}
+          <div className="relative w-full h-full">
+            <Image
+              src={imageSrc}
+              alt="Garment mockup"
+              fill
+              className="object-contain mix-blend-multiply"
+              style={{ filter: 'contrast(1.05)' }}
+              onError={() => setImageExists(false)}
+            />
+          </div>
+          {/* Design overlay */}
+          <div
+            className="absolute flex items-center justify-center"
+            style={{
+              top: designPosition.top,
+              left: designPosition.left,
+              width: designPosition.width,
+              height: designPosition.height,
+            }}
+          >
+            {children}
+          </div>
+        </>
+      ) : (
+        // Fallback to enhanced SVG mockup
+        <FallbackMockup color={color} type={garmentType}>
+          {children}
+        </FallbackMockup>
+      )}
     </div>
-  </div>
+  );
+};
+
+// Enhanced Fallback SVG Mockup (much more detailed and realistic)
+const FallbackMockup = ({ color, type, children }: { color: string; type: 'tshirt' | 'hoodie'; children?: React.ReactNode }) => {
+  const isLight = color === "#FFFFFF" || color === "#F5F5DC" || color === "#D2B48C";
+  const shadowColor = isLight ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.15)";
+  const highlightColor = isLight ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.1)";
+  const strokeColor = isLight ? "#D1D5DB" : "transparent";
+
+  if (type === 'hoodie') {
+    return (
+      <div className="relative w-full h-full">
+        <svg viewBox="0 0 400 480" className="w-full h-full" style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))' }}>
+          <defs>
+            <linearGradient id="hoodieGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor={highlightColor} />
+              <stop offset="50%" stopColor="transparent" />
+              <stop offset="100%" stopColor={shadowColor} />
+            </linearGradient>
+            <linearGradient id="hoodieFold" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor={shadowColor} />
+              <stop offset="50%" stopColor="transparent" />
+              <stop offset="100%" stopColor={shadowColor} />
+            </linearGradient>
+          </defs>
+
+          {/* Hood - back part */}
+          <path
+            d="M100 85 Q60 50 100 20 Q200 -15 300 20 Q340 50 300 85"
+            fill={color}
+            stroke={strokeColor}
+            strokeWidth="1.5"
+          />
+
+          {/* Main body */}
+          <path
+            d="M100 85 L55 125 L15 110 L45 220 L75 205 L75 440 L325 440 L325 205 L355 220 L385 110 L345 125 L300 85 L255 85 C245 115 220 135 200 135 C180 135 155 115 145 85 L100 85 Z"
+            fill={color}
+            stroke={strokeColor}
+            strokeWidth="1.5"
+          />
+
+          {/* Gradient overlay for 3D effect */}
+          <path
+            d="M100 85 L55 125 L15 110 L45 220 L75 205 L75 440 L325 440 L325 205 L355 220 L385 110 L345 125 L300 85 L255 85 C245 115 220 135 200 135 C180 135 155 115 145 85 L100 85 Z"
+            fill="url(#hoodieGradient)"
+          />
+
+          {/* Hood opening / neckline */}
+          <ellipse cx="200" cy="92" rx="58" ry="22" fill={color} />
+          <ellipse cx="200" cy="92" rx="45" ry="15" fill="none" stroke={shadowColor} strokeWidth="3" />
+
+          {/* Hood strings */}
+          <path d="M170 100 L165 160" stroke={shadowColor} strokeWidth="3" strokeLinecap="round" />
+          <path d="M230 100 L235 160" stroke={shadowColor} strokeWidth="3" strokeLinecap="round" />
+
+          {/* Kangaroo pocket */}
+          <path
+            d="M120 320 Q120 350 150 350 L250 350 Q280 350 280 320 L280 295 Q200 310 120 295 Z"
+            fill="none"
+            stroke={shadowColor}
+            strokeWidth="2.5"
+          />
+
+          {/* Sleeve seams */}
+          <path d="M75 205 Q55 145 45 220" fill="none" stroke={shadowColor} strokeWidth="1.5" />
+          <path d="M325 205 Q345 145 355 220" fill="none" stroke={shadowColor} strokeWidth="1.5" />
+
+          {/* Cuffs */}
+          <rect x="40" y="205" width="40" height="20" rx="4" fill={shadowColor} />
+          <rect x="320" y="205" width="40" height="20" rx="4" fill={shadowColor} />
+
+          {/* Bottom hem */}
+          <rect x="75" y="425" width="250" height="18" rx="4" fill={shadowColor} />
+
+          {/* Center fold line */}
+          <path d="M200 135 L200 320" stroke="url(#hoodieFold)" strokeWidth="1" opacity="0.5" />
+        </svg>
+
+        {/* Design overlay area */}
+        <div className="absolute top-[32%] left-[30%] w-[40%] h-[28%] flex items-center justify-center">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
+  // T-shirt
+  return (
+    <div className="relative w-full h-full">
+      <svg viewBox="0 0 400 480" className="w-full h-full" style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))' }}>
+        <defs>
+          <linearGradient id="tshirtGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={highlightColor} />
+            <stop offset="50%" stopColor="transparent" />
+            <stop offset="100%" stopColor={shadowColor} />
+          </linearGradient>
+          <linearGradient id="tshirtFold" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor={shadowColor} />
+            <stop offset="50%" stopColor="transparent" />
+            <stop offset="100%" stopColor={shadowColor} />
+          </linearGradient>
+        </defs>
+
+        {/* Main body */}
+        <path
+          d="M105 70 L65 105 L25 90 L50 165 L85 150 L85 440 L315 440 L315 150 L350 165 L375 90 L335 105 L295 70 L250 70 C242 100 225 120 200 120 C175 120 158 100 150 70 L105 70 Z"
+          fill={color}
+          stroke={strokeColor}
+          strokeWidth="1.5"
+        />
+
+        {/* Gradient overlay for 3D effect */}
+        <path
+          d="M105 70 L65 105 L25 90 L50 165 L85 150 L85 440 L315 440 L315 150 L350 165 L375 90 L335 105 L295 70 L250 70 C242 100 225 120 200 120 C175 120 158 100 150 70 L105 70 Z"
+          fill="url(#tshirtGradient)"
+        />
+
+        {/* Collar band */}
+        <ellipse cx="200" cy="75" rx="52" ry="18" fill={color} stroke={strokeColor} strokeWidth="1" />
+        <ellipse cx="200" cy="75" rx="40" ry="12" fill="none" stroke={shadowColor} strokeWidth="3" />
+
+        {/* Sleeve hems */}
+        <path d="M50 155 L85 145" stroke={shadowColor} strokeWidth="2" />
+        <path d="M350 155 L315 145" stroke={shadowColor} strokeWidth="2" />
+
+        {/* Side seams */}
+        <path d="M85 150 L85 440" stroke={shadowColor} strokeWidth="1" opacity="0.3" />
+        <path d="M315 150 L315 440" stroke={shadowColor} strokeWidth="1" opacity="0.3" />
+
+        {/* Bottom hem */}
+        <rect x="85" y="428" width="230" height="14" rx="3" fill={shadowColor} />
+
+        {/* Center fold hint */}
+        <path d="M200 120 L200 420" stroke="url(#tshirtFold)" strokeWidth="1" opacity="0.3" />
+      </svg>
+
+      {/* Design overlay area */}
+      <div className="absolute top-[28%] left-[28%] w-[44%] h-[32%] flex items-center justify-center">
+        {children}
+      </div>
+    </div>
+  );
+};
+
+// T-Shirt Mockup - uses SVG with blend mode for color, falls back to enhanced SVG
+const TShirtMockup = ({ color, children }: { color: string; children?: React.ReactNode }) => (
+  <MockupWithBlendMode
+    imageSrc="/images/mockups/tshirt-white.svg"
+    color={color}
+    designPosition={{ top: '28%', left: '28%', width: '44%', height: '32%' }}
+    garmentType="tshirt"
+  >
+    {children}
+  </MockupWithBlendMode>
 );
 
-// Realistic Sweatshirt/Pull SVG Mockup
+// Sweatshirt/Hoodie Mockup - uses SVG with blend mode for color, falls back to enhanced SVG
 const SweatshirtMockup = ({ color, children }: { color: string; children?: React.ReactNode }) => (
-  <div className="relative w-full h-full">
-    <svg viewBox="0 0 300 350" className="w-full h-full">
-      {/* Sweatshirt body */}
-      <path
-        d="M70 60 L40 90 L10 80 L30 160 L55 150 L55 320 L245 320 L245 150 L270 160 L290 80 L260 90 L230 60 L190 60 C185 80 165 95 150 95 C135 95 115 80 110 60 L70 60 Z"
-        fill={color}
-        stroke={color === "#FFFFFF" ? "#E5E5E5" : "transparent"}
-        strokeWidth="2"
-      />
-      {/* Hood (behind) */}
-      <path
-        d="M70 60 Q50 30 80 10 Q150 -10 220 10 Q250 30 230 60"
-        fill={color}
-        stroke={color === "#FFFFFF" ? "#E5E5E5" : "transparent"}
-        strokeWidth="2"
-      />
-      {/* Hood opening */}
-      <ellipse cx="150" cy="65" rx="45" ry="18" fill={color} />
-      <ellipse cx="150" cy="65" rx="35" ry="12" fill="none" stroke={color === "#FFFFFF" ? "#CCCCCC" : "rgba(0,0,0,0.15)"} strokeWidth="3" />
-      {/* Kangaroo pocket */}
-      <path
-        d="M90 240 Q90 260 110 260 L190 260 Q210 260 210 240 L210 220 Q150 230 90 220 Z"
-        fill="none"
-        stroke={color === "#FFFFFF" ? "#CCCCCC" : "rgba(0,0,0,0.1)"}
-        strokeWidth="2"
-      />
-      {/* Sleeve cuffs */}
-      <rect x="30" y="150" width="30" height="15" rx="3" fill={color === "#FFFFFF" ? "#E5E5E5" : "rgba(0,0,0,0.1)"} />
-      <rect x="240" y="150" width="30" height="15" rx="3" fill={color === "#FFFFFF" ? "#E5E5E5" : "rgba(0,0,0,0.1)"} />
-      {/* Bottom hem */}
-      <rect x="55" y="310" width="190" height="12" rx="3" fill={color === "#FFFFFF" ? "#E5E5E5" : "rgba(0,0,0,0.1)"} />
-    </svg>
-    {/* Design overlay area */}
-    <div className="absolute top-[30%] left-[28%] w-[44%] h-[30%] flex items-center justify-center">
-      {children}
-    </div>
-  </div>
+  <MockupWithBlendMode
+    imageSrc="/images/mockups/hoodie-white.svg"
+    color={color}
+    designPosition={{ top: '32%', left: '30%', width: '40%', height: '28%' }}
+    garmentType="hoodie"
+  >
+    {children}
+  </MockupWithBlendMode>
 );
 
 export default function StudioPage() {
