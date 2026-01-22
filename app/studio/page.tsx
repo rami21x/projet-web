@@ -122,6 +122,79 @@ const SymbolMirror = ({ className }: { className?: string }) => (
 
 const SYMBOL_COMPONENTS = [SymbolFire, SymbolEclipse, SymbolDance, SymbolMirror];
 
+// Realistic T-Shirt SVG Mockup
+const TShirtMockup = ({ color, children }: { color: string; children?: React.ReactNode }) => (
+  <div className="relative w-full h-full">
+    <svg viewBox="0 0 300 350" className="w-full h-full">
+      {/* T-Shirt shape */}
+      <path
+        d="M75 50 L50 80 L20 70 L35 120 L60 110 L60 320 L240 320 L240 110 L265 120 L280 70 L250 80 L225 50 L190 50 C185 70 165 85 150 85 C135 85 115 70 110 50 L75 50 Z"
+        fill={color}
+        stroke={color === "#FFFFFF" ? "#E5E5E5" : "transparent"}
+        strokeWidth="2"
+      />
+      {/* Collar */}
+      <ellipse cx="150" cy="55" rx="40" ry="15" fill={color} stroke={color === "#FFFFFF" ? "#E5E5E5" : "transparent"} strokeWidth="1" />
+      <ellipse cx="150" cy="55" rx="30" ry="10" fill="none" stroke={color === "#FFFFFF" ? "#CCCCCC" : "rgba(0,0,0,0.1)"} strokeWidth="2" />
+      {/* Sleeve lines */}
+      <path d="M60 110 Q40 95 35 120" fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth="2" />
+      <path d="M240 110 Q260 95 265 120" fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth="2" />
+      {/* Body shadow for depth */}
+      <path
+        d="M60 110 L60 320 L240 320 L240 110"
+        fill="none"
+        stroke="rgba(0,0,0,0.03)"
+        strokeWidth="40"
+      />
+    </svg>
+    {/* Design overlay area */}
+    <div className="absolute top-[28%] left-[28%] w-[44%] h-[35%] flex items-center justify-center">
+      {children}
+    </div>
+  </div>
+);
+
+// Realistic Sweatshirt/Pull SVG Mockup
+const SweatshirtMockup = ({ color, children }: { color: string; children?: React.ReactNode }) => (
+  <div className="relative w-full h-full">
+    <svg viewBox="0 0 300 350" className="w-full h-full">
+      {/* Sweatshirt body */}
+      <path
+        d="M70 60 L40 90 L10 80 L30 160 L55 150 L55 320 L245 320 L245 150 L270 160 L290 80 L260 90 L230 60 L190 60 C185 80 165 95 150 95 C135 95 115 80 110 60 L70 60 Z"
+        fill={color}
+        stroke={color === "#FFFFFF" ? "#E5E5E5" : "transparent"}
+        strokeWidth="2"
+      />
+      {/* Hood (behind) */}
+      <path
+        d="M70 60 Q50 30 80 10 Q150 -10 220 10 Q250 30 230 60"
+        fill={color}
+        stroke={color === "#FFFFFF" ? "#E5E5E5" : "transparent"}
+        strokeWidth="2"
+      />
+      {/* Hood opening */}
+      <ellipse cx="150" cy="65" rx="45" ry="18" fill={color} />
+      <ellipse cx="150" cy="65" rx="35" ry="12" fill="none" stroke={color === "#FFFFFF" ? "#CCCCCC" : "rgba(0,0,0,0.15)"} strokeWidth="3" />
+      {/* Kangaroo pocket */}
+      <path
+        d="M90 240 Q90 260 110 260 L190 260 Q210 260 210 240 L210 220 Q150 230 90 220 Z"
+        fill="none"
+        stroke={color === "#FFFFFF" ? "#CCCCCC" : "rgba(0,0,0,0.1)"}
+        strokeWidth="2"
+      />
+      {/* Sleeve cuffs */}
+      <rect x="30" y="150" width="30" height="15" rx="3" fill={color === "#FFFFFF" ? "#E5E5E5" : "rgba(0,0,0,0.1)"} />
+      <rect x="240" y="150" width="30" height="15" rx="3" fill={color === "#FFFFFF" ? "#E5E5E5" : "rgba(0,0,0,0.1)"} />
+      {/* Bottom hem */}
+      <rect x="55" y="310" width="190" height="12" rx="3" fill={color === "#FFFFFF" ? "#E5E5E5" : "rgba(0,0,0,0.1)"} />
+    </svg>
+    {/* Design overlay area */}
+    <div className="absolute top-[30%] left-[28%] w-[44%] h-[30%] flex items-center justify-center">
+      {children}
+    </div>
+  </div>
+);
+
 export default function StudioPage() {
   const { studioPageContent: content } = useContent();
   const { resolvedTheme } = useTheme();
@@ -1320,33 +1393,48 @@ function VisualiserStep({
               </h3>
 
               <div
-                className="aspect-square flex items-center justify-center relative overflow-hidden mb-8"
-                style={{ backgroundColor: safeGarmentColor.hex }}
+                className={`aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-8 rounded-lg ${isDark ? "bg-neutral-900" : "bg-neutral-100"}`}
               >
-                {/* Garment silhouette */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                  <Shirt className={`w-64 h-64 ${safeGarmentColor.dark ? "text-white" : "text-black"}`} />
+                {/* Garment Mockup */}
+                <div className="w-full h-full p-4">
+                  {garmentType === "tshirt" ? (
+                    <TShirtMockup color={safeGarmentColor.hex}>
+                      {uploadedImage ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={uploadedImage}
+                          alt="Design preview"
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <p className={`font-mono text-xs ${safeGarmentColor.dark ? "text-white/30" : "text-black/30"}`}>
+                          Design
+                        </p>
+                      )}
+                    </TShirtMockup>
+                  ) : (
+                    <SweatshirtMockup color={safeGarmentColor.hex}>
+                      {uploadedImage ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={uploadedImage}
+                          alt="Design preview"
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <p className={`font-mono text-xs ${safeGarmentColor.dark ? "text-white/30" : "text-black/30"}`}>
+                          Design
+                        </p>
+                      )}
+                    </SweatshirtMockup>
+                  )}
                 </div>
 
-                {/* Design preview */}
-                {uploadedImage ? (
-                  <div className="relative w-1/2 h-1/2">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={uploadedImage}
-                      alt="Design preview"
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                ) : (
-                  <div className={`absolute inset-0 flex items-center justify-center ${safeGarmentColor.dark ? "text-white/20" : "text-black/20"}`}>
-                    <p className="font-mono text-sm">Aucun design chargé</p>
-                  </div>
-                )}
-
-                <p className={`absolute bottom-4 left-4 text-xs font-mono ${safeGarmentColor.dark ? "text-white/30" : "text-black/30"}`}>
-                  {content.visualiser?.types?.[garmentType] || garmentType} • {content.visualiser?.fits?.[garmentFit] || garmentFit}
-                </p>
+                {/* Label */}
+                <div className={`absolute bottom-3 left-3 right-3 flex justify-between items-center text-xs font-mono ${isDark ? "text-white/40" : "text-black/40"}`}>
+                  <span>{content.visualiser?.types?.[garmentType] || garmentType}</span>
+                  <span>{content.visualiser?.fits?.[garmentFit] || garmentFit}</span>
+                </div>
               </div>
 
               {/* Options */}
