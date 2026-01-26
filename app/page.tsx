@@ -288,7 +288,7 @@ export default function Home() {
               <FadeIn key={num} delay={index * 0.1}>
                 <div className="group relative aspect-[3/4] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
                   <Image
-                    src={`/images/models/model-${num}.jpg`}
+                    src={`/images/models/model-${num}.png`}
                     alt={`Model ${num}`}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -313,7 +313,7 @@ export default function Home() {
               <FadeIn key={num} delay={0.4 + index * 0.1}>
                 <div className="group relative aspect-[4/3] md:aspect-[16/9] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
                   <Image
-                    src={`/images/models/model-${num}.jpg`}
+                    src={`/images/models/model-${num}.png`}
                     alt={`Model ${num}`}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
