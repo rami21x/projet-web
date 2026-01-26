@@ -1619,7 +1619,11 @@ function CreerStep({
           </div>
         </FadeIn>
 
-        <FadeIn delay={0.1}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
             {!uploadedImage ? (
               <div
@@ -1673,9 +1677,13 @@ function CreerStep({
               className="hidden"
             />
           </div>
-        </FadeIn>
+        </motion.div>
 
-        <FadeIn delay={0.2}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <div className={`mt-8 p-6 border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
             <h4 className={`font-display text-base font-semibold ${textPrimary} mb-4`}>
               {content.creer.tips.title}
@@ -1689,7 +1697,7 @@ function CreerStep({
               ))}
             </ul>
           </div>
-        </FadeIn>
+        </motion.div>
       </div>
     </div>
   );
