@@ -370,143 +370,159 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          {/* Artistic Masonry Grid - Chaos meets Order */}
-          <div className="grid grid-cols-12 gap-2 md:gap-3 auto-rows-[80px] md:auto-rows-[100px]">
+          {/* Artistic Bento Grid - Chaos meets Order */}
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Row 1 */}
             {/* Large image - Dubuffet */}
-            <FadeIn delay={0.1}>
-              <motion.div
-                className="col-span-6 md:col-span-5 row-span-4 relative overflow-hidden group cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link href="/studio">
-                  <Image
-                    src="/images/studio/Dubuffet.jpeg"
-                    alt="Dubuffet"
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                  <div className="absolute bottom-4 left-4">
-                    <p className="font-mono text-[10px] tracking-widest text-white/60">ART BRUT</p>
-                    <p className="font-display text-lg text-white">Dubuffet</p>
-                  </div>
-                </Link>
-              </motion.div>
-            </FadeIn>
-
-            {/* Small image - Bacon */}
-            <FadeIn delay={0.2}>
-              <motion.div
-                className="col-span-6 md:col-span-3 row-span-2 relative overflow-hidden group cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link href="/studio">
-                  <Image
-                    src="/images/studio/bacon.jpeg"
-                    alt="Francis Bacon"
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                  <div className="absolute bottom-3 left-3">
-                    <p className="font-display text-sm text-white">Bacon</p>
-                  </div>
-                </Link>
-              </motion.div>
-            </FadeIn>
+            <motion.div
+              className="col-span-1 md:col-span-1 row-span-2 relative aspect-[3/4] overflow-hidden group cursor-pointer"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Link href="/studio" className="block w-full h-full">
+                <Image
+                  src="/images/studio/Dubuffet.jpeg"
+                  alt="Dubuffet"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                <div className="absolute bottom-4 left-4">
+                  <p className="font-mono text-[10px] tracking-widest text-white/60">ART BRUT</p>
+                  <p className="font-display text-lg text-white">Dubuffet</p>
+                </div>
+              </Link>
+            </motion.div>
 
             {/* Medium image - De Kooning */}
-            <FadeIn delay={0.3}>
-              <motion.div
-                className="col-span-6 md:col-span-4 row-span-3 relative overflow-hidden group cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link href="/studio">
-                  <Image
-                    src="/images/studio/kooning.jpeg"
-                    alt="Willem de Kooning"
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                  <div className="absolute bottom-3 left-3">
-                    <p className="font-mono text-[9px] tracking-widest text-white/60">EXPRESSIONNISME</p>
-                    <p className="font-display text-base text-white">De Kooning</p>
-                  </div>
-                </Link>
-              </motion.div>
-            </FadeIn>
+            <motion.div
+              className="col-span-1 relative aspect-square overflow-hidden group cursor-pointer"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Link href="/studio" className="block w-full h-full">
+                <Image
+                  src="/images/studio/kooning.jpeg"
+                  alt="Willem de Kooning"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                <div className="absolute bottom-3 left-3">
+                  <p className="font-mono text-[9px] tracking-widest text-white/60">EXPRESSIONNISME</p>
+                  <p className="font-display text-sm text-white">De Kooning</p>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Small image - Bacon */}
+            <motion.div
+              className="col-span-1 relative aspect-square overflow-hidden group cursor-pointer"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Link href="/studio" className="block w-full h-full">
+                <Image
+                  src="/images/studio/bacon.jpeg"
+                  alt="Francis Bacon"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                <div className="absolute bottom-3 left-3">
+                  <p className="font-display text-sm text-white">Bacon</p>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Row 2 */}
+            {/* Medium image - Lao Tzu */}
+            <motion.div
+              className="col-span-1 relative aspect-square overflow-hidden group cursor-pointer"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Link href="/studio" className="block w-full h-full">
+                <Image
+                  src="/images/studio/laotzu.jpeg"
+                  alt="Lao Tzu"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                <div className="absolute bottom-3 left-3">
+                  <p className="font-mono text-[9px] tracking-widest text-white/60">PHILOSOPHIE</p>
+                  <p className="font-display text-sm text-white">Lao Tzu</p>
+                </div>
+              </Link>
+            </motion.div>
 
             {/* Small image - Jung */}
-            <FadeIn delay={0.4}>
-              <motion.div
-                className="col-span-4 md:col-span-3 row-span-2 relative overflow-hidden group cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link href="/studio">
-                  <Image
-                    src="/images/studio/Jung.jpeg"
-                    alt="Carl Jung"
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                  <div className="absolute bottom-2 left-2">
-                    <p className="font-display text-sm text-white">Jung</p>
-                  </div>
-                </Link>
-              </motion.div>
-            </FadeIn>
+            <motion.div
+              className="col-span-1 relative aspect-square overflow-hidden group cursor-pointer"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Link href="/studio" className="block w-full h-full">
+                <Image
+                  src="/images/studio/Jung.jpeg"
+                  alt="Carl Jung"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                <div className="absolute bottom-3 left-3">
+                  <p className="font-mono text-[9px] tracking-widest text-white/60">PSYCHOLOGIE</p>
+                  <p className="font-display text-sm text-white">Jung</p>
+                </div>
+              </Link>
+            </motion.div>
 
-            {/* Medium image - Lao Tzu */}
-            <FadeIn delay={0.5}>
-              <motion.div
-                className="col-span-5 md:col-span-4 row-span-3 relative overflow-hidden group cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link href="/studio">
-                  <Image
-                    src="/images/studio/laotzu.jpeg"
-                    alt="Lao Tzu"
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                  <div className="absolute bottom-3 left-3">
-                    <p className="font-mono text-[9px] tracking-widest text-white/60">PHILOSOPHIE</p>
-                    <p className="font-display text-base text-white">Lao Tzu</p>
-                  </div>
-                </Link>
-              </motion.div>
-            </FadeIn>
-
-            {/* Small image - Nietzsche */}
-            <FadeIn delay={0.6}>
-              <motion.div
-                className="col-span-3 md:col-span-2 row-span-2 relative overflow-hidden group cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link href="/studio">
-                  <Image
-                    src="/images/studio/nietzsche.jpeg"
-                    alt="Nietzsche"
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                  <div className="absolute bottom-2 left-2">
-                    <p className="font-display text-xs text-white">Nietzsche</p>
-                  </div>
-                </Link>
-              </motion.div>
-            </FadeIn>
-          </div>
+            {/* Row 3 - Full width Nietzsche */}
+            <motion.div
+              className="col-span-2 md:col-span-1 relative aspect-[2/1] md:aspect-square overflow-hidden group cursor-pointer"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Link href="/studio" className="block w-full h-full">
+                <Image
+                  src="/images/studio/nietzsche.jpeg"
+                  alt="Nietzsche"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                <div className="absolute bottom-3 left-3">
+                  <p className="font-mono text-[9px] tracking-widest text-white/60">PHILOSOPHIE</p>
+                  <p className="font-display text-sm text-white">Nietzsche</p>
+                </div>
+              </Link>
+            </motion.div>
+          </motion.div>
 
           {/* CTA to Studio */}
           <FadeIn delay={0.7}>
