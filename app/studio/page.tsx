@@ -1528,7 +1528,12 @@ function InterpreterStep({
 
         <div className="space-y-6">
           {content.interpreter.questions.map((q, index) => (
-            <FadeIn key={q.id} delay={index * 0.08}>
+            <motion.div
+              key={q.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
               <div className={`${bgCard} p-6 md:p-8 border ${borderColor}`}>
                 <label className="block mb-5">
                   <span className="text-xs text-accent font-mono tracking-wider">
@@ -1563,7 +1568,7 @@ function InterpreterStep({
                   )}
                 </div>
               </div>
-            </FadeIn>
+            </motion.div>
           ))}
         </div>
       </div>
