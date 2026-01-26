@@ -258,6 +258,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Models Lookbook Section */}
+      <section className="py-20 md:py-32 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="text-center mb-16">
+              <span className="font-mono text-[10px] tracking-[0.5em] text-[#6A6A6A] dark:text-gray-500 block mb-4">
+                LOOKBOOK
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-4">
+                Porté par l'Art
+              </h2>
+              <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
+            </div>
+          </FadeIn>
+
+          {/* Models Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[1, 2, 3, 4].map((num, index) => (
+              <FadeIn key={num} delay={index * 0.1}>
+                <div className="group relative aspect-[3/4] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
+                  <Image
+                    src={`/images/models/model-${num}.jpg`}
+                    alt={`Model ${num}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  {/* Overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Arteral branding */}
+                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <p className="font-mono text-[10px] tracking-widest text-white/80">ARTERAL</p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* Second row - larger images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-6">
+            {[5, 6].map((num, index) => (
+              <FadeIn key={num} delay={0.4 + index * 0.1}>
+                <div className="group relative aspect-[4/3] md:aspect-[16/9] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
+                  <Image
+                    src={`/images/models/model-${num}.jpg`}
+                    alt={`Model ${num}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <p className="font-mono text-[10px] tracking-widest text-white/80">ARTERAL</p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <FadeIn delay={0.6}>
+            <div className="text-center mt-12">
+              <Link
+                href="/collection"
+                className="inline-flex items-center gap-3 font-body text-sm font-medium text-primary hover:text-primary/70 transition-colors group"
+              >
+                <span>Voir la collection</span>
+                <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Philosophical Quote Section */}
       <PhilosophicalQuote />
 

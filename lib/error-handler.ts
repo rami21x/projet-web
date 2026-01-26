@@ -128,7 +128,7 @@ export function handleApiError(
   }
 
   if (error instanceof ZodError) {
-    const messages = error.errors.map(e => {
+    const messages = error.issues.map((e: { path: (string | number)[]; message: string }) => {
       const path = e.path.join('.')
       return path ? `${path}: ${e.message}` : e.message
     })
