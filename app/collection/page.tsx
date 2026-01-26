@@ -45,11 +45,11 @@ export default function CollectionPage() {
         </div>
       </section>
 
-      {/* Models Lookbook Gallery */}
+      {/* Models Lookbook Gallery - Alternating Layout */}
       <section className="py-16 md:py-24 bg-white dark:bg-[#0A0A0A] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <div className="text-center mb-12 md:mb-16">
+            <div className="text-center mb-12 md:mb-20">
               <span className="font-mono text-[10px] tracking-[0.5em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
                 LOOKBOOK
               </span>
@@ -63,42 +63,67 @@ export default function CollectionPage() {
             </div>
           </FadeIn>
 
-          {/* Models Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[2, 3, 4, 5].map((num, index) => (
+          {/* Models Alternating Grid */}
+          <div className="space-y-8 md:space-y-12">
+            {[1, 2, 3, 4, 5, 6].map((num, index) => (
               <FadeIn key={num} delay={index * 0.1}>
-                <motion.div
-                  whileHover={{ y: -8 }}
-                  transition={{ duration: 0.3 }}
-                  className="group relative aspect-[3/4] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]"
-                >
-                  <Image
-                    src={`/images/models/model-${num}.png`}
-                    alt={`Model ${num}`}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-6 md:gap-10 items-center`}>
+                  {/* Image */}
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-full md:w-1/2 group relative aspect-[3/4] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]"
+                  >
+                    <Image
+                      src={`/images/models/model-${num}.png`}
+                      alt={`Model ${num}`}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    {/* Branding */}
+                    <div className="absolute bottom-6 left-6">
+                      <p className="font-mono text-[10px] tracking-widest text-white/60">ARTERAL</p>
+                    </div>
+                  </motion.div>
 
-                  {/* Content overlay */}
-                  <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6">
-                    <p className="font-mono text-[9px] tracking-widest text-white/50 mb-1">ARTERAL</p>
-                    <p className="font-display text-sm md:text-base text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {/* Text Content */}
+                  <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-4' : 'md:pr-4'}`}>
+                    <span className="font-mono text-[10px] tracking-[0.3em] text-primary/60 block mb-3">
+                      0{num} / 06
+                    </span>
+                    <h3 className="font-display text-2xl md:text-3xl font-bold text-[#2B2B2B] dark:text-white mb-4">
+                      {num === 1 && "L'Éveil"}
+                      {num === 2 && "La Dualité"}
+                      {num === 3 && "L'Ombre"}
+                      {num === 4 && "La Lumière"}
+                      {num === 5 && "Le Chaos"}
+                      {num === 6 && "L'Harmonie"}
+                    </h3>
+                    <p className="font-body text-[#5A5A5A] dark:text-gray-400 leading-relaxed mb-4">
+                      {num === 1 && "Une toile vierge attend son premier souffle. Le glitch murmure les possibilités infinies d'une création à naître."}
+                      {num === 2 && "Entre l'ombre et la lumière, le vêtement cherche son équilibre. Votre art définira son identité."}
+                      {num === 3 && "Dans les profondeurs de l'abstrait, une forme émerge. Elle appelle un artiste pour révéler sa nature."}
+                      {num === 4 && "La clarté naît du chaos maîtrisé. Ce tissu attend que votre vision l'illumine."}
+                      {num === 5 && "Le désordre apparent cache un ordre secret. Seul un regard créatif peut en extraire la beauté."}
+                      {num === 6 && "La synthèse finale où tout converge. L'équilibre parfait entre votre art et notre support."}
+                    </p>
+                    <p className="font-display text-sm italic text-primary/80">
                       En attente de création
                     </p>
                   </div>
-                </motion.div>
+                </div>
               </FadeIn>
             ))}
           </div>
 
           {/* Artistic Quote */}
-          <FadeIn delay={0.5}>
-            <div className="mt-12 md:mt-16 p-8 md:p-12 bg-[#F5F5F5] dark:bg-[#1A1A1A] text-center">
+          <FadeIn delay={0.7}>
+            <div className="mt-16 md:mt-24 p-8 md:p-12 bg-[#F5F5F5] dark:bg-[#1A1A1A] text-center">
               <p className="font-display text-lg md:text-xl italic text-[#4A4A4A] dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
                 "Le glitch n'est pas une erreur — c'est un appel. Une fréquence qui vibre entre le néant et la création,
                 attendant qu'un artiste accorde sa vision à cette mélodie visuelle."

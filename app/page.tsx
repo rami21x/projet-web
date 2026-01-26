@@ -269,7 +269,7 @@ export default function Home() {
 
       {/* Models Lookbook Section - Immersive */}
       <section className="py-12 md:py-20 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-8 md:mb-12">
               <span className="font-mono text-[10px] tracking-[0.5em] text-[#6A6A6A] dark:text-gray-500 block mb-4">
@@ -282,14 +282,13 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          {/* Two Large Hero Images */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            {/* Model 1 */}
-            <FadeIn delay={0.1}>
-              <div className="group relative aspect-[3/4] md:aspect-[2/3] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
+          {/* Single Large Hero Image */}
+          <FadeIn delay={0.1}>
+            <div className="max-w-2xl mx-auto">
+              <div className="group relative aspect-[3/4] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
                 <Image
                   src="/images/models/model-1.png"
-                  alt="Model 1"
+                  alt="Model ARTERAL"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   onError={(e) => {
@@ -303,29 +302,8 @@ export default function Home() {
                   <p className="font-mono text-[10px] tracking-widest text-white/60 mb-2">ARTERAL</p>
                 </div>
               </div>
-            </FadeIn>
-
-            {/* Model 6 */}
-            <FadeIn delay={0.2}>
-              <div className="group relative aspect-[3/4] md:aspect-[2/3] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
-                <Image
-                  src="/images/models/model-6.png"
-                  alt="Model 6"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                {/* Branding */}
-                <div className="absolute bottom-6 left-6 right-6">
-                  <p className="font-mono text-[10px] tracking-widest text-white/60 mb-2">ARTERAL</p>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
 
           {/* Artistic Quote about Glitch */}
           <FadeIn delay={0.4}>
