@@ -6,7 +6,16 @@ import { motion } from "framer-motion";
 import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 import PhilosophicalQuote from "@/components/PhilosophicalQuote";
-import DualitySlider from "@/components/DualitySlider";
+
+// Studio artwork images for artistic gallery
+const studioArtworks = [
+  { src: "/images/studio/Dubuffet.jpeg", alt: "Dubuffet", size: "large" },
+  { src: "/images/studio/bacon.jpeg", alt: "Francis Bacon", size: "small" },
+  { src: "/images/studio/kooning.jpeg", alt: "Willem de Kooning", size: "medium" },
+  { src: "/images/studio/Jung.jpeg", alt: "Carl Jung", size: "small" },
+  { src: "/images/studio/laotzu.jpeg", alt: "Lao Tzu", size: "medium" },
+  { src: "/images/studio/nietzsche.jpeg", alt: "Nietzsche", size: "small" },
+];
 
 // Sparkling dots around the logo
 const sparkles = [
@@ -339,8 +348,185 @@ export default function Home() {
       {/* Philosophical Quote Section */}
       <PhilosophicalQuote />
 
-      {/* Duality Slider Section */}
-      <DualitySlider />
+      {/* Studio Artistic Gallery - Harmony meets Chaos */}
+      <section className="py-20 md:py-32 bg-dark relative overflow-hidden">
+        {/* Background texture */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/noise.png')] bg-repeat" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <FadeIn>
+            <div className="text-center mb-12 md:mb-16">
+              <span className="font-mono text-[10px] tracking-[0.5em] text-primary/80 block mb-4">
+                ATELIER CREATIF
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+                L'Art Rencontre la Mode
+              </h2>
+              <p className="font-body text-base text-white/60 max-w-xl mx-auto">
+                Des philosophes aux artistes, chaque reference inspire nos creations
+              </p>
+            </div>
+          </FadeIn>
+
+          {/* Artistic Masonry Grid - Chaos meets Order */}
+          <div className="grid grid-cols-12 gap-2 md:gap-3 auto-rows-[80px] md:auto-rows-[100px]">
+            {/* Large image - Dubuffet */}
+            <FadeIn delay={0.1}>
+              <motion.div
+                className="col-span-6 md:col-span-5 row-span-4 relative overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link href="/studio">
+                  <Image
+                    src="/images/studio/Dubuffet.jpeg"
+                    alt="Dubuffet"
+                    fill
+                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                  <div className="absolute bottom-4 left-4">
+                    <p className="font-mono text-[10px] tracking-widest text-white/60">ART BRUT</p>
+                    <p className="font-display text-lg text-white">Dubuffet</p>
+                  </div>
+                </Link>
+              </motion.div>
+            </FadeIn>
+
+            {/* Small image - Bacon */}
+            <FadeIn delay={0.2}>
+              <motion.div
+                className="col-span-6 md:col-span-3 row-span-2 relative overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link href="/studio">
+                  <Image
+                    src="/images/studio/bacon.jpeg"
+                    alt="Francis Bacon"
+                    fill
+                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                  <div className="absolute bottom-3 left-3">
+                    <p className="font-display text-sm text-white">Bacon</p>
+                  </div>
+                </Link>
+              </motion.div>
+            </FadeIn>
+
+            {/* Medium image - De Kooning */}
+            <FadeIn delay={0.3}>
+              <motion.div
+                className="col-span-6 md:col-span-4 row-span-3 relative overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link href="/studio">
+                  <Image
+                    src="/images/studio/kooning.jpeg"
+                    alt="Willem de Kooning"
+                    fill
+                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                  <div className="absolute bottom-3 left-3">
+                    <p className="font-mono text-[9px] tracking-widest text-white/60">EXPRESSIONNISME</p>
+                    <p className="font-display text-base text-white">De Kooning</p>
+                  </div>
+                </Link>
+              </motion.div>
+            </FadeIn>
+
+            {/* Small image - Jung */}
+            <FadeIn delay={0.4}>
+              <motion.div
+                className="col-span-4 md:col-span-3 row-span-2 relative overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link href="/studio">
+                  <Image
+                    src="/images/studio/Jung.jpeg"
+                    alt="Carl Jung"
+                    fill
+                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                  <div className="absolute bottom-2 left-2">
+                    <p className="font-display text-sm text-white">Jung</p>
+                  </div>
+                </Link>
+              </motion.div>
+            </FadeIn>
+
+            {/* Medium image - Lao Tzu */}
+            <FadeIn delay={0.5}>
+              <motion.div
+                className="col-span-5 md:col-span-4 row-span-3 relative overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link href="/studio">
+                  <Image
+                    src="/images/studio/laotzu.jpeg"
+                    alt="Lao Tzu"
+                    fill
+                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                  <div className="absolute bottom-3 left-3">
+                    <p className="font-mono text-[9px] tracking-widest text-white/60">PHILOSOPHIE</p>
+                    <p className="font-display text-base text-white">Lao Tzu</p>
+                  </div>
+                </Link>
+              </motion.div>
+            </FadeIn>
+
+            {/* Small image - Nietzsche */}
+            <FadeIn delay={0.6}>
+              <motion.div
+                className="col-span-3 md:col-span-2 row-span-2 relative overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link href="/studio">
+                  <Image
+                    src="/images/studio/nietzsche.jpeg"
+                    alt="Nietzsche"
+                    fill
+                    className="object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                  <div className="absolute bottom-2 left-2">
+                    <p className="font-display text-xs text-white">Nietzsche</p>
+                  </div>
+                </Link>
+              </motion.div>
+            </FadeIn>
+          </div>
+
+          {/* CTA to Studio */}
+          <FadeIn delay={0.7}>
+            <div className="text-center mt-12 md:mt-16">
+              <Link
+                href="/studio"
+                className="inline-flex items-center gap-4 px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300 group"
+              >
+                <span className="font-display text-lg text-white group-hover:text-primary transition-colors">
+                  Creer votre oeuvre
+                </span>
+                <motion.span
+                  className="w-8 h-[1px] bg-primary"
+                  whileHover={{ width: 48 }}
+                />
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
 
       {/* Collection Teaser - Harmonie du Chaos */}
       <section className="py-20 md:py-32 bg-[#E8E8E8] dark:bg-[#0A0A0A] relative">
