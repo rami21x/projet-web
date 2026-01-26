@@ -617,6 +617,8 @@ export default function StudioPage() {
     email: "",
     instagram: "",
     title: "",
+    comment: "",
+    position: "",
   });
   const [acceptNewsletter, setAcceptNewsletter] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -639,7 +641,7 @@ export default function StudioPage() {
     { id: "comprendre", label: content.steps.comprendre, icon: BookOpen },
     { id: "interpreter", label: content.steps.interpreter, icon: Feather },
     { id: "creer", label: content.steps.creer, icon: Upload },
-    { id: "visualiser", label: content.steps.visualiser, icon: Eye },
+    { id: "visualiser", label: "Soumettre", icon: Send },
   ];
 
   const canProceedToInterpret = hasUnderstood;
@@ -666,6 +668,15 @@ export default function StudioPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
+      const philosophyText = [
+        `DUALITÉ: ${interpretation.duality}`,
+        `HARMONIE DU CHAOS: ${interpretation.harmony}`,
+        `SENTIMENT: ${interpretation.feeling}`,
+        `MESSAGE: ${interpretation.message}`,
+        artistInfo.comment ? `COMMENTAIRE: ${artistInfo.comment}` : "",
+        artistInfo.position ? `POSITION SOUHAITÉE: ${artistInfo.position}` : "",
+      ].filter(Boolean).join("\n\n");
+
       const response = await fetch("/api/designs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -674,10 +685,10 @@ export default function StudioPage() {
           artistName: artistInfo.instagram || artistInfo.name,
           email: artistInfo.email,
           title: artistInfo.title,
-          philosophy: `DUALITÉ: ${interpretation.duality}\n\nHARMONIE DU CHAOS: ${interpretation.harmony}\n\nSENTIMENT: ${interpretation.feeling}\n\nMESSAGE: ${interpretation.message}`,
-          garmentType,
-          garmentFit,
-          garmentColor: garmentColor.hex,
+          philosophy: philosophyText,
+          garmentType: "tshirt",
+          garmentFit: "oversize",
+          garmentColor: "#FFFFFF",
           imageData: uploadedImage,
         }),
       });
@@ -833,14 +844,6 @@ export default function StudioPage() {
               content={content}
               isDark={isDark}
               uploadedImage={uploadedImage}
-              garmentType={garmentType}
-              setGarmentType={setGarmentType}
-              garmentFit={garmentFit}
-              setGarmentFit={setGarmentFit}
-              garmentColor={garmentColor}
-              setGarmentColor={setGarmentColor}
-              artworkTransform={artworkTransform}
-              setArtworkTransform={setArtworkTransform}
               artistInfo={artistInfo}
               setArtistInfo={setArtistInfo}
               interpretation={interpretation}
@@ -1704,20 +1707,12 @@ function CreerStep({
 }
 
 // ============================================
-// STEP 4: VISUALISER
+// STEP 4: SOUMETTRE (anciennement VISUALISER)
 // ============================================
 function VisualiserStep({
   content,
   isDark,
   uploadedImage,
-  garmentType,
-  setGarmentType,
-  garmentFit,
-  setGarmentFit,
-  garmentColor,
-  setGarmentColor,
-  artworkTransform,
-  setArtworkTransform,
   artistInfo,
   setArtistInfo,
   interpretation,
@@ -1731,16 +1726,8 @@ function VisualiserStep({
   content: ReturnType<typeof useContent>["studioPageContent"];
   isDark: boolean;
   uploadedImage: string | null;
-  garmentType: GarmentType;
-  setGarmentType: (v: GarmentType) => void;
-  garmentFit: GarmentFit;
-  setGarmentFit: (v: GarmentFit) => void;
-  garmentColor: typeof content.colors[0];
-  setGarmentColor: (v: typeof content.colors[0]) => void;
-  artworkTransform: ArtworkTransform;
-  setArtworkTransform: (v: ArtworkTransform) => void;
-  artistInfo: { name: string; email: string; instagram: string; title: string };
-  setArtistInfo: (v: { name: string; email: string; instagram: string; title: string }) => void;
+  artistInfo: { name: string; email: string; instagram: string; title: string; comment: string; position: string };
+  setArtistInfo: (v: { name: string; email: string; instagram: string; title: string; comment: string; position: string }) => void;
   interpretation: Record<string, string>;
   acceptNewsletter: boolean;
   setAcceptNewsletter: (v: boolean) => void;
@@ -1756,158 +1743,53 @@ function VisualiserStep({
   const textMuted = isDark ? "text-white/40" : "text-gray-400";
   const inputBg = isDark ? "bg-black/30" : "bg-gray-50";
 
-  // Fallback for garmentColor if undefined
-  const safeGarmentColor = garmentColor || { name: "White", hex: "#FFFFFF", dark: false };
-
-  // Livret - Submission Success Screen
+  // Success Screen after submission
   if (isSubmitted) {
     return (
       <div className="py-16 px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
           >
-            {/* Success Header */}
-            <div className="text-center mb-12">
-              <div className="w-20 h-20 bg-green-500/10 flex items-center justify-center mx-auto mb-6">
-                <Check className="w-10 h-10 text-green-500" />
-              </div>
-              <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-3`}>
-                {content.visualiser?.success?.title || "Soumission envoyee !"}
-              </h2>
-              <p className={`${textSecondary} max-w-lg mx-auto`}>
-                {content.visualiser?.success?.message || "Votre oeuvre a ete soumise avec succes. Voici le recapitulatif de votre participation."}
-              </p>
+            <div className="w-20 h-20 bg-green-500/10 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-10 h-10 text-green-500" />
             </div>
+            <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
+              Soumission envoyée !
+            </h2>
+            <p className={`${textSecondary} max-w-lg mx-auto mb-8`}>
+              Votre œuvre a été soumise avec succès. Elle sera visible dans le Livret d'Or après validation.
+            </p>
 
-            {/* Livret Card */}
-            <div className={`${bgCard} border ${borderColor} overflow-hidden`}>
-              {/* Header with artist info */}
-              <div className={`p-6 md:p-8 border-b ${borderColor} ${isDark ? "bg-primary/5" : "bg-primary/[0.02]"}`}>
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-primary/10 flex items-center justify-center text-primary font-display text-xl font-bold">
-                    {artistInfo.name.charAt(0).toUpperCase()}
+            {/* Summary Card */}
+            <div className={`${bgCard} border ${borderColor} p-6 md:p-8 text-left`}>
+              <div className="flex items-start gap-4 mb-6">
+                {uploadedImage && (
+                  <div className="w-24 h-24 flex-shrink-0 bg-gray-100 dark:bg-black/30 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={uploadedImage} alt="Votre œuvre" className="w-full h-full object-contain" />
                   </div>
-                  <div>
-                    <h3 className={`font-display text-xl font-semibold ${textPrimary}`}>
-                      {artistInfo.title}
-                    </h3>
-                    <p className={`${textSecondary} text-sm`}>
-                      par {artistInfo.name} {artistInfo.instagram && `(@${artistInfo.instagram.replace('@', '')})`}
-                    </p>
-                  </div>
+                )}
+                <div>
+                  <h3 className={`font-display text-xl font-semibold ${textPrimary}`}>{artistInfo.title}</h3>
+                  <p className={`${textSecondary} text-sm`}>par {artistInfo.name}</p>
+                  {artistInfo.instagram && (
+                    <p className="text-primary text-sm">@{artistInfo.instagram.replace('@', '')}</p>
+                  )}
                 </div>
               </div>
 
-              {/* Visual Section - Side by side */}
-              <div className="grid md:grid-cols-2 gap-0">
-                {/* Original Artwork */}
-                <div className={`p-6 md:p-8 border-b md:border-b-0 md:border-r ${borderColor}`}>
-                  <p className={`text-xs font-mono tracking-wider text-accent mb-4`}>OEUVRE ORIGINALE</p>
-                  <div className={`aspect-square relative overflow-hidden rounded-lg ${isDark ? "bg-black/50" : "bg-gray-100"}`}>
-                    {uploadedImage ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={uploadedImage}
-                        alt="Oeuvre soumise"
-                        className="w-full h-full object-contain"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <ImageIcon className={`w-16 h-16 ${textMuted}`} />
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Mockup Preview */}
-                <div className={`p-6 md:p-8`}>
-                  <p className={`text-xs font-mono tracking-wider text-accent mb-4`}>APERCU SUR VETEMENT</p>
-                  <div className={`aspect-square relative overflow-hidden rounded-lg ${isDark ? "bg-neutral-900" : "bg-neutral-100"}`}>
-                    <div className="w-full h-full p-4">
-                      {garmentType === "tshirt" ? (
-                        <TShirtMockup color={safeGarmentColor.hex}>
-                          {uploadedImage && (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={uploadedImage}
-                              alt="Design preview"
-                              className="w-full h-full object-contain"
-                            />
-                          )}
-                        </TShirtMockup>
-                      ) : (
-                        <SweatshirtMockup color={safeGarmentColor.hex}>
-                          {uploadedImage && (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={uploadedImage}
-                              alt="Design preview"
-                              className="w-full h-full object-contain"
-                            />
-                          )}
-                        </SweatshirtMockup>
-                      )}
-                    </div>
-                    {/* Garment info */}
-                    <div className={`absolute bottom-2 left-2 right-2 flex justify-between text-[10px] font-mono ${textMuted}`}>
-                      <span>{content.visualiser?.types?.[garmentType] || garmentType}</span>
-                      <span>{safeGarmentColor.name}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Artist Writings */}
-              <div className={`p-6 md:p-8 border-t ${borderColor}`}>
-                <p className={`text-xs font-mono tracking-wider text-accent mb-6`}>VOTRE INTERPRETATION</p>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Duality */}
-                  <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
-                    <h4 className={`text-sm font-semibold ${textPrimary} mb-2`}>La Dualite</h4>
-                    <p className={`text-sm ${textSecondary} italic`}>"{interpretation.duality || ""}"</p>
-                  </div>
-
-                  {/* Harmony */}
-                  <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
-                    <h4 className={`text-sm font-semibold ${textPrimary} mb-2`}>L'Harmonie du Chaos</h4>
-                    <p className={`text-sm ${textSecondary} italic`}>"{interpretation.harmony || ""}"</p>
-                  </div>
-
-                  {/* Feeling */}
-                  <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
-                    <h4 className={`text-sm font-semibold ${textPrimary} mb-2`}>Le Sentiment</h4>
-                    <p className={`text-sm ${textSecondary} italic`}>"{interpretation.feeling || ""}"</p>
-                  </div>
-
-                  {/* Message */}
-                  <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
-                    <h4 className={`text-sm font-semibold ${textPrimary} mb-2`}>Le Message</h4>
-                    <p className={`text-sm ${textSecondary} italic`}>"{interpretation.message || ""}"</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className={`px-6 md:px-8 py-4 border-t ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"} flex items-center justify-between`}>
-                <p className={`text-xs ${textMuted}`}>
-                  ARTERAL - Narcisse Amoureux
-                </p>
-                <p className={`text-xs ${textMuted}`}>
-                  {new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                </p>
+              <div className={`p-4 border ${borderColor} ${isDark ? "bg-white/[0.02]" : "bg-black/[0.02]"}`}>
+                <p className={`text-sm ${textSecondary} italic`}>"{interpretation.message}"</p>
               </div>
             </div>
 
-            {/* Additional Info */}
-            <div className="mt-8 text-center">
-              <p className={`text-sm ${textSecondary}`}>
-                Vous recevrez un email de confirmation a <span className="text-primary">{artistInfo.email}</span>
-              </p>
-            </div>
+            <p className={`text-sm ${textMuted} mt-6`}>
+              Confirmation envoyée à <span className="text-primary">{artistInfo.email}</span>
+            </p>
           </motion.div>
         </div>
       </div>
@@ -1915,185 +1797,151 @@ function VisualiserStep({
   }
 
   return (
-    <div className="py-16 pb-12 px-6">
-      <div className="max-w-6xl mx-auto">
-        <FadeIn>
-          <div className="text-center mb-14">
+    <div className="py-16 pb-40 px-6">
+      <div className="max-w-3xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="text-center mb-12">
             <div className={`w-16 h-16 mx-auto mb-6 ${isDark ? "bg-accent/10" : "bg-accent/5"} flex items-center justify-center`}>
-              <Eye className="w-7 h-7 text-accent" />
+              <Send className="w-7 h-7 text-accent" />
             </div>
             <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
-              {content.visualiser?.title || "Visualisez & Soumettez"}
+              Finalisez votre soumission
             </h2>
             <p className={`${textSecondary} max-w-xl mx-auto`}>
-              {content.visualiser?.subtitle || "Choisissez le support de votre œuvre et finalisez votre soumission."}
+              Complétez vos informations pour soumettre votre œuvre au concours ARTERAL.
             </p>
           </div>
-        </FadeIn>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Preview with Interactive Editor */}
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Uploaded Artwork Preview */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
-              <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
-                {content.visualiser?.preview || "Aperçu"} - <span className="text-accent font-normal text-base">Positionnez votre design</span>
+            <div className={`${bgCard} border ${borderColor} p-6`}>
+              <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-4`}>
+                Votre œuvre
               </h3>
-
-              {/* Interactive Artwork Editor */}
-              <InteractiveArtworkEditor
-                uploadedImage={uploadedImage}
-                garmentType={garmentType}
-                garmentColor={safeGarmentColor}
-                transform={artworkTransform}
-                onTransformChange={setArtworkTransform}
-                isDark={isDark}
-              />
-
-              {/* Disclaimer */}
-              <div className={`mt-6 mb-6 p-4 border ${borderColor} ${isDark ? "bg-amber-500/5 border-amber-500/20" : "bg-amber-50 border-amber-200"} rounded-lg`}>
-                <p className={`text-xs ${isDark ? "text-amber-200/80" : "text-amber-700"} leading-relaxed`}>
-                  <span className="font-semibold">Note :</span> Cet apercu est une visualisation approximative et ne represente pas le design final de l'oeuvre.
-                  Il permet aux artistes et au public de se projeter sur le rendu potentiel du vetement.
-                </p>
+              <div className={`aspect-square relative overflow-hidden ${isDark ? "bg-black/30" : "bg-gray-100"}`}>
+                {uploadedImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={uploadedImage}
+                    alt="Votre design"
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <ImageIcon className={`w-16 h-16 ${textMuted}`} />
+                  </div>
+                )}
               </div>
 
-              {/* Options */}
-              <div className="space-y-5">
-                {/* Type */}
-                <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.garmentType || "Type"}</label>
-                  <div className="flex gap-2">
-                    {(["tshirt", "pull"] as GarmentType[]).map((type) => (
-                      <button
-                        key={type}
-                        onClick={() => setGarmentType(type)}
-                        className={`flex-1 py-3 border transition-all ${
-                          garmentType === type
-                            ? "bg-primary border-primary text-white"
-                            : `${inputBg} ${borderColor} ${textSecondary} hover:border-primary/30`
-                        }`}
-                      >
-                        {content.visualiser?.types?.[type] || type}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Fit */}
-                <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.garmentFit || "Coupe"}</label>
-                  <div className="flex gap-2">
-                    {(["slim", "regular", "oversize"] as GarmentFit[]).map((fit) => (
-                      <button
-                        key={fit}
-                        onClick={() => setGarmentFit(fit)}
-                        className={`flex-1 py-3 border transition-all capitalize ${
-                          garmentFit === fit
-                            ? "bg-primary border-primary text-white"
-                            : `${inputBg} ${borderColor} ${textSecondary} hover:border-primary/30`
-                        }`}
-                      >
-                        {content.visualiser?.fits?.[fit] || fit}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Color */}
-                <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.garmentColor || "Couleur"}</label>
-                  <div className="flex flex-wrap gap-3">
-                    {(content.colors || []).map((color) => (
-                      <button
-                        key={color.hex}
-                        onClick={() => setGarmentColor(color)}
-                        title={color.name}
-                        className={`w-10 h-10 border-2 transition-all ${
-                          safeGarmentColor.hex === color.hex
-                            ? "border-primary scale-110"
-                            : `border-transparent hover:scale-105 ${isDark ? "ring-1 ring-white/10" : "ring-1 ring-black/10"}`
-                        }`}
-                        style={{ backgroundColor: color.hex }}
-                      >
-                        {safeGarmentColor.hex === color.hex && (
-                          <Check className={`w-5 h-5 mx-auto ${color.dark ? "text-white" : "text-black"}`} />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+              {/* Message preview */}
+              <div className={`mt-4 p-4 border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
+                <p className="text-xs text-accent mb-2">Votre message</p>
+                <p className={`${textSecondary} italic text-sm`}>"{interpretation.message}"</p>
               </div>
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* Submission Form */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className={`${bgCard} border ${borderColor} p-6 md:p-8`}>
+            <div className={`${bgCard} border ${borderColor} p-6`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
-                {content.visualiser?.artistInfo || "Informations Artiste"}
+                Informations artiste
               </h3>
 
               <div className="space-y-4">
+                {/* Title */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.fields?.title || "Titre de l'œuvre *"}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>Titre de l'œuvre *</label>
                   <input
                     type="text"
                     value={artistInfo.title}
                     onChange={(e) => setArtistInfo({ ...artistInfo, title: e.target.value })}
-                    placeholder={content.visualiser?.fields?.titlePlaceholder || "Ex: Le Reflet Brisé"}
-                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
+                    placeholder="Ex: Le Reflet Brisé"
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
 
+                {/* Name */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.fields?.name || "Votre nom *"}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>Votre nom *</label>
                   <input
                     type="text"
                     value={artistInfo.name}
                     onChange={(e) => setArtistInfo({ ...artistInfo, name: e.target.value })}
-                    placeholder={content.visualiser?.fields?.namePlaceholder || "Nom ou pseudonyme"}
-                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
+                    placeholder="Nom ou pseudonyme"
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
 
+                {/* Email */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.fields?.email || "Email *"}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>Email *</label>
                   <input
                     type="email"
                     value={artistInfo.email}
                     onChange={(e) => setArtistInfo({ ...artistInfo, email: e.target.value })}
-                    placeholder={content.visualiser?.fields?.emailPlaceholder || "pour vous contacter"}
-                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
+                    placeholder="pour vous contacter"
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
 
+                {/* Instagram */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser?.fields?.instagram || "Instagram (optionnel)"}</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>Instagram (optionnel)</label>
                   <input
                     type="text"
                     value={artistInfo.instagram}
                     onChange={(e) => setArtistInfo({ ...artistInfo, instagram: e.target.value })}
-                    placeholder={content.visualiser?.fields?.instagramPlaceholder || "@votre_compte"}
-                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all`}
+                    placeholder="@votre_compte"
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
 
-                {/* Message summary */}
-                <div className={`mt-6 p-5 border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
-                  <h4 className="text-sm text-accent mb-2">{content.visualiser?.yourMessage || "Votre message"}</h4>
-                  <p className={`${textPrimary} italic`}>"{interpretation.message || ""}"</p>
+                {/* Position on garment - Optional */}
+                <div>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>Position souhaitée sur le vêtement (optionnel)</label>
+                  <select
+                    value={artistInfo.position}
+                    onChange={(e) => setArtistInfo({ ...artistInfo, position: e.target.value })}
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} focus:outline-none focus:border-primary/50 transition-all`}
+                  >
+                    <option value="">Laisser au choix de l'équipe</option>
+                    <option value="center">Centre (poitrine)</option>
+                    <option value="left">Côté gauche</option>
+                    <option value="right">Côté droit</option>
+                    <option value="back">Dos</option>
+                    <option value="full">Impression complète</option>
+                  </select>
                 </div>
 
-                {/* Newsletter checkbox */}
-                <label className="flex items-start gap-3 mt-6 cursor-pointer group">
+                {/* Comment about artwork */}
+                <div>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>Commentaire sur l'œuvre (optionnel)</label>
+                  <textarea
+                    value={artistInfo.comment}
+                    onChange={(e) => setArtistInfo({ ...artistInfo, comment: e.target.value })}
+                    placeholder="Partagez l'histoire derrière votre création, votre inspiration..."
+                    rows={3}
+                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all resize-none`}
+                  />
+                </div>
+
+                {/* Newsletter */}
+                <label className="flex items-start gap-3 mt-4 cursor-pointer group">
                   <div className="relative flex-shrink-0 mt-0.5">
                     <input
                       type="checkbox"
@@ -2102,40 +1950,39 @@ function VisualiserStep({
                       className="sr-only peer"
                     />
                     <div className={`w-5 h-5 border-2 ${borderColor} transition-all peer-checked:bg-primary peer-checked:border-primary group-hover:border-primary/50`}>
-                      {acceptNewsletter && (
-                        <Check className="w-4 h-4 text-white" />
-                      )}
+                      {acceptNewsletter && <Check className="w-4 h-4 text-white" />}
                     </div>
                   </div>
                   <span className={`text-sm ${textSecondary} leading-relaxed`}>
-                    J'accepte de recevoir des nouvelles concernant mon oeuvre et les resultats du concours ARTERAL par email.
+                    J'accepte de recevoir des nouvelles concernant mon œuvre et les résultats du concours.
                   </span>
                 </label>
 
+                {/* Submit Button */}
                 <button
                   onClick={handleSubmit}
                   disabled={!canSubmit || isSubmitting}
                   className={`w-full mt-6 py-4 font-semibold flex items-center justify-center gap-3 transition-all ${
                     canSubmit && !isSubmitting
-                      ? "bg-primary text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
+                      ? "bg-primary text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:-translate-y-0.5"
                       : `${inputBg} ${textMuted} cursor-not-allowed border ${borderColor}`
                   }`}
                 >
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>{content.visualiser?.submitting || "Envoi..."}</span>
+                      <span>Envoi en cours...</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5" />
-                      <span>{content.visualiser?.submit || "Soumettre"}</span>
+                      <span>Soumettre mon œuvre</span>
                     </>
                   )}
                 </button>
 
                 <p className={`text-xs ${textMuted} text-center mt-4`}>
-                  {content.visualiser?.terms || "En soumettant, vous acceptez que votre œuvre soit utilisée dans le cadre du concours ARTERAL."}
+                  En soumettant, vous acceptez que votre œuvre soit utilisée dans le cadre du concours ARTERAL.
                 </p>
               </div>
             </div>
