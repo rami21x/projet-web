@@ -267,11 +267,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Models Lookbook Section */}
-      <section className="py-20 md:py-32 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Models Lookbook Section - Immersive */}
+      <section className="py-12 md:py-20 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8 md:mb-12">
               <span className="font-mono text-[10px] tracking-[0.5em] text-[#6A6A6A] dark:text-gray-500 block mb-4">
                 LOOKBOOK
               </span>
@@ -282,62 +282,77 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          {/* Models Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[1, 2, 3, 4].map((num, index) => (
-              <FadeIn key={num} delay={index * 0.1}>
-                <div className="group relative aspect-[3/4] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
-                  <Image
-                    src={`/images/models/model-${num}.png`}
-                    alt={`Model ${num}`}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                  {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  {/* Arteral branding */}
-                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <p className="font-mono text-[10px] tracking-widest text-white/80">ARTERAL</p>
-                  </div>
+          {/* Two Large Hero Images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {/* Model 1 */}
+            <FadeIn delay={0.1}>
+              <div className="group relative aspect-[3/4] md:aspect-[2/3] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
+                <Image
+                  src="/images/models/model-1.png"
+                  alt="Model 1"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                {/* Branding */}
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="font-mono text-[10px] tracking-widest text-white/60 mb-2">ARTERAL</p>
                 </div>
-              </FadeIn>
-            ))}
+              </div>
+            </FadeIn>
+
+            {/* Model 6 */}
+            <FadeIn delay={0.2}>
+              <div className="group relative aspect-[3/4] md:aspect-[2/3] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
+                <Image
+                  src="/images/models/model-6.png"
+                  alt="Model 6"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                {/* Branding */}
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="font-mono text-[10px] tracking-widest text-white/60 mb-2">ARTERAL</p>
+                </div>
+              </div>
+            </FadeIn>
           </div>
 
-          {/* Second row - larger images */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-6">
-            {[5, 6].map((num, index) => (
-              <FadeIn key={num} delay={0.4 + index * 0.1}>
-                <div className="group relative aspect-[4/3] md:aspect-[16/9] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]">
-                  <Image
-                    src={`/images/models/model-${num}.png`}
-                    alt={`Model ${num}`}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <p className="font-mono text-[10px] tracking-widest text-white/80">ARTERAL</p>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          {/* Artistic Quote about Glitch */}
+          <FadeIn delay={0.4}>
+            <div className="text-center mt-10 md:mt-16 max-w-3xl mx-auto">
+              <div className="relative inline-block">
+                <span className="absolute -top-6 -left-4 font-display text-5xl text-primary/20 select-none">&ldquo;</span>
+                <p className="font-display text-xl sm:text-2xl md:text-3xl italic text-[#3A3A3A] dark:text-gray-200 leading-relaxed px-6">
+                  Ces silhouettes attendent leur âme. Chaque glitch est une invitation —
+                  <span className="text-primary"> donnez vie à cette toile vierge</span>,
+                  inscrivez votre art dans le tissu du réel.
+                </p>
+                <span className="absolute -bottom-6 -right-4 font-display text-5xl text-primary/20 select-none">&rdquo;</span>
+              </div>
+              <p className="font-mono text-[10px] tracking-[0.3em] text-[#7A7A7A] dark:text-gray-500 mt-8">
+                — EN ATTENTE D'ARTISTES
+              </p>
+            </div>
+          </FadeIn>
 
           {/* CTA */}
           <FadeIn delay={0.6}>
-            <div className="text-center mt-12">
+            <div className="text-center mt-10">
               <Link
                 href="/collection"
                 className="inline-flex items-center gap-3 font-body text-sm font-medium text-primary hover:text-primary/70 transition-colors group"
               >
-                <span>Voir la collection</span>
+                <span>Découvrir tous les modèles</span>
                 <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
               </Link>
             </div>

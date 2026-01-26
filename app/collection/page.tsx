@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
 import NotifyMeButton from "@/components/NotifyMeButton";
 import Link from "next/link";
@@ -40,6 +41,70 @@ export default function CollectionPage() {
                 {collectionPageContent.hero.description}
               </p>
             </motion.div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Models Lookbook Gallery */}
+      <section className="py-16 md:py-24 bg-white dark:bg-[#0A0A0A] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="text-center mb-12 md:mb-16">
+              <span className="font-mono text-[10px] tracking-[0.5em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
+                LOOKBOOK
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-6">
+                Toiles en Attente
+              </h2>
+              <p className="font-body text-base md:text-lg text-[#5A5A5A] dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Chaque silhouette est une promesse. Les distorsions que vous voyez sont l'écho d'un art à naître —
+                <span className="italic text-primary"> votre vision peut habiter ces vêtements</span>.
+              </p>
+            </div>
+          </FadeIn>
+
+          {/* Models Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[2, 3, 4, 5].map((num, index) => (
+              <FadeIn key={num} delay={index * 0.1}>
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  transition={{ duration: 0.3 }}
+                  className="group relative aspect-[3/4] overflow-hidden bg-[#D8D8D8] dark:bg-[#1A1A1A]"
+                >
+                  <Image
+                    src={`/images/models/model-${num}.png`}
+                    alt={`Model ${num}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+
+                  {/* Content overlay */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6">
+                    <p className="font-mono text-[9px] tracking-widest text-white/50 mb-1">ARTERAL</p>
+                    <p className="font-display text-sm md:text-base text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      En attente de création
+                    </p>
+                  </div>
+                </motion.div>
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* Artistic Quote */}
+          <FadeIn delay={0.5}>
+            <div className="mt-12 md:mt-16 p-8 md:p-12 bg-[#F5F5F5] dark:bg-[#1A1A1A] text-center">
+              <p className="font-display text-lg md:text-xl italic text-[#4A4A4A] dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                "Le glitch n'est pas une erreur — c'est un appel. Une fréquence qui vibre entre le néant et la création,
+                attendant qu'un artiste accorde sa vision à cette mélodie visuelle."
+              </p>
+              <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
+            </div>
           </FadeIn>
         </div>
       </section>
