@@ -20,6 +20,7 @@ interface Design {
   title: string;
   philosophy: string;
   imageUrl: string | null;
+  imageData: string | null;
   createdAt: string;
   author: {
     name: string;
@@ -258,12 +259,12 @@ export default function LivretDorPage() {
 
                         {/* Artwork Image */}
                         <div className="relative aspect-square bg-[#F5F5F5] dark:bg-[#0A0A0A] overflow-hidden">
-                          {design.imageUrl ? (
-                            <Image
-                              src={design.imageUrl}
+                          {(design.imageUrl || design.imageData) ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={design.imageUrl || design.imageData || ''}
                               alt={design.title}
-                              fill
-                              className="object-contain group-hover:scale-105 transition-transform duration-500"
+                              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
