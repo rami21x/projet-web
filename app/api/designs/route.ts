@@ -40,9 +40,11 @@ export async function GET(request: NextRequest) {
       orderBy = { votes: { _count: 'desc' } }
     }
 
+    const where = status ? { status } : {}
+
     const [designs, total] = await Promise.all([
       prisma.design.findMany({
-        where: { status },
+        where,
         include: {
           author: {
             select: { id: true, name: true, artistName: true }
@@ -55,7 +57,7 @@ export async function GET(request: NextRequest) {
         skip,
         take: limit,
       }),
-      prisma.design.count({ where: { status } })
+      prisma.design.count({ where })
     ])
 
     const response = NextResponse.json({

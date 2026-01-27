@@ -42,7 +42,7 @@ export default function LivretDorPage() {
     const fetchDesigns = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/designs?status=approved&limit=50');
+        const response = await fetch('/api/designs?limit=50');
         if (response.ok) {
           const data = await response.json();
           setDesigns(data.designs || []);
