@@ -666,6 +666,24 @@ export default function StudioPage() {
   };
 
   const handleSubmit = async () => {
+    // Client-side validation
+    if (!artistInfo.name || artistInfo.name.length < 2) {
+      alert("Veuillez entrer votre nom (min 2 caractères).");
+      return;
+    }
+    if (!artistInfo.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(artistInfo.email)) {
+      alert("Veuillez entrer une adresse email valide.");
+      return;
+    }
+    if (!artistInfo.title || artistInfo.title.length < 3) {
+      alert("Veuillez entrer un titre pour votre œuvre (min 3 caractères).");
+      return;
+    }
+    if (!uploadedImage) {
+      alert("Veuillez uploader une image.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const philosophyText = [

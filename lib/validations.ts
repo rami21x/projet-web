@@ -54,7 +54,7 @@ export const createDesignSchema = z.object({
 export const designQuerySchema = z.object({
   page: z.coerce.number().int().positive().default(1),
   limit: z.coerce.number().int().min(1).max(50).default(12),
-  status: z.enum(['pending', 'approved', 'rejected', 'featured']).default('approved'),
+  status: z.enum(['pending', 'approved', 'rejected', 'featured']).nullable().optional(),
   sort: z.enum(['recent', 'popular', 'votes']).default('recent')
 })
 
