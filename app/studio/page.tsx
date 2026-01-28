@@ -713,9 +713,14 @@ export default function StudioPage() {
       if (response.ok) {
         setIsSubmitted(true);
       } else {
-        const errorData = await response.json();
-        console.error("Erreur API:", errorData);
-        alert(errorData.error || "Une erreur est survenue lors de la soumission.");
+        const responseText = await response.text();
+        console.error("Erreur API - Status:", response.status, "Body:", responseText);
+        try {
+          const errorData = JSON.parse(responseText);
+          alert(errorData.error || `Erreur ${response.status}: Une erreur est survenue.`);
+        } catch {
+          alert(`Erreur ${response.status}: ${responseText || "Une erreur est survenue."}`);
+        }
       }
     } catch (error) {
       console.error("Erreur lors de la soumission:", error);
