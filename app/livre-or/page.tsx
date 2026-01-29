@@ -74,9 +74,12 @@ export default function LivretDorPage() {
         const data = await response.json();
         setDesigns(designs.map(d =>
           d.id === designId
-            ? { ...d, _count: { votes: data.votes }, hasVoted: data.hasVoted }
+            ? { ...d, _count: { ...d._count, votes: data.votes }, hasVoted: data.hasVoted }
             : d
         ));
+      } else {
+        const err = await response.text();
+        console.error('Vote error:', response.status, err);
       }
     } catch (error) {
       console.error('Error voting:', error);

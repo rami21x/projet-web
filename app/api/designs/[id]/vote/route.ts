@@ -20,16 +20,9 @@ export async function POST(
     const { id: designId } = await params
     const body = await request.json()
 
-    // Validate
-    const validation = validate(voteDesignSchema, body)
-    if (!validation.success) {
-      return NextResponse.json(
-        { error: 'Données invalides', details: validation.errors },
-        { status: 400 }
-      )
-    }
-
-    const { email, type } = validation.data
+    // Support both email-based and anonymous visitorId-based voting
+    const { email, visitorId, type: voteType } = body
+    const type = voteType || 'people'
 
     // Verify design exists
     const design = await prisma.design.findUnique({ where: { id: designId } })
@@ -37,12 +30,26 @@ export async function POST(
       return NextResponse.json({ error: 'Design non trouvé' }, { status: 404 })
     }
 
-    // Find or create user
-    let user = await prisma.user.findUnique({ where: { email } })
-    if (!user) {
-      user = await prisma.user.create({
-        data: { email }
-      })
+    // Find or create user (anonymous if visitorId, identified if email)
+    let user
+    if (email) {
+      const emailResult = z.string().email().safeParse(email)
+      if (!emailResult.success) {
+        return NextResponse.json({ error: 'Email invalide' }, { status: 400 })
+      }
+      user = await prisma.user.findUnique({ where: { email: emailResult.data } })
+      if (!user) {
+        user = await prisma.user.create({ data: { email: emailResult.data } })
+      }
+    } else if (visitorId) {
+      // Use visitorId as anonymous identifier
+      const anonEmail = `anon_${visitorId}@visitor.local`
+      user = await prisma.user.findUnique({ where: { email: anonEmail } })
+      if (!user) {
+        user = await prisma.user.create({ data: { email: anonEmail, name: 'Visiteur anonyme' } })
+      }
+    } else {
+      return NextResponse.json({ error: 'Email ou visitorId requis' }, { status: 400 })
     }
 
     // Check if already voted
@@ -58,50 +65,32 @@ export async function POST(
 
     if (existingVote) {
       // Unvote
-      await prisma.vote.delete({
-        where: { id: existingVote.id }
-      })
+      await prisma.vote.delete({ where: { id: existingVote.id } })
 
-      // Update site stats
       await prisma.siteStats.upsert({
         where: { id: 'main' },
         update: { totalVotes: { decrement: 1 } },
         create: { id: 'main', totalVotes: 0 }
       })
 
-      const voteCount = await prisma.vote.count({
-        where: { designId, type }
-      })
+      const voteCount = await prisma.vote.count({ where: { designId, type } })
 
-      return NextResponse.json({
-        voted: false,
-        voteCount
-      })
+      return NextResponse.json({ voted: false, votes: voteCount, hasVoted: false })
     } else {
       // Vote
       await prisma.vote.create({
-        data: {
-          userId: user.id,
-          designId,
-          type
-        }
+        data: { userId: user.id, designId, type }
       })
 
-      // Update site stats
       await prisma.siteStats.upsert({
         where: { id: 'main' },
         update: { totalVotes: { increment: 1 } },
         create: { id: 'main', totalVotes: 1 }
       })
 
-      const voteCount = await prisma.vote.count({
-        where: { designId, type }
-      })
+      const voteCount = await prisma.vote.count({ where: { designId, type } })
 
-      return NextResponse.json({
-        voted: true,
-        voteCount
-      })
+      return NextResponse.json({ voted: true, votes: voteCount, hasVoted: true })
     }
   } catch (error) {
     return handleApiError(error, { path: '/api/designs/[id]/vote', method: 'POST' })
