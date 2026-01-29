@@ -1439,6 +1439,179 @@ export const studioPageContent = {
   },
 };
 
+// Connexion Page
+export const connexionPageContent = {
+  hero: {
+    label: "MEMBER AREA",
+    titleChoice: "Join Arteral",
+    titleLogin: "Login",
+    titleRegisterArtist: "Artist Space",
+    titleRegisterClient: "Client Space",
+    subtitleChoice: "Choose your profile to access exclusive features.",
+    subtitleLogin: "Log in to access your personal space.",
+    subtitleRegisterArtist: "Create your artist profile to exhibit, sell and manage your artworks.",
+    subtitleRegisterClient: "Create your account to collect, vote and follow your favorite artists.",
+  },
+  roles: {
+    artist: {
+      title: "I am an Artist",
+      description: "Exhibit your artworks, receive votes, participate in contests and connect with collectors.",
+      features: ["Personal portfolio", "Submit artworks", "Statistics", "Artist badge"],
+      accountTitle: "Artist Account",
+      accountSubtitle: "Exhibit and manage your artworks",
+    },
+    client: {
+      title: "I am a Client",
+      description: "Discover artists, vote for your favorite artworks, build your collection and receive recommendations.",
+      features: ["Favorites & collection", "Unlimited votes", "Recommendations", "History"],
+      accountTitle: "Client Account",
+      accountSubtitle: "Collect and vote",
+    },
+  },
+  form: {
+    email: "Email",
+    password: "Password",
+    passwordHint: "(min 6 characters)",
+    fullName: "Full name *",
+    fullNamePlaceholder: "Your name",
+    artistName: "Artist name",
+    artistNamePlaceholder: "Your artist name",
+    instagram: "Instagram",
+    instagramPlaceholder: "@your_instagram",
+    bio: "Bio",
+    bioOptional: "(optional)",
+    bioPlaceholderArtist: "Tell us about your art, your inspiration...",
+    bioPlaceholderClient: "Tell us about your artistic tastes...",
+    loginButton: "Log in",
+    createAccountArtist: "Create my artist account",
+    createAccountClient: "Create my client account",
+    back: "Back",
+    backToChoice: "Back to choice",
+  },
+  links: {
+    alreadyAccount: "Already have an account?",
+    login: "Log in",
+    noAccount: "Don't have an account yet?",
+    createAccount: "Create an account",
+    loginSignup: "Login / Sign up",
+  },
+  success: {
+    loggedIn: "Logged in!",
+    accountCreated: "Account created!",
+    redirecting: "Redirecting...",
+  },
+  errors: {
+    loginError: "Login error",
+    registerError: "Registration error",
+  },
+};
+
+// Livret d'Or / Gallery Page
+export const livretDorContent = {
+  hero: {
+    label: "GOLDEN BOOK",
+    title: "Artists Gallery",
+    description: "Discover artworks submitted by our community of artists.",
+    descriptionHighlight: "Vote for your favorite creations",
+    descriptionSuffix: "— each like counts to elect the winning artwork.",
+  },
+  stats: {
+    artworks: "Artworks",
+    votes: "Votes",
+  },
+  sort: {
+    submittedCount: "artwork",
+    submittedCountPlural: "artworks",
+    submitted: "submitted",
+    submittedPlural: "submitted",
+    mostVoted: "Most voted",
+    recent: "Recent",
+  },
+  loading: "Loading artworks...",
+  empty: {
+    title: "No artworks yet",
+    description: "Be the first to submit your artistic creation!",
+    cta: "Create my artwork",
+  },
+  card: {
+    by: "by",
+    voted: "Voted",
+    vote: "Vote",
+  },
+  userStatus: {
+    loggedInAs: "Logged in as",
+    artist: "Artist",
+    client: "Client",
+    votesWithAccount: "— votes with your account",
+    anonymousVote: "Anonymous vote enabled (cookies accepted)",
+    acceptCookies: "Accept cookies to vote anonymously, or",
+    loginLink: "log in",
+  },
+  cta: {
+    title: "Your artwork deserves its place here",
+    description: "Join our community of artists and submit your creation for a chance to see your design worn.",
+    button: "Submit my artwork",
+  },
+  cookiePrompt: {
+    title: "Cookies required to vote",
+    description: "To vote as an anonymous visitor, you must accept cookies. You can also log in to vote with your account.",
+    acceptButton: "Accept cookies & vote",
+    loginButton: "Log in",
+    cancel: "Cancel",
+  },
+};
+
+// Dashboard Page
+export const dashboardPageContent = {
+  roles: {
+    artist: "Artist",
+    client: "Client",
+  },
+  logout: "Logout",
+  stats: {
+    myArtworks: "My artworks",
+    votesReceived: "Votes received",
+    totalViews: "Total views",
+    ranking: "Ranking",
+    myVotes: "My votes",
+    favorites: "Favorites",
+    followedArtists: "Followed artists",
+    comments: "Comments",
+  },
+  artist: {
+    submitArtwork: "Submit an artwork",
+    submitArtworkDesc: "Add a new creation to your portfolio",
+    seeVotes: "See votes",
+    seeVotesDesc: "Check rankings and votes",
+    myGallery: "My gallery",
+    myGalleryDesc: "Discover the community gallery",
+    recentArtworks: "Recent artworks",
+    noArtworks: "No artwork submitted yet",
+    submitFirst: "Submit my first artwork",
+    statusApproved: "Approved",
+    statusPending: "Pending",
+    statusRejected: "Rejected",
+  },
+  client: {
+    vote: "Vote",
+    voteDesc: "Vote for your favorite artworks",
+    explore: "Explore",
+    exploreDesc: "Discover new artists",
+    contact: "Contact",
+    contactDesc: "Contact an artist or the team",
+    popularArtworks: "Popular artworks",
+    noArtworks: "No artwork available at the moment",
+    voteLink: "Vote",
+  },
+};
+
+// Auth/Navigation UI strings
+export const authUI = {
+  mySpace: "My space",
+  connexion: "Login",
+  disconnect: "Logout",
+};
+
 export const navigation = [
   { name: "Home", href: "/" },
   { name: "Brand", href: "/marque" },

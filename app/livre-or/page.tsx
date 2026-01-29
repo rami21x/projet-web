@@ -19,6 +19,7 @@ import FadeIn from "@/components/FadeIn";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCookieConsent } from "@/components/CookieConsent";
+import { useContent } from "@/hooks/useContent";
 
 interface Design {
   id: string;
@@ -45,6 +46,7 @@ export default function LivretDorPage() {
   const [showCookiePrompt, setShowCookiePrompt] = useState(false);
   const { user } = useAuth();
   const { consent, accept, isDecided } = useCookieConsent();
+  const { livretDorContent: t } = useContent();
 
   // Fetch designs from API
   useEffect(() => {
@@ -67,8 +69,6 @@ export default function LivretDorPage() {
   }, []);
 
   const handleVote = async (designId: string) => {
-    // If user is logged in, vote with their account
-    // If anonymous, require cookie consent first
     if (!user && !consent) {
       setShowCookiePrompt(true);
       return;
@@ -110,13 +110,11 @@ export default function LivretDorPage() {
   };
 
   const extractInstagram = (philosophy: string): string | null => {
-    // Try to extract Instagram from philosophy text or author name
     const match = philosophy.match(/@[\w.]+/) || null;
     return match ? match[0] : null;
   };
 
   const extractMessage = (philosophy: string): string => {
-    // Extract the MESSAGE part from philosophy
     const messageMatch = philosophy.match(/MESSAGE:\s*(.+?)(?=\n\n|COMMENTAIRE:|POSITION:|$)/s);
     return messageMatch ? messageMatch[1].trim() : philosophy.substring(0, 150);
   };
@@ -155,17 +153,17 @@ export default function LivretDorPage() {
                   <Trophy className="w-6 h-6 text-primary" />
                 </div>
                 <span className="font-mono text-xs tracking-[0.3em] text-primary uppercase">
-                  LIVRET D'OR
+                  {t.hero.label}
                 </span>
               </div>
 
               <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-                Galerie des Artistes
+                {t.hero.title}
               </h1>
 
               <p className="font-body text-xl text-white/70 leading-relaxed max-w-2xl mx-auto mb-8">
-                Découvrez les œuvres soumises par notre communauté d'artistes.
-                <span className="text-primary"> Votez pour vos créations préférées</span> — chaque like compte pour élire l'œuvre gagnante.
+                {t.hero.description}
+                <span className="text-primary"> {t.hero.descriptionHighlight}</span> {t.hero.descriptionSuffix}
               </p>
 
               {/* Stats */}
@@ -175,7 +173,7 @@ export default function LivretDorPage() {
                     {designs.length}
                   </div>
                   <div className="font-mono text-xs text-white/50 uppercase tracking-wider mt-1">
-                    Œuvres
+                    {t.stats.artworks}
                   </div>
                 </div>
                 <div className="text-center">
@@ -183,7 +181,7 @@ export default function LivretDorPage() {
                     {designs.reduce((acc, d) => acc + d._count.votes, 0)}
                   </div>
                   <div className="font-mono text-xs text-white/50 uppercase tracking-wider mt-1">
-                    Votes
+                    {t.stats.votes}
                   </div>
                 </div>
               </div>
@@ -197,7 +195,7 @@ export default function LivretDorPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <p className="font-mono text-xs text-[#6A6A6A] dark:text-gray-500 uppercase tracking-wider">
-              {designs.length} œuvre{designs.length > 1 ? 's' : ''} soumise{designs.length > 1 ? 's' : ''}
+              {designs.length} {designs.length > 1 ? t.sort.submittedCountPlural : t.sort.submittedCount} {designs.length > 1 ? t.sort.submittedPlural : t.sort.submitted}
             </p>
             <div className="flex gap-2">
               <button
@@ -208,7 +206,7 @@ export default function LivretDorPage() {
                     : "bg-[#E8E8E8] dark:bg-[#1A1A1A] text-[#5A5A5A] dark:text-gray-400 hover:bg-primary/10"
                 }`}
               >
-                Plus votées
+                {t.sort.mostVoted}
               </button>
               <button
                 onClick={() => setSortBy("recent")}
@@ -218,7 +216,7 @@ export default function LivretDorPage() {
                     : "bg-[#E8E8E8] dark:bg-[#1A1A1A] text-[#5A5A5A] dark:text-gray-400 hover:bg-primary/10"
                 }`}
               >
-                Récentes
+                {t.sort.recent}
               </button>
             </div>
           </div>
@@ -231,24 +229,24 @@ export default function LivretDorPage() {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20">
               <Loader2 className="w-10 h-10 animate-spin text-primary mb-4" />
-              <p className="text-[#6A6A6A] dark:text-gray-500">Chargement des œuvres...</p>
+              <p className="text-[#6A6A6A] dark:text-gray-500">{t.loading}</p>
             </div>
           ) : designs.length === 0 ? (
             <FadeIn>
               <div className="text-center py-20 bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5">
                 <Sparkles className="w-16 h-16 text-primary/30 mx-auto mb-6" />
                 <h3 className="font-display text-2xl font-bold text-[#2B2B2B] dark:text-white mb-3">
-                  Aucune œuvre pour le moment
+                  {t.empty.title}
                 </h3>
                 <p className="font-body text-[#5A5A5A] dark:text-gray-400 mb-8">
-                  Soyez le premier à soumettre votre création artistique !
+                  {t.empty.description}
                 </p>
                 <Link
                   href="/studio"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
                 >
                   <Sparkles className="w-5 h-5" />
-                  Créer mon œuvre
+                  {t.empty.cta}
                 </Link>
               </div>
             </FadeIn>
@@ -314,7 +312,7 @@ export default function LivretDorPage() {
                               ) : (
                                 <Heart className={`w-5 h-5 ${design.hasVoted ? 'fill-current' : ''}`} />
                               )}
-                              <span>{design.hasVoted ? 'Voté' : 'Voter'}</span>
+                              <span>{design.hasVoted ? t.card.voted : t.card.vote}</span>
                             </motion.button>
                           </div>
                         </div>
@@ -328,7 +326,7 @@ export default function LivretDorPage() {
                                 {design.title}
                               </h3>
                               <p className="font-body text-sm text-[#6A6A6A] dark:text-gray-500">
-                                par {design.author.name}
+                                {t.card.by} {design.author.name}
                               </p>
                             </div>
                             <div className="flex items-center gap-1.5 text-primary">
@@ -353,7 +351,7 @@ export default function LivretDorPage() {
 
                           {/* Message */}
                           <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 italic line-clamp-2">
-                            "{message}"
+                            &quot;{message}&quot;
                           </p>
 
                           {/* Footer */}
@@ -371,7 +369,7 @@ export default function LivretDorPage() {
                               }`}
                             >
                               <Heart className={`w-4 h-4 ${design.hasVoted ? 'fill-current' : ''}`} />
-                              {design.hasVoted ? 'Voté' : 'Voter'}
+                              {design.hasVoted ? t.card.voted : t.card.vote}
                             </button>
                           </div>
                         </div>
@@ -392,19 +390,19 @@ export default function LivretDorPage() {
             {user ? (
               <span className="flex items-center gap-2 text-primary font-medium">
                 <User className="w-4 h-4" />
-                Connecté en tant que {user.name} ({user.role === "artist" ? "Artiste" : "Client"}) — votes avec votre compte
+                {t.userStatus.loggedInAs} {user.name} ({user.role === "artist" ? t.userStatus.artist : t.userStatus.client}) {t.userStatus.votesWithAccount}
               </span>
             ) : consent ? (
               <span className="flex items-center gap-2 text-green-600 dark:text-green-400">
                 <Cookie className="w-4 h-4" />
-                Vote anonyme activé (cookies acceptés)
+                {t.userStatus.anonymousVote}
               </span>
             ) : (
               <span className="flex items-center gap-2 text-[#8A8A8A]">
                 <Cookie className="w-4 h-4" />
-                Acceptez les cookies pour voter en anonyme, ou{" "}
+                {t.userStatus.acceptCookies}{" "}
                 <Link href="/connexion" className="text-primary hover:underline inline-flex items-center gap-1">
-                  <LogIn className="w-3 h-3" /> connectez-vous
+                  <LogIn className="w-3 h-3" /> {t.userStatus.loginLink}
                 </Link>
               </span>
             )}
@@ -418,17 +416,17 @@ export default function LivretDorPage() {
           <FadeIn>
             <Sparkles className="w-12 h-12 text-primary mx-auto mb-6" />
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Votre œuvre mérite sa place ici
+              {t.cta.title}
             </h2>
             <p className="font-body text-lg text-white/70 mb-8 max-w-xl mx-auto">
-              Rejoignez notre communauté d'artistes et soumettez votre création pour avoir une chance de voir votre design porté.
+              {t.cta.description}
             </p>
             <Link
               href="/studio"
               className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white font-semibold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/25"
             >
               <Sparkles className="w-5 h-5" />
-              Soumettre mon œuvre
+              {t.cta.button}
             </Link>
           </FadeIn>
         </div>
@@ -453,11 +451,10 @@ export default function LivretDorPage() {
             >
               <Cookie className="w-12 h-12 text-primary mx-auto mb-4" />
               <h3 className="font-display text-xl font-bold text-center text-[#2B2B2B] dark:text-white mb-3">
-                Cookies requis pour voter
+                {t.cookiePrompt.title}
               </h3>
               <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 text-center mb-6">
-                Pour voter en tant que visiteur anonyme, vous devez accepter les cookies.
-                Vous pouvez aussi vous connecter pour voter avec votre compte.
+                {t.cookiePrompt.description}
               </p>
               <div className="space-y-3">
                 <button
@@ -468,20 +465,20 @@ export default function LivretDorPage() {
                   className="w-full py-3 bg-primary text-white font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
                 >
                   <Cookie className="w-5 h-5" />
-                  Accepter les cookies & voter
+                  {t.cookiePrompt.acceptButton}
                 </button>
                 <Link
                   href="/connexion"
                   className="w-full py-3 bg-[#E8E8E8] dark:bg-[#2A2A2A] text-[#2B2B2B] dark:text-white font-medium hover:bg-[#D8D8D8] dark:hover:bg-[#333] transition-colors flex items-center justify-center gap-2"
                 >
                   <LogIn className="w-5 h-5" />
-                  Se connecter
+                  {t.cookiePrompt.loginButton}
                 </Link>
                 <button
                   onClick={() => setShowCookiePrompt(false)}
                   className="w-full py-2 text-sm text-[#8A8A8A] hover:text-[#5A5A5A] transition-colors"
                 >
-                  Annuler
+                  {t.cookiePrompt.cancel}
                 </button>
               </div>
             </motion.div>

@@ -1433,6 +1433,179 @@ export const studioPageContent = {
   },
 };
 
+// Page Connexion
+export const connexionPageContent = {
+  hero: {
+    label: "ESPACE MEMBRE",
+    titleChoice: "Rejoignez Arteral",
+    titleLogin: "Connexion",
+    titleRegisterArtist: "Espace Artiste",
+    titleRegisterClient: "Espace Client",
+    subtitleChoice: "Choisissez votre profil pour accéder à des fonctionnalités exclusives.",
+    subtitleLogin: "Connectez-vous pour accéder à votre espace personnel.",
+    subtitleRegisterArtist: "Créez votre profil artiste pour exposer, vendre et gérer vos oeuvres.",
+    subtitleRegisterClient: "Créez votre compte pour collectionner, voter et suivre vos artistes préférés.",
+  },
+  roles: {
+    artist: {
+      title: "Je suis Artiste",
+      description: "Exposez vos oeuvres, recevez des votes, participez aux concours et connectez-vous avec des collectionneurs.",
+      features: ["Portfolio personnel", "Soumettre des oeuvres", "Statistiques", "Badge artiste"],
+      accountTitle: "Compte Artiste",
+      accountSubtitle: "Exposez et gérez vos oeuvres",
+    },
+    client: {
+      title: "Je suis Client",
+      description: "Découvrez des artistes, votez pour vos oeuvres préférées, construisez votre collection et recevez des recommandations.",
+      features: ["Favoris & collection", "Votes illimités", "Recommandations", "Historique"],
+      accountTitle: "Compte Client",
+      accountSubtitle: "Collectionnez et votez",
+    },
+  },
+  form: {
+    email: "Email",
+    password: "Mot de passe",
+    passwordHint: "(min 6 caractères)",
+    fullName: "Nom complet *",
+    fullNamePlaceholder: "Votre nom",
+    artistName: "Nom d'artiste",
+    artistNamePlaceholder: "Votre nom d'artiste",
+    instagram: "Instagram",
+    instagramPlaceholder: "@votre_instagram",
+    bio: "Bio",
+    bioOptional: "(optionnel)",
+    bioPlaceholderArtist: "Parlez de votre art, votre inspiration...",
+    bioPlaceholderClient: "Parlez de vos goûts artistiques...",
+    loginButton: "Se connecter",
+    createAccountArtist: "Créer mon compte artiste",
+    createAccountClient: "Créer mon compte client",
+    back: "Retour",
+    backToChoice: "Retour au choix",
+  },
+  links: {
+    alreadyAccount: "Déjà un compte ?",
+    login: "Se connecter",
+    noAccount: "Pas encore de compte ?",
+    createAccount: "Créer un compte",
+    loginSignup: "Connexion / Inscription",
+  },
+  success: {
+    loggedIn: "Connecté !",
+    accountCreated: "Compte créé !",
+    redirecting: "Redirection en cours...",
+  },
+  errors: {
+    loginError: "Erreur de connexion",
+    registerError: "Erreur d'inscription",
+  },
+};
+
+// Page Livret d'Or / Galerie
+export const livretDorContent = {
+  hero: {
+    label: "LIVRET D'OR",
+    title: "Galerie des Artistes",
+    description: "Découvrez les œuvres soumises par notre communauté d'artistes.",
+    descriptionHighlight: "Votez pour vos créations préférées",
+    descriptionSuffix: "— chaque like compte pour élire l'œuvre gagnante.",
+  },
+  stats: {
+    artworks: "Œuvres",
+    votes: "Votes",
+  },
+  sort: {
+    submittedCount: "œuvre",
+    submittedCountPlural: "œuvres",
+    submitted: "soumise",
+    submittedPlural: "soumises",
+    mostVoted: "Plus votées",
+    recent: "Récentes",
+  },
+  loading: "Chargement des œuvres...",
+  empty: {
+    title: "Aucune œuvre pour le moment",
+    description: "Soyez le premier à soumettre votre création artistique !",
+    cta: "Créer mon œuvre",
+  },
+  card: {
+    by: "par",
+    voted: "Voté",
+    vote: "Voter",
+  },
+  userStatus: {
+    loggedInAs: "Connecté en tant que",
+    artist: "Artiste",
+    client: "Client",
+    votesWithAccount: "— votes avec votre compte",
+    anonymousVote: "Vote anonyme activé (cookies acceptés)",
+    acceptCookies: "Acceptez les cookies pour voter en anonyme, ou",
+    loginLink: "connectez-vous",
+  },
+  cta: {
+    title: "Votre œuvre mérite sa place ici",
+    description: "Rejoignez notre communauté d'artistes et soumettez votre création pour avoir une chance de voir votre design porté.",
+    button: "Soumettre mon œuvre",
+  },
+  cookiePrompt: {
+    title: "Cookies requis pour voter",
+    description: "Pour voter en tant que visiteur anonyme, vous devez accepter les cookies. Vous pouvez aussi vous connecter pour voter avec votre compte.",
+    acceptButton: "Accepter les cookies & voter",
+    loginButton: "Se connecter",
+    cancel: "Annuler",
+  },
+};
+
+// Page Dashboard
+export const dashboardPageContent = {
+  roles: {
+    artist: "Artiste",
+    client: "Client",
+  },
+  logout: "Déconnexion",
+  stats: {
+    myArtworks: "Mes oeuvres",
+    votesReceived: "Votes reçus",
+    totalViews: "Vues totales",
+    ranking: "Classement",
+    myVotes: "Mes votes",
+    favorites: "Favoris",
+    followedArtists: "Artistes suivis",
+    comments: "Commentaires",
+  },
+  artist: {
+    submitArtwork: "Soumettre une oeuvre",
+    submitArtworkDesc: "Ajoutez une nouvelle création à votre portfolio",
+    seeVotes: "Voir les votes",
+    seeVotesDesc: "Consultez les classements et votes",
+    myGallery: "Ma galerie",
+    myGalleryDesc: "Découvrez la galerie communautaire",
+    recentArtworks: "Oeuvres récentes",
+    noArtworks: "Aucune oeuvre soumise pour le moment",
+    submitFirst: "Soumettre ma première oeuvre",
+    statusApproved: "Approuvé",
+    statusPending: "En attente",
+    statusRejected: "Rejeté",
+  },
+  client: {
+    vote: "Voter",
+    voteDesc: "Votez pour vos oeuvres préférées",
+    explore: "Explorer",
+    exploreDesc: "Découvrez de nouveaux artistes",
+    contact: "Contact",
+    contactDesc: "Contactez un artiste ou l'équipe",
+    popularArtworks: "Oeuvres populaires",
+    noArtworks: "Aucune oeuvre disponible pour le moment",
+    voteLink: "Voter",
+  },
+};
+
+// UI Auth/Navigation
+export const authUI = {
+  mySpace: "Mon espace",
+  connexion: "Connexion",
+  disconnect: "Déconnexion",
+};
+
 export const navigation = [
   { name: "Accueil", href: "/" },
   { name: "La Marque", href: "/marque" },

@@ -18,7 +18,7 @@ export default function Navigation() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const { navigation } = useContent();
+  const { navigation, authUI } = useContent();
   const { user, loading: authLoading } = useAuth();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -161,10 +161,10 @@ export default function Navigation() {
                         className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#1A1A1A] shadow-xl rounded-lg border border-dark/10 dark:border-white/10 py-2 overflow-hidden"
                       >
                         <Link href="/dashboard" onClick={() => setIsUserMenuOpen(false)} className="block px-4 py-2 text-sm text-[#2B2B2B] dark:text-white hover:bg-primary/10 hover:text-primary transition-colors">
-                          <span className="flex items-center gap-2"><User className="w-4 h-4" /> Mon espace</span>
+                          <span className="flex items-center gap-2"><User className="w-4 h-4" /> {authUI.mySpace}</span>
                         </Link>
                         <Link href="/connexion" onClick={async () => { setIsUserMenuOpen(false); await fetch("/api/auth/logout", { method: "POST" }); window.location.href = "/"; }} className="block px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
-                          <span className="flex items-center gap-2"><LogOut className="w-4 h-4" /> Déconnexion</span>
+                          <span className="flex items-center gap-2"><LogOut className="w-4 h-4" /> {authUI.disconnect}</span>
                         </Link>
                       </motion.div>
                     )}
@@ -176,7 +176,7 @@ export default function Navigation() {
                   className="flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-colors"
                 >
                   <User className="w-4 h-4" />
-                  Connexion
+                  {authUI.connexion}
                 </Link>
               )
             )}
@@ -226,12 +226,12 @@ export default function Navigation() {
                 {user ? (
                   <>
                     <Link href="/dashboard" onClick={() => setIsOpen(false)} className="flex items-center gap-2 font-body text-base font-medium py-2 px-4 rounded-lg text-primary">
-                      <User className="w-5 h-5" /> Mon espace ({user.role === "artist" ? "Artiste" : "Client"})
+                      <User className="w-5 h-5" /> {authUI.mySpace} ({user.role === "artist" ? "Artist" : "Client"})
                     </Link>
                   </>
                 ) : (
                   <Link href="/connexion" onClick={() => setIsOpen(false)} className="flex items-center gap-2 font-body text-base font-medium py-2 px-4 rounded-lg bg-primary text-white">
-                    <User className="w-5 h-5" /> Connexion / Inscription
+                    <User className="w-5 h-5" /> {authUI.connexion}
                   </Link>
                 )}
               </div>

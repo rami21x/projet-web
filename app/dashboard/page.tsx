@@ -25,6 +25,7 @@ import {
   ImageIcon,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 import Link from "next/link";
 
@@ -41,6 +42,7 @@ interface Design {
 export default function DashboardPage() {
   const router = useRouter();
   const { user, loading: authLoading, logout } = useAuth();
+  const { dashboardPageContent: t } = useContent();
   const [designs, setDesigns] = useState<Design[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ totalVotes: 0, totalDesigns: 0, totalMessages: 0 });
@@ -90,7 +92,7 @@ export default function DashboardPage() {
 
   const isArtist = user.role === "artist";
   const isClient = user.role === "client";
-  const myDesigns = designs.filter(d => true); // All designs for now - would filter by user in production
+  const myDesigns = designs.filter(d => true); // All designs for now
   const totalMyVotes = myDesigns.reduce((a, d) => a + (d._count?.votes || 0), 0);
 
   return (
@@ -113,7 +115,7 @@ export default function DashboardPage() {
                       {user.name}
                     </h1>
                     <span className={`px-3 py-1 text-xs font-mono uppercase tracking-wider ${isArtist ? "bg-primary/20 text-primary" : "bg-amber-500/20 text-amber-400"}`}>
-                      {isArtist ? "Artiste" : "Client"}
+                      {isArtist ? t.roles.artist : t.roles.client}
                     </span>
                   </div>
                   <p className="text-white/50 text-sm mt-1">{user.email}</p>
@@ -127,7 +129,7 @@ export default function DashboardPage() {
                 className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors"
               >
                 <LogOut className="w-4 h-4" />
-                Déconnexion
+                {t.logout}
               </button>
             </div>
           </FadeIn>
@@ -140,26 +142,26 @@ export default function DashboardPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {isArtist ? (
               <>
-                <StatCard icon={<Palette className="w-6 h-6" />} label="Mes oeuvres" value={myDesigns.length.toString()} color="primary" />
-                <StatCard icon={<Heart className="w-6 h-6" />} label="Votes reçus" value={totalMyVotes.toString()} color="primary" />
-                <StatCard icon={<Eye className="w-6 h-6" />} label="Vues totales" value={stats.totalDesigns.toString()} color="primary" />
-                <StatCard icon={<Trophy className="w-6 h-6" />} label="Classement" value={`#${Math.max(1, Math.floor(Math.random() * 10))}`} color="primary" />
+                <StatCard icon={<Palette className="w-6 h-6" />} label={t.stats.myArtworks} value={myDesigns.length.toString()} color="primary" />
+                <StatCard icon={<Heart className="w-6 h-6" />} label={t.stats.votesReceived} value={totalMyVotes.toString()} color="primary" />
+                <StatCard icon={<Eye className="w-6 h-6" />} label={t.stats.totalViews} value={stats.totalDesigns.toString()} color="primary" />
+                <StatCard icon={<Trophy className="w-6 h-6" />} label={t.stats.ranking} value={`#${Math.max(1, Math.floor(Math.random() * 10))}`} color="primary" />
               </>
             ) : (
               <>
-                <StatCard icon={<Heart className="w-6 h-6" />} label="Mes votes" value={stats.totalVotes.toString()} color="amber" />
-                <StatCard icon={<Star className="w-6 h-6" />} label="Favoris" value="0" color="amber" />
-                <StatCard icon={<Users className="w-6 h-6" />} label="Artistes suivis" value="0" color="amber" />
-                <StatCard icon={<MessageSquare className="w-6 h-6" />} label="Commentaires" value={stats.totalMessages.toString()} color="amber" />
+                <StatCard icon={<Heart className="w-6 h-6" />} label={t.stats.myVotes} value={stats.totalVotes.toString()} color="amber" />
+                <StatCard icon={<Star className="w-6 h-6" />} label={t.stats.favorites} value="0" color="amber" />
+                <StatCard icon={<Users className="w-6 h-6" />} label={t.stats.followedArtists} value="0" color="amber" />
+                <StatCard icon={<MessageSquare className="w-6 h-6" />} label={t.stats.comments} value={stats.totalMessages.toString()} color="amber" />
               </>
             )}
           </div>
 
           {/* Role-specific content */}
           {isArtist ? (
-            <ArtistDashboard designs={myDesigns} loading={loading} />
+            <ArtistDashboard designs={myDesigns} loading={loading} t={t} />
           ) : (
-            <ClientDashboard designs={designs} loading={loading} stats={stats} />
+            <ClientDashboard designs={designs} loading={loading} stats={stats} t={t} />
           )}
         </div>
       </section>
@@ -181,7 +183,7 @@ function StatCard({ icon, label, value, color }: { icon: React.ReactNode; label:
   );
 }
 
-function ArtistDashboard({ designs, loading }: { designs: Design[]; loading: boolean }) {
+function ArtistDashboard({ designs, loading, t }: { designs: Design[]; loading: boolean; t: any }) {
   return (
     <div className="space-y-8">
       {/* Quick Actions */}
@@ -189,22 +191,22 @@ function ArtistDashboard({ designs, loading }: { designs: Design[]; loading: boo
         <Link href="/studio" className="group">
           <div className="bg-primary text-white p-6 hover:bg-primary/90 transition-colors">
             <Upload className="w-8 h-8 mb-3" />
-            <h3 className="font-display text-lg font-bold mb-1">Soumettre une oeuvre</h3>
-            <p className="text-white/70 text-sm">Ajoutez une nouvelle création à votre portfolio</p>
+            <h3 className="font-display text-lg font-bold mb-1">{t.artist.submitArtwork}</h3>
+            <p className="text-white/70 text-sm">{t.artist.submitArtworkDesc}</p>
           </div>
         </Link>
         <Link href="/livre-or" className="group">
           <div className="bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5 p-6 hover:shadow-lg transition-all">
             <BarChart3 className="w-8 h-8 text-primary mb-3" />
-            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">Voir les votes</h3>
-            <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">Consultez les classements et votes</p>
+            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">{t.artist.seeVotes}</h3>
+            <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">{t.artist.seeVotesDesc}</p>
           </div>
         </Link>
         <Link href="/galerie" className="group">
           <div className="bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5 p-6 hover:shadow-lg transition-all">
             <BookOpen className="w-8 h-8 text-primary mb-3" />
-            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">Ma galerie</h3>
-            <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">Découvrez la galerie communautaire</p>
+            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">{t.artist.myGallery}</h3>
+            <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">{t.artist.myGalleryDesc}</p>
           </div>
         </Link>
       </div>
@@ -212,7 +214,7 @@ function ArtistDashboard({ designs, loading }: { designs: Design[]; loading: boo
       {/* My Designs */}
       <div>
         <h2 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white mb-4">
-          Oeuvres récentes
+          {t.artist.recentArtworks}
         </h2>
         {loading ? (
           <div className="text-center py-10">
@@ -221,10 +223,10 @@ function ArtistDashboard({ designs, loading }: { designs: Design[]; loading: boo
         ) : designs.length === 0 ? (
           <div className="bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5 p-10 text-center">
             <Sparkles className="w-12 h-12 text-primary/30 mx-auto mb-4" />
-            <p className="text-[#5A5A5A] dark:text-gray-400 mb-4">Aucune oeuvre soumise pour le moment</p>
+            <p className="text-[#5A5A5A] dark:text-gray-400 mb-4">{t.artist.noArtworks}</p>
             <Link href="/studio" className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-medium hover:bg-primary/90 transition-colors">
               <Upload className="w-5 h-5" />
-              Soumettre ma première oeuvre
+              {t.artist.submitFirst}
             </Link>
           </div>
         ) : (
@@ -246,7 +248,7 @@ function ArtistDashboard({ designs, loading }: { designs: Design[]; loading: boo
                   <div className="flex items-center gap-3 mt-2 text-sm text-[#8A8A8A]">
                     <span className="flex items-center gap-1"><Heart className="w-4 h-4" /> {design._count?.votes || 0}</span>
                     <span className={`px-2 py-0.5 text-xs ${design.status === "approved" ? "bg-green-100 text-green-700" : design.status === "pending" ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700"}`}>
-                      {design.status === "approved" ? "Approuvé" : design.status === "pending" ? "En attente" : "Rejeté"}
+                      {design.status === "approved" ? t.artist.statusApproved : design.status === "pending" ? t.artist.statusPending : t.artist.statusRejected}
                     </span>
                   </div>
                 </div>
@@ -259,7 +261,7 @@ function ArtistDashboard({ designs, loading }: { designs: Design[]; loading: boo
   );
 }
 
-function ClientDashboard({ designs, loading, stats }: { designs: Design[]; loading: boolean; stats: { totalVotes: number; totalDesigns: number } }) {
+function ClientDashboard({ designs, loading, stats, t }: { designs: Design[]; loading: boolean; stats: { totalVotes: number; totalDesigns: number }; t: any }) {
   const topDesigns = [...designs].sort((a, b) => (b._count?.votes || 0) - (a._count?.votes || 0)).slice(0, 6);
 
   return (
@@ -269,32 +271,32 @@ function ClientDashboard({ designs, loading, stats }: { designs: Design[]; loadi
         <Link href="/livre-or" className="group">
           <div className="bg-amber-500 text-white p-6 hover:bg-amber-600 transition-colors">
             <Heart className="w-8 h-8 mb-3" />
-            <h3 className="font-display text-lg font-bold mb-1">Voter</h3>
-            <p className="text-white/70 text-sm">Votez pour vos oeuvres préférées</p>
+            <h3 className="font-display text-lg font-bold mb-1">{t.client.vote}</h3>
+            <p className="text-white/70 text-sm">{t.client.voteDesc}</p>
           </div>
         </Link>
         <Link href="/galerie" className="group">
           <div className="bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5 p-6 hover:shadow-lg transition-all">
             <Eye className="w-8 h-8 text-amber-500 mb-3" />
-            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">Explorer</h3>
-            <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">Découvrez de nouveaux artistes</p>
+            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">{t.client.explore}</h3>
+            <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">{t.client.exploreDesc}</p>
           </div>
         </Link>
         <Link href="/contact" className="group">
           <div className="bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5 p-6 hover:shadow-lg transition-all">
             <MessageSquare className="w-8 h-8 text-amber-500 mb-3" />
-            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">Contact</h3>
-            <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">Contactez un artiste ou l'équipe</p>
+            <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">{t.client.contact}</h3>
+            <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">{t.client.contactDesc}</p>
           </div>
         </Link>
       </div>
 
-      {/* Top Designs / Recommendations */}
+      {/* Top Designs */}
       <div>
         <div className="flex items-center gap-3 mb-4">
           <TrendingUp className="w-5 h-5 text-amber-500" />
           <h2 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white">
-            Oeuvres populaires
+            {t.client.popularArtworks}
           </h2>
         </div>
         {loading ? (
@@ -304,7 +306,7 @@ function ClientDashboard({ designs, loading, stats }: { designs: Design[]; loadi
         ) : topDesigns.length === 0 ? (
           <div className="bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5 p-10 text-center">
             <Star className="w-12 h-12 text-amber-500/30 mx-auto mb-4" />
-            <p className="text-[#5A5A5A] dark:text-gray-400">Aucune oeuvre disponible pour le moment</p>
+            <p className="text-[#5A5A5A] dark:text-gray-400">{t.client.noArtworks}</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -332,7 +334,7 @@ function ClientDashboard({ designs, loading, stats }: { designs: Design[]; loadi
                       <Heart className="w-4 h-4 fill-current" /> {design._count?.votes || 0}
                     </span>
                     <Link href="/livre-or" className="text-xs text-primary hover:underline">
-                      Voter
+                      {t.client.voteLink}
                     </Link>
                   </div>
                 </div>

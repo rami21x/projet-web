@@ -20,6 +20,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
 
 type Mode = "choice" | "login" | "register";
@@ -28,6 +29,7 @@ type Role = "artist" | "client";
 export default function ConnexionPage() {
   const router = useRouter();
   const { login, register } = useAuth();
+  const { connexionPageContent: t } = useContent();
   const [mode, setMode] = useState<Mode>("choice");
   const [role, setRole] = useState<Role>("client");
   const [showPassword, setShowPassword] = useState(false);
@@ -53,7 +55,7 @@ export default function ConnexionPage() {
       setSuccess(true);
       setTimeout(() => router.push("/dashboard"), 1000);
     } else {
-      setError(result.error || "Erreur de connexion");
+      setError(result.error || t.errors.loginError);
     }
   };
 
@@ -75,7 +77,7 @@ export default function ConnexionPage() {
       setSuccess(true);
       setTimeout(() => router.push("/dashboard"), 1000);
     } else {
-      setError(result.error || "Erreur d'inscription");
+      setError(result.error || t.errors.registerError);
     }
   };
 
@@ -89,9 +91,9 @@ export default function ConnexionPage() {
         >
           <CheckCircle2 className="w-20 h-20 text-green-500 mx-auto mb-4" />
           <h2 className="font-display text-2xl font-bold text-[#2B2B2B] dark:text-white mb-2">
-            {mode === "login" ? "Connecté !" : "Compte créé !"}
+            {mode === "login" ? t.success.loggedIn : t.success.accountCreated}
           </h2>
-          <p className="text-[#5A5A5A] dark:text-gray-400">Redirection en cours...</p>
+          <p className="text-[#5A5A5A] dark:text-gray-400">{t.success.redirecting}</p>
         </motion.div>
       </div>
     );
@@ -108,18 +110,18 @@ export default function ConnexionPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <FadeIn>
             <span className="font-mono text-xs tracking-[0.3em] text-primary uppercase">
-              ESPACE MEMBRE
+              {t.hero.label}
             </span>
             <h1 className="font-display text-4xl sm:text-5xl font-bold mt-4 mb-4">
-              {mode === "choice" && "Rejoignez Arteral"}
-              {mode === "login" && "Connexion"}
-              {mode === "register" && (role === "artist" ? "Espace Artiste" : "Espace Client")}
+              {mode === "choice" && t.hero.titleChoice}
+              {mode === "login" && t.hero.titleLogin}
+              {mode === "register" && (role === "artist" ? t.hero.titleRegisterArtist : t.hero.titleRegisterClient)}
             </h1>
             <p className="font-body text-lg text-white/70 max-w-xl mx-auto">
-              {mode === "choice" && "Choisissez votre profil pour accéder à des fonctionnalités exclusives."}
-              {mode === "login" && "Connectez-vous pour accéder à votre espace personnel."}
-              {mode === "register" && role === "artist" && "Créez votre profil artiste pour exposer, vendre et gérer vos oeuvres."}
-              {mode === "register" && role === "client" && "Créez votre compte pour collectionner, voter et suivre vos artistes préférés."}
+              {mode === "choice" && t.hero.subtitleChoice}
+              {mode === "login" && t.hero.subtitleLogin}
+              {mode === "register" && role === "artist" && t.hero.subtitleRegisterArtist}
+              {mode === "register" && role === "client" && t.hero.subtitleRegisterClient}
             </p>
           </FadeIn>
         </div>
@@ -150,13 +152,13 @@ export default function ConnexionPage() {
                       </div>
                       <div className="flex-1">
                         <h3 className="font-display text-2xl font-bold text-[#2B2B2B] dark:text-white mb-2 group-hover:text-primary transition-colors">
-                          Je suis Artiste
+                          {t.roles.artist.title}
                         </h3>
                         <p className="font-body text-[#5A5A5A] dark:text-gray-400 mb-4">
-                          Exposez vos oeuvres, recevez des votes, participez aux concours et connectez-vous avec des collectionneurs.
+                          {t.roles.artist.description}
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          {["Portfolio personnel", "Soumettre des oeuvres", "Statistiques", "Badge artiste"].map((f) => (
+                          {t.roles.artist.features.map((f: string) => (
                             <span key={f} className="px-3 py-1 bg-primary/5 text-primary text-xs font-medium">
                               {f}
                             </span>
@@ -180,13 +182,13 @@ export default function ConnexionPage() {
                       </div>
                       <div className="flex-1">
                         <h3 className="font-display text-2xl font-bold text-[#2B2B2B] dark:text-white mb-2 group-hover:text-amber-500 transition-colors">
-                          Je suis Client
+                          {t.roles.client.title}
                         </h3>
                         <p className="font-body text-[#5A5A5A] dark:text-gray-400 mb-4">
-                          Découvrez des artistes, votez pour vos oeuvres préférées, construisez votre collection et recevez des recommandations.
+                          {t.roles.client.description}
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          {["Favoris & collection", "Votes illimités", "Recommandations", "Historique"].map((f) => (
+                          {t.roles.client.features.map((f: string) => (
                             <span key={f} className="px-3 py-1 bg-amber-500/5 text-amber-600 dark:text-amber-400 text-xs font-medium">
                               {f}
                             </span>
@@ -201,12 +203,12 @@ export default function ConnexionPage() {
                 {/* Already have an account */}
                 <div className="text-center pt-4">
                   <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">
-                    Déjà un compte ?{" "}
+                    {t.links.alreadyAccount}{" "}
                     <button
                       onClick={() => setMode("login")}
                       className="text-primary font-medium hover:underline"
                     >
-                      Se connecter
+                      {t.links.login}
                     </button>
                   </p>
                 </div>
@@ -226,14 +228,14 @@ export default function ConnexionPage() {
                     onClick={() => setMode("choice")}
                     className="flex items-center gap-2 text-sm text-[#5A5A5A] dark:text-gray-400 hover:text-primary transition-colors mb-6"
                   >
-                    <ArrowLeft className="w-4 h-4" /> Retour
+                    <ArrowLeft className="w-4 h-4" /> {t.form.back}
                   </button>
 
                   <form onSubmit={handleLogin} className="space-y-5">
                     {/* Email */}
                     <div>
                       <label className="block font-body text-sm font-medium text-[#2B2B2B] dark:text-white mb-2">
-                        Email
+                        {t.form.email}
                       </label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
@@ -251,7 +253,7 @@ export default function ConnexionPage() {
                     {/* Password */}
                     <div>
                       <label className="block font-body text-sm font-medium text-[#2B2B2B] dark:text-white mb-2">
-                        Mot de passe
+                        {t.form.password}
                       </label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
@@ -286,7 +288,7 @@ export default function ConnexionPage() {
                         <Loader2 className="w-5 h-5 animate-spin" />
                       ) : (
                         <>
-                          Se connecter
+                          {t.form.loginButton}
                           <ArrowRight className="w-5 h-5" />
                         </>
                       )}
@@ -295,12 +297,12 @@ export default function ConnexionPage() {
 
                   <div className="text-center mt-6">
                     <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">
-                      Pas encore de compte ?{" "}
+                      {t.links.noAccount}{" "}
                       <button
                         onClick={() => setMode("choice")}
                         className="text-primary font-medium hover:underline"
                       >
-                        Créer un compte
+                        {t.links.createAccount}
                       </button>
                     </p>
                   </div>
@@ -321,7 +323,7 @@ export default function ConnexionPage() {
                     onClick={() => setMode("choice")}
                     className="flex items-center gap-2 text-sm text-[#5A5A5A] dark:text-gray-400 hover:text-primary transition-colors mb-6"
                   >
-                    <ArrowLeft className="w-4 h-4" /> Retour au choix
+                    <ArrowLeft className="w-4 h-4" /> {t.form.backToChoice}
                   </button>
 
                   {/* Role badge */}
@@ -333,12 +335,10 @@ export default function ConnexionPage() {
                     )}
                     <div>
                       <span className="font-display font-bold text-[#2B2B2B] dark:text-white">
-                        {role === "artist" ? "Compte Artiste" : "Compte Client"}
+                        {role === "artist" ? t.roles.artist.accountTitle : t.roles.client.accountTitle}
                       </span>
                       <p className="text-xs text-[#5A5A5A] dark:text-gray-500">
-                        {role === "artist"
-                          ? "Exposez et gérez vos oeuvres"
-                          : "Collectionnez et votez"}
+                        {role === "artist" ? t.roles.artist.accountSubtitle : t.roles.client.accountSubtitle}
                       </p>
                     </div>
                   </div>
@@ -347,7 +347,7 @@ export default function ConnexionPage() {
                     {/* Name */}
                     <div>
                       <label className="block font-body text-sm font-medium text-[#2B2B2B] dark:text-white mb-2">
-                        Nom complet *
+                        {t.form.fullName}
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
@@ -357,7 +357,7 @@ export default function ConnexionPage() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           className="w-full pl-11 pr-4 py-3 bg-[#F5F5F5] dark:bg-[#0A0A0A] border border-black/5 dark:border-white/10 text-[#2B2B2B] dark:text-white font-body focus:outline-none focus:border-primary transition-colors"
-                          placeholder="Votre nom"
+                          placeholder={t.form.fullNamePlaceholder}
                         />
                       </div>
                     </div>
@@ -367,7 +367,7 @@ export default function ConnexionPage() {
                       <>
                         <div>
                           <label className="block font-body text-sm font-medium text-[#2B2B2B] dark:text-white mb-2">
-                            Nom d'artiste
+                            {t.form.artistName}
                           </label>
                           <div className="relative">
                             <Sparkles className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
@@ -376,13 +376,13 @@ export default function ConnexionPage() {
                               value={artistName}
                               onChange={(e) => setArtistName(e.target.value)}
                               className="w-full pl-11 pr-4 py-3 bg-[#F5F5F5] dark:bg-[#0A0A0A] border border-black/5 dark:border-white/10 text-[#2B2B2B] dark:text-white font-body focus:outline-none focus:border-primary transition-colors"
-                              placeholder="Votre nom d'artiste"
+                              placeholder={t.form.artistNamePlaceholder}
                             />
                           </div>
                         </div>
                         <div>
                           <label className="block font-body text-sm font-medium text-[#2B2B2B] dark:text-white mb-2">
-                            Instagram
+                            {t.form.instagram}
                           </label>
                           <div className="relative">
                             <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
@@ -391,7 +391,7 @@ export default function ConnexionPage() {
                               value={instagram}
                               onChange={(e) => setInstagram(e.target.value)}
                               className="w-full pl-11 pr-4 py-3 bg-[#F5F5F5] dark:bg-[#0A0A0A] border border-black/5 dark:border-white/10 text-[#2B2B2B] dark:text-white font-body focus:outline-none focus:border-primary transition-colors"
-                              placeholder="@votre_instagram"
+                              placeholder={t.form.instagramPlaceholder}
                             />
                           </div>
                         </div>
@@ -401,7 +401,7 @@ export default function ConnexionPage() {
                     {/* Email */}
                     <div>
                       <label className="block font-body text-sm font-medium text-[#2B2B2B] dark:text-white mb-2">
-                        Email *
+                        {t.form.email} *
                       </label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
@@ -419,7 +419,7 @@ export default function ConnexionPage() {
                     {/* Password */}
                     <div>
                       <label className="block font-body text-sm font-medium text-[#2B2B2B] dark:text-white mb-2">
-                        Mot de passe * <span className="text-xs text-[#8A8A8A]">(min 6 caractères)</span>
+                        {t.form.password} * <span className="text-xs text-[#8A8A8A]">{t.form.passwordHint}</span>
                       </label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
@@ -445,7 +445,7 @@ export default function ConnexionPage() {
                     {/* Bio */}
                     <div>
                       <label className="block font-body text-sm font-medium text-[#2B2B2B] dark:text-white mb-2">
-                        Bio <span className="text-xs text-[#8A8A8A]">(optionnel)</span>
+                        {t.form.bio} <span className="text-xs text-[#8A8A8A]">{t.form.bioOptional}</span>
                       </label>
                       <textarea
                         value={bio}
@@ -453,7 +453,7 @@ export default function ConnexionPage() {
                         rows={3}
                         maxLength={500}
                         className="w-full px-4 py-3 bg-[#F5F5F5] dark:bg-[#0A0A0A] border border-black/5 dark:border-white/10 text-[#2B2B2B] dark:text-white font-body focus:outline-none focus:border-primary transition-colors resize-none"
-                        placeholder={role === "artist" ? "Parlez de votre art, votre inspiration..." : "Parlez de vos goûts artistiques..."}
+                        placeholder={role === "artist" ? t.form.bioPlaceholderArtist : t.form.bioPlaceholderClient}
                       />
                     </div>
 
@@ -474,7 +474,7 @@ export default function ConnexionPage() {
                         <Loader2 className="w-5 h-5 animate-spin" />
                       ) : (
                         <>
-                          Créer mon compte {role === "artist" ? "artiste" : "client"}
+                          {role === "artist" ? t.form.createAccountArtist : t.form.createAccountClient}
                           <ArrowRight className="w-5 h-5" />
                         </>
                       )}
@@ -483,12 +483,12 @@ export default function ConnexionPage() {
 
                   <div className="text-center mt-6">
                     <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">
-                      Déjà un compte ?{" "}
+                      {t.links.alreadyAccount}{" "}
                       <button
                         onClick={() => setMode("login")}
                         className="text-primary font-medium hover:underline"
                       >
-                        Se connecter
+                        {t.links.login}
                       </button>
                     </p>
                   </div>
