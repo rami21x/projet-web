@@ -4,18 +4,22 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut, Palette, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import DarkModeToggle from "./DarkModeToggle";
 import LanguageToggle from "./LanguageToggle";
 import { useContent } from "@/hooks/useContent";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { navigation } = useContent();
+  const { user, loading: authLoading } = useAuth();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -29,11 +33,14 @@ export default function Navigation() {
     !leftNav.includes(item)
   );
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
       }
     };
 
@@ -129,6 +136,50 @@ export default function Navigation() {
 
             <LanguageToggle />
             <DarkModeToggle />
+
+            {/* Auth Button */}
+            {!authLoading && (
+              user ? (
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                      user.role === "artist"
+                        ? "bg-primary/10 text-primary hover:bg-primary/20"
+                        : "bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20"
+                    }`}
+                  >
+                    {user.role === "artist" ? <Palette className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
+                    <span className="max-w-[80px] truncate">{user.name}</span>
+                  </button>
+                  <AnimatePresence>
+                    {isUserMenuOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#1A1A1A] shadow-xl rounded-lg border border-dark/10 dark:border-white/10 py-2 overflow-hidden"
+                      >
+                        <Link href="/dashboard" onClick={() => setIsUserMenuOpen(false)} className="block px-4 py-2 text-sm text-[#2B2B2B] dark:text-white hover:bg-primary/10 hover:text-primary transition-colors">
+                          <span className="flex items-center gap-2"><User className="w-4 h-4" /> Mon espace</span>
+                        </Link>
+                        <Link href="/connexion" onClick={async () => { setIsUserMenuOpen(false); await fetch("/api/auth/logout", { method: "POST" }); window.location.href = "/"; }} className="block px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
+                          <span className="flex items-center gap-2"><LogOut className="w-4 h-4" /> Déconnexion</span>
+                        </Link>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link
+                  href="/connexion"
+                  className="flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-colors"
+                >
+                  <User className="w-4 h-4" />
+                  Connexion
+                </Link>
+              )
+            )}
           </div>
 
           {/* Mobile Menu Button + Language + Dark Mode */}
@@ -171,6 +222,19 @@ export default function Navigation() {
                   {item.name}
                 </Link>
               ))}
+              <div className="border-t border-dark/10 dark:border-white/10 pt-2 mt-2">
+                {user ? (
+                  <>
+                    <Link href="/dashboard" onClick={() => setIsOpen(false)} className="flex items-center gap-2 font-body text-base font-medium py-2 px-4 rounded-lg text-primary">
+                      <User className="w-5 h-5" /> Mon espace ({user.role === "artist" ? "Artiste" : "Client"})
+                    </Link>
+                  </>
+                ) : (
+                  <Link href="/connexion" onClick={() => setIsOpen(false)} className="flex items-center gap-2 font-body text-base font-medium py-2 px-4 rounded-lg bg-primary text-white">
+                    <User className="w-5 h-5" /> Connexion / Inscription
+                  </Link>
+                )}
+              </div>
             </div>
           </motion.div>
         )}

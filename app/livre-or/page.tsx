@@ -11,9 +11,14 @@ import {
   Loader2,
   ImageIcon,
   ExternalLink,
+  Cookie,
+  User,
+  LogIn,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCookieConsent } from "@/components/CookieConsent";
 
 interface Design {
   id: string;
@@ -37,6 +42,9 @@ export default function LivretDorPage() {
   const [loading, setLoading] = useState(true);
   const [votingId, setVotingId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"votes" | "recent">("votes");
+  const [showCookiePrompt, setShowCookiePrompt] = useState(false);
+  const { user } = useAuth();
+  const { consent, accept, isDecided } = useCookieConsent();
 
   // Fetch designs from API
   useEffect(() => {
@@ -59,15 +67,28 @@ export default function LivretDorPage() {
   }, []);
 
   const handleVote = async (designId: string) => {
+    // If user is logged in, vote with their account
+    // If anonymous, require cookie consent first
+    if (!user && !consent) {
+      setShowCookiePrompt(true);
+      return;
+    }
+
     setVotingId(designId);
     try {
-      const visitorId = localStorage.getItem('visitorId') || Date.now().toString();
-      localStorage.setItem('visitorId', visitorId);
+      let body: Record<string, string> = {};
+      if (user) {
+        body = { email: user.email };
+      } else {
+        const visitorId = localStorage.getItem('visitorId') || Date.now().toString();
+        localStorage.setItem('visitorId', visitorId);
+        body = { visitorId };
+      }
 
       const response = await fetch(`/api/designs/${designId}/vote`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ visitorId }),
+        body: JSON.stringify(body),
       });
 
       if (response.ok) {
@@ -364,6 +385,33 @@ export default function LivretDorPage() {
         </div>
       </section>
 
+      {/* User Status Bar */}
+      <section className="py-4 bg-white dark:bg-[#111111] border-t border-black/5 dark:border-white/5">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center gap-3 text-sm">
+            {user ? (
+              <span className="flex items-center gap-2 text-primary font-medium">
+                <User className="w-4 h-4" />
+                Connecté en tant que {user.name} ({user.role === "artist" ? "Artiste" : "Client"}) — votes avec votre compte
+              </span>
+            ) : consent ? (
+              <span className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                <Cookie className="w-4 h-4" />
+                Vote anonyme activé (cookies acceptés)
+              </span>
+            ) : (
+              <span className="flex items-center gap-2 text-[#8A8A8A]">
+                <Cookie className="w-4 h-4" />
+                Acceptez les cookies pour voter en anonyme, ou{" "}
+                <Link href="/connexion" className="text-primary hover:underline inline-flex items-center gap-1">
+                  <LogIn className="w-3 h-3" /> connectez-vous
+                </Link>
+              </span>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-[#1A1A1A] text-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -385,6 +433,61 @@ export default function LivretDorPage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* Cookie Consent Prompt for Voting */}
+      <AnimatePresence>
+        {showCookiePrompt && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-4"
+            onClick={() => setShowCookiePrompt(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white dark:bg-[#1A1A1A] p-8 max-w-md w-full shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Cookie className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="font-display text-xl font-bold text-center text-[#2B2B2B] dark:text-white mb-3">
+                Cookies requis pour voter
+              </h3>
+              <p className="font-body text-sm text-[#5A5A5A] dark:text-gray-400 text-center mb-6">
+                Pour voter en tant que visiteur anonyme, vous devez accepter les cookies.
+                Vous pouvez aussi vous connecter pour voter avec votre compte.
+              </p>
+              <div className="space-y-3">
+                <button
+                  onClick={() => {
+                    accept();
+                    setShowCookiePrompt(false);
+                  }}
+                  className="w-full py-3 bg-primary text-white font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                >
+                  <Cookie className="w-5 h-5" />
+                  Accepter les cookies & voter
+                </button>
+                <Link
+                  href="/connexion"
+                  className="w-full py-3 bg-[#E8E8E8] dark:bg-[#2A2A2A] text-[#2B2B2B] dark:text-white font-medium hover:bg-[#D8D8D8] dark:hover:bg-[#333] transition-colors flex items-center justify-center gap-2"
+                >
+                  <LogIn className="w-5 h-5" />
+                  Se connecter
+                </Link>
+                <button
+                  onClick={() => setShowCookiePrompt(false)}
+                  className="w-full py-2 text-sm text-[#8A8A8A] hover:text-[#5A5A5A] transition-colors"
+                >
+                  Annuler
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

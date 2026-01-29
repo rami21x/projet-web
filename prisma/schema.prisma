@@ -17,9 +17,13 @@ datasource db {
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
+  password      String?   // hashed password (null for anonymous users)
   name          String?
   artistName    String?
   instagram     String?
+  bio           String?
+  role          String    @default("visitor") // visitor, artist, client
+  avatar        String?   // URL or base64
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -29,8 +33,22 @@ model User {
   comments      Comment[]
   votes         Vote[]
   guestbookEntries GuestbookEntry[]
+  sessions      Session[]
 
   @@index([email])
+  @@index([role])
+}
+
+model Session {
+  id            String    @id @default(cuid())
+  token         String    @unique
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt     DateTime
+  createdAt     DateTime  @default(now())
+
+  @@index([token])
+  @@index([userId])
 }
 
 // ============================================
