@@ -35,6 +35,20 @@ interface Chapter {
   quoteAuthor: string;
 }
 
+// Alternating visual styles for chapter blocks to avoid monotony
+const chapterStyles = [
+  { bg: "bg-[#1A1A1A]", numColor: "text-primary", labelColor: "text-white/40", border: "border-primary/20" },                // I - Dark
+  { bg: "bg-gradient-to-br from-primary to-primary/80", numColor: "text-white", labelColor: "text-white/60", border: "border-white/20" },  // II - Red
+  { bg: "bg-[#1A1A1A]", numColor: "text-accent", labelColor: "text-white/40", border: "border-accent/20" },                   // III - Dark + gold
+  { bg: "bg-gradient-to-br from-[#2B2B2B] to-[#1A1A1A]", numColor: "text-white", labelColor: "text-white/30", border: "border-white/10" }, // IV - Charcoal
+  { bg: "bg-gradient-to-br from-accent to-accent/80", numColor: "text-white", labelColor: "text-white/60", border: "border-white/20" },    // V - Gold
+  { bg: "bg-[#0A0A0A]", numColor: "text-primary", labelColor: "text-white/30", border: "border-primary/10" },                 // VI - Pure dark
+  { bg: "bg-gradient-to-br from-primary/90 to-accent/90", numColor: "text-white", labelColor: "text-white/50", border: "border-white/20" },// VII - Gradient
+  { bg: "bg-[#1A1A1A]", numColor: "text-white", labelColor: "text-white/40", border: "border-white/10" },                     // VIII - Dark clean
+  { bg: "bg-gradient-to-br from-[#2B2B2B] to-primary/30", numColor: "text-primary", labelColor: "text-white/40", border: "border-primary/15" }, // IX - Dark red tint
+  { bg: "bg-gradient-to-br from-primary to-accent", numColor: "text-white", labelColor: "text-white/60", border: "border-white/20" },      // X - Full gradient
+];
+
 const processIconMap = {
   0: BookOpen,
   1: Users,
@@ -140,14 +154,15 @@ export default function ManifestePage() {
             </div>
           </FadeIn>
 
-          <div className="space-y-8 md:space-y-12">
+          <div className="space-y-12 md:space-y-20">
             {manifestoPageContent.chapters.map((chapter: Chapter, index: number) => {
               const isEven = index % 2 === 0;
+              const style = chapterStyles[index] || chapterStyles[0];
 
               return (
                 <FadeIn key={chapter.number} delay={index * 0.05}>
                   <div
-                    className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 md:gap-10 items-center`}
+                    className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 md:gap-10 items-stretch`}
                   >
                     {/* Number / Visual Column */}
                     <motion.div
@@ -155,23 +170,25 @@ export default function ManifestePage() {
                       transition={{ duration: 0.4 }}
                       className="w-full md:w-5/12 group relative overflow-hidden"
                     >
-                      <div className="relative bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-10 md:p-14 rounded-sm min-h-[260px] flex items-center justify-center">
-                        {/* Large background number */}
-                        <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none">
-                          <span className="text-[140px] md:text-[180px] font-display font-bold text-[#2B2B2B]/5 dark:text-white/5">
+                      <div className={`relative ${style.bg} p-10 md:p-14 rounded-sm min-h-[300px] md:min-h-[340px] flex items-center justify-center border ${style.border}`}>
+                        {/* Large ghost number */}
+                        <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none overflow-hidden">
+                          <span className="text-[180px] md:text-[240px] font-display font-bold text-white/[0.04]">
                             {chapter.number}
                           </span>
                         </div>
 
-                        {/* Overlay gradient like Collection models */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        {/* Hover shimmer */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
+                        {/* Content */}
                         <div className="relative z-10 text-center">
-                          <p className="font-display text-5xl md:text-6xl font-bold text-primary mb-2">
+                          <p className={`font-display text-6xl md:text-7xl lg:text-8xl font-bold ${style.numColor} mb-3 transition-transform duration-500 group-hover:scale-110`}>
                             {chapter.number}
                           </p>
-                          <p className="font-mono text-[10px] tracking-[0.3em] text-[#5A5A5A] dark:text-gray-400">
-                            CHAPITRE
+                          <div className="w-8 h-[1px] bg-current opacity-30 mx-auto mb-3" />
+                          <p className={`font-mono text-[10px] tracking-[0.4em] ${style.labelColor} uppercase`}>
+                            Chapitre
                           </p>
                         </div>
                       </div>
