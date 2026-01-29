@@ -13,10 +13,19 @@ import {
   Shirt,
   Film,
 } from "lucide-react";
+import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
 import NotifyMeButton from "@/components/NotifyMeButton";
 import Link from "next/link";
 import { useContent } from "@/hooks/useContent";
+
+// Images mapped to process steps (index-based)
+const processImages: Record<number, { src: string; alt: string }> = {
+  0: { src: "/images/manifeste/broderie.png", alt: "Recherche philosophique et broderie artisanale" },
+  1: { src: "/images/manifeste/atelier.png", alt: "Atelier de collaboration artistique" },
+  2: { src: "/images/manifeste/materiaux.png", alt: "Matériaux et textiles premium" },
+  3: { src: "/images/manifeste/packaging.png", alt: "Storytelling et packaging éthique" },
+};
 
 interface Chapter {
   number: string;
@@ -249,12 +258,21 @@ export default function ManifestePage() {
       {/* ARTISTIC QUOTE TRANSITION                       */}
       {/* ═══════════════════════════════════════════════ */}
       <FadeIn>
-        <div className="py-16 md:py-24 bg-[#E8E8E8] dark:bg-[#0A0A0A]">
-          <div className="max-w-3xl mx-auto px-4 text-center">
-            <p className="font-display text-lg md:text-xl italic text-[#4A4A4A] dark:text-gray-300 leading-relaxed">
+        <div className="relative py-24 md:py-36 overflow-hidden">
+          <Image
+            src="/images/manifeste/dualite.png"
+            alt="Dualité Chaos et Ordre — la tension créatrice d'Arteral"
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
+            <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-8" />
+            <p className="font-display text-xl md:text-2xl lg:text-3xl italic text-white leading-relaxed">
               &ldquo;La philosophie sans les mains reste lettre morte. Le processus donne vie à la pensée — du concept abstrait au textile que vous porterez.&rdquo;
             </p>
-            <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
+            <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-8" />
           </div>
         </div>
       </FadeIn>
@@ -289,25 +307,44 @@ export default function ManifestePage() {
                   <div
                     className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 md:gap-10 items-center`}
                   >
-                    {/* Icon/Visual Column */}
+                    {/* Visual Column - Image or Icon fallback */}
                     <motion.div
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.4 }}
                       className="w-full md:w-5/12 group relative overflow-hidden"
                     >
-                      <div className="relative bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 p-12 md:p-16 rounded-sm min-h-[280px] flex items-center justify-center">
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                        <div className="relative z-10 text-center">
-                          <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 mb-6 bg-white dark:bg-[#0A0A0A] rounded-full shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            {Icon && (
-                              <Icon className="w-12 h-12 md:w-16 md:h-16 text-primary" />
-                            )}
+                      <div className="relative rounded-sm min-h-[280px] md:min-h-[360px] flex items-center justify-center">
+                        {processImages[index] ? (
+                          <>
+                            <Image
+                              src={processImages[index].src}
+                              alt={processImages[index].alt}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
+                              sizes="(max-width: 768px) 100vw, 42vw"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                            <div className="relative z-10 text-center">
+                              <div className="inline-flex items-center justify-center w-16 h-16 mb-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                                {Icon && <Icon className="w-8 h-8 text-white" />}
+                              </div>
+                              <p className="font-mono text-[10px] tracking-[0.3em] text-white/70">
+                                {processPageContent.stepLabel} {index + 1}
+                              </p>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 mb-6 bg-white dark:bg-[#0A0A0A] rounded-full shadow-lg">
+                                {Icon && <Icon className="w-12 h-12 md:w-16 md:h-16 text-primary" />}
+                              </div>
+                              <p className="font-mono text-[10px] tracking-[0.3em] text-[#5A5A5A] dark:text-gray-400">
+                                {processPageContent.stepLabel} {index + 1}
+                              </p>
+                            </div>
                           </div>
-                          <p className="font-mono text-[10px] tracking-[0.3em] text-[#5A5A5A] dark:text-gray-400">
-                            {processPageContent.stepLabel} {index + 1}
-                          </p>
-                        </div>
+                        )}
                       </div>
                     </motion.div>
 
@@ -512,11 +549,15 @@ export default function ManifestePage() {
       {/* ═══════════════════════════════════════════════ */}
       {/* MANIFESTO QUOTE - Full bleed                    */}
       {/* ═══════════════════════════════════════════════ */}
-      <section className="py-24 md:py-36 bg-gradient-to-br from-[#1A1A1A] via-[#1A1A1A] to-primary/20 text-white relative">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,0.1),transparent_30%)]" />
-          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_100%_100%,rgba(139,0,0,0.2),transparent_30%)]" />
-        </div>
+      <section className="py-24 md:py-36 text-white relative overflow-hidden">
+        <Image
+          src="/images/manifeste/narcisse.png"
+          alt="Narcisse Amoureux — le paradoxe de l'amour de soi"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-black/70" />
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeIn>
