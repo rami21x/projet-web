@@ -374,6 +374,7 @@ const InteractiveArtworkEditor = ({
   onTransformChange: (transform: ArtworkTransform) => void;
   isDark: boolean;
 }) => {
+  const { studioPageContent: content } = useContent();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -579,7 +580,7 @@ const InteractiveArtworkEditor = ({
 
       {/* Helper text */}
       <p className={`text-xs ${textMuted} text-center`}>
-        Glissez l'image pour la repositionner. Utilisez les boutons +/- pour ajuster la taille.
+        {content.visualiser.dragHint}
       </p>
     </div>
   );
@@ -641,7 +642,7 @@ export default function StudioPage() {
     { id: "comprendre", label: content.steps.comprendre, icon: BookOpen },
     { id: "interpreter", label: content.steps.interpreter, icon: Feather },
     { id: "creer", label: content.steps.creer, icon: Upload },
-    { id: "visualiser", label: "Soumettre", icon: Send },
+    { id: "visualiser", label: content.steps.visualiser, icon: Send },
   ];
 
   const canProceedToInterpret = hasUnderstood;
@@ -653,7 +654,7 @@ export default function StudioPage() {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 10 * 1024 * 1024) {
-        alert("Le fichier est trop volumineux. Maximum 10MB.");
+        alert(content.visualiser.validation.fileTooLarge);
         return;
       }
       const reader = new FileReader();
@@ -668,19 +669,19 @@ export default function StudioPage() {
   const handleSubmit = async () => {
     // Client-side validation
     if (!artistInfo.name || artistInfo.name.length < 2) {
-      alert("Veuillez entrer votre nom (min 2 caractères).");
+      alert(content.visualiser.validation.nameRequired);
       return;
     }
     if (!artistInfo.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(artistInfo.email)) {
-      alert("Veuillez entrer une adresse email valide.");
+      alert(content.visualiser.validation.emailInvalid);
       return;
     }
     if (!artistInfo.title || artistInfo.title.length < 3) {
-      alert("Veuillez entrer un titre pour votre œuvre (min 3 caractères).");
+      alert(content.visualiser.validation.titleRequired);
       return;
     }
     if (!uploadedImage) {
-      alert("Veuillez uploader une image.");
+      alert(content.visualiser.validation.imageRequired);
       return;
     }
 
@@ -724,7 +725,7 @@ export default function StudioPage() {
       }
     } catch (error) {
       console.error("Erreur lors de la soumission:", error);
-      alert("Erreur de connexion. Veuillez réessayer.");
+      alert(content.visualiser.validation.connectionError);
     } finally {
       setIsSubmitting(false);
     }
@@ -1781,10 +1782,10 @@ function VisualiserStep({
               <Check className="w-10 h-10 text-green-500" />
             </div>
             <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
-              Soumission envoyée !
+              {content.visualiser.success.title}
             </h2>
             <p className={`${textSecondary} max-w-lg mx-auto mb-8`}>
-              Votre œuvre a été soumise avec succès. Elle sera visible dans le Livret d'Or après validation.
+              {content.visualiser.success.message}
             </p>
 
             {/* Summary Card */}
@@ -1793,12 +1794,12 @@ function VisualiserStep({
                 {uploadedImage && (
                   <div className="w-24 h-24 flex-shrink-0 bg-gray-100 dark:bg-black/30 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={uploadedImage} alt="Votre œuvre" className="w-full h-full object-contain" />
+                    <img src={uploadedImage} alt={content.visualiser.yourArtwork} className="w-full h-full object-contain" />
                   </div>
                 )}
                 <div>
                   <h3 className={`font-display text-xl font-semibold ${textPrimary}`}>{artistInfo.title}</h3>
-                  <p className={`${textSecondary} text-sm`}>par {artistInfo.name}</p>
+                  <p className={`${textSecondary} text-sm`}>{content.visualiser.success.by} {artistInfo.name}</p>
                   {artistInfo.instagram && (
                     <p className="text-primary text-sm">@{artistInfo.instagram.replace('@', '')}</p>
                   )}
@@ -1811,7 +1812,7 @@ function VisualiserStep({
             </div>
 
             <p className={`text-sm ${textMuted} mt-6`}>
-              Confirmation envoyée à <span className="text-primary">{artistInfo.email}</span>
+              {content.visualiser.success.confirmSent} <span className="text-primary">{artistInfo.email}</span>
             </p>
           </motion.div>
         </div>
@@ -1832,10 +1833,10 @@ function VisualiserStep({
               <Send className="w-7 h-7 text-accent" />
             </div>
             <h2 className={`font-display text-3xl md:text-4xl font-bold ${textPrimary} mb-4`}>
-              Finalisez votre soumission
+              {content.visualiser.finalize}
             </h2>
             <p className={`${textSecondary} max-w-xl mx-auto`}>
-              Complétez vos informations pour soumettre votre œuvre au concours ARTERAL.
+              {content.visualiser.finalizeDesc}
             </p>
           </div>
         </motion.div>
@@ -1849,7 +1850,7 @@ function VisualiserStep({
           >
             <div className={`${bgCard} border ${borderColor} p-6`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-4`}>
-                Votre œuvre
+                {content.visualiser.yourArtwork}
               </h3>
               <div className={`aspect-square relative overflow-hidden ${isDark ? "bg-black/30" : "bg-gray-100"}`}>
                 {uploadedImage ? (
@@ -1868,7 +1869,7 @@ function VisualiserStep({
 
               {/* Message preview */}
               <div className={`mt-4 p-4 border ${borderColor} ${isDark ? "bg-accent/5" : "bg-accent/[0.02]"}`}>
-                <p className="text-xs text-accent mb-2">Votre message</p>
+                <p className="text-xs text-accent mb-2">{content.visualiser.yourMessage}</p>
                 <p className={`${textSecondary} italic text-sm`}>"{interpretation.message}"</p>
               </div>
             </div>
@@ -1882,82 +1883,82 @@ function VisualiserStep({
           >
             <div className={`${bgCard} border ${borderColor} p-6`}>
               <h3 className={`font-display text-lg font-semibold ${textPrimary} mb-6`}>
-                Informations artiste
+                {content.visualiser.artistInfo}
               </h3>
 
               <div className="space-y-4">
                 {/* Title */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>Titre de l'œuvre *</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.title}</label>
                   <input
                     type="text"
                     value={artistInfo.title}
                     onChange={(e) => setArtistInfo({ ...artistInfo, title: e.target.value })}
-                    placeholder="Ex: Le Reflet Brisé"
+                    placeholder={content.visualiser.fields.titlePlaceholder}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
 
                 {/* Name */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>Votre nom *</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.name}</label>
                   <input
                     type="text"
                     value={artistInfo.name}
                     onChange={(e) => setArtistInfo({ ...artistInfo, name: e.target.value })}
-                    placeholder="Nom ou pseudonyme"
+                    placeholder={content.visualiser.fields.namePlaceholder}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>Email *</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.email}</label>
                   <input
                     type="email"
                     value={artistInfo.email}
                     onChange={(e) => setArtistInfo({ ...artistInfo, email: e.target.value })}
-                    placeholder="pour vous contacter"
+                    placeholder={content.visualiser.fields.emailPlaceholder}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
 
                 {/* Instagram */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>Instagram (optionnel)</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.instagram}</label>
                   <input
                     type="text"
                     value={artistInfo.instagram}
                     onChange={(e) => setArtistInfo({ ...artistInfo, instagram: e.target.value })}
-                    placeholder="@votre_compte"
+                    placeholder={content.visualiser.fields.instagramPlaceholder}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
 
                 {/* Position on garment - Optional */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>Position souhaitée sur le vêtement (optionnel)</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.position.label}</label>
                   <select
                     value={artistInfo.position}
                     onChange={(e) => setArtistInfo({ ...artistInfo, position: e.target.value })}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} focus:outline-none focus:border-primary/50 transition-all`}
                   >
-                    <option value="">Laisser au choix de l'équipe</option>
-                    <option value="center">Centre (poitrine)</option>
-                    <option value="left">Côté gauche</option>
-                    <option value="right">Côté droit</option>
-                    <option value="back">Dos</option>
-                    <option value="full">Impression complète</option>
+                    <option value="">{content.visualiser.position.teamChoice}</option>
+                    <option value="center">{content.visualiser.position.center}</option>
+                    <option value="left">{content.visualiser.position.left}</option>
+                    <option value="right">{content.visualiser.position.right}</option>
+                    <option value="back">{content.visualiser.position.back}</option>
+                    <option value="full">{content.visualiser.position.full}</option>
                   </select>
                 </div>
 
                 {/* Comment about artwork */}
                 <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>Commentaire sur l'œuvre (optionnel)</label>
+                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.comment.label}</label>
                   <textarea
                     value={artistInfo.comment}
                     onChange={(e) => setArtistInfo({ ...artistInfo, comment: e.target.value })}
-                    placeholder="Partagez l'histoire derrière votre création, votre inspiration..."
+                    placeholder={content.visualiser.comment.placeholder}
                     rows={3}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all resize-none`}
                   />
@@ -1977,7 +1978,7 @@ function VisualiserStep({
                     </div>
                   </div>
                   <span className={`text-sm ${textSecondary} leading-relaxed`}>
-                    J'accepte de recevoir des nouvelles concernant mon œuvre et les résultats du concours.
+                    {content.visualiser.newsletter}
                   </span>
                 </label>
 
@@ -1994,18 +1995,18 @@ function VisualiserStep({
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>Envoi en cours...</span>
+                      <span>{content.visualiser.submitting}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5" />
-                      <span>Soumettre mon œuvre</span>
+                      <span>{content.visualiser.submit}</span>
                     </>
                   )}
                 </button>
 
                 <p className={`text-xs ${textMuted} text-center mt-4`}>
-                  En soumettant, vous acceptez que votre œuvre soit utilisée dans le cadre du concours ARTERAL.
+                  {content.visualiser.terms}
                 </p>
               </div>
             </div>

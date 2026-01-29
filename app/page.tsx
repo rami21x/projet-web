@@ -273,10 +273,10 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-8 md:mb-12">
               <span className="font-mono text-[10px] tracking-[0.5em] text-[#6A6A6A] dark:text-gray-500 block mb-4">
-                LOOKBOOK
+                {homePageContent.lookbook.label}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-4">
-                Porté par l'Art
+                {homePageContent.lookbook.title}
               </h2>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
             </div>
@@ -311,14 +311,14 @@ export default function Home() {
               <div className="relative inline-block">
                 <span className="absolute -top-6 -left-4 font-display text-5xl text-primary/20 select-none">&ldquo;</span>
                 <p className="font-display text-xl sm:text-2xl md:text-3xl italic text-[#3A3A3A] dark:text-gray-200 leading-relaxed px-6">
-                  Ces silhouettes attendent leur âme. Chaque glitch est une invitation —
-                  <span className="text-primary"> donnez vie à cette toile vierge</span>,
-                  inscrivez votre art dans le tissu du réel.
+                  {homePageContent.lookbook.quote}
+                  <span className="text-primary"> {homePageContent.lookbook.quoteHighlight}</span>
+                  {homePageContent.lookbook.quoteSuffix}
                 </p>
                 <span className="absolute -bottom-6 -right-4 font-display text-5xl text-primary/20 select-none">&rdquo;</span>
               </div>
               <p className="font-mono text-[10px] tracking-[0.3em] text-[#7A7A7A] dark:text-gray-500 mt-8">
-                — EN ATTENTE D'ARTISTES
+                {homePageContent.lookbook.quoteAuthor}
               </p>
             </div>
           </FadeIn>
@@ -330,7 +330,7 @@ export default function Home() {
                 href="/collection"
                 className="inline-flex items-center gap-3 font-body text-sm font-medium text-primary hover:text-primary/70 transition-colors group"
               >
-                <span>Découvrir tous les modèles</span>
+                <span>{homePageContent.lookbook.cta}</span>
                 <span className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
               </Link>
             </div>
@@ -352,13 +352,13 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
               <span className="font-mono text-[10px] tracking-[0.5em] text-primary/80 block mb-4">
-                ATELIER CREATIF
+                {homePageContent.studioGallery.label}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-                L'Art Rencontre la Mode
+                {homePageContent.studioGallery.title}
               </h2>
               <p className="font-body text-base text-white/60 max-w-xl mx-auto">
-                Des philosophes aux artistes, chaque reference inspire nos creations
+                {homePageContent.studioGallery.subtitle}
               </p>
             </div>
           </FadeIn>
@@ -525,7 +525,7 @@ export default function Home() {
                 className="inline-flex items-center gap-4 px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300 group"
               >
                 <span className="font-display text-lg text-white group-hover:text-primary transition-colors">
-                  Creer votre oeuvre
+                  {homePageContent.studioGallery.cta}
                 </span>
                 <motion.span
                   className="w-8 h-[1px] bg-primary"
