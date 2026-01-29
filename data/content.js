@@ -1661,8 +1661,7 @@ export const navigation = [
   { name: "Brand", href: "/marque" },
   { name: "Collection", href: "/collection" },
   { name: "Studio", href: "/studio" },
-  { name: "Gallery", href: "/galerie" },
-  { name: "Manifesto & Process", href: "/manifeste" },
+{ name: "Manifesto & Process", href: "/manifeste" },
   { name: "Guestbook", href: "/livre-or" },
   { name: "Contact", href: "/contact" },
 ];

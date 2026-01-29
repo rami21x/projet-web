@@ -1655,8 +1655,7 @@ export const navigation = [
   { name: "La Marque", href: "/marque" },
   { name: "Collection", href: "/collection" },
   { name: "Studio", href: "/studio" },
-  { name: "Galerie", href: "/galerie" },
-  { name: "Manifeste & Processus", href: "/manifeste" },
+{ name: "Manifeste & Processus", href: "/manifeste" },
   { name: "Livre d'Or", href: "/livre-or" },
   { name: "Contact", href: "/contact" },
 ];

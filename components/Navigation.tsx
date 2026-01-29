@@ -23,12 +23,12 @@ export default function Navigation() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Left navigation items - Only Home and Gallery
+  // Left navigation items - Only Home
   const leftNav = navigation.filter((item) =>
-    ["Home", "Accueil", "Gallery", "Galerie"].includes(item.name)
+    ["Home", "Accueil"].includes(item.name)
   );
 
-  // Dropdown items - Everything except Home and Gallery
+  // Dropdown items - Everything except Home
   const dropdownItems = navigation.filter((item) =>
     !leftNav.includes(item)
   );
