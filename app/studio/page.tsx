@@ -1277,8 +1277,7 @@ function ComprendreStep({
                       <span className="text-accent font-mono text-xs">{content.contest.briefSection.themes}:</span> {content.contest.briefSection.themesText}
                     </p>
                     <a
-                      href="/downloads/arteral-concours-brief.zip"
-                      download
+                      href="/contact"
                       className="inline-flex items-center gap-3 px-6 py-3 bg-primary hover:bg-primary/90 text-white font-semibold transition-all hover:scale-105 shadow-lg"
                     >
                       <Download className="w-5 h-5" />
