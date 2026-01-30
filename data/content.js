@@ -855,23 +855,25 @@ export const brandPageContent = {
   founders: {
     label: "THE FOUNDERS",
     title: "Two souls, one vision",
+    citation: "We don't create clothing. We weave ideas meant to be worn.",
+    image: "/images/founders/fondateurs.jpg",
     profiles: [
       {
         name: "Soheil",
         role: "Artistic Direction & Marketing",
         origin: "Iran",
-        bio: "Born in Iran, in the shadow of mountains and ancient poetry, Soheil carries within him the Persian heritage of mystics and calligraphers. His exile brought him both the pain of uprooting and the chance of a fresh start. In the tension between his roots and his journey, he found his voice: creating bridges between cultures, transforming the invisible into the visible.",
-        quote: "Beauty has no borders. Art is the universal language that unites what history divides.",
+        description: "Passionate about conceptual art and poetry, Soheil brings an artistic vision that transcends cultural boundaries. His aesthetic sensibility shapes every Arteral collection.",
+        quote: "Art is the only language that censorship cannot silence.",
       },
       {
         name: "Rami",
         role: "Design & Creative Direction",
         origin: "Syria",
-        bio: "Rami grew up in Syria, a land of contrasts where ancient civilizations meet the storm of modernity. Forced to leave, he carried in his suitcases dreams and sketches, the memory of Damascus courtyards and bazaars. His creativity is nourished by this duality: preserving the beauty of the past while imagining the future.",
+        description: "Driven by philosophy and existentialism, Rami designs each piece as a silent statement. Clothing becomes an extension of thought.",
         quote: "Every line I draw is a bridge between the world I left and the one I'm building.",
       },
     ],
-    sharedVision: "United by exile and shared dreams, Soheil and Rami founded ARTERAL to prove that beauty can emerge from chaos, that difference is a strength, and that fashion can be an act of philosophical resistance.",
+    sharedVision: "Our vision for Arteral goes beyond fashion. We believe that what you wear shapes who you are.",
   },
   manifesto: {
     label: "MANIFESTO",

@@ -855,13 +855,14 @@ export const brandPageContent = {
   founders: {
     label: "LES FONDATEURS",
     title: "Deux âmes, une vision",
-    description: "Arteral est né de la rencontre de deux parcours marqués par l'exil et la quête d'expression. Unis par la passion de l'art et la conviction que les vêtements sont l'identité silencieuse de celui qui les porte.",
+    citation: "Nous ne créons pas des vêtements. Nous tissons des idées que l'on porte.",
+    image: "/images/founders/fondateurs.jpg",
     profiles: [
       {
         name: "Soheil",
         role: "Direction Artistique & Marketing",
         origin: "Iran",
-        description: "Immigré d'Iran, Soheil a grandi entre deux cultures, nourrissant une passion profonde pour l'art conceptuel et la poésie française. Inspiré par Baudelaire, Rimbaud et Verlaine, il voit dans chaque création une forme de résistance poétique.",
+        description: "Passionné d'art conceptuel et de poésie, Soheil apporte une vision artistique qui transcende les frontières culturelles. Sa sensibilité esthétique nourrit chaque collection Arteral.",
         quote: "L'art est la seule langue que la censure ne peut pas étouffer.",
         image: "/images/founders/soheil.jpg",
       },
@@ -869,12 +870,12 @@ export const brandPageContent = {
         name: "Rami",
         role: "Design & Direction Créative",
         origin: "Syrie",
-        description: "Syrien passionné de philosophie et de mode, Rami trouve dans Nietzsche et la pensée existentialiste les fondements de sa vision créative. Pour lui, le vêtement est une extension de l'âme, une déclaration silencieuse de qui nous sommes.",
+        description: "Nourri par la philosophie et l'existentialisme, Rami conçoit chaque pièce comme une déclaration silencieuse. Le vêtement devient extension de la pensée.",
         quote: "Le vêtement est le miroir de l'âme que les mots ne peuvent exprimer.",
         image: "/images/founders/rami.jpg",
       },
     ],
-    sharedVision: "Notre vision d'Arteral dépasse la simple mode. Nous voulons faire réfléchir, enrichir les esprits, collaborer avec des artistes et des penseurs. Les vêtements déterminent inconsciemment l'identité de celui qui les porte. Nous voulons transmettre notre message par le moyen le plus intime qui soit : ce que l'on choisit de porter chaque jour.",
+    sharedVision: "Notre vision d'Arteral dépasse la simple mode. Nous croyons que ce que l'on porte façonne qui l'on est.",
   },
   manifesto: {
     label: "MANIFESTE",

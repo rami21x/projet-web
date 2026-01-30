@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { MapPin, Quote, ArrowRight, Sparkles, Eye, Heart, Users, Paintbrush, FileText } from "lucide-react";
 import { useContent } from "@/hooks/useContent";
 import { useTheme } from "next-themes";
@@ -195,53 +196,82 @@ export default function MarquePage() {
               <p className="font-mono text-xs tracking-[0.3em] text-accent mb-4">
                 {brandPageContent.founders.label}
               </p>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-6">
                 {brandPageContent.founders.title}
               </h2>
+              <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-6" />
+              <p className="font-display text-lg md:text-xl italic text-[#4A4A4A] dark:text-gray-300 max-w-xl mx-auto">
+                &ldquo;{brandPageContent.founders.citation}&rdquo;
+              </p>
             </div>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
-            {brandPageContent.founders.profiles.map((founder: { name: string; role: string; origin: string; bio: string; quote: string }, index: number) => (
-              <FadeIn key={founder.name} delay={index * 0.2}>
-                <div className="bg-[#F5F5F5] dark:bg-[#1A1A1A] p-6 md:p-8 rounded-lg border-2 border-accent/20 hover:border-accent/40 transition-all duration-300">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-lg">
-                      {founder.name.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 className="font-display text-xl md:text-2xl font-bold text-[#2B2B2B] dark:text-white">
-                        {founder.name}
-                      </h3>
-                      <p className="font-body text-sm text-accent font-semibold">
-                        {founder.role}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 mb-4 text-[#6A6A6A] dark:text-gray-400">
-                    <MapPin className="w-4 h-4" />
-                    <span className="font-mono text-xs tracking-wider">{founder.origin}</span>
-                  </div>
-
-                  <p className="font-body text-sm md:text-base text-[#4A4A4A] dark:text-gray-300 leading-relaxed mb-6">
-                    {founder.bio}
-                  </p>
-
-                  <div className="bg-accent/10 p-4 rounded-lg border-l-4 border-accent">
-                    <Quote className="w-5 h-5 text-accent mb-2" />
-                    <p className="font-body text-sm italic text-[#3A3A3A] dark:text-gray-200">
-                      &ldquo;{founder.quote}&rdquo;
-                    </p>
+          {/* Photo des fondateurs ensemble */}
+          <FadeIn delay={0.1}>
+            <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center mb-16">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.4 }}
+                className="w-full md:w-5/12 relative overflow-hidden rounded-sm group"
+              >
+                <div className="relative aspect-[4/5]">
+                  <Image
+                    src={brandPageContent.founders.image}
+                    alt="Soheil & Rami — Fondateurs d'Arteral"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 42vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <p className="font-display text-2xl font-bold text-white">Soheil & Rami</p>
+                    <p className="font-mono text-[10px] tracking-[0.3em] text-white/60 mt-1">FONDATEURS</p>
                   </div>
                 </div>
-              </FadeIn>
-            ))}
-          </div>
+              </motion.div>
+
+              <div className="w-full md:w-7/12 space-y-8">
+                {brandPageContent.founders.profiles.map((founder: { name: string; role: string; origin: string; description: string; quote: string }, index: number) => (
+                  <FadeIn key={founder.name} delay={0.2 + index * 0.15}>
+                    <div className="relative">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white font-bold text-sm">
+                          {founder.name.charAt(0)}
+                        </div>
+                        <div>
+                          <h3 className="font-display text-xl font-bold text-[#2B2B2B] dark:text-white">
+                            {founder.name}
+                          </h3>
+                          <p className="font-mono text-[10px] tracking-wider text-accent">
+                            {founder.role}
+                          </p>
+                        </div>
+                        <span className="ml-auto flex items-center gap-1 text-[#6A6A6A] dark:text-gray-500">
+                          <MapPin className="w-3 h-3" />
+                          <span className="font-mono text-[10px] tracking-wider">{founder.origin}</span>
+                        </span>
+                      </div>
+
+                      <p className="font-body text-sm md:text-base text-[#4A4A4A] dark:text-gray-300 leading-relaxed mb-3 pl-[52px]">
+                        {founder.description}
+                      </p>
+
+                      <blockquote className="pl-[52px] border-l-2 border-primary/30 ml-0">
+                        <p className="font-body text-sm italic text-[#3A3A3A] dark:text-gray-200 pl-4">
+                          &ldquo;{founder.quote}&rdquo;
+                        </p>
+                      </blockquote>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
 
           <FadeIn delay={0.4}>
-            <div className="text-center max-w-3xl mx-auto">
-              <p className="font-body text-base md:text-lg text-[#3A3A3A] dark:text-gray-200 leading-relaxed italic">
+            <div className="text-center max-w-2xl mx-auto">
+              <div className="w-8 h-[1px] bg-primary mx-auto mb-6" />
+              <p className="font-body text-base md:text-lg text-[#3A3A3A] dark:text-gray-200 leading-relaxed">
                 {brandPageContent.founders.sharedVision}
               </p>
             </div>
