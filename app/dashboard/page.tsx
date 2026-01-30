@@ -202,7 +202,7 @@ function ArtistDashboard({ designs, loading, t }: { designs: Design[]; loading: 
             <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">{t.artist.seeVotesDesc}</p>
           </div>
         </Link>
-        <Link href="/galerie" className="group">
+        <Link href="/collection" className="group">
           <div className="bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5 p-6 hover:shadow-lg transition-all">
             <BookOpen className="w-8 h-8 text-primary mb-3" />
             <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">{t.artist.myGallery}</h3>
@@ -275,7 +275,7 @@ function ClientDashboard({ designs, loading, stats, t }: { designs: Design[]; lo
             <p className="text-white/70 text-sm">{t.client.voteDesc}</p>
           </div>
         </Link>
-        <Link href="/galerie" className="group">
+        <Link href="/collection" className="group">
           <div className="bg-white dark:bg-[#111111] border border-black/5 dark:border-white/5 p-6 hover:shadow-lg transition-all">
             <Eye className="w-8 h-8 text-amber-500 mb-3" />
             <h3 className="font-display text-lg font-bold text-[#2B2B2B] dark:text-white mb-1">{t.client.explore}</h3>
