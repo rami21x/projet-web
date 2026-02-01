@@ -388,38 +388,6 @@ export default function MarquePage() {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="py-16 md:py-24 bg-[#F0F0F0] dark:bg-[#0A0A0A]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeIn>
-            <div className="text-center mb-12 md:mb-16">
-              <p className="font-mono text-xs tracking-[0.3em] text-accent mb-4">
-                {brandPageContent.gallery.label}
-              </p>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white">
-                {brandPageContent.gallery.title}
-              </h2>
-            </div>
-          </FadeIn>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {brandPageContent.gallery.images.map((image: { src: string; alt: string }, index: number) => (
-              <FadeIn key={image.alt} delay={index * 0.1}>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="aspect-square bg-[#2B2B2B]/10 dark:bg-white/10 rounded-lg overflow-hidden relative group"
-                >
-                  <div className="absolute inset-0 flex items-center justify-center text-[#5A5A5A] dark:text-gray-400 font-body text-sm">
-                    {image.alt}
-                  </div>
-                  <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/20 transition-colors duration-300" />
-                </motion.div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-dark text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

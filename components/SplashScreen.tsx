@@ -1,15 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const closeSplash = useCallback(() => {
     setShowContent(false);
@@ -25,67 +22,23 @@ export default function SplashScreen() {
     if (hasSeenSplash) {
       setIsVisible(false);
     } else {
-      // Show content after a small delay
       setTimeout(() => setShowContent(true), 300);
     }
   }, []);
 
-  const handleVideoLoad = useCallback(() => {
-    setVideoLoaded(true);
-    setVideoError(false);
-  }, []);
-
-  const handleVideoError = useCallback(() => {
-    setVideoError(true);
-    setVideoLoaded(false);
-    // Show fallback content immediately
-    setShowContent(true);
-  }, []);
-
-  const handleVideoEnd = useCallback(() => {
-    closeSplash();
-  }, [closeSplash]);
-
   const handleSkip = useCallback(() => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-    }
     closeSplash();
   }, [closeSplash]);
 
-  // Fallback: auto-hide after 12 seconds if video doesn't end
+  // Auto-hide after 8 seconds
   useEffect(() => {
     if (isVisible) {
       const fallbackTimer = setTimeout(() => {
         closeSplash();
-      }, 12000);
+      }, 8000);
       return () => clearTimeout(fallbackTimer);
     }
   }, [isVisible, closeSplash]);
-
-  // Lazy load video only when visible
-  useEffect(() => {
-    if (!isVisible || !videoRef.current) return;
-
-    const video = videoRef.current;
-
-    // Intersection observer for lazy loading
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            video.load();
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(video);
-
-    return () => observer.disconnect();
-  }, [isVisible]);
 
   if (!isVisible) return null;
 
@@ -98,32 +51,8 @@ export default function SplashScreen() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-[#0A0A0A] flex items-center justify-center overflow-hidden"
         >
-          {/* Video Background - Full cover with lazy loading */}
-          {!videoError && (
-            <motion.video
-              ref={videoRef}
-              autoPlay
-              muted
-              playsInline
-              preload="metadata"
-              onLoadedData={handleVideoLoad}
-              onEnded={handleVideoEnd}
-              onError={handleVideoError}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: videoLoaded ? 1 : 0 }}
-              transition={{ duration: 1 }}
-              className="absolute inset-0 w-full h-full object-cover"
-              poster="/images/splash-poster.jpg"
-            >
-              {/* WebM first for better compression */}
-              <source src="/videos/splash-intro.webm" type="video/webm" />
-              <source src="/videos/splash-intro.mp4" type="video/mp4" />
-            </motion.video>
-          )}
-
-          {/* Fallback animated background when video fails or not available */}
-          {(videoError || !videoLoaded) && (
-            <motion.div
+          {/* Animated background */}
+          <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-primary/20"
@@ -146,7 +75,6 @@ export default function SplashScreen() {
                 className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
               />
             </motion.div>
-          )}
 
           {/* Elegant overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />

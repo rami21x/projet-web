@@ -427,7 +427,7 @@ export const artists = [
     bio: "Specialized in exploring emotional paradoxes through digital and traditional art.",
     contribution: "Creation of the main 'Love ↔ Boredom' artwork - fusion of opposite symbols",
     portfolio: "#",
-    image: "/images/artists/artist-1.jpg",
+    image: null,
   },
   {
     name: "Lucas Chen",
@@ -435,7 +435,7 @@ export const artists = [
     bio: "Works at the intersection of Eastern philosophy and minimalist contemporary design.",
     contribution: "Development of Yin/Yang symbols adapted to the collection",
     portfolio: "#",
-    image: "/images/artists/artist-2.jpg",
+    image: null,
   },
   {
     name: "Amara Diallo",
@@ -443,7 +443,7 @@ export const artists = [
     bio: "Ancestral mastery of African embroidery applied to contemporary concepts.",
     contribution: "Technical realization of embroidery on premium textiles",
     portfolio: "#",
-    image: "/images/artists/artist-3.jpg",
+    image: null,
   },
 ];
 
@@ -916,16 +916,7 @@ export const brandPageContent = {
       },
     ],
   },
-  gallery: {
-    label: "IN THE WORKSHOP",
-    title: "Behind the scenes of creation",
-    images: [
-      { src: "/images/atelier/atelier-1.jpg", alt: "Creative sketches" },
-      { src: "/images/atelier/atelier-2.jpg", alt: "Fabric selection" },
-      { src: "/images/atelier/atelier-3.jpg", alt: "Embroidery detail" },
-      { src: "/images/atelier/atelier-4.jpg", alt: "Photo session" },
-    ],
-  },
+  gallery: null,
   cta: {
     title: "Join the movement",
     description: "ARTERAL is more than a brand. It's a community of those who believe that fashion can be a vector of change, a space for reflection, a form of philosophical resistance.",

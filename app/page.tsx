@@ -38,20 +38,11 @@ export default function Home() {
     <div>
       {/* Hero Section with Video Background */}
       <section className="relative min-h-[100vh] flex items-center justify-center text-white overflow-hidden">
-        {/* Video Background */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/videos/splash-intro.mp4" type="video/mp4" />
-          <source src="/videos/splash-intro.webm" type="video/webm" />
-        </video>
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-primary/20" />
 
         {/* Overlay gradients for better text readability */}
-        <div className="absolute inset-0 bg-dark/50" />
+        <div className="absolute inset-0 bg-dark/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/30" />
 
         {/* Sparkling dots */}
@@ -344,9 +335,7 @@ export default function Home() {
       {/* Studio Artistic Gallery - Harmony meets Chaos */}
       <section className="py-20 md:py-32 bg-dark relative overflow-hidden">
         {/* Background texture */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/noise.png')] bg-repeat" />
-        </div>
+        <div className="absolute inset-0 opacity-5" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeIn>

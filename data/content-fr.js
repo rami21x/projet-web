@@ -427,7 +427,7 @@ export const artists = [
     bio: "Spécialisée dans l'exploration des paradoxes émotionnels à travers l'art digital et traditionnel.",
     contribution: "Création de l'artwork principal 'Amour ↔ Ennui' - fusion de symboles opposés",
     portfolio: "#",
-    image: "/images/artists/artist-1.jpg",
+    image: null,
   },
   {
     name: "Lucas Chen",
@@ -435,7 +435,7 @@ export const artists = [
     bio: "Travaille à l'intersection de la philosophie orientale et du design contemporain minimaliste.",
     contribution: "Développement des symboles Yin/Yang adaptés à la collection",
     portfolio: "#",
-    image: "/images/artists/artist-2.jpg",
+    image: null,
   },
   {
     name: "Amara Diallo",
@@ -443,7 +443,7 @@ export const artists = [
     bio: "Maîtrise ancestrale de la broderie africaine appliquée aux concepts contemporains.",
     contribution: "Réalisation technique de la broderie sur textile premium",
     portfolio: "#",
-    image: "/images/artists/artist-3.jpg",
+    image: null,
   },
 ];
 
@@ -864,7 +864,6 @@ export const brandPageContent = {
         origin: "Iran",
         description: "Passionné d'art conceptuel et de poésie, Soheil apporte une vision artistique qui transcende les frontières culturelles. Sa sensibilité esthétique nourrit chaque collection Arteral.",
         quote: "L'art est la seule langue que la censure ne peut pas étouffer.",
-        image: "/images/founders/soheil.jpg",
       },
       {
         name: "Rami",
@@ -872,7 +871,6 @@ export const brandPageContent = {
         origin: "Syrie",
         description: "Nourri par la philosophie et l'existentialisme, Rami conçoit chaque pièce comme une déclaration silencieuse. Le vêtement devient extension de la pensée.",
         quote: "Le vêtement est le miroir de l'âme que les mots ne peuvent exprimer.",
-        image: "/images/founders/rami.jpg",
       },
     ],
     sharedVision: "Notre vision d'Arteral dépasse la simple mode. Nous croyons que ce que l'on porte façonne qui l'on est.",
@@ -918,17 +916,7 @@ export const brandPageContent = {
       },
     ],
   },
-  gallery: {
-    label: "DANS L'ATELIER",
-    title: "Les coulisses de la création",
-    description: "Des premières esquisses aux broderies finales, découvrez l'artisanat derrière chaque pièce Arteral.",
-    images: [
-      { src: "/images/atelier/atelier-1.jpg", alt: "Esquisses et recherches" },
-      { src: "/images/atelier/atelier-2.jpg", alt: "Sélection des matières" },
-      { src: "/images/atelier/atelier-3.jpg", alt: "Broderie artisanale" },
-      { src: "/images/atelier/atelier-4.jpg", alt: "Contrôle qualité" },
-    ],
-  },
+  gallery: null,
   cta: {
     title: "Rejoignez le mouvement",
     description: "Découvrez notre première collection et participez à redéfinir ce que signifie porter un vêtement.",
