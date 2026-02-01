@@ -856,7 +856,7 @@ export const brandPageContent = {
     label: "THE FOUNDERS",
     title: "Two souls, one vision",
     citation: "We don't create clothing. We weave ideas meant to be worn.",
-    image: "/images/founders/fondateurs.jpg",
+    image: "/images/founders/fondateurs.jpeg",
     profiles: [
       {
         name: "Soheil",

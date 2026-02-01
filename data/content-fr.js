@@ -856,7 +856,7 @@ export const brandPageContent = {
     label: "LES FONDATEURS",
     title: "Deux âmes, une vision",
     citation: "Nous ne créons pas des vêtements. Nous tissons des idées que l'on porte.",
-    image: "/images/founders/fondateurs.jpg",
+    image: "/images/founders/fondateurs.jpeg",
     profiles: [
       {
         name: "Soheil",
