@@ -1,12 +1,15 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const closeSplash = useCallback(() => {
     setShowContent(false);
@@ -27,15 +30,18 @@ export default function SplashScreen() {
   }, []);
 
   const handleSkip = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
     closeSplash();
   }, [closeSplash]);
 
-  // Auto-hide after 8 seconds
+  // Auto-hide after 12 seconds
   useEffect(() => {
     if (isVisible) {
       const fallbackTimer = setTimeout(() => {
         closeSplash();
-      }, 8000);
+      }, 12000);
       return () => clearTimeout(fallbackTimer);
     }
   }, [isVisible, closeSplash]);
@@ -51,30 +57,45 @@ export default function SplashScreen() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-[#0A0A0A] flex items-center justify-center overflow-hidden"
         >
-          {/* Animated background */}
-          <motion.div
+          {/* Video Background */}
+          {!videoError && (
+            <motion.video
+              ref={videoRef}
+              autoPlay
+              muted
+              playsInline
+              preload="auto"
+              onLoadedData={() => { setVideoLoaded(true); setVideoError(false); }}
+              onEnded={() => closeSplash()}
+              onError={() => { setVideoError(true); setShowContent(true); }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: videoLoaded ? 1 : 0 }}
+              transition={{ duration: 1 }}
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src="/videos/splash-intro.mp4" type="video/mp4" />
+            </motion.video>
+          )}
+
+          {/* Fallback animated background when video fails */}
+          {(videoError || !videoLoaded) && (
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-primary/20"
             >
-              {/* Animated shapes */}
               <motion.div
-                animate={{
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 180, 360],
-                }}
+                animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl"
               />
               <motion.div
-                animate={{
-                  scale: [1.2, 1, 1.2],
-                  rotate: [360, 180, 0],
-                }}
+                animate={{ scale: [1.2, 1, 1.2], rotate: [360, 180, 0] }}
                 transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                 className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
               />
             </motion.div>
+          )}
 
           {/* Elegant overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
@@ -90,7 +111,6 @@ export default function SplashScreen() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="relative z-10 flex flex-col items-center text-center px-4"
               >
-                {/* Logo with glow effect */}
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -109,7 +129,6 @@ export default function SplashScreen() {
                   />
                 </motion.div>
 
-                {/* Brand Name */}
                 <motion.h1
                   initial={{ opacity: 0, letterSpacing: "0.5em" }}
                   animate={{ opacity: 1, letterSpacing: "0.2em" }}
@@ -119,7 +138,6 @@ export default function SplashScreen() {
                   ARTERAL
                 </motion.h1>
 
-                {/* Tagline */}
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.7 }}
@@ -129,7 +147,6 @@ export default function SplashScreen() {
                   L&apos;art de porter sa philosophie
                 </motion.p>
 
-                {/* Animated line */}
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: "100px" }}
@@ -140,7 +157,7 @@ export default function SplashScreen() {
             )}
           </AnimatePresence>
 
-          {/* Skip Button - More elegant */}
+          {/* Skip Button */}
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
