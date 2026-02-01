@@ -41,10 +41,10 @@ export const createDesignSchema = z.object({
       'Format d\'image invalide (base64 requis)'
     ),
   garmentType: z.enum(['tshirt', 'pull'], {
-    errorMap: () => ({ message: 'Type de vêtement invalide' })
+    error: 'Type de vêtement invalide'
   }),
   garmentFit: z.enum(['slim', 'regular', 'oversize'], {
-    errorMap: () => ({ message: 'Coupe invalide' })
+    error: 'Coupe invalide'
   }),
   garmentColor: z
     .string()
@@ -65,7 +65,7 @@ export const likeDesignSchema = z.object({
 export const voteDesignSchema = z.object({
   email: emailSchema,
   type: z.enum(['people', 'heart'], {
-    errorMap: () => ({ message: 'Type de vote invalide' })
+    error: 'Type de vote invalide'
   })
 })
 
@@ -82,7 +82,7 @@ export const createGuestbookSchema = z.object({
     .max(1000, 'Message trop long (max 1000 caractères)')
     .transform(val => val.trim()),
   mood: z.enum(['love', 'inspired', 'thoughtful'], {
-    errorMap: () => ({ message: 'Mood invalide' })
+    error: 'Mood invalide'
   })
 })
 

@@ -648,7 +648,7 @@ export default function StudioPage() {
   const canProceedToInterpret = hasUnderstood;
   const canProceedToCreate = Object.values(interpretation).every(v => v.length >= 20);
   const canProceedToVisualize = uploadedImage !== null;
-  const canSubmit = artistInfo.name && artistInfo.email && artistInfo.title;
+  const canSubmit = !!(artistInfo.name && artistInfo.email && artistInfo.title);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -1526,7 +1526,7 @@ function InterpreterStep({
   content: ReturnType<typeof useContent>["studioPageContent"];
   isDark: boolean;
   interpretation: Record<string, string>;
-  setInterpretation: (v: Record<string, string>) => void;
+  setInterpretation: React.Dispatch<React.SetStateAction<{ duality: string; harmony: string; feeling: string; message: string }>>;
 }) {
   const bgCard = isDark ? "bg-[#111111]" : "bg-white";
   const borderColor = isDark ? "border-white/10" : "border-black/10";
@@ -1573,7 +1573,7 @@ function InterpreterStep({
                 <textarea
                   value={interpretation[q.id] || ""}
                   onChange={(e) =>
-                    setInterpretation({ ...interpretation, [q.id]: e.target.value })
+                    setInterpretation(prev => ({ ...prev, [q.id]: e.target.value }))
                   }
                   placeholder={q.placeholder}
                   rows={4}

@@ -161,26 +161,6 @@ export default function SplashScreen() {
             </span>
           </motion.button>
 
-          {/* Loading state - Only shows if video is loading */}
-          {!videoLoaded && !videoError && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-20"
-            >
-              <div className="flex items-center gap-3">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                  className="w-4 h-4 border border-white/20 border-t-primary/80 rounded-full"
-                />
-                <span className="text-white/30 text-xs font-body tracking-wider">
-                  Chargement...
-                </span>
-              </div>
-            </motion.div>
-          )}
         </motion.div>
       )}
     </AnimatePresence>

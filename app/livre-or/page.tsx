@@ -115,7 +115,7 @@ export default function LivretDorPage() {
   };
 
   const extractMessage = (philosophy: string): string => {
-    const messageMatch = philosophy.match(/MESSAGE:\s*(.+?)(?=\n\n|COMMENTAIRE:|POSITION:|$)/s);
+    const messageMatch = philosophy.match(/MESSAGE:\s*([\s\S]+?)(?=\n\n|COMMENTAIRE:|POSITION:|$)/);
     return messageMatch ? messageMatch[1].trim() : philosophy.substring(0, 150);
   };
 
