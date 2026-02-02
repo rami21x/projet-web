@@ -33,6 +33,7 @@ import AmbientMusic from "@/components/AmbientMusic";
 import MuseumSpotlight from "@/components/MuseumSpotlight";
 import PhilosophicalEasterEggs from "@/components/PhilosophicalEasterEggs";
 import CookieConsent from "@/components/CookieConsent";
+import SplashScreen from "@/components/SplashScreen";
 
 export default function RootLayout({
   children,
@@ -47,6 +48,7 @@ export default function RootLayout({
         <ThemeProviders>
           <LanguageProvider>
             <AuthProvider>
+              <SplashScreen />
               <CustomCursor />
               <MuseumSpotlight />
               <PhilosophicalEasterEggs />
