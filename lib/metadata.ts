@@ -60,9 +60,7 @@ export const defaultMetadata: Metadata = {
     },
   },
   verification: {
-    // Add when available:
-    // google: "your-google-verification-code",
-    // yandex: "your-yandex-verification-code",
+    google: "SA-eHlJO-59KO0I7aThhvsFw6IMNbq7iiQAlWDv_9Jc",
   },
 };
 
