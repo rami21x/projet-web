@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arteral.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://projet-web-8lni.vercel.app";
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
