@@ -19,7 +19,6 @@ export default function SplashScreen() {
     }, 600);
   }, []);
 
-  // Check if splash was already shown this session
   useEffect(() => {
     const hasSeenSplash = sessionStorage.getItem("arteral-splash-seen");
     if (hasSeenSplash) {
@@ -36,12 +35,12 @@ export default function SplashScreen() {
     closeSplash();
   }, [closeSplash]);
 
-  // Auto-hide after 12 seconds
+  // Auto-hide after 15 seconds
   useEffect(() => {
     if (isVisible) {
       const fallbackTimer = setTimeout(() => {
         closeSplash();
-      }, 12000);
+      }, 15000);
       return () => clearTimeout(fallbackTimer);
     }
   }, [isVisible, closeSplash]);
@@ -57,9 +56,9 @@ export default function SplashScreen() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-[#0A0A0A] flex items-center justify-center overflow-hidden"
         >
-          {/* Video Background */}
+          {/* Video Background - native HTML5 video */}
           {!videoError && (
-            <motion.video
+            <video
               ref={videoRef}
               autoPlay
               muted
@@ -68,13 +67,11 @@ export default function SplashScreen() {
               onLoadedData={() => { setVideoLoaded(true); setVideoError(false); }}
               onEnded={() => closeSplash()}
               onError={() => { setVideoError(true); setShowContent(true); }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: videoLoaded ? 1 : 0 }}
-              transition={{ duration: 1 }}
+              style={{ opacity: videoLoaded ? 1 : 0, transition: "opacity 1s ease" }}
               className="absolute inset-0 w-full h-full object-cover"
             >
               <source src="/videos/splash-intro.mp4" type="video/mp4" />
-            </motion.video>
+            </video>
           )}
 
           {/* Fallback animated background when video fails */}
@@ -97,9 +94,8 @@ export default function SplashScreen() {
             </motion.div>
           )}
 
-          {/* Elegant overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/30 via-transparent to-[#0A0A0A]/30" />
+          {/* Overlay gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]/40" />
 
           {/* Centered Logo & Brand */}
           <AnimatePresence>
