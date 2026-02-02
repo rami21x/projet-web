@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://arteral.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://projet-web-8lni.vercel.app'
   const lastModified = new Date()
 
   // Static pages
