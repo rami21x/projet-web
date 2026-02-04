@@ -6,8 +6,7 @@ import Image from "next/image";
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -27,6 +26,28 @@ export default function SplashScreen() {
       setTimeout(() => setShowContent(true), 300);
     }
   }, []);
+
+  // Try to play video manually after mount
+  useEffect(() => {
+    if (!isVisible || !videoRef.current) return;
+
+    const video = videoRef.current;
+
+    const handlePlaying = () => {
+      setVideoReady(true);
+    };
+
+    video.addEventListener("playing", handlePlaying);
+
+    // Force play attempt
+    video.play().catch(() => {
+      // Autoplay blocked or video error — fallback will show
+    });
+
+    return () => {
+      video.removeEventListener("playing", handlePlaying);
+    };
+  }, [isVisible]);
 
   const handleSkip = useCallback(() => {
     if (videoRef.current) {
@@ -56,46 +77,35 @@ export default function SplashScreen() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-[#0A0A0A] flex items-center justify-center overflow-hidden"
         >
-          {/* Video Background - native HTML5 video */}
-          {!videoError && (
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              playsInline
-              preload="auto"
-              onLoadedData={() => { setVideoLoaded(true); setVideoError(false); }}
-              onEnded={() => closeSplash()}
-              onError={() => { setVideoError(true); setShowContent(true); }}
-              style={{ opacity: videoLoaded ? 1 : 0, transition: "opacity 1s ease" }}
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src="/videos/splash-intro.mp4" type="video/mp4" />
-            </video>
-          )}
-
-          {/* Fallback animated background when video fails */}
-          {(videoError || !videoLoaded) && (
+          {/* Fallback animated background — always behind video */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-primary/20">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-primary/20"
-            >
-              <motion.div
-                animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl"
-              />
-              <motion.div
-                animate={{ scale: [1.2, 1, 1.2], rotate: [360, 180, 0] }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
-              />
-            </motion.div>
-          )}
+              animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl"
+            />
+            <motion.div
+              animate={{ scale: [1.2, 1, 1.2], rotate: [360, 180, 0] }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+              className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
+            />
+          </div>
 
-          {/* Overlay gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]/40" />
+          {/* Video Background — on top of fallback */}
+          <video
+            ref={videoRef}
+            muted
+            playsInline
+            preload="auto"
+            onEnded={() => closeSplash()}
+            className="absolute inset-0 z-[1] w-full h-full object-cover transition-opacity duration-1000"
+            style={{ opacity: videoReady ? 1 : 0 }}
+          >
+            <source src="/videos/splash-intro.mp4" type="video/mp4" />
+          </video>
+
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]/40" />
 
           {/* Centered Logo & Brand */}
           <AnimatePresence>
@@ -105,7 +115,7 @@ export default function SplashScreen() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="relative z-10 flex flex-col items-center text-center px-4"
+                className="relative z-[3] flex flex-col items-center text-center px-4"
               >
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -159,7 +169,7 @@ export default function SplashScreen() {
             animate={{ opacity: 1 }}
             transition={{ delay: 2.5, duration: 0.5 }}
             onClick={handleSkip}
-            className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-20 group"
+            className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-[4] group"
           >
             <span className="font-body text-xs sm:text-sm text-white/40 group-hover:text-white/80 transition-all duration-300 flex items-center gap-2">
               <span className="hidden sm:inline">Passer</span>
