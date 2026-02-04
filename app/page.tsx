@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -33,17 +34,52 @@ const sparkles = [
 
 export default function Home() {
   const { homeFeatures, homePageContent } = useContent();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  // Manually play video on mount
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handlePlaying = () => {
+      setVideoReady(true);
+    };
+
+    video.addEventListener("playing", handlePlaying);
+
+    video.play().catch(() => {
+      // Autoplay blocked — gradient fallback will show
+    });
+
+    return () => {
+      video.removeEventListener("playing", handlePlaying);
+    };
+  }, []);
 
   return (
     <div>
       {/* Hero Section with Video Background */}
       <section className="relative min-h-[100vh] flex items-center justify-center text-white overflow-hidden">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-primary/20" />
+        {/* Fallback gradient background — always behind video */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0A0A0A] via-[#1A1A1A] to-primary/20" />
+
+        {/* Looping Video Background */}
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 z-[1] w-full h-full object-cover transition-opacity duration-1000"
+          style={{ opacity: videoReady ? 1 : 0 }}
+        >
+          <source src="/videos/splash-intro.mp4" type="video/mp4" />
+        </video>
 
         {/* Overlay gradients for better text readability */}
-        <div className="absolute inset-0 bg-dark/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/30" />
+        <div className="absolute inset-0 z-[2] bg-dark/40" />
+        <div className="absolute inset-0 z-[2] bg-gradient-to-t from-dark via-transparent to-dark/30" />
 
         {/* Sparkling dots */}
         {sparkles.map((sparkle, index) => (
