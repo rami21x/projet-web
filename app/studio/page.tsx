@@ -675,11 +675,11 @@ export default function StudioPage() {
   const defaultColor = { name: "White", hex: "#FFFFFF", dark: false };
   const [garmentColor, setGarmentColor] = useState(content.colors?.[0] || defaultColor);
 
-  // Submission state
+  // Submission state - Pre-fill with user data from registration
   const [artistInfo, setArtistInfo] = useState({
-    name: "",
-    email: "",
-    instagram: "",
+    name: user?.name || "",
+    email: user?.email || "",
+    instagram: user?.instagram || "",
     title: "",
     comment: "",
     position: "",
@@ -711,31 +711,89 @@ export default function StudioPage() {
   const canProceedToInterpret = hasUnderstood;
   const canProceedToCreate = Object.values(interpretation).every(v => v.length >= 20);
   const canProceedToVisualize = uploadedImage !== null;
-  const canSubmit = !!(artistInfo.name && artistInfo.email && artistInfo.title);
+  const canSubmit = !!(artistInfo.title && user?.name && user?.email);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Compress image to stay under Vercel's 4.5MB limit
+  const compressImage = useCallback((file: File, maxWidth: number = 1200, quality: number = 0.8): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = document.createElement('img');
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          // Scale down if image is too large
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject(new Error('Failed to get canvas context'));
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Try JPEG first (better compression), then PNG if needed
+          let compressed = canvas.toDataURL('image/jpeg', quality);
+
+          // If still too large, reduce quality further
+          if (compressed.length > 3 * 1024 * 1024) {
+            compressed = canvas.toDataURL('image/jpeg', 0.6);
+          }
+          if (compressed.length > 3 * 1024 * 1024) {
+            compressed = canvas.toDataURL('image/jpeg', 0.4);
+          }
+
+          resolve(compressed);
+        };
+        img.onerror = reject;
+        img.src = event.target?.result as string;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }, []);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 10 * 1024 * 1024) {
         alert(content.visualiser.validation.fileTooLarge);
         return;
       }
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setUploadedImage(event.target?.result as string);
+      try {
+        // Compress the image before storing
+        const compressedImage = await compressImage(file);
+        setUploadedImage(compressedImage);
         setUploadedFileName(file.name);
-      };
-      reader.readAsDataURL(file);
+      } catch (error) {
+        console.error('Error compressing image:', error);
+        // Fallback to original if compression fails
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          setUploadedImage(event.target?.result as string);
+          setUploadedFileName(file.name);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   };
 
   const handleSubmit = async () => {
-    // Client-side validation
-    if (!artistInfo.name || artistInfo.name.length < 2) {
+    // Client-side validation - use user data from profile
+    if (!user?.name || user.name.length < 2) {
       alert(content.visualiser.validation.nameRequired);
       return;
     }
-    if (!artistInfo.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(artistInfo.email)) {
+    if (!user?.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
       alert(content.visualiser.validation.emailInvalid);
       return;
     }
@@ -763,9 +821,9 @@ export default function StudioPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: artistInfo.name,
-          artistName: artistInfo.instagram || artistInfo.name,
-          email: artistInfo.email,
+          name: user.name,
+          artistName: user.artistName || user.instagram || user.name,
+          email: user.email,
           title: artistInfo.title,
           philosophy: philosophyText,
           garmentType: "tshirt",
@@ -776,6 +834,9 @@ export default function StudioPage() {
       });
       if (response.ok) {
         setIsSubmitted(true);
+      } else if (response.status === 413) {
+        // Image too large even after compression
+        alert("L'image est trop volumineuse. Veuillez utiliser une image plus petite (max 2MB recommandé).");
       } else {
         const responseText = await response.text();
         console.error("Erreur API - Status:", response.status, "Body:", responseText);
@@ -831,7 +892,7 @@ export default function StudioPage() {
   return (
     <div className={`min-h-screen ${bgMain} transition-colors duration-500`}>
       {/* Header */}
-      <header className={`sticky top-0 z-50 ${bgMain}/95 backdrop-blur-md border-b ${borderColor}`}>
+      <header className={`sticky top-0 z-30 ${bgMain}/95 backdrop-blur-md border-b ${borderColor}`}>
         <div className="max-w-6xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             <div>
@@ -1957,42 +2018,6 @@ function VisualiserStep({
                     value={artistInfo.title}
                     onChange={(e) => setArtistInfo({ ...artistInfo, title: e.target.value })}
                     placeholder={content.visualiser.fields.titlePlaceholder}
-                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
-                  />
-                </div>
-
-                {/* Name */}
-                <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.name}</label>
-                  <input
-                    type="text"
-                    value={artistInfo.name}
-                    onChange={(e) => setArtistInfo({ ...artistInfo, name: e.target.value })}
-                    placeholder={content.visualiser.fields.namePlaceholder}
-                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.email}</label>
-                  <input
-                    type="email"
-                    value={artistInfo.email}
-                    onChange={(e) => setArtistInfo({ ...artistInfo, email: e.target.value })}
-                    placeholder={content.visualiser.fields.emailPlaceholder}
-                    className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
-                  />
-                </div>
-
-                {/* Instagram */}
-                <div>
-                  <label className={`text-sm ${textMuted} mb-2 block`}>{content.visualiser.fields.instagram}</label>
-                  <input
-                    type="text"
-                    value={artistInfo.instagram}
-                    onChange={(e) => setArtistInfo({ ...artistInfo, instagram: e.target.value })}
-                    placeholder={content.visualiser.fields.instagramPlaceholder}
                     className={`w-full ${inputBg} border ${borderColor} px-4 py-3 ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50 transition-all`}
                   />
                 </div>
