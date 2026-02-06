@@ -120,6 +120,17 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    // Check if user already has a design submitted (limit: 1 per artist)
+    const existingDesign = await prisma.design.findFirst({
+      where: { authorId: user.id }
+    })
+    if (existingDesign) {
+      return NextResponse.json(
+        { error: 'Vous avez déjà soumis une œuvre. Chaque artiste ne peut soumettre qu\'une seule création.' },
+        { status: 409 }
+      )
+    }
+
     // Create design
     const design = await prisma.design.create({
       data: {

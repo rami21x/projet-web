@@ -5,9 +5,25 @@ import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rat
 import { handleApiError } from '@/lib/error-handler'
 import { z } from 'zod'
 
+const passwordSchema = z.string()
+  .min(12, 'Mot de passe trop court (min 12 caractères)')
+  .max(100)
+  .refine(
+    (val) => /[A-Z]/.test(val),
+    'Le mot de passe doit contenir au moins une majuscule'
+  )
+  .refine(
+    (val) => /[a-z]/.test(val),
+    'Le mot de passe doit contenir au moins une minuscule'
+  )
+  .refine(
+    (val) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val),
+    'Le mot de passe doit contenir au moins un caractère spécial (!@#$%^&*...)'
+  )
+
 const registerSchema = z.object({
   email: z.string().email('Email invalide').transform(v => v.toLowerCase().trim()),
-  password: z.string().min(6, 'Mot de passe trop court (min 6 caractères)').max(100),
+  password: passwordSchema,
   name: z.string().min(2, 'Nom trop court').max(100).transform(v => v.trim()),
   role: z.enum(['artist', 'client'], { error: 'Rôle invalide' }),
   artistName: z.string().max(100).optional(),
