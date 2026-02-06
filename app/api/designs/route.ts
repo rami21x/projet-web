@@ -182,10 +182,21 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     // Log detailed error for debugging
     console.error('[POST /api/designs] Error:', error);
-    if (error instanceof Error) {
-      console.error('[POST /api/designs] Error message:', error.message);
-      console.error('[POST /api/designs] Error stack:', error.stack);
-    }
-    return handleApiError(error, { path: '/api/designs', method: 'POST' })
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    console.error('[POST /api/designs] Error message:', errorMessage);
+    console.error('[POST /api/designs] Error stack:', errorStack);
+
+    // Return detailed error in development/debug mode
+    return NextResponse.json(
+      {
+        error: 'Une erreur interne est survenue',
+        debug: {
+          message: errorMessage,
+          type: error instanceof Error ? error.constructor.name : typeof error
+        }
+      },
+      { status: 500 }
+    )
   }
 }
