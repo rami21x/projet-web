@@ -89,7 +89,16 @@ export async function POST(request: NextRequest) {
       return rateLimitedResponse(rateLimit)
     }
 
-    const body = await request.json()
+    let body;
+    try {
+      body = await request.json()
+    } catch (parseError) {
+      console.error('[POST /api/designs] JSON parse error:', parseError);
+      return NextResponse.json(
+        { error: 'Erreur de parsing JSON. Le payload est peut-être trop volumineux.' },
+        { status: 400 }
+      )
+    }
 
     // Validate request body
     const validation = validate(createDesignSchema, body)
@@ -155,12 +164,12 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    // Update site stats
-    await prisma.siteStats.upsert({
+    // Update site stats (non-blocking)
+    prisma.siteStats.upsert({
       where: { id: 'main' },
       update: { totalDesigns: { increment: 1 } },
       create: { id: 'main', totalDesigns: 1 }
-    })
+    }).catch(err => console.error('Failed to update site stats:', err))
 
     // Send confirmation email (non-blocking)
     sendDesignSubmissionEmail({
@@ -171,6 +180,12 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(design, { status: 201 })
   } catch (error) {
+    // Log detailed error for debugging
+    console.error('[POST /api/designs] Error:', error);
+    if (error instanceof Error) {
+      console.error('[POST /api/designs] Error message:', error.message);
+      console.error('[POST /api/designs] Error stack:', error.stack);
+    }
     return handleApiError(error, { path: '/api/designs', method: 'POST' })
   }
 }
