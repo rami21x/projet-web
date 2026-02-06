@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma'
 import { validate, createDesignSchema, designQuerySchema } from '@/lib/validations'
 import { checkRateLimit, rateLimitConfigs, rateLimitedResponse } from '@/lib/rate-limit'
 import { handleApiError } from '@/lib/error-handler'
+import { sendDesignSubmissionEmail } from '@/lib/email'
 
 // GET /api/designs - Get all designs with pagination
 export async function GET(request: NextRequest) {
@@ -147,6 +148,13 @@ export async function POST(request: NextRequest) {
       update: { totalDesigns: { increment: 1 } },
       create: { id: 'main', totalDesigns: 1 }
     })
+
+    // Send confirmation email (non-blocking)
+    sendDesignSubmissionEmail({
+      to: email,
+      artistName: artistName || name,
+      designTitle: title,
+    }).catch((err) => console.error('Failed to send confirmation email:', err))
 
     return NextResponse.json(design, { status: 201 })
   } catch (error) {
