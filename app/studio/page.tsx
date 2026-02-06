@@ -4,6 +4,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useContent } from "@/hooks/useContent";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   BookOpen,
   Feather,
@@ -26,6 +29,7 @@ import {
   ZoomIn,
   ZoomOut,
   RotateCcw,
+  Lock,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Image from "next/image";
@@ -589,9 +593,68 @@ const InteractiveArtworkEditor = ({
 export default function StudioPage() {
   const { studioPageContent: content } = useContent();
   const { resolvedTheme } = useTheme();
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [currentStep, setCurrentStep] = useState<Step>("comprendre");
   const [hasUnderstood, setHasUnderstood] = useState(false);
+
+  // Auth protection - only artists can access
+  const isArtist = user?.role === "artist";
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#E8E8E8] dark:bg-[#0A0A0A]">
+        <div className="text-center">
+          <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-[#4A4A4A] dark:text-gray-400 font-mono text-sm">Chargement...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show restricted access if not an artist
+  if (!user || !isArtist) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#E8E8E8] dark:bg-[#0A0A0A] px-4">
+        <div className="max-w-md w-full text-center">
+          <div className="w-20 h-20 mx-auto mb-6 bg-primary/10 rounded-full flex items-center justify-center">
+            <Lock className="w-10 h-10 text-primary" />
+          </div>
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-[#2B2B2B] dark:text-white mb-4">
+            Accès Réservé aux Artistes
+          </h1>
+          <p className="font-body text-[#4A4A4A] dark:text-gray-300 mb-8 leading-relaxed">
+            Le Studio ARTERAL est un espace exclusif pour les artistes inscrits.
+            Créez votre compte artiste pour soumettre vos œuvres et participer au concours.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/connexion"
+              className="inline-flex items-center justify-center gap-2 font-body font-semibold px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-sm transition-all"
+            >
+              <span>Créer un compte artiste</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            {user && user.role === "client" && (
+              <p className="text-sm text-[#6A6A6A] dark:text-gray-500 mt-2">
+                Vous êtes connecté en tant que client. Seuls les artistes peuvent accéder au Studio.
+              </p>
+            )}
+          </div>
+          <div className="mt-8 pt-8 border-t border-[#D0D0D0] dark:border-gray-700">
+            <p className="text-sm text-[#6A6A6A] dark:text-gray-500">
+              Déjà inscrit ?{" "}
+              <Link href="/connexion" className="text-primary hover:underline">
+                Se connecter
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Interpretation form state
   const [interpretation, setInterpretation] = useState({

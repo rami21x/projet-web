@@ -622,7 +622,7 @@ export default function ManifestePage() {
                   <span className="w-4 h-[1px] bg-current group-hover:w-6 transition-all" />
                 </Link>
                 <Link
-                  href="/artistes"
+                  href="/studio"
                   className="inline-flex items-center justify-center gap-2 font-body text-sm text-[#4A4A4A] dark:text-gray-300 hover:text-primary transition-colors group"
                 >
                   <span>{manifestoPageContent.cta.contest}</span>
