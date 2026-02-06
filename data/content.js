@@ -3,8 +3,8 @@
 export const siteConfig = {
   name: "ARTERAL",
   tagline: "Philosophical Fashion",
-  email: "contact@arteral.com",
-  instagram: "@arteral",
+  email: "arteral.clo@gmail.com",
+  instagram: "@arteral_clo",
 };
 
 export const heroContent = {
@@ -491,8 +491,8 @@ export const contactContent = {
     successMessage: "Thank you! Check your email.",
   },
   info: {
-    email: "contact@arteral.com",
-    instagram: "@arteral",
+    email: "arteral.clo@gmail.com",
+    instagram: "@arteral_clo",
   },
   faq: [
     {
@@ -509,7 +509,7 @@ export const contactContent = {
     },
     {
       question: "Can I contribute as an artist?",
-      answer: "Absolutely! We're always seeking collaborations with artists exploring philosophical themes. Contact us at contact@arteral.com with your portfolio.",
+      answer: "Absolutely! We're always seeking collaborations with artists exploring philosophical themes. Contact us at arteral.clo@gmail.com with your portfolio.",
     },
     {
       question: "Where do you ship?",

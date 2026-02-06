@@ -14,8 +14,7 @@ export function OrganizationJsonLd({
   logo = 'https://arteral.com/images/logo.gif',
   description = 'ARTERAL - Where art meets fashion. Unique wearable art pieces that explore the duality of human experience.',
   sameAs = [
-    'https://instagram.com/arteral',
-    'https://twitter.com/arteral',
+    'https://instagram.com/arteral_clo',
   ],
 }: OrganizationJsonLdProps) {
   const jsonLd = {
@@ -29,7 +28,7 @@ export function OrganizationJsonLd({
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      email: 'contact@arteral.com',
+      email: 'arteral.clo@gmail.com',
     },
   }
 
