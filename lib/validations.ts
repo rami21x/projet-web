@@ -59,9 +59,8 @@ export const createDesignSchema = z.object({
   garmentColor: z
     .string()
     .regex(/^#[0-9A-Fa-f]{6}$/, 'Couleur invalide (format hex requis)'),
-  // Storyboard: 4-9 images with captions
+  // Storyboard: 0-9 images with captions (optional)
   storyboard: z.array(storyboardItemSchema)
-    .min(4, 'Minimum 4 images pour le storyboard')
     .max(9, 'Maximum 9 images pour le storyboard')
     .optional()
 })
