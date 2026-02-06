@@ -823,6 +823,7 @@ export const contactPageContent = {
     name: "Comment vous appelle-t-on ?",
     namePlaceholder: "Votre prénom",
     submit: "Rejoindre la communauté",
+    submitting: "Envoi...",
   },
   contactSection: {
     title: "Tissons des liens",

@@ -823,6 +823,7 @@ export const contactPageContent = {
     name: "What should we call you?",
     namePlaceholder: "Your name",
     submit: "Join the community",
+    submitting: "Sending...",
   },
   contactSection: {
     title: "Let's Connect",
