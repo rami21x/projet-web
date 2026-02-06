@@ -86,6 +86,22 @@ export const collectionPageContent = {
     title2: "du Chaos",
     description: "Là où l'ordre rencontre le désordre, où la beauté naît de la contradiction.",
   },
+  lookbook: {
+    label: "LOOKBOOK",
+    title: "Toiles en Attente",
+    description: "Chaque silhouette est une promesse. Les distorsions que vous voyez sont l'écho d'un art à naître —",
+    descriptionHighlight: " votre vision peut habiter ces vêtements",
+    quote: "Le glitch n'est pas une erreur — c'est un appel. Une fréquence qui vibre entre le néant et la création, attendant qu'un artiste accorde sa vision à cette mélodie visuelle.",
+    models: [
+      { title: "L'Éveil", description: "Une toile vierge attend son premier souffle. Le glitch murmure les possibilités infinies d'une création à naître." },
+      { title: "La Dualité", description: "Entre l'ombre et la lumière, le vêtement cherche son équilibre. Votre art définira son identité." },
+      { title: "L'Ombre", description: "Dans les profondeurs de l'abstrait, une forme émerge. Elle appelle un artiste pour révéler sa nature." },
+      { title: "La Lumière", description: "La clarté naît du chaos maîtrisé. Ce tissu attend que votre vision l'illumine." },
+      { title: "Le Chaos", description: "Le désordre apparent cache un ordre secret. Seul un regard créatif peut en extraire la beauté." },
+      { title: "L'Harmonie", description: "La synthèse finale où tout converge. L'équilibre parfait entre votre art et notre support." },
+    ],
+    pendingText: "En attente de création",
+  },
   series: {
     label: "PREMIÈRE SÉRIE",
     title: "Narcisse Amoureux",

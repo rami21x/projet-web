@@ -86,6 +86,22 @@ export const collectionPageContent = {
     title2: "of Chaos",
     description: "Where order meets disorder, where beauty emerges from contradiction.",
   },
+  lookbook: {
+    label: "LOOKBOOK",
+    title: "Canvases Awaiting",
+    description: "Each silhouette is a promise. The distortions you see are the echo of an art yet to be born —",
+    descriptionHighlight: " your vision can inhabit these garments",
+    quote: "The glitch is not an error — it's a call. A frequency vibrating between nothingness and creation, waiting for an artist to tune their vision to this visual melody.",
+    models: [
+      { title: "The Awakening", description: "A blank canvas awaits its first breath. The glitch whispers the infinite possibilities of a creation to be born." },
+      { title: "The Duality", description: "Between shadow and light, the garment seeks its balance. Your art will define its identity." },
+      { title: "The Shadow", description: "In the depths of the abstract, a form emerges. It calls for an artist to reveal its nature." },
+      { title: "The Light", description: "Clarity is born from mastered chaos. This fabric awaits your vision to illuminate it." },
+      { title: "The Chaos", description: "The apparent disorder hides a secret order. Only a creative eye can extract its beauty." },
+      { title: "The Harmony", description: "The final synthesis where everything converges. The perfect balance between your art and our canvas." },
+    ],
+    pendingText: "Awaiting creation",
+  },
   series: {
     label: "FIRST SERIES",
     title: "Narcissus in Love",

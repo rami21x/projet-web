@@ -51,14 +51,14 @@ export default function CollectionPage() {
           <FadeIn>
             <div className="text-center mb-12 md:mb-20">
               <span className="font-mono text-[10px] tracking-[0.5em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
-                LOOKBOOK
+                {collectionPageContent.lookbook.label}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-6">
-                Toiles en Attente
+                {collectionPageContent.lookbook.title}
               </h2>
               <p className="font-body text-base md:text-lg text-[#5A5A5A] dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                Chaque silhouette est une promesse. Les distorsions que vous voyez sont l'écho d'un art à naître —
-                <span className="italic text-primary"> votre vision peut habiter ces vêtements</span>.
+                {collectionPageContent.lookbook.description}
+                <span className="italic text-primary">{collectionPageContent.lookbook.descriptionHighlight}</span>.
               </p>
             </div>
           </FadeIn>
@@ -97,23 +97,13 @@ export default function CollectionPage() {
                       0{num} / 06
                     </span>
                     <h3 className="font-display text-2xl md:text-3xl font-bold text-[#2B2B2B] dark:text-white mb-4">
-                      {num === 1 && "L'Éveil"}
-                      {num === 2 && "La Dualité"}
-                      {num === 3 && "L'Ombre"}
-                      {num === 4 && "La Lumière"}
-                      {num === 5 && "Le Chaos"}
-                      {num === 6 && "L'Harmonie"}
+                      {collectionPageContent.lookbook.models[index].title}
                     </h3>
                     <p className="font-body text-[#5A5A5A] dark:text-gray-400 leading-relaxed mb-4">
-                      {num === 1 && "Une toile vierge attend son premier souffle. Le glitch murmure les possibilités infinies d'une création à naître."}
-                      {num === 2 && "Entre l'ombre et la lumière, le vêtement cherche son équilibre. Votre art définira son identité."}
-                      {num === 3 && "Dans les profondeurs de l'abstrait, une forme émerge. Elle appelle un artiste pour révéler sa nature."}
-                      {num === 4 && "La clarté naît du chaos maîtrisé. Ce tissu attend que votre vision l'illumine."}
-                      {num === 5 && "Le désordre apparent cache un ordre secret. Seul un regard créatif peut en extraire la beauté."}
-                      {num === 6 && "La synthèse finale où tout converge. L'équilibre parfait entre votre art et notre support."}
+                      {collectionPageContent.lookbook.models[index].description}
                     </p>
                     <p className="font-display text-sm italic text-primary/80">
-                      En attente de création
+                      {collectionPageContent.lookbook.pendingText}
                     </p>
                   </div>
                 </div>
@@ -125,8 +115,7 @@ export default function CollectionPage() {
           <FadeIn delay={0.7}>
             <div className="mt-16 md:mt-24 p-8 md:p-12 bg-[#F5F5F5] dark:bg-[#1A1A1A] text-center">
               <p className="font-display text-lg md:text-xl italic text-[#4A4A4A] dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
-                "Le glitch n'est pas une erreur — c'est un appel. Une fréquence qui vibre entre le néant et la création,
-                attendant qu'un artiste accorde sa vision à cette mélodie visuelle."
+                &ldquo;{collectionPageContent.lookbook.quote}&rdquo;
               </p>
               <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
             </div>
