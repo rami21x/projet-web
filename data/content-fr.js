@@ -3,8 +3,8 @@
 export const siteConfig = {
   name: "ARTERAL",
   tagline: "Mode Philosophique",
-  email: "contact@arteral.com",
-  instagram: "@arteral",
+  email: "arteral.clo@gmail.com",
+  instagram: "@arteral_clo",
 };
 
 export const heroContent = {
@@ -491,8 +491,8 @@ export const contactContent = {
     successMessage: "Bienvenue dans la communauté Arteral !",
   },
   info: {
-    email: "contact@arteral.com",
-    instagram: "@arteral",
+    email: "arteral.clo@gmail.com",
+    instagram: "@arteral_clo",
   },
   faq: [
     {
@@ -509,7 +509,7 @@ export const contactContent = {
     },
     {
       question: "Puis-je contribuer en tant qu'artiste?",
-      answer: "Absolument! Nous cherchons toujours des collaborations avec des artistes qui explorent des thèmes philosophiques. Contactez-nous à contact@arteral.com avec votre portfolio.",
+      answer: "Absolument! Nous cherchons toujours des collaborations avec des artistes qui explorent des thèmes philosophiques. Contactez-nous à arteral.clo@gmail.com avec votre portfolio.",
     },
     {
       question: "Vous livrez où?",
