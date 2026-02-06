@@ -142,14 +142,14 @@ export default function ManifestePage() {
           <FadeIn>
             <div className="text-center mb-12 md:mb-20">
               <span className="font-mono text-[10px] tracking-[0.5em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
-                DIX CHAPITRES
+                {manifestoPageContent.chaptersSection.label}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-6">
-                Notre Philosophie
+                {manifestoPageContent.chaptersSection.title}
               </h2>
               <p className="font-body text-base md:text-lg text-[#5A5A5A] dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                Chaque chapitre est un pilier de notre vision —
-                <span className="italic text-primary"> un refus du conformisme, une promesse de sens</span>.
+                {manifestoPageContent.chaptersSection.description}
+                <span className="italic text-primary">{manifestoPageContent.chaptersSection.descriptionHighlight}</span>.
               </p>
             </div>
           </FadeIn>
@@ -188,7 +188,7 @@ export default function ManifestePage() {
                           </p>
                           <div className="w-8 h-[1px] bg-current opacity-30 mx-auto mb-3" />
                           <p className={`font-mono text-[10px] tracking-[0.4em] ${style.labelColor} uppercase`}>
-                            Chapitre
+                            {manifestoPageContent.chapterLabel}
                           </p>
                         </div>
                       </div>
@@ -287,7 +287,7 @@ export default function ManifestePage() {
           <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
             <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-8" />
             <p className="font-display text-xl md:text-2xl lg:text-3xl italic text-white leading-relaxed">
-              &ldquo;La philosophie sans les mains reste lettre morte. Le processus donne vie à la pensée — du concept abstrait au textile que vous porterez.&rdquo;
+              &ldquo;{manifestoPageContent.transitionQuote}&rdquo;
             </p>
             <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-8" />
           </div>
@@ -302,7 +302,7 @@ export default function ManifestePage() {
           <FadeIn>
             <div className="text-center mb-12 md:mb-20">
               <span className="font-mono text-[10px] tracking-[0.5em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
-                DE LA PENSÉE AU TEXTILE
+                {manifestoPageContent.processSection.label}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white mb-6">
                 {processPageContent.hero.title}
@@ -443,7 +443,7 @@ export default function ManifestePage() {
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
               <span className="font-mono text-[10px] tracking-[0.5em] text-[#7A7A7A] dark:text-gray-500 block mb-4">
-                VUE D&apos;ENSEMBLE
+                {manifestoPageContent.overviewSection.label}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#2B2B2B] dark:text-white">
                 {processPageContent.timeline.title}
@@ -552,10 +552,10 @@ export default function ManifestePage() {
             <div className="relative -mt-8 md:-mt-12 z-10">
               <div className="max-w-md mx-auto bg-[#1A1A1A] text-white p-8 md:p-10 text-center">
                 <span className="font-mono text-[10px] tracking-[0.3em] text-primary/80 block mb-3">
-                  NOTRE ENGAGEMENT
+                  {manifestoPageContent.commitmentSection.label}
                 </span>
                 <p className="font-display text-lg md:text-xl italic">
-                  &ldquo;Nous ne fabriquons pas des vêtements. Nous incarnons des idées.&rdquo;
+                  &ldquo;{manifestoPageContent.commitmentSection.quote}&rdquo;
                 </p>
               </div>
             </div>
@@ -581,10 +581,10 @@ export default function ManifestePage() {
             <blockquote className="text-center">
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-10" />
               <p className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold italic leading-relaxed mb-8">
-                &ldquo;Porter Arteral, c&apos;est porter son paradoxe. C&apos;est accepter que la beauté naît de la contradiction, que l&apos;art naît du chaos, et que la mode peut être une philosophie.&rdquo;
+                &ldquo;{manifestoPageContent.finalQuote.text}&rdquo;
               </p>
               <footer className="font-mono text-xs tracking-[0.3em] text-white/50">
-                — MANIFESTE ARTERAL
+                — {manifestoPageContent.finalQuote.author}
               </footer>
               <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-10" />
             </blockquote>

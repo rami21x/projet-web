@@ -1009,6 +1009,28 @@ export const manifestoPageContent = {
     title: "Le Manifeste",
     description: "Notre vision, notre engagement, notre refus du conformisme. Ce texte est notre promesse envers ceux qui croient que la mode peut être plus qu'une apparence.",
   },
+  chaptersSection: {
+    label: "DIX CHAPITRES",
+    title: "Notre Philosophie",
+    description: "Chaque chapitre est un pilier de notre vision —",
+    descriptionHighlight: " un refus du conformisme, une promesse de sens",
+  },
+  chapterLabel: "Chapitre",
+  processSection: {
+    label: "DE LA PENSÉE AU TEXTILE",
+  },
+  overviewSection: {
+    label: "VUE D'ENSEMBLE",
+  },
+  commitmentSection: {
+    label: "NOTRE ENGAGEMENT",
+    quote: "Nous ne fabriquons pas des vêtements. Nous incarnons des idées.",
+  },
+  transitionQuote: "La philosophie sans les mains reste lettre morte. Le processus donne vie à la pensée — du concept abstrait au textile que vous porterez.",
+  finalQuote: {
+    text: "Porter Arteral, c'est porter son paradoxe. C'est accepter que la beauté naît de la contradiction, que l'art naît du chaos, et que la mode peut être une philosophie.",
+    author: "MANIFESTE ARTERAL",
+  },
   intro: {
     quote: "L'Art n'est pas une décoration. La Mode n'est pas une superficialité.",
     author: "ARTERAL",
