@@ -109,7 +109,8 @@ export async function POST(request: NextRequest) {
       imageData,
       garmentType,
       garmentFit,
-      garmentColor
+      garmentColor,
+      storyboard
     } = validation.data
 
     // Find or create user
@@ -140,6 +141,7 @@ export async function POST(request: NextRequest) {
         garmentType,
         garmentFit,
         garmentColor,
+        storyboard: storyboard || [],
         authorId: user.id,
         status: 'pending' // Requires moderation
       },

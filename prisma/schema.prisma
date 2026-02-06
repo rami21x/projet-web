@@ -78,6 +78,9 @@ model Design {
   garmentColor  String
   status        String    @default("pending") // pending, approved, rejected, featured
 
+  // Storyboard images (4-9 images with captions)
+  storyboard    Json?     // Array of { imageData: string, caption: string, category: string }
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 

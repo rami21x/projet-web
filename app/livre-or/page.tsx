@@ -14,6 +14,10 @@ import {
   Cookie,
   User,
   LogIn,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Layers,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Link from "next/link";
@@ -21,12 +25,19 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCookieConsent } from "@/components/CookieConsent";
 import { useContent } from "@/hooks/useContent";
 
+interface StoryboardItem {
+  imageData: string;
+  caption?: string;
+  category?: 'inspiration' | 'process' | 'details' | 'final' | 'other';
+}
+
 interface Design {
   id: string;
   title: string;
   philosophy: string;
   imageUrl: string | null;
   imageData: string | null;
+  storyboard?: StoryboardItem[];
   createdAt: string;
   author: {
     name: string;
@@ -44,9 +55,11 @@ export default function LivretDorPage() {
   const [votingId, setVotingId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"votes" | "recent">("votes");
   const [showCookiePrompt, setShowCookiePrompt] = useState(false);
+  const [selectedDesign, setSelectedDesign] = useState<Design | null>(null);
+  const [storyboardIndex, setStoryboardIndex] = useState(0);
   const { user } = useAuth();
   const { consent, accept, isDecided } = useCookieConsent();
-  const { livretDorContent: t } = useContent();
+  const { livretDorContent: t, studioPageContent: studioT } = useContent();
 
   // Fetch designs from API
   useEffect(() => {
@@ -280,7 +293,13 @@ export default function LivretDorPage() {
                         )}
 
                         {/* Artwork Image */}
-                        <div className="relative aspect-square bg-[#F5F5F5] dark:bg-[#0A0A0A] overflow-hidden">
+                        <div
+                          className="relative aspect-square bg-[#F5F5F5] dark:bg-[#0A0A0A] overflow-hidden cursor-pointer"
+                          onClick={() => {
+                            setSelectedDesign(design);
+                            setStoryboardIndex(0);
+                          }}
+                        >
                           {(design.imageUrl || design.imageData) ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
@@ -291,6 +310,14 @@ export default function LivretDorPage() {
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
                               <ImageIcon className="w-20 h-20 text-[#D8D8D8] dark:text-[#2A2A2A]" />
+                            </div>
+                          )}
+
+                          {/* Storyboard indicator */}
+                          {design.storyboard && design.storyboard.length > 0 && (
+                            <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-2 py-1 bg-black/70 text-white text-xs">
+                              <Layers className="w-3.5 h-3.5" />
+                              <span>{design.storyboard.length}</span>
                             </div>
                           )}
 
@@ -480,6 +507,222 @@ export default function LivretDorPage() {
                 >
                   {t.cookiePrompt.cancel}
                 </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Storyboard Modal */}
+      <AnimatePresence>
+        {selectedDesign && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setSelectedDesign(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-5xl max-h-[90vh] bg-white dark:bg-[#111111] overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedDesign(null)}
+                className="absolute top-4 right-4 z-20 w-10 h-10 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
+                {/* Main Image Area */}
+                <div className="flex-1 relative bg-[#0A0A0A] flex items-center justify-center min-h-[300px] md:min-h-[500px]">
+                  {/* Main artwork or storyboard image */}
+                  {storyboardIndex === 0 ? (
+                    // Show main artwork
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={selectedDesign.imageUrl || selectedDesign.imageData || ''}
+                      alt={selectedDesign.title}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  ) : (
+                    // Show storyboard image
+                    selectedDesign.storyboard && selectedDesign.storyboard[storyboardIndex - 1] && (
+                      <div className="flex flex-col items-center">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={selectedDesign.storyboard[storyboardIndex - 1].imageData}
+                          alt={`Storyboard ${storyboardIndex}`}
+                          className="max-w-full max-h-[70vh] object-contain"
+                        />
+                        {/* Caption */}
+                        {selectedDesign.storyboard[storyboardIndex - 1].caption && (
+                          <p className="mt-4 text-white/80 text-center max-w-lg px-4">
+                            {selectedDesign.storyboard[storyboardIndex - 1].caption}
+                          </p>
+                        )}
+                        {/* Category badge */}
+                        {selectedDesign.storyboard[storyboardIndex - 1].category && (
+                          <span className="mt-2 px-3 py-1 bg-primary/20 text-primary text-sm">
+                            {studioT?.storyboard?.categories?.[selectedDesign.storyboard[storyboardIndex - 1].category!] ||
+                              selectedDesign.storyboard[storyboardIndex - 1].category}
+                          </span>
+                        )}
+                      </div>
+                    )
+                  )}
+
+                  {/* Navigation arrows - only if storyboard exists */}
+                  {selectedDesign.storyboard && selectedDesign.storyboard.length > 0 && (
+                    <>
+                      <button
+                        onClick={() => setStoryboardIndex(Math.max(0, storyboardIndex - 1))}
+                        disabled={storyboardIndex === 0}
+                        className={`absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center transition-all ${
+                          storyboardIndex === 0
+                            ? 'bg-white/10 text-white/30 cursor-not-allowed'
+                            : 'bg-white/20 hover:bg-white/30 text-white'
+                        }`}
+                      >
+                        <ChevronLeft className="w-8 h-8" />
+                      </button>
+                      <button
+                        onClick={() => setStoryboardIndex(Math.min(selectedDesign.storyboard!.length, storyboardIndex + 1))}
+                        disabled={storyboardIndex === selectedDesign.storyboard.length}
+                        className={`absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center transition-all ${
+                          storyboardIndex === selectedDesign.storyboard.length
+                            ? 'bg-white/10 text-white/30 cursor-not-allowed'
+                            : 'bg-white/20 hover:bg-white/30 text-white'
+                        }`}
+                      >
+                        <ChevronRight className="w-8 h-8" />
+                      </button>
+                    </>
+                  )}
+
+                  {/* Image counter */}
+                  {selectedDesign.storyboard && selectedDesign.storyboard.length > 0 && (
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/60 text-white text-sm">
+                      {storyboardIndex === 0 ? (
+                        <span className="flex items-center gap-2">
+                          <ImageIcon className="w-4 h-4" />
+                          {t.modal?.mainArtwork || "Œuvre principale"}
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          <Layers className="w-4 h-4" />
+                          {storyboardIndex} / {selectedDesign.storyboard.length}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Side Panel - Info & Thumbnails */}
+                <div className="w-full md:w-80 p-6 flex flex-col bg-white dark:bg-[#111111] border-t md:border-t-0 md:border-l border-black/10 dark:border-white/10">
+                  {/* Artist Info */}
+                  <div className="mb-6">
+                    <h2 className="font-display text-2xl font-bold text-[#2B2B2B] dark:text-white mb-2">
+                      {selectedDesign.title}
+                    </h2>
+                    <p className="text-[#6A6A6A] dark:text-gray-400">
+                      {t.card.by} {selectedDesign.author.name}
+                    </p>
+                    {selectedDesign.author.artistName && (
+                      <a
+                        href={`https://instagram.com/${selectedDesign.author.artistName.replace('@', '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-primary text-sm hover:underline mt-1"
+                      >
+                        <Instagram className="w-4 h-4" />
+                        {selectedDesign.author.artistName}
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Message */}
+                  <div className="mb-6 p-4 bg-[#F5F5F5] dark:bg-[#0A0A0A]">
+                    <p className="text-sm text-[#5A5A5A] dark:text-gray-400 italic">
+                      &quot;{extractMessage(selectedDesign.philosophy)}&quot;
+                    </p>
+                  </div>
+
+                  {/* Storyboard Thumbnails */}
+                  {selectedDesign.storyboard && selectedDesign.storyboard.length > 0 && (
+                    <div className="flex-1 overflow-y-auto">
+                      <h3 className="font-display text-sm font-semibold text-[#2B2B2B] dark:text-white mb-3 flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-primary" />
+                        {studioT?.storyboard?.title || "Storyboard"}
+                      </h3>
+                      <div className="grid grid-cols-3 gap-2">
+                        {/* Main artwork thumbnail */}
+                        <button
+                          onClick={() => setStoryboardIndex(0)}
+                          className={`aspect-square relative overflow-hidden border-2 transition-all ${
+                            storyboardIndex === 0
+                              ? 'border-primary'
+                              : 'border-transparent hover:border-primary/50'
+                          }`}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={selectedDesign.imageUrl || selectedDesign.imageData || ''}
+                            alt="Main"
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            <ImageIcon className="w-4 h-4 text-white" />
+                          </div>
+                        </button>
+                        {/* Storyboard thumbnails */}
+                        {selectedDesign.storyboard.map((item, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setStoryboardIndex(idx + 1)}
+                            className={`aspect-square relative overflow-hidden border-2 transition-all ${
+                              storyboardIndex === idx + 1
+                                ? 'border-primary'
+                                : 'border-transparent hover:border-primary/50'
+                            }`}
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={item.imageData}
+                              alt={`Storyboard ${idx + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Vote Button */}
+                  <div className="mt-6 pt-6 border-t border-black/10 dark:border-white/10">
+                    <button
+                      onClick={() => handleVote(selectedDesign.id)}
+                      disabled={votingId === selectedDesign.id}
+                      className={`w-full py-3 flex items-center justify-center gap-2 font-medium transition-all ${
+                        selectedDesign.hasVoted
+                          ? "bg-primary text-white"
+                          : "bg-[#E8E8E8] dark:bg-[#1A1A1A] text-[#2B2B2B] dark:text-white hover:bg-primary hover:text-white"
+                      }`}
+                    >
+                      {votingId === selectedDesign.id ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                      ) : (
+                        <Heart className={`w-5 h-5 ${selectedDesign.hasVoted ? 'fill-current' : ''}`} />
+                      )}
+                      <span>{selectedDesign._count.votes} {selectedDesign.hasVoted ? t.card.voted : t.card.vote}</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.div>
