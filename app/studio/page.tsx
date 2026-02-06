@@ -865,7 +865,9 @@ export default function StudioPage() {
         console.error("Erreur API - Status:", response.status, "Body:", responseText);
         try {
           const errorData = JSON.parse(responseText);
-          alert(errorData.error || `Erreur ${response.status}: Une erreur est survenue.`);
+          // Show debug info if available
+          const debugInfo = errorData.debug ? `\n\nDébug: ${errorData.debug.type}: ${errorData.debug.message}` : '';
+          alert((errorData.error || `Erreur ${response.status}: Une erreur est survenue.`) + debugInfo);
         } catch {
           alert(`Erreur ${response.status}: ${responseText || "Une erreur est survenue."}`);
         }
