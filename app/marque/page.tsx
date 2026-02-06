@@ -407,7 +407,7 @@ export default function MarquePage() {
                 <ArrowRight className="w-5 h-5" />
               </a>
               <a
-                href="/artistes"
+                href="/studio"
                 className="inline-block font-body font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 border-2 border-white hover:bg-white hover:text-dark text-white rounded-sm transition-all hover:scale-105"
               >
                 {brandPageContent.cta.contest}
