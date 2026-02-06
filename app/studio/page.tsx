@@ -780,8 +780,8 @@ export default function StudioPage() {
         return;
       }
       try {
-        // Compress the image before storing
-        const compressedImage = await compressImage(file);
+        // Compress the image before storing (800px width, 60% quality for smaller payload)
+        const compressedImage = await compressImage(file, 800, 0.6);
         setUploadedImage(compressedImage);
         setUploadedFileName(file.name);
       } catch (error) {
@@ -827,21 +827,32 @@ export default function StudioPage() {
         artistInfo.position ? `POSITION SOUHAITÉE: ${artistInfo.position}` : "",
       ].filter(Boolean).join("\n\n");
 
+      const payload = {
+        name: user.name,
+        artistName: user.artistName || user.instagram || user.name,
+        email: user.email,
+        title: artistInfo.title,
+        philosophy: philosophyText,
+        garmentType: "tshirt",
+        garmentFit: "oversize",
+        garmentColor: "#FFFFFF",
+        imageData: uploadedImage,
+        storyboard: storyboard,
+      };
+
+      // Check payload size before sending (Vercel limit is ~4.5MB)
+      const payloadSize = new Blob([JSON.stringify(payload)]).size;
+      const maxSize = 4 * 1024 * 1024; // 4MB to be safe
+      if (payloadSize > maxSize) {
+        alert(`Les images sont trop volumineuses (${(payloadSize / 1024 / 1024).toFixed(1)}MB). Veuillez réduire le nombre d'images du storyboard ou utiliser des images plus petites.`);
+        setIsSubmitting(false);
+        return;
+      }
+
       const response = await fetch("/api/designs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: user.name,
-          artistName: user.artistName || user.instagram || user.name,
-          email: user.email,
-          title: artistInfo.title,
-          philosophy: philosophyText,
-          garmentType: "tshirt",
-          garmentFit: "oversize",
-          garmentColor: "#FFFFFF",
-          imageData: uploadedImage,
-          storyboard: storyboard,
-        }),
+        body: JSON.stringify(payload),
       });
       if (response.ok) {
         setIsSubmitted(true);
@@ -2214,7 +2225,8 @@ function VisualiserStep({
                       const file = e.target.files?.[0];
                       if (!file) return;
                       try {
-                        const compressed = await compressImage(file, 800, 0.7);
+                        // Compress storyboard images more aggressively (500px, 50% quality)
+                        const compressed = await compressImage(file, 500, 0.5);
                         const newItem: StoryboardItem = {
                           imageData: compressed,
                           caption: "",
