@@ -30,6 +30,9 @@ import {
   ZoomOut,
   RotateCcw,
   Lock,
+  Layers,
+  Plus,
+  Instagram,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import Image from "next/image";
@@ -688,6 +691,13 @@ export default function StudioPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Storyboard state (4-9 images)
+  const [storyboard, setStoryboard] = useState<Array<{
+    imageData: string;
+    caption: string;
+    category: 'inspiration' | 'process' | 'details' | 'final' | 'other';
+  }>>([]);
+
   // Artwork transform state (position and scale)
   const [artworkTransform, setArtworkTransform] = useState({
     x: 0,      // horizontal offset in %
@@ -711,7 +721,7 @@ export default function StudioPage() {
   const canProceedToInterpret = hasUnderstood;
   const canProceedToCreate = Object.values(interpretation).every(v => v.length >= 20);
   const canProceedToVisualize = uploadedImage !== null;
-  const canSubmit = !!(artistInfo.title && user?.name && user?.email);
+  const canSubmit = !!(artistInfo.title && user?.name && user?.email && storyboard.length >= 4);
 
   // Compress image to stay under Vercel's 4.5MB limit
   const compressImage = useCallback((file: File, maxWidth: number = 1200, quality: number = 0.8): Promise<string> => {
@@ -830,6 +840,7 @@ export default function StudioPage() {
           garmentFit: "oversize",
           garmentColor: "#FFFFFF",
           imageData: uploadedImage,
+          storyboard: storyboard,
         }),
       });
       if (response.ok) {
@@ -1001,6 +1012,9 @@ export default function StudioPage() {
               isSubmitted={isSubmitted}
               canSubmit={canSubmit}
               handleSubmit={handleSubmit}
+              storyboard={storyboard}
+              setStoryboard={setStoryboard}
+              compressImage={compressImage}
             />
           )}
         </motion.main>
@@ -1854,6 +1868,12 @@ function CreerStep({
 // ============================================
 // STEP 4: SOUMETTRE (anciennement VISUALISER)
 // ============================================
+type StoryboardItem = {
+  imageData: string;
+  caption: string;
+  category: 'inspiration' | 'process' | 'details' | 'final' | 'other';
+};
+
 function VisualiserStep({
   content,
   isDark,
@@ -1867,6 +1887,9 @@ function VisualiserStep({
   isSubmitted,
   canSubmit,
   handleSubmit,
+  storyboard,
+  setStoryboard,
+  compressImage,
 }: {
   content: ReturnType<typeof useContent>["studioPageContent"];
   isDark: boolean;
@@ -1880,6 +1903,9 @@ function VisualiserStep({
   isSubmitted: boolean;
   canSubmit: boolean;
   handleSubmit: () => void;
+  storyboard: StoryboardItem[];
+  setStoryboard: React.Dispatch<React.SetStateAction<StoryboardItem[]>>;
+  compressImage: (file: File, maxWidth?: number, quality?: number) => Promise<string>;
 }) {
   const bgCard = isDark ? "bg-[#111111]" : "bg-white";
   const borderColor = isDark ? "border-white/10" : "border-black/10";
@@ -2097,6 +2123,137 @@ function VisualiserStep({
             </div>
           </motion.div>
         </div>
+
+        {/* Storyboard Section - Full Width */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-8"
+        >
+          <div className={`${bgCard} border ${borderColor} p-6`}>
+            <div className="flex items-center gap-3 mb-2">
+              <Layers className="w-5 h-5 text-primary" />
+              <h3 className={`font-display text-lg font-semibold ${textPrimary}`}>
+                {content.storyboard?.title || "Storyboard de création"}
+              </h3>
+            </div>
+            <p className={`${textSecondary} text-sm mb-6`}>
+              {content.storyboard?.description || "Partagez 4 à 9 images qui racontent l'histoire de votre création"}
+            </p>
+
+            {/* Storyboard Grid */}
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-4">
+              {/* Existing storyboard images */}
+              {storyboard.map((item, index) => (
+                <div key={index} className="relative group">
+                  <div className={`aspect-square relative overflow-hidden ${isDark ? "bg-black/30" : "bg-gray-100"} border ${borderColor}`}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.imageData}
+                      alt={`Storyboard ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Category badge */}
+                    {item.category && (
+                      <div className="absolute bottom-1 left-1 px-1.5 py-0.5 bg-black/70 text-white text-[10px] rounded">
+                        {content.storyboard?.categories?.[item.category] || item.category}
+                      </div>
+                    )}
+                    {/* Delete button */}
+                    <button
+                      onClick={() => {
+                        const newStoryboard = [...storyboard];
+                        newStoryboard.splice(index, 1);
+                        setStoryboard(newStoryboard);
+                      }}
+                      className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  {/* Caption input */}
+                  <input
+                    type="text"
+                    value={item.caption}
+                    onChange={(e) => {
+                      const newStoryboard = [...storyboard];
+                      newStoryboard[index] = { ...newStoryboard[index], caption: e.target.value };
+                      setStoryboard(newStoryboard);
+                    }}
+                    placeholder={content.storyboard?.captionPlaceholder || "Légende..."}
+                    className={`w-full mt-1 px-2 py-1 text-xs ${inputBg} border ${borderColor} ${textPrimary} placeholder:${textMuted} focus:outline-none focus:border-primary/50`}
+                  />
+                  {/* Category select */}
+                  <select
+                    value={item.category}
+                    onChange={(e) => {
+                      const newStoryboard = [...storyboard];
+                      newStoryboard[index] = { ...newStoryboard[index], category: e.target.value as StoryboardItem['category'] };
+                      setStoryboard(newStoryboard);
+                    }}
+                    className={`w-full mt-1 px-2 py-1 text-xs ${inputBg} border ${borderColor} ${textPrimary} focus:outline-none focus:border-primary/50`}
+                  >
+                    <option value="inspiration">{content.storyboard?.categories?.inspiration || "Inspiration"}</option>
+                    <option value="process">{content.storyboard?.categories?.process || "Processus"}</option>
+                    <option value="details">{content.storyboard?.categories?.details || "Détails"}</option>
+                    <option value="final">{content.storyboard?.categories?.final || "Résultat"}</option>
+                    <option value="other">{content.storyboard?.categories?.other || "Autre"}</option>
+                  </select>
+                </div>
+              ))}
+
+              {/* Add image button - show if less than 9 images */}
+              {storyboard.length < 9 && (
+                <label className={`aspect-square flex flex-col items-center justify-center cursor-pointer border-2 border-dashed ${borderColor} hover:border-primary/50 transition-colors ${isDark ? "bg-black/20" : "bg-gray-50"}`}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="sr-only"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      try {
+                        const compressed = await compressImage(file, 800, 0.7);
+                        const newItem: StoryboardItem = {
+                          imageData: compressed,
+                          caption: "",
+                          category: "process"
+                        };
+                        setStoryboard([...storyboard, newItem]);
+                      } catch (error) {
+                        console.error("Error compressing storyboard image:", error);
+                      }
+                      e.target.value = "";
+                    }}
+                  />
+                  <Plus className={`w-6 h-6 ${textMuted}`} />
+                  <span className={`text-xs ${textMuted} mt-1`}>
+                    {content.storyboard?.addImage || "Ajouter"}
+                  </span>
+                </label>
+              )}
+            </div>
+
+            {/* Progress indicator */}
+            <div className={`flex items-center justify-between text-sm ${textSecondary}`}>
+              <span>
+                {storyboard.length}/9 {content.storyboard?.images || "images"}
+              </span>
+              {storyboard.length < 4 && (
+                <span className="text-amber-500">
+                  {content.storyboard?.minimum || `Minimum ${4 - storyboard.length} image(s) de plus`}
+                </span>
+              )}
+              {storyboard.length >= 4 && (
+                <span className="text-green-500 flex items-center gap-1">
+                  <Check className="w-4 h-4" />
+                  {content.storyboard?.complete || "Storyboard complet"}
+                </span>
+              )}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

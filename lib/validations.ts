@@ -21,6 +21,16 @@ export const nameSchema = z
 // DESIGN SCHEMAS
 // ============================================
 
+// Storyboard item schema
+const storyboardItemSchema = z.object({
+  imageData: z.string().min(100).refine(
+    val => val.startsWith('data:image/'),
+    'Format d\'image invalide'
+  ),
+  caption: z.string().max(200).optional(),
+  category: z.enum(['inspiration', 'process', 'details', 'final', 'other']).optional()
+})
+
 export const createDesignSchema = z.object({
   email: emailSchema,
   name: nameSchema,
@@ -48,7 +58,12 @@ export const createDesignSchema = z.object({
   }),
   garmentColor: z
     .string()
-    .regex(/^#[0-9A-Fa-f]{6}$/, 'Couleur invalide (format hex requis)')
+    .regex(/^#[0-9A-Fa-f]{6}$/, 'Couleur invalide (format hex requis)'),
+  // Storyboard: 4-9 images with captions
+  storyboard: z.array(storyboardItemSchema)
+    .min(4, 'Minimum 4 images pour le storyboard')
+    .max(9, 'Maximum 9 images pour le storyboard')
+    .optional()
 })
 
 export const designQuerySchema = z.object({
