@@ -823,6 +823,7 @@ export const contactPageContent = {
     name: "What should we call you?",
     namePlaceholder: "Your name",
     submit: "Join the community",
+    submitting: "Sending...",
   },
   contactSection: {
     title: "Let's Connect",
@@ -1018,6 +1019,28 @@ export const manifestoPageContent = {
     label: "OUR PHILOSOPHY",
     title: "The Manifesto",
     description: "Our vision, our commitment, our refusal of conformity. This text is our promise to those who believe fashion can be more than appearance.",
+  },
+  chaptersSection: {
+    label: "TEN CHAPTERS",
+    title: "Our Philosophy",
+    description: "Each chapter is a pillar of our vision —",
+    descriptionHighlight: " a refusal of conformity, a promise of meaning",
+  },
+  chapterLabel: "Chapter",
+  processSection: {
+    label: "FROM THOUGHT TO TEXTILE",
+  },
+  overviewSection: {
+    label: "OVERVIEW",
+  },
+  commitmentSection: {
+    label: "OUR COMMITMENT",
+    quote: "We don't make clothes. We embody ideas.",
+  },
+  transitionQuote: "Philosophy without hands remains dead letter. Process gives life to thought — from abstract concept to the textile you will wear.",
+  finalQuote: {
+    text: "To wear Arteral is to wear your paradox. It is to accept that beauty is born from contradiction, that art is born from chaos, and that fashion can be a philosophy.",
+    author: "ARTERAL MANIFESTO",
   },
   intro: {
     quote: "Art is not decoration. Fashion is not superficiality.",

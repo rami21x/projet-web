@@ -165,7 +165,7 @@ export default function ContactPage() {
                       disabled={submitting}
                       className="w-full flex items-center justify-center gap-3 font-body font-semibold text-base sm:text-lg px-8 py-4 sm:py-5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-white rounded-xl transition-all hover:scale-[1.02] shadow-lg hover:shadow-xl disabled:opacity-50"
                     >
-                      <span>{submitting ? 'Envoi...' : contactPageContent.form.submit}</span>
+                      <span>{submitting ? contactPageContent.form.submitting : contactPageContent.form.submit}</span>
                       <Send className="w-5 h-5" />
                     </button>
 
