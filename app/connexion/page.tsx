@@ -295,7 +295,17 @@ export default function ConnexionPage() {
                     </button>
                   </form>
 
-                  <div className="text-center mt-6">
+                  {/* Forgot password link */}
+                  <div className="text-center mt-4">
+                    <Link
+                      href="/forgot-password"
+                      className="text-sm text-[#8A8A8A] hover:text-primary transition-colors"
+                    >
+                      {t.links.forgotPassword || "Mot de passe oublié ?"}
+                    </Link>
+                  </div>
+
+                  <div className="text-center mt-4">
                     <p className="text-[#5A5A5A] dark:text-gray-400 text-sm">
                       {t.links.noAccount}{" "}
                       <button
@@ -426,11 +436,11 @@ export default function ConnexionPage() {
                         <input
                           type={showPassword ? "text" : "password"}
                           required
-                          minLength={6}
+                          minLength={12}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           className="w-full pl-11 pr-12 py-3 bg-[#F5F5F5] dark:bg-[#0A0A0A] border border-black/5 dark:border-white/10 text-[#2B2B2B] dark:text-white font-body focus:outline-none focus:border-primary transition-colors"
-                          placeholder="••••••••"
+                          placeholder="••••••••••••"
                         />
                         <button
                           type="button"

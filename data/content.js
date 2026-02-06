@@ -1451,34 +1451,38 @@ export const studioPageContent = {
     },
     prizes: {
       label: "REWARDS",
-      title: "Two ways to win",
-      peuple: {
-        label: "FIRST PRIZE",
-        title: "People's Choice",
-        amount: "€3,500",
-        description: "The winner will be chosen by",
-        you: "you",
-        details: "All artworks will be published on our Instagram. The one receiving the most likes wins the prize.",
-        rewards: [
-          "Your art printed on the collection",
-          "Artist credit on each piece",
-          "5 collection pieces offered",
-        ],
-      },
-      coeur: {
-        label: "SECOND PRIZE",
-        title: "Jury's Choice",
-        amount: "€1,500",
-        description: "Selected by an exceptional jury. Three perspectives, one decision.",
-        jury: [
-          { title: "A renowned artist", status: "REVEALED SOON" },
-          { title: "A fashion figure", status: "REVEALED SOON" },
-          { title: "The Arteral team", status: "FOUNDERS" },
-        ],
-        rewards: [
-          "Special mention on our platforms",
-          "3 collection pieces offered",
-        ],
+      title: "Crowdfunding Prizes",
+      crowdfundingNote: "Prizes depend on the success of our Ulule campaign. The more we raise, the more artists win!",
+      tiers: [
+        {
+          goal: "€5,000",
+          goalLabel: "TIER 1",
+          prizes: [
+            { label: "1st Prize", amount: "€2,000" },
+            { label: "2nd Prize", amount: "€1,000" },
+          ],
+        },
+        {
+          goal: "€8,000",
+          goalLabel: "TIER 2",
+          prizes: [
+            { label: "1st Prize", amount: "€3,500" },
+            { label: "2nd Prize", amount: "€1,500" },
+          ],
+        },
+      ],
+      rewards: [
+        "Your art printed on the collection",
+        "Artist credit on each piece",
+        "Collection pieces offered",
+      ],
+      followUs: {
+        title: "Stay informed",
+        description: "To discover all contest details and follow the campaign progress:",
+        instagram: "Follow us on Instagram",
+        instagramHandle: "@arteral_clo",
+        ulule: "Ulule campaign coming soon",
+        ululeNote: "The Ulule page will be launched soon with all reward details.",
       },
     },
     rules: {
@@ -1547,7 +1551,7 @@ export const connexionPageContent = {
   form: {
     email: "Email",
     password: "Password",
-    passwordHint: "(min 6 characters)",
+    passwordHint: "(12 chars min, 1 uppercase, 1 lowercase, 1 special)",
     fullName: "Full name *",
     fullNamePlaceholder: "Your name",
     artistName: "Artist name",
@@ -1570,6 +1574,7 @@ export const connexionPageContent = {
     noAccount: "Don't have an account yet?",
     createAccount: "Create an account",
     loginSignup: "Login / Sign up",
+    forgotPassword: "Forgot password?",
   },
   success: {
     loggedIn: "Logged in!",
