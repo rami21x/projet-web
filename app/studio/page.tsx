@@ -721,7 +721,8 @@ export default function StudioPage() {
   const canProceedToInterpret = hasUnderstood;
   const canProceedToCreate = Object.values(interpretation).every(v => v.length >= 20);
   const canProceedToVisualize = uploadedImage !== null;
-  const canSubmit = !!(artistInfo.title && user?.name && user?.email && storyboard.length >= 4);
+  // Storyboard is now optional
+  const canSubmit = !!(artistInfo.title && user?.name && user?.email);
 
   // Compress image to stay under Vercel's 4.5MB limit
   const compressImage = useCallback((file: File, maxWidth: number = 1200, quality: number = 0.8): Promise<string> => {
@@ -2252,15 +2253,15 @@ function VisualiserStep({
               <span>
                 {storyboard.length}/9 {content.storyboard?.images || "images"}
               </span>
-              {storyboard.length < 4 && (
-                <span className="text-amber-500">
-                  {content.storyboard?.minimum || `Minimum ${4 - storyboard.length} image(s) de plus`}
+              {storyboard.length === 0 && (
+                <span className="text-gray-500">
+                  (Optionnel)
                 </span>
               )}
-              {storyboard.length >= 4 && (
+              {storyboard.length > 0 && (
                 <span className="text-green-500 flex items-center gap-1">
                   <Check className="w-4 h-4" />
-                  {content.storyboard?.complete || "Storyboard complet"}
+                  {content.storyboard?.complete || "Storyboard ajouté"}
                 </span>
               )}
             </div>
