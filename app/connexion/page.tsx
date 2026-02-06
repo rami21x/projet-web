@@ -22,6 +22,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { useContent } from "@/hooks/useContent";
 import FadeIn from "@/components/FadeIn";
+import Link from "next/link";
 
 type Mode = "choice" | "login" | "register";
 type Role = "artist" | "client";
